@@ -19,8 +19,8 @@
     <url>/2022/08/02/ubuntuOS/vscode-docker-otherPC/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>vscode连接远程机器上的docker，应用太多了，此处是用win的PC连接远程ubuntuPC上运行的docker，docker是基于ubuntu20.04的博客部署系统~</p>
 <p><strong>又一个利器~</strong><br><span id="more"></span></p>
-<h2 id="1，前提"><a href="#1，前提" class="headerlink" title="1，前提"></a>1，前提</h2><p>宿主机连接本机上运行的docker，并用vscode连接，详见<a href=""></a></p>
-<h2 id="2，docker上的ssh配置"><a href="#2，docker上的ssh配置" class="headerlink" title="2，docker上的ssh配置"></a>2，docker上的ssh配置</h2><p>在docker中修改sshd服务的配置文件，即<code>/etc/ssh/sshd_config</code>，将端口号的配置项去掉注释即可。<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Port 22</span><br></pre></td></tr></table></figure><br>注意：docker使用的ssh默认的端口号22，映射到主机上的端口号是8022（详情见<a href="">宿主机上vscode连接本机docker</a>）</p>
+<h2 id="1，前提"><a href="#1，前提" class="headerlink" title="1，前提"></a>1，前提</h2><p>宿主机连接本机上运行的docker，并用vscode连接，详见<a href="https://sophia-hxw.github.io/2022/08/01/ubuntuOS/vscode-docker-onePC/">宿主机上vscode连接本机docker</a></p>
+<h2 id="2，docker上的ssh配置"><a href="#2，docker上的ssh配置" class="headerlink" title="2，docker上的ssh配置"></a>2，docker上的ssh配置</h2><p>在docker中修改sshd服务的配置文件，即<code>/etc/ssh/sshd_config</code>，将端口号的配置项去掉注释即可。<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Port 22</span><br></pre></td></tr></table></figure><br>注意：docker使用的ssh默认的端口号22，映射到主机上的端口号是8022（详情见<a href="https://sophia-hxw.github.io/2022/08/01/ubuntuOS/vscode-docker-onePC/">宿主机上vscode连接本机docker</a>）</p>
 <h2 id="3，远程主机-非docker-开放端口"><a href="#3，远程主机-非docker-开放端口" class="headerlink" title="3，远程主机(非docker)开放端口"></a>3，远程主机(非docker)开放端口</h2><p>此处主机上开放的端口是8022，也就是<code>docker run</code>时用来映射docker内22的端口，就不赘述了~<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo iptables -I INPUT -p tcp --dport 8022 -j ACCEPT</span><br></pre></td></tr></table></figure></p>
 <h2 id="4，测试连接"><a href="#4，测试连接" class="headerlink" title="4，测试连接"></a>4，测试连接</h2><ul>
 <li>配置免密访问<br>密码登录请自行测试，为了方便，本文采用了密钥对来免密访问。</li>
