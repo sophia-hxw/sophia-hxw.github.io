@@ -29,7 +29,7 @@
 <meta property="og:description" content="前言title: Lifted Proximal Operator Machines essay link 提升近端算子机，将非凸问题进行凸化的利器，已用于分析DNN的网络和训练策略等~">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-03-22T07:23:14.000Z">
-<meta property="article:modified_time" content="2023-03-22T07:20:47.560Z">
+<meta property="article:modified_time" content="2023-03-23T01:04:00.083Z">
 <meta property="article:author" content="xinwen">
 <meta property="article:tag" content="LPOM">
 <meta name="twitter:card" content="summary">
@@ -132,7 +132,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">70</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">71</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -142,7 +142,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">74</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">75</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -222,10 +222,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2023-03-22 15:23:14 / 修改时间：15:20:47" itemprop="dateCreated datePublished" datetime="2023-03-22T15:23:14+08:00">2023-03-22</time>
+              <time title="创建时间：2023-03-22 15:23:14" itemprop="dateCreated datePublished" datetime="2023-03-22T15:23:14+08:00">2023-03-22</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-03-23 09:04:00" itemprop="dateModified" datetime="2023-03-23T09:04:00+08:00">2023-03-23</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -275,7 +281,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>title: Lifted Proximal Operator Machines</p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>title: Lifted Proximal Operator Machines</p>
 <p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1811.01501">essay link</a></p>
 <p><strong>提升近端算子机，将非凸问题进行凸化的利器，已用于分析DNN的网络和训练策略等~</strong><br><span id="more"></span></p>
 <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>我们提出了一种用于训练前馈神经网络的新优化方法，通过将激活函数重写为等效的近端算子，然后将近端算子以正则项添加到目标函数来近似前馈神经网络，因此称本文提出的方法为提升近端算子机（LPOM）。 </p>
@@ -598,7 +604,7 @@ W^{i,t+1}=Y^{i,t}-\frac{1}{\beta}(\phi(Y^{i,t}X^i)-X^{i+1})(X^i)^{+}
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C"><span class="nav-text">相关工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E5%8D%87%E8%BF%91%E7%AB%AF%E7%AE%97%E5%AD%90"><span class="nav-text">提升近端算子</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E8%BF%91%E7%AB%AF%E7%AE%97%E5%AD%90%E8%BF%9B%E8%A1%8C%E9%87%8D%E6%9E%84"><span class="nav-text">用近端算子进行重构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LPOM%E4%BC%98%E5%8A%BF"><span class="nav-text">LPOM优势</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B1%82%E8%A7%A3LPOM"><span class="nav-text">求解LPOM</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0-X-i-n-i-2"><span class="nav-text">更新$\{X^i\}^n_{i&#x3D;2}$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0-W-i-n-1-i-1"><span class="nav-text">更新$\{W^i\}^{n-1}_{i&#x3D;1}$</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C"><span class="nav-text">实验</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8ESGD%E6%AF%94%E8%BE%83"><span class="nav-text">与SGD比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8E%E5%85%B6%E4%BB%96%E9%9D%9E%E6%A2%AF%E5%BA%A6%E6%96%B9%E6%B3%95%E6%AF%94%E8%BE%83"><span class="nav-text">与其他非梯度方法比较</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C"><span class="nav-text">相关工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E5%8D%87%E8%BF%91%E7%AB%AF%E7%AE%97%E5%AD%90"><span class="nav-text">提升近端算子</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E8%BF%91%E7%AB%AF%E7%AE%97%E5%AD%90%E8%BF%9B%E8%A1%8C%E9%87%8D%E6%9E%84"><span class="nav-text">用近端算子进行重构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LPOM%E4%BC%98%E5%8A%BF"><span class="nav-text">LPOM优势</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B1%82%E8%A7%A3LPOM"><span class="nav-text">求解LPOM</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0-X-i-n-i-2"><span class="nav-text">更新$\{X^i\}^n_{i&#x3D;2}$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0-W-i-n-1-i-1"><span class="nav-text">更新$\{W^i\}^{n-1}_{i&#x3D;1}$</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C"><span class="nav-text">实验</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8ESGD%E6%AF%94%E8%BE%83"><span class="nav-text">与SGD比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8E%E5%85%B6%E4%BB%96%E9%9D%9E%E6%A2%AF%E5%BA%A6%E6%96%B9%E6%B3%95%E6%AF%94%E8%BE%83"><span class="nav-text">与其他非梯度方法比较</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -614,7 +620,7 @@ W^{i,t+1}=Y^{i,t}-\frac{1}{\beta}(\phi(Y^{i,t}X^i)-X^{i+1})(X^i)^{+}
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">74</span>
+          <span class="site-state-item-count">75</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -627,7 +633,7 @@ W^{i,t+1}=Y^{i,t}-\frac{1}{\beta}(\phi(Y^{i,t}X^i)-X^{i+1})(X^i)^{+}
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">70</span>
+        <span class="site-state-item-count">71</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -682,13 +688,13 @@ W^{i,t+1}=Y^{i,t}-\frac{1}{\beta}(\phi(Y^{i,t}X^i)-X^{i+1})(X^i)^{+}
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">231k</span>
+    <span title="站点总字数">236k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">3:30</span>
+    <span title="站点阅读时长">3:35</span>
 </div>
 
         

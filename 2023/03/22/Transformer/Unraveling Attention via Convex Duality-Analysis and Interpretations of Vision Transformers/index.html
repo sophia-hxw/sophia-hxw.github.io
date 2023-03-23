@@ -29,7 +29,7 @@
 <meta property="og:description" content="前言文章：Unraveling Attention via Convex Duality-Analysis and Interpretations of Vision Transformers essay link 通过凸对偶性解释Transformer网络~">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-03-22T12:52:45.000Z">
-<meta property="article:modified_time" content="2023-03-22T13:12:22.782Z">
+<meta property="article:modified_time" content="2023-03-23T01:04:04.753Z">
 <meta property="article:author" content="xinwen">
 <meta property="article:tag" content="non-mercer">
 <meta property="article:tag" content="convex duality">
@@ -133,7 +133,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">70</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">71</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -143,7 +143,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">74</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">75</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -223,10 +223,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2023-03-22 20:52:45 / 修改时间：21:12:22" itemprop="dateCreated datePublished" datetime="2023-03-22T20:52:45+08:00">2023-03-22</time>
+              <time title="创建时间：2023-03-22 20:52:45" itemprop="dateCreated datePublished" datetime="2023-03-22T20:52:45+08:00">2023-03-22</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-03-23 09:04:04" itemprop="dateModified" datetime="2023-03-23T09:04:04+08:00">2023-03-23</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -276,7 +282,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>文章：Unraveling Attention via Convex Duality-Analysis and Interpretations of Vision Transformers</p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>文章：Unraveling Attention via Convex Duality-Analysis and Interpretations of Vision Transformers</p>
 <p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2205.08078">essay link</a></p>
 <p><strong>通过凸对偶性解释Transformer网络~</strong><br><span id="more"></span></p>
 <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>使用自注意力或其替代方案的视觉Transformer已经在许多图像相关任务中展示了有潜力的结果，然而，注意力的基础归纳偏差尚不清楚。为了解决这个问题，本文从凸对偶的角度分析了注意力。对于非线性点积自注意力，以及 MLP 混合器和傅里叶神经算子 (FNO) 等替代机制，我们推导出等效的有限维凸问题，这些问题可解释并可求全局最优解。凸程序带来的块核范数正则化促使了潜在特征和token维度的低秩，特别是，我们展示了自注意力网络如何根据token的潜在相似性隐式地对其进行聚类。我们通过微调各种凸注意力头进行实验，采用的是 CIFAR-100 分类问题的预训练主干，结果表明与现有的 MLP 或线性头相比，注意力机制占优。</p>
@@ -668,7 +674,7 @@ p^\ast_{FN}=\min_{\mathbf{Z}\in\mathbb{R}^{sd\times c}}\sum\limits^n_{i=1}\mathc
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1%EF%BC%8C%E4%BB%8B%E7%BB%8D"><span class="nav-text">1，介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C"><span class="nav-text">1.1 相关工作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%EF%BC%8C%E9%A2%84%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-text">2，预备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E7%BA%BF%E6%80%A7%E5%92%8C-ReLU-MLPs-%E7%9A%84%E9%9A%90%E5%BC%8F%E5%87%B8%E6%80%A7"><span class="nav-text">2.1 线性和 ReLU MLPs 的隐式凸性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%EF%BC%8C%E8%87%AA%E6%B3%A8%E6%84%8F%E5%8A%9B%E7%9A%84%E9%9A%90%E5%BC%8F%E5%87%B8%E6%80%A7"><span class="nav-text">3，自注意力的隐式凸性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%EF%BC%8C%E6%9B%BF%E6%8D%A2%E6%B7%B7%E5%90%88%E6%9C%BA%E5%88%B6"><span class="nav-text">4，替换混合机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-MLP-Mixer"><span class="nav-text">4.1 MLP Mixer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-Fourier%E7%A5%9E%E7%BB%8F%E7%AE%97%E5%AD%90"><span class="nav-text">4.2 Fourier神经算子</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-1-%E5%9D%97%E5%AF%B9%E8%A7%92FNO"><span class="nav-text">4.2.1 块对角FNO</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5%EF%BC%8C%E6%95%B0%E5%80%BC%E7%BB%93%E6%9E%9C"><span class="nav-text">5，数值结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6%EF%BC%8C%E6%80%BB%E7%BB%93"><span class="nav-text">6，总结</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1%EF%BC%8C%E4%BB%8B%E7%BB%8D"><span class="nav-text">1，介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C"><span class="nav-text">1.1 相关工作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%EF%BC%8C%E9%A2%84%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-text">2，预备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E7%BA%BF%E6%80%A7%E5%92%8C-ReLU-MLPs-%E7%9A%84%E9%9A%90%E5%BC%8F%E5%87%B8%E6%80%A7"><span class="nav-text">2.1 线性和 ReLU MLPs 的隐式凸性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%EF%BC%8C%E8%87%AA%E6%B3%A8%E6%84%8F%E5%8A%9B%E7%9A%84%E9%9A%90%E5%BC%8F%E5%87%B8%E6%80%A7"><span class="nav-text">3，自注意力的隐式凸性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%EF%BC%8C%E6%9B%BF%E6%8D%A2%E6%B7%B7%E5%90%88%E6%9C%BA%E5%88%B6"><span class="nav-text">4，替换混合机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-MLP-Mixer"><span class="nav-text">4.1 MLP Mixer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-Fourier%E7%A5%9E%E7%BB%8F%E7%AE%97%E5%AD%90"><span class="nav-text">4.2 Fourier神经算子</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-1-%E5%9D%97%E5%AF%B9%E8%A7%92FNO"><span class="nav-text">4.2.1 块对角FNO</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5%EF%BC%8C%E6%95%B0%E5%80%BC%E7%BB%93%E6%9E%9C"><span class="nav-text">5，数值结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6%EF%BC%8C%E6%80%BB%E7%BB%93"><span class="nav-text">6，总结</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -684,7 +690,7 @@ p^\ast_{FN}=\min_{\mathbf{Z}\in\mathbb{R}^{sd\times c}}\sum\limits^n_{i=1}\mathc
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">74</span>
+          <span class="site-state-item-count">75</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -697,7 +703,7 @@ p^\ast_{FN}=\min_{\mathbf{Z}\in\mathbb{R}^{sd\times c}}\sum\limits^n_{i=1}\mathc
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">70</span>
+        <span class="site-state-item-count">71</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -752,13 +758,13 @@ p^\ast_{FN}=\min_{\mathbf{Z}\in\mathbb{R}^{sd\times c}}\sum\limits^n_{i=1}\mathc
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">231k</span>
+    <span title="站点总字数">236k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">3:30</span>
+    <span title="站点阅读时长">3:35</span>
 </div>
 
         
