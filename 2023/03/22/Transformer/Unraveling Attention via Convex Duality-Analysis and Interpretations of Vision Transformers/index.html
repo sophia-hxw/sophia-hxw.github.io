@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"github.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="前言文章：Unraveling Attention via Convex Duality-Analysis and Interpretations of Vision Transformers essay link 通过凸对偶性解释Transformer网络~">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Transformer are Deep Infinite-Dimensional Non-Mercer Binary Kernel Machines">
+<meta property="og:url" content="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/03/22/Transformer/Unraveling%20Attention%20via%20Convex%20Duality-Analysis%20and%20Interpretations%20of%20Vision%20Transformers/index.html">
+<meta property="og:site_name" content="橦言无忌">
+<meta property="og:description" content="前言文章：Unraveling Attention via Convex Duality-Analysis and Interpretations of Vision Transformers essay link 通过凸对偶性解释Transformer网络~">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-03-22T12:52:45.000Z">
+<meta property="article:modified_time" content="2023-03-22T13:12:22.782Z">
+<meta property="article:author" content="xinwen">
+<meta property="article:tag" content="non-mercer">
+<meta property="article:tag" content="convex duality">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/03/22/Transformer/Unraveling%20Attention%20via%20Convex%20Duality-Analysis%20and%20Interpretations%20of%20Vision%20Transformers/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Transformer are Deep Infinite-Dimensional Non-Mercer Binary Kernel Machines | 橦言无忌</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">橦言无忌</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一个不想改变世界的程序媛</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">70</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">19</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">74</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/sophia-hxw" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/03/22/Transformer/Unraveling%20Attention%20via%20Convex%20Duality-Analysis%20and%20Interpretations%20of%20Vision%20Transformers/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/me.jpg">
+      <meta itemprop="name" content="xinwen">
+      <meta itemprop="description" content="想到哪儿记到哪儿的技术博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="橦言无忌">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Transformer are Deep Infinite-Dimensional Non-Mercer Binary Kernel Machines
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-03-22 20:52:45 / 修改时间：21:12:22" itemprop="dateCreated datePublished" datetime="2023-03-22T20:52:45+08:00">2023-03-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Transformer/" itemprop="url" rel="index"><span itemprop="name">Transformer</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/03/22/Transformer/Unraveling%20Attention%20via%20Convex%20Duality-Analysis%20and%20Interpretations%20of%20Vision%20Transformers/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/03/22/Transformer/Unraveling%20Attention%20via%20Convex%20Duality-Analysis%20and%20Interpretations%20of%20Vision%20Transformers/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>22k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>20 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>文章：Unraveling Attention via Convex Duality-Analysis and Interpretations of Vision Transformers</p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2205.08078">essay link</a></p>
+<p><strong>通过凸对偶性解释Transformer网络~</strong><br><span id="more"></span></p>
+<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>使用自注意力或其替代方案的视觉Transformer已经在许多图像相关任务中展示了有潜力的结果，然而，注意力的基础归纳偏差尚不清楚。为了解决这个问题，本文从凸对偶的角度分析了注意力。对于非线性点积自注意力，以及 MLP 混合器和傅里叶神经算子 (FNO) 等替代机制，我们推导出等效的有限维凸问题，这些问题可解释并可求全局最优解。凸程序带来的块核范数正则化促使了潜在特征和token维度的低秩，特别是，我们展示了自注意力网络如何根据token的潜在相似性隐式地对其进行聚类。我们通过微调各种凸注意力头进行实验，采用的是 CIFAR-100 分类问题的预训练主干，结果表明与现有的 MLP 或线性头相比，注意力机制占优。</p>
+<h2 id="1，介绍"><a href="#1，介绍" class="headerlink" title="1，介绍"></a>1，介绍</h2><p>Transformers 最近在语言和视觉的表示学习方面取得了巨大的成功，这主要是由于注意机制有效地混合了各层对token的表示以学习输入的语义。 在点积自注意力出现后，出现了几种有效的替代方法，可以很好地适应大型预训练任务的序列大小。然而，可学习的注意力归纳偏置没有得到很好的探索，对注意力归纳偏置的理论理解可以激发设计更高效的架构，并可以解释这些网络的泛化能力。</p>
+<p>自注意力是首个视觉Transformer (ViT)中的基本构建块，它由两个线性函数的外积组成，后跟一个非线性函数以及与另一个线性函数的积，这使得它是非凸和不可解释的。理解注意力的一种方法是设计新的自注意力替代方案，其表现同样出色，这可能有助于解释其潜在机制。一组工作涉及基于多层感知器 (MLP) 的架构，tolstikhin2021mlp 等，而另一系列工作提出基于傅立叶的模型 lee2021fnet 等，其他人提出用矩阵分解 geng2021attention等 代替 self-attention。虽然所有这些作品都有吸引人的应用，利用了注意力结构的一般概念，但它们缺乏从优化角度对这些架构及微调后的应用做理论分析。</p>
+<p>为了解决这个缺点，我们利用凸对偶性来分析具有 ReLU 激活的单个自注意力块。 由于自注意力会导致序列的平方复杂度，因此我们选择分析更高效的模块。 作为更高效模块的代表，我们专注于 MLP 混合器和傅立叶神经运算符（FNO）。 MLP 混合器（纯粹）在token和特征维度上使用 MLP 投影来混合token，相比之下，FNO 基于 2D 傅里叶变换来实现利用循环卷积混合token。</p>
+<p>我们发现所有这三个分析模块都等同于有限维凸优化问题，表明“可证明地将它们优化到全局最优值”是有保障的。此外，我们对凸模型引起的偏差进行了观察，特别是，自注意力和 MLP-Mixer 模块的凸等价物类似于 MLP 的加权组合，但具有额外的自由度（例如，更高维度的归纳参数），以及将它们的各个子模块联系在一起以利用全局信息的独特块核范数正则化操作。相比之下，凸化的 FNO 混合器相当于循环卷积，而对 FNO 架构的轻微修改可以诱导出等效的分组卷积。我们在CIFAR-100 分类问题上进行Transformer的迁移学习，微调单个凸注意头来进行注意力头的实验测试和比较。我们观察到这些注意力模块的归纳偏差优于传统的凸模型。</p>
+<p>本文的主要贡献总结如下：</p>
+<ul>
+<li>我们通过证明带线性（或 ReLU ）激活函数的自注意力、MLP-Mixer 和 FNO 模块与凸优化问题的等价性来保障其能求得到全局最优解。</li>
+<li>通过分析这些等效的凸应用，本文为这些注意力模块的优化目标提供了可解释性。</li>
+<li>实验验证了（凸）视觉 Transformer 在迁移学习任务中的表现优于基线凸方法。</li>
+</ul>
+<h3 id="1-1-相关工作"><a href="#1-1-相关工作" class="headerlink" title="1.1 相关工作"></a>1.1 相关工作</h3><p>这项工作主要与两条研究路线有关。</p>
+<p><strong>自注意力的解释</strong><br>一种方法是通过实验观察注意力网络的特性来理解它们，例如，DINO 提出了一种针对 ViTs 的对比自监督学习方法。 据观察，学习到的注意力映射保留了图像的语义区域。 另一项工作比较了经过训练的 ViT 和 CNN 的跨层对齐，得出的结论是 ViT 在网络的各个层之间具有更统一的表示结构。 另一项工作使用深度泰勒分解方法来可视化输入图像中会引起特定 ViT 预测的部分。</p>
+<p>另一种方法是分析注意力网络的表现力，一项工作将多头自注意力解释为贝叶斯推理，并提供了工具来决定使用多少个头，以及如何在不同的头中强化特征的区别表达。 其他分析表明，稀疏Transformer可以逼近任何函数，多头自注意力网络至少跟卷积网络的表达力相当，点积自注意力网络不是Lipschitz 连续的。</p>
+<p><strong>凸神经网络</strong><br>从 pilanci2020neural 开始，已有大量工作证明各种 ReLU 及其变体的激活神经网络架构具有等效的凸优化问题。 这些包括双层卷积和矢量输出网络、更深层次的网络、具有批量标准化的网络和 Wasserstein GANs。最近的工作还展示了如何有效地优化这些等效凸网络的最简单形式，并结合额外的约束来增强对抗性鲁棒性。 然而，这些工作都没有分析过Transformer的构建块，而Transformer是许多最先进的视觉和语言处理任务中的主要方法。</p>
+<h2 id="2，预备工作"><a href="#2，预备工作" class="headerlink" title="2，预备工作"></a>2，预备工作</h2><p>一般来说，我们分析监督学习问题，其中输入训练数据 $\{\mathbf{X}_i \in \mathbb{R}^{s \times d}\}_{i=1}^n$ 是嵌入层patch的结果，我们有相应的任意大小的标签 $\{\mathbf{Y}_i \in \mathbb{R}^{r \times c}\}_{i=1}^n$。 对于任意<strong>凸损失函数</strong> $\mathcal{L}(\cdot, \cdot)$，我们求解优化问题</p>
+<script type="math/tex; mode=display">
+p^\ast:=\min_{\theta}\sum\limits^n_{i=1}\mathcal{L}(f_{\theta}(\mathbf{X}_i),\mathbf{Y}_i)+\mathcal{R}(\theta) 
+\tag{1}</script><p>$\theta$ 是可学习的参数，$f_{\theta}(\cdot)$ 是神经网络，$\mathcal{R}(\cdot)$ 是正则化器。 请注意，此公式包括了去噪和分类场景：在 $r = 1$ 的分类设置中，可以将全局平均池化吸收到凸损失 $\mathcal{L}$ 中，而如果 $r = s$，可以直接使用平方损失或其他凸损失函数，也可以使用这个公式来应用于监督学习和自监督学习。</p>
+<p>在本文中，我们将 $(\cdot)_+ := \max \{0, \cdot\}$ 表示为 非线性的ReLU。 我们使用上标，比如 $\mathbf{A}^{(i_i, i_2)}$ 来表示矩阵块，用方括号，比如 $\mathbf{A}[i_1, i_2]$ 来表示矩阵的元素，其中参数指的是行（或行块）$i_1$ 和列（或列块）$i_2$。</p>
+<h3 id="2-1-线性和-ReLU-MLPs-的隐式凸性"><a href="#2-1-线性和-ReLU-MLPs-的隐式凸性" class="headerlink" title="2.1 线性和 ReLU MLPs 的隐式凸性"></a>2.1 线性和 ReLU MLPs 的隐式凸性</h3><p>之前，已经证明标准的两层 ReLU MLP 等价于凸优化问题，简要描述相关背景，为本文中的大部分分析提供背景。 特别是，我们表示一个网络的隐藏层中有 $m$ 个神经元，权重衰减参数 $\beta &gt;0$ 和数据 $\mathbf{X} \in \mathbb{R} ^{n \times d}$, $\mathbf{Y} \in \mathbb{R}^{n \times c}$ 为:</p>
+<script type="math/tex; mode=display">
+p^\ast_{RMLP}:=\min_{\mathbf{w}_{2j},\mathbf{w}_{2j}}\mathcal{L}\bigg ( \sum\limits^m_{j=1}(\mathbf{X}\mathbf{w}_{1j})_+\mathbf{w}^\top_{2j},\mathbf{Y} \bigg )+\frac{\beta}{2}\sum\limits^m_{j=1}(\|\mathbf{w}_{1j}\|^2_2+\|\mathbf{w}_{2j}\|^2_2) 
+\tag{2}</script><p>虽然这个问题如上所述是非凸的，但已经证明目标等同于等价凸优化问题的解决方案，并且两个问题的解决方案之间存在一对一的映射。 特别是，该分析利用了 <strong>hrperplane arrangements</strong>，枚举了 所有可能的非线性 ReLU 激活模式：</p>
+<script type="math/tex; mode=display">
+\mathcal{D}:=\{\mathrm{diag}(\mathbb{1}\{\mathbf{Xu}\geq 0\}):\mathbf{u}\in\mathcal{R}^d \} 
+\tag{3}</script><p>集合 $\mathcal{D}$ 显然是有限的，其基函数的界为 $P := |\mathcal{D}| \leq 2r\left(\frac{e(n-1)}{r}\right)^r$，其中 $r := \mathrm{rank}(\mathbf{X})$。 通过凸对偶分析，我们可以通过枚举有限排列集 $\{\mathbf{D}_j\}_{j=1}^P$ 来表示一个等价的凸优化问题。 我们定义以下范数：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+&\| \mathbf{Z} \|_{*,K}  :=\min_{t\geq 0}t\quad s.t.\mathbf{Z}\in t\mathcal{C} \\
+&\mathcal{C} :=conv\{\mathbf{Z}=uv^\top\; : \; \mathbf{K}u\geq 0,\|\mathbf{Z}\|_\ast\leq 1,v\in\mathbb{R}^c \}
+\end{align*}
+\tag{4}</script><p>这个范数是一个准核范数，它与标准核范数的不同之处在于它所依赖的因式分解对其左因子施加了约束，在我们的例子中这将是一个仿射约束。 在凸 ReLU 神经网络中，选择 $\mathrm{K}$ 来强制存在 $\{\mathbf{u}_k, \mathbf{v}_k\}$ 这样 $\mathbf{Z} = \sum_k \mathbf{u}_k \mathbf{v}_k^\top$ 和 $\mathbf{D}_{j}\mathbf{X}\mathbf{Z} = \sum_k (\mathbf{X}\mathbf{u}_k)_+\mathbf{v}_k^\top$, 并惩罚 $\sum_k |\mathbf{u}_k|_2 |\mathbf{v}_k|_2$。</p>
+<p>有了这个成立，可以证明</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+p^\ast_{RMLP}:=\min_{\{\mathbf{z}_j\}^P_{j=1}}\mathcal{L}( \sum\limits^P_{j=1}(\mathbf{D}_j\mathbf{X}\mathbf{Z}_j,\mathbf{Y})+\beta\sum\limits^P_{j=1}\|\mathbf{Z}_j\|_{*,\mathbf{K}_j} \\
+\mathbf{K}_j:=(2\mathbf{D}_j-\mathbf{I})\mathbf{X}
+\end{align*}
+\tag{5}\label{eq5}</script><p>双层 ReLU MLP 优化问题因此表示为具有核范数正则化约束的分片线性模型，这与双层线性激活 MLP 形成对比，后者的凸等价式为：</p>
+<script type="math/tex; mode=display">
+p^\ast_{RMLP}=\min_{\mathbf{z}}\mathcal{L}(\mathbf{X}\mathbf{Z},\mathbf{Y})+\beta\|\mathbf{Z}\|_\ast 
+\tag{6}\label{eq6}</script><p>众所周知，这种核范数惩罚会诱导出低秩解决方案并出现在矩阵分解问题中。 还可以定义 gated ReLU 激活，其中 ReLU 门固定为 $\{\mathbf{h}_j\}_{j=1}^m$，</p>
+<script type="math/tex; mode=display">
+g(\mathbf{X}\mathbf{w}_{1j}):=\mathrm{diag}(1\{\mathbf{X}\mathbf{h}_j\geq 0\})(\mathbf{X}\mathbf{w}_{1j}) 
+\tag{7}</script><p>然后，定义 $\{\mathbf{D}_j\}_{j=1}^m := \{\mathrm{diag}(1\{\mathbf{X}\mathbf{h}_j \geq 0\} )\}_{j=1}^m$, 相应的凸门控 ReLU 激活双层网络目标直接从 ReLU 和线性情况下得出，由下式给出</p>
+<script type="math/tex; mode=display">
+p^\ast_{RMLP}=\min_{\mathbf{z}^m_{j=1}}\mathcal{L}\bigg (\sum\limits^m_{j=1}\mathbf{D}_j\mathbf{X}\mathbf{Z}_j,\mathbf{Y}\bigg )+\beta\sum\limits^m_{j=1}\|\mathbf{Z}_j\|_\ast 
+\tag{8}</script><p>我们注意到，对于线性和门控 ReLU 公式，凸权重的正则化成为了标准核范数，因为不再需要强制 ReLU 约束。已经证明，门控 ReLU 和 ReLU 网络之间存在小的近似差距，并且 ReLU 网络可以从门控 ReLU 问题的解决方案中形成。</p>
+<p>在解决这些问题的有效算法方面，使用应用于凸线性和门控 ReLU 的加速近端梯度下降算法，可以在 $\mathcal{O}(1 /\sqrt{\epsilon})$ 迭代下获得 $\epsilon$ 的精度。对于凸 ReLU 公式，sahiner2020mathbftor 提出了适用于这种情况的凸 MLP 的 Frank-Wolfe 算法，对于 $\epsilon$ 精度，在一般情况下需要 $\mathcal{O}(1/\epsilon)$ 迭代。</p>
+<p>在后续部分中，我们将通过类似的凸对偶技术演示具有线性和 ReLU 激活的常见视觉Transformer块如何与等效凸优化问题相关联。</p>
+<h2 id="3，自注意力的隐式凸性"><a href="#3，自注意力的隐式凸性" class="headerlink" title="3，自注意力的隐式凸性"></a>3，自注意力的隐式凸性</h2><p>规范的 Vision Transformer (ViT) 使用自注意力和 MLP 作为其主干，特别是，自注意力网络的单个“头”由以下给出：</p>
+<script type="math/tex; mode=display">
+f_j(\mathbf{X}_i):=\sigma\bigg(\frac{\mathbf{X}_i\mathbf{Q}_j\mathbf{K}^\top_j\mathbf{X}^\top_i}{\sqrt{d}}\bigg)\mathbf{X}_i\mathbf{V}_j 
+\tag{9}</script><p>其中 $\mathbf{Q}, \mathbf{K}, \mathbf{V}$ 都是可学习的参数，$\sigma(\cdot)$ 通常（但不总是）表示非线性的 softmax。 在实践中，人们通常使用 $m$ 个注意力“头”，它们沿着特征维度连接在一起，然后是一个“通道混合”层，或者一个分类头：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+f_{MHSA}(\mathbf{X}_i)& := [f_1(\mathbf{X}_i)\cdots f_m(\mathbf{X}_i)]\mathbf{W} \\
+&=\sum\limits^m_{j=1}\sigma\bigg (\frac{\mathbf{X}_i\mathbf{Q}_j\mathbf{K}^\top_j\mathbf{X}^\top_i}{\sqrt{d}}\bigg) \mathbf{X}_i\mathbf{V}_j\mathbf{W}_j 
+\end{align*}
+\tag{10}</script><p>为了我们的分析，注意到 $\mathbf{Q}_j \mathbf{K}_j^\top$ 和 $\mathbf{V}_j\mathbf{W}_j$ 都可以表示为单个线性层，我们将多头自注意力网络建模为</p>
+<script type="math/tex; mode=display">
+f_{SA}(\mathbf{X}_i):=\sum\limits^m_{j=1}\sigma\bigg (\frac{\mathbf{X}_i\mathbf{W}_{1j}\mathbf{X}^\top_i}{\sqrt{d}}\bigg) \mathbf{X}_i\mathbf{W}_{2j} 
+\tag{11}</script><p>然后我们定义多头自注意力训练问题如下所示：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+p^\ast_{SA}:=&\min_{\mathbf{W}_{1j},\mathbf{W}_{2j}}\sum\limits^n_{i=1}\mathcal{L}(f_{SA}(\mathbf{X}_i),\mathbf{Y}_i)\\
+&+\frac{\beta}{2}\sum\limits^m_{j=1}\|\mathbf{W}_{1j}\|^2_F+\|\mathbf{W}_{2j}\|^2_F 
+\end{align*}
+\tag{12}\label{eq12}</script><p>因此在公式中使用了通用的凸损失函数和标准权重衰减。 虽然当 $\sigma(\cdot)$ 表示 softmax 激活时直接凸分析是棘手的，但我们可以针对许多其他激活函数分析这种架构。 特别是，已经提出了具有线性和 ReLU 激活函数的自注意力，其性能与标准 softmax 激活网络相当。因此，我们将分析带线性、ReLU 和门控 ReLU 激活变体的多头自注意力模型。</p>
+<p><strong>定理3.1</strong><br>对于带线性激活函数的多头自注意力网络的训练问题\eqref{eq12}，对于 $m \geq m^\ast$，其中 $m^\ast \leq \min\{d^2, dc\}$, 标准的非凸训练目标相当于一个凸优化问题，由下式给出</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+p^\ast_{SA}:=&\min_{\mathbf{Z}\in\mathbb{R}^{d^2\times dc}}\sum\limits^n_{i=1}\mathcal{L}\bigg(\sum\limits^d_{k=1}\sum\limits^d_{\ell =1}\mathbf{G}_i[k,\ell ]\mathbf{X}_i\mathbf{Z}^{(k,\ell)},\mathbf{Y}_i \bigg)\\
+&+\beta\|\mathbf{Z}\|_\ast
+\end{align*}
+\tag{13}\label{eq13}</script><p>其中，$\mathbf{G}_i:=\mathbf{X}^\top_i\mathbf{X}_i$，且 $\mathbf{Z}^{(k,\ell )}\in\mathbb{R}^{d\times c}$。</p>
+<p>结果表明，线性激活自注意力模型由 Gram（特征相关）矩阵加权线性模型组成，核范数惩罚项将各个模型彼此组合。</p>
+<p>还可以将凸模型视为一组具有加权核范数的线性模型，其中每个块 $\mathbf{Z}^{(k, \ell)}$ 具有相应的权重 $1/\mathbf{G}_i[k, \ell]$。因此，具有高相关性的特征将具有相应的较大范数的线性权重。我们注意到，当 $\beta = 0$ 时，线性自注意力模型 \eqref{eq13} 等价于线性两层 MLP \eqref{eq6}。</p>
+<p>虽然通常 $\mathbf{Z}$ 上的核范数惩罚项在每个单独的线性模型 $\mathbf{Z}^{(k, \ell)}$ 上没有相应的范数，但以下结果总结了一个实例，核规范可以分解成更小的块。</p>
+<p><strong>推论3.2</strong><br>假设 $\mathbf{X}_i$ 的某些特征与所有 $i$ 完全不相关，即 $\mathbf{G}_i$ 是对于所有 $i$ 的块对角线块 $\{\mathbf{ G}_i^{(b)} \in \mathbb{R}^{d_b \times d_b}\}_{b=1}^B$。 然后，凸问题 \eqref{eq13} 简化为以下凸问题：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+p^\ast_{SA}:=&\min_{\mathbf{Z}^{(b)}}\sum\limits^n_{i=1}\mathcal{L}\bigg(\sum\limits^B_{b=1}\sum\limits^{d_b}_{k=1}\sum\limits^{d_B}_{\ell =1}\mathbf{G}_i^{(b)}[k,\ell ]\mathbf{X}_i\mathbf{Z}^{(b,k,\ell)},\mathbf{Y}_i \bigg)\\
+&+\beta\|\mathbf{Z}^{(b)}\|_\ast,\mathbf{Z}^{(b)}\in\mathbb{R}^{d_bd\times d_bc}
+\end{align*}
+\tag{14}\label{eq14}</script><p>因此，这个推论表明，在不相关特征集的假设下，线性自注意力块在这些集上分离。 特别是，对应于 Gram 矩阵 $\mathbf{G}_i$ 中 $0$ 值的 $\mathbf{Z}$ 块将被设置为 $0$，从而消除不相关特征之间的相互作用。 这种现象如图1所示。</p>
+<p>虽然这个线性模型为自注意力的基础提供了一个简单、优雅的解释，但我们也可以分析具有非线性的自注意力块。 因此，我们提供了 ReLU 激活自注意力的分析。</p>
+<p><strong>定理3.3</strong><br>对于 ReLU 激活多头自注意力训练问题 \eqref{eq12}，我们定义：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\mathbf{X}& :=
+\begin{bmatrix}
+\mathbf{X}_1\otimes\mathbf{X}_1\\
+\cdots \\
+\mathbf{X}_n\otimes\mathbf{X}_n
+\end{bmatrix}\\
+\{\mathbf{D_j}\}^P_{j=1}& :=\{\mathrm{diag} (1\{ \mathbf{X}\mathbf{u}_j\geq 0\}):\mathbf{u}_j\in\mathbb{R}^{d^2} \}
+\end{align*}</script><p>其中 $P \leq 2r\left(\frac{e(n-1)}{r}\right)^r$ 和 $r := \mathrm{rank}(\mathbf{X})$。</p>
+<p>那么，对于 $m \geq m^\ast$，且 $m^\ast \leq n\min\{d^2, dc\}$，标准的非凸训练等价于以下凸优化问题：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+p^\ast_{SA}:=&\min_{\mathbf{Z}_j\in\mathbb{R}^{d^2\times dc}}\sum\limits^n_{i=1}\mathcal{L}\bigg(\sum\limits^P_{j=1}\sum\limits^d_{k=1}\sum\limits^d_{\ell =1}\mathbf{G}_{i,j}^{(k,\ell )}\mathbf{X}_i\mathbf{Z}_j^{(k,\ell)},\mathbf{Y}_i \bigg)\\
+&+\beta\|\mathbf{Z}_j\|_{\ast,K_j},\mathbf{K}_j:=(2\mathbf{D}_j-\mathbf{I}_{ns^2})\mathbf{X}
+\end{align*}
+\tag{15}\label{eq15}</script><p>其中 $\mathbf{G}_{i,j} := (\mathbf{X}_i \otimes \mathbf{I}_{s})^\top \mathbf{D}_{j}^{( i)} (\mathbf{X}_i \otimes \mathbf{I}_{s})$, $\mathbf{G}_{i,j}^{(k, \ell)} \in \mathbb{R}^{s \times s}$ 和 $\mathbf{Z}_j^{(k, \ell)} \in \mathbb{R}^{d \times c}$。</p>
+<p>有趣的是，虽然标准 ReLU MLP 的超平面排列仅取决于数据矩阵 $\mathbf{X}$，但对于自注意力网络，它们更复杂，而不是取决于 $\mathbf{X}_i \otimes \mathbf{X}_i$。这些超平面排列定义了约束核范数惩罚项的约束。人们可能会将 ReLU 激活自注意力模型视为两个模型的融合—，一种使用 $\mathbf{X}_i \otimes \mathbf{X}_i$ 生成超平面排列，另一种将 $\mathbf{X}_i$ 用于线性预测。因此，与线性自注意力情况不同，即使在 $\beta = 0$ 的情况下，ReLU 自注意力网络 \eqref{eq15} 也不等同于 ReLU MLP 模型 \eqref{eq5}。</p>
+<p>此外，在 \eqref{eq13} 中的线性激活情况下，每个线性模型由 $\mathbf{G}_i$ 中的单项进行缩放，而在 ReLU 情况下，每个线性模型由对角矩阵 $\mathbf{G}_{i,j}^{(k, \ell)}$ 进行缩放，将来自 $\mathbf{X}_i$ 的二阶信息与由 ReLU 激活函数诱导的超平面排列联合起来。例如，人们可能会注意到区别项：</p>
+<script type="math/tex; mode=display">\mathbf{G}^{(k,\ell )}_{i,j}=\sum\limits^s_{t=1}\mathbf{X}_i[t,k]\mathbf{X}_i[t,\ell ]\mathbf{D}^{(i,t)}_j \tag{16}</script><p>是对于对角线 $\mathbf{D}_{j}^{(i, t)} \in \{0, 1\}^{s \times s}$ 而言。 因此，$\mathbf{G}_{i,j}^{(k, \ell)}$ 可以看作是特征 $k$ 和 $\ell$ 之间的相关性，由对角线 $\{0, 1\}$ 进行加权。换句话说，一种“局部”相关性，其中局部性是通过 $\mathbf{D}_{j}^{(i, t)}$ 中的 $\{0, 1\}$ 值来体现。这种局部相关性对预测的每个token进行缩放，本质上是为未被 $\mathbf{D}_{j}^{(i, t)}$ 掩盖的token赋予权重。</p>
+<h2 id="4，替换混合机制"><a href="#4，替换混合机制" class="headerlink" title="4，替换混合机制"></a>4，替换混合机制</h2><p>虽然自注意力是最初提出的用于视觉Transformer的token混合器，但还有许多其他替代方法已显示出产生类似结果，同时计算效率更高，我们在这里处理两个这样的架构。</p>
+<h3 id="4-1-MLP-Mixer"><a href="#4-1-MLP-Mixer" class="headerlink" title="4.1 MLP Mixer"></a>4.1 MLP Mixer</h3><p>我们首先分析 MLP-Mixer 架构，这是一种替代自注意力网络的全 MLP 结构，在图像分类基准上具有竞争性能。 该提案很简单，—沿输入的一个维度应用 MLP，然后沿相反维度应用 MLP。 因此，这种 MLP-Mixer 架构的最简单形式可以写成：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+p^\ast_{MM}&:=\min_{\mathbf{W}_{1j},\mathbf{W}_{2j}}\sum\limits^n_{i=1}\mathcal{L}(\sum\limits^m_{j=1}\sigma(\mathbf{W}_{1j}\mathbf{X}_i)\mathbf{W}_{2j},\mathbf{Y}_i)\\
+&+\frac{\beta}{2}\sum\limits^m_{j=1}\|\mathbf{W}_{1j}\|^2_F+\|\mathbf{W}_{2j}\|^2_F
+\end{align*}
+\tag{17}\label{eq17}</script><p>其中 $\sigma$ 是激活函数。 虽然 tolstikhin2021mlp 使用 GeLU 的非线性，但我们分析了更简单的线性和 ReLU 对应激活函数，这对 MLP-Mixer 架构的底层结构提供了重要的见解。</p>
+<p><strong>定理4.1</strong><br>对于线性激活MLP-Mixer的训练问题\eqref{eq17}，对于 $m \geq m^\ast$，其中 $m^\ast \leq \min\{s^2, dc\}$， 标准的非凸训练目标相当于一个下式的凸优化问题：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+p^\ast_{MM}&:=\min_{\mathbf{Z}\in\mathbb{R}^{s^2\times dc}}\sum\limits^n_{i=1}\mathcal{L}([f_1(\mathbf{X}_i)\cdots f_c(\mathbf{X}_i)],\mathbf{Y}_i)\\
+&+\beta\|\mathbf{Z}\|_\ast,f_p(\mathbf{X}_i):=\mathbf{Z}^{(p)}\text{vec}(\mathbf{X}_i)
+\end{align*}
+\tag{18}</script><p>其中 $\mathbf{Z}^{(p)} \in \mathbb{R}^{s \times sd}$ 对于 $p \in [c]$, 和 $\mathbf{Z} ^{(p, t)} \in \mathbb{R}^{s \times d}$ 对于 $t \in [s]$，以及</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\mathbf{Z}^{(p)}=[\mathbf{Z}^{(p,1)}\cdots \mathbf{Z}^{(p,s)}]\\
+\mathbf{Z}=
+\begin{bmatrix}
+\mathbf{Z}^{(1,1)}\cdots \mathbf{Z}^{(c,1)}\\
+\cdots \\
+\mathbf{Z}^{(1,s)}\cdots \mathbf{Z}^{(c,s)}
+\end{bmatrix}
+\end{align*}</script><p>我们可以将线性 MLP-Mixer 的拟合项与标准线性 MLP \eqref{eq6} 进行对比，其中网络输出的每一列 $k$ 为：</p>
+<script type="math/tex; mode=display">
+\mathbf{X}_i\mathbf{Z}^{(k)} = ({\mathbf{Z}^{(k)}}^\top \otimes \mathbf{I}_s)\text{vec}(\mathbf{X}_i)</script><p>其中 $\mathbf {Z}^{(k)} \in \mathbb{R}^d$。因此，与标准线性 MLP 相比，MLP-Mixer 为网络提供了 $s^2$ 量级多的自由度来拟合 $\mathbf{Y}_i$ 的每一列。这表明，与线性自注意力网络不同，即使 $\beta = 0$，线性 MLP-Mixer 模型也不等同于线性标准 MLP。人们可能会推测，与标准 MLP 相比，这种额外的隐式自由度允许类似 MLP 模型混合器更容易地适应复杂的分布。虽然从拟合项看来 $\mathbf{Y}_i$ 的每个输出类都是独立拟合的，但我们注意到这些输出通过 $\mathbf{Z}$ 上的核范数耦合在一起，这鼓励 $\{ \mathbf{Z}^{(k)}\}_{k=1}^c$ 彼此相似。</p>
+<p>凸线性 MLP-Mixer 架构的另一种解释可以通过简单地将 $\mathbf{Z}$ 的列置换为 $\tilde{\mathbf{Z}}$ 来实现，这不会影响核范数，因此不会影响最优解。如果根据块 $\tilde{\mathbf{Z}}^{(t, k)} \in \mathbb{R}^{ s \times c},(t \in [s],k \in [d])$上 $\tilde{\mathbf{Z}}$ 的按列划分，凸优化问题也可以写成： </p>
+<script type="math/tex; mode=display">
+p^\ast_{MM}=\min_{\tilde{\mathbf{Z}}}\sum\limits^n_{i=1}\mathcal{L}\bigg (\sum\limits^s_{t=1}\sum\limits^d_{k=1}\mathbf{X}_i[t,k]\tilde{\mathbf{Z}}^{(t,k)},\mathbf{Y}_i  \bigg)+\beta\|\tilde{Z} \|_\ast 
+\tag{19}\label{eq19}</script><p>在这里，与线性自注意力网络 \eqref{eq13} 的连接变得更加清晰，\eqref{eq13} 是线性模型的加权求和，其中权重对应于 Gram 矩阵项，而 \eqref{eq19} 是预测的加权求和，其中权重对应于数据矩阵项。 我们还注意到，在大多数网络中，通常 $s &lt; d$，因此与自注意力块相比，MLP-Mixer 块的求解复杂度较低，我们还可以将这些结果扩展到 ReLU 激活的 MLP-Mixers。</p>
+<p><strong>定理4.2</strong><br>对于 ReLU 激活的 MLP-Mixer 训练问题 \eqref{eq17}，我们定义：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\mathbf{X}& :=
+\begin{bmatrix}
+\mathbf{X}^\top_1\otimes\mathbf{I}_s\\
+\mathbf{X}^\top_n\otimes\mathbf{I}_s
+\end{bmatrix}\\
+\{\mathbf{D}_j\}^P_{j=1}& :=\{\mathrm{diag}(1\{\mathbf{X}\mathbf{u}_j\geq 0 \}):\mathbf{u}_j\in\mathbb{R}^{s^2} \}
+\end{align*}</script><p>其中 $P \leq 2r\left(\frac{e(n-1)}{r}\right)^r$ 和 $ r := \mathrm{rank}(\mathbf{X})$。然后，对于 $m \geq m^\ast$，其中 $m^\ast \leq n\min\{s^2, dc\}$，标准的非凸训练目标等价于以下凸优化问题：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+  p^\ast_{MM}& =\min_{\mathbf{Z}_j\in\mathbb{R}^{s^2\times dc}}\sum\limits^n_{i=1}\mathcal{L}([f_1(\mathbf{X}_i)\cdots f_c(\mathbf{X}_i)],\mathbf{Y}_i)\\
+  & + \beta\sum\limits^P_{j=1}\|\mathbf{Z}_j\|_{\ast,K_j},\mathbf{K}_j:=(2\mathbf{D}_j-\mathbf{I}_{nd})\mathbf{X}
+\end{align*}
+\tag{20}\label{eq20}</script><p>其中，</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+    f_p(\mathbf{X_i}) &:= \sum_{j=1}^P \begin{bmatrix}  \mathbf{D}_{j}^{(i, 1)}\mathbf{Z}_j^{(p, 1)} \cdots   \mathbf{D}_{j}^{(i, d)}\mathbf{Z}_j^{(p, d)}\end{bmatrix}  \mathrm{vec}(\mathbf{X}_i)
+\end{align*}</script><p>对于 $\mathbf{D}_{j}^{(i,k)} \in \mathbb{R}^{s \times s}$ 和 $\mathbf{Z}_j^{(p, k)} \in \mathbb{R}^{s \times s}$。</p>
+<p>现在，与自注意力模型不同，超平面排列的有效数据矩阵是 $\mathbf{X}_i \otimes \mathbf{X}_i$，MLP-mixer 的排列使用 $\mathbf{X}_i^\top \otimes \mathbf{I}_s$，为分区数据提供额外的自由度，同时仍仅包含有关数据的一阶信息。 使用与 \eqref{eq19} 中相同的列置换技巧，可以将 \eqref{eq20} 写为</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+  p^\ast_{MM}& =\min_{\mathbf{\tilde{Z}}_j}\sum\limits^n_{i=1}\mathcal{L}\bigg (\sum\limits^P_{j=1}\sum\limits^s_{t=1}\sum\limits^d_{k=1}\mathbf{X}_i[t,k]\mathbf{D}_j^{(i,k)}\tilde{\mathbf{Z}}_j^{(t,k)},\mathbf{Y}_i\bigg )\\
+  & + \beta\sum\limits^P_{j=1}\|\tilde{\mathbf{Z}}_j\|_{\ast,K_j}
+\end{align*}
+\tag{21}</script><p>现在我们再次清楚地看到与\eqref{eq15} ReLU 自注意力的差异，对角线排列由 $\mathbf{X}_i$ 而不是 Gram 矩阵加权， $\tilde{\mathbf{ Z}}_j^{(t, k)}$ 只是简单的预测，而不是线性模型的权重。</p>
+<h3 id="4-2-Fourier神经算子"><a href="#4-2-Fourier神经算子" class="headerlink" title="4.2 Fourier神经算子"></a>4.2 Fourier神经算子</h3><p>与自注意力或类似 MLP 的注意力机制相比，还有一系列基于傅立叶的自注意力替代方案，最近在视觉任务中显示出前景。 我们介绍傅里叶神经算子 (FNO) ，其工作方式如下：</p>
+<ul>
+<li>i. 二维 DFT 首先应用于空间token； </li>
+<li>ii. 每个token乘以自己的权重矩阵； </li>
+<li>iii. 逆 DFT 将傅立叶token返回到原始（空间）域。</li>
+</ul>
+<p>以紧凑矩阵形式表示 FNO，请注意除了标准 MLP 权重 $\mathbf{W}_1 \in \mathbb{R}^{d \times m},\, \mathbf{W}_2 \in \mathbb{R}^{m \times c}$，FNO 块具有第三组权重 $\mathbf{L} \in \mathbb{R}^{s \times d \times d}$。 让我们定义傅里叶变换 $\mathbf{F} := \mathbf{F}_h \otimes \mathbf{F}_w$，它是 $h \times w$ 二维傅里叶变换的矢量化版本。 在傅立叶空间中将权重 $\mathbf{L}$ 写成为 $\mathbf{V}$ 更方便，其中二维傅立叶变换已应用于第一维，即 $\mathbf{V}[ :,i,j]$ 对应每个 $i,j$。</p>
+<p>现在，定义 $\mathbf{V}^{(j)}=\mathbf{V}[j,:,:]$。 然后将 $\mathbf{F}\mathbf{X}_i$ 的每一行乘以 $d \times d$ 权重矩阵 $\mathbf{V}^{(j)}$，并转换回图像域如下：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+f_{FN}(\mathbf{X}_i):=\sigma\bigg ( \bigg ( \mathbf{F}^{-1}
+    \begin{bmatrix}
+        (\mathbf{F}\mathbf{X}_i)_1^\top\mathbf{V}^{(1)}\\
+        \cdots \\
+        (\mathbf{F}\mathbf{X}_i)_s^\top\mathbf{V}^{(s)}
+    \end{bmatrix}
+\bigg )\mathbf{W}_1\bigg )\mathbf{W}_2  
+\end{align*}
+\tag{22}\label{eq22}</script><p>这种表示可以大大简化。</p>
+<p><strong>引理4.3</strong><br>对于权重 $\mathbf{W}_1 \in \mathbb{R}^{sd \times m}$, $\mathbf{W}_2 \in \mathbb{R}^{m \times c}$, FNO 块 \eqref{eq22} 可以等效地表示为</p>
+<script type="math/tex; mode=display">
+f_{FN}(\mathbf{X}_i)=\sum\limits^m_{j=1}\sigma(\mathrm{circ}(\mathbf{X}_i)\mathbf{w}_{1j})\mathbf{w}_{2j}^\top 
+\tag{23}</script><p>其中 $\mathrm{circ}(\mathbf{X}_i) \in \mathbb{R}^{s \times sd}$ 表示由 $\mathbf {X}_i$ 沿着它的第一个维度的所有圆组成的矩阵。</p>
+<p>因此，我们可以将 FNO 训练目标写为：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+p^\ast_{FN}:=& \min_{\mathbf{w}_{1j},\mathbf{w}_{2j}}\sum\limits^n_{i=1}\mathcal{L}(f_{FN}(\mathbf{X}_i),\mathbf{Y}_i)\\
+&+\frac{\beta}{2}\sum\limits^m_{j=1}\|\mathbf{w}_{1j}\|^2_2+\|\mathbf{w}_{2j}\|^2_2
+\end{align*}
+\tag{24}\label{eq24}</script><p>我们注意到 FNO 实际上非常类似于双层 CNN，其中第一层由具有完整循环填充的卷积层和全局卷积核组成。 与典型的卷积核通常很小并且卷积是局部的 CNN 不同，这里的卷积要大得多，这意味着参数比典型的 CNN 多得多。 之前已经通过凸对偶分析了类似的 CNN 架构。 因此，对于线性和 ReLU 激活，\eqref{eq24} 等价于凸优化问题。</p>
+<p><strong>定理4.4</strong><br>对于线性激活FNO训练问题\eqref{eq24}，对于 $m \geq m^\ast$，其中 $m^\ast \leq \min\{sd, c\}$，标准非凸训练问题相当于一个凸优化问题，由下式给出：</p>
+<script type="math/tex; mode=display">
+p^\ast_{FN}=\min_{\mathbf{Z}\in\mathbb{R}^{sd\times c}}\sum\limits^n_{i=1}\mathcal{L}(\mathrm{circ}(\mathbf{X}_i)\mathbf{Z},\mathbf{Y}_i)+\beta\|\mathbf{Z}\|_\ast 
+\tag{25}</script><p><strong>定理4.5</strong><br>对于 ReLU 激活的 FNO 训练问题 \eqref{eq24}，我们定义：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+    \mathbf{X}&:=
+    \begin{bmatrix}
+        \mathrm{circ}(\mathbf{X}_1)\\
+        \cdots \\
+        \mathrm{circ}(\mathbf{X}_n)
+    \end{bmatrix}\\
+    \{\mathrm{D}_j \}^P_{j=1}&:=\{\mathrm{diag}(1\{\mathrm{X}\mathrm{u}_j\geq 0 \}):\mathrm{u}_j\in\mathbb{R}^{sd} \}
+\end{align*}</script><p>其中 $P \leq 2r\left(\frac{e(n-1)}{r}\right)^r$ 和 $r := \mathrm{rank}(\mathbf{X})$。 然后，对于 $m \geq m^\ast$，其中 $m^\ast \leq n\min\{sd, c\}$，标准非凸训练问题等价于凸优化问题，由下式给定：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+    p^\ast_{FN}=\min_{\mathbf{Z}_j\in\mathbb{R}^{sd\times c}}\sum\limits^n_{i=1}\mathcal{L}\bigg(\sum\limits^P_{j=1}\mathbf{D}_j^{(i)}\mathrm{circ}(\mathbf{X}_i)\mathbf{Z}_j,\mathbf{Y}_i)+\\
+    \beta\sum\limits^P_{j=1}\|\mathbf{Z}_j\|_{\ast,K_j},\mathbf{K}_j:=(2\mathbf{D}_j-\mathbf{I}_{ns})\mathbf{X} 
+\end{align*}
+\tag{26}</script><h4 id="4-2-1-块对角FNO"><a href="#4-2-1-块对角FNO" class="headerlink" title="4.2.1 块对角FNO"></a>4.2.1 块对角FNO</h4><p>虽然 FNO 公式非常优雅，但它需要许多参数（每个token的 $d^2$ 个）。 因此，对自适应傅里叶神经算子 (AFNO) 的形式提出了修改。 一个重要的修改涉及强制token权重服从块对角线结构，与标准 FNO 相比，这显着提高了 AFNO 的训练和泛化能力，我们称这种架构为 B-FNO，归结为：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+    f_{BFN}(\mathbf{X}_i)&:=\sigma\bigg (\mathbf{F}^{-1}
+    \begin{bmatrix}
+        (\mathbf{F}\mathbf{X}_i)^\top_1\mathbf{V}^{(1)}\\
+        \cdots \\
+        (\mathbf{F}\mathbf{X}_i)^\top_s\mathbf{V}^{(s)}
+    \end{bmatrix}
+    \bigg)\mathbf{W}_2\\
+    \mathbf{L}^{(l)}&:=
+    \begin{bmatrix}
+        \mathbf{L}^{(l,1)} & &\\
+        &\ddots \\
+        &&\mathbf{L}^{(l,B)}
+    \end{bmatrix}
+    \in\mathbb{R}^{d\times m},l\in[s]\\
+    \mathbf{W}_2&:=
+    \begin{bmatrix}
+        \mathbf{W}_2^{(1)}\\
+        &\ddots \\
+        && \mathbf{W}^B_2
+    \end{bmatrix}\in\mathbb{R}^{m\times c}
+\end{align*}
+\tag{27}\label{eq27}</script><p><strong>引理4.6</strong><br>对于权重 $\mathbf{W}_{1b} \in \mathbb{R}^{sd/B \times m/B}$ 和 $\mathbf{W}_{2b} \in \mathbb{R}^{m/B \times c/B}$，假设 $\sigma$ 按元素操作，B-FNO 模型 \eqref{eq27} 可以等效地表示为：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+    f_{BFN}(\mathbf{X}_i)&=[f^{(1)}_{BFN}(\mathbf{X}_i)\cdots f^{(B)}_{BFN}(\mathbf{X}_i)]\\
+    f_{BFN}^{(b)}&=\sum\limits^m_{j=1}\sigma(\mathrm{circ}(\mathbf{X}_i^{(b)})\mathbf{w}_{1bj})\mathbf{w}^\top_{2bj}
+\end{align*}
+\tag{28}</script><p>其中 $\mathrm{circ}(\mathbf{X}_i^{(b)}) \in \mathbb{R}^{s \times sd/B}$ 是由所有 $s$ 来沿 $\mathbf{X}_i^{(b)} \in \mathbb{R}^{s \times d/B}$ 第一维的循环位移。</p>
+<p>有趣的是，AFNO 的块对角线权重将 CNN 中的局部卷积与 全局，分组卷积( $B$ 组)进行对比。 我们因此定义：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+    p^\ast_{BFN}&:=\min_{\mathbf{W}_{1bj},\mathbf{W}_{2bj}}\sum\limits^n_{i=1}\mathcal{L}(f_{BFN}(\mathbf{X}_i),\mathbf{Y}_i)\\
+    &+\frac{\beta}{2}\sum\limits^B_{b=1}\sum\limits^m_{j=1}\|\mathbf{w}_{1bj}\|^2_2+\|\mathbf{w}_{2bj}\|^2_2
+\end{align*}
+\tag{29}\label{eq29}</script><p><strong>定理4.7</strong><br>对于线性激活B-FNO训练问题\eqref{eq29}，对于 $m \geq m^\ast$ 和 $m^\ast \leq 1/B\min\{sd, c\}$，标准的非凸训练问题相当于一个凸优化问题，由下式给出：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+    p^\ast_{BFN}&=\min_{\mathbf{Z}_b}\sum\limits^n_{i=1}\mathcal{L}([f^{(1)}(\mathbf{X}_i)\cdots f^{(B)}(\mathbf{X}_i)],\mathbf{Y}_i)\\
+    &+\beta\sum\limits^B_{b=1}\|\mathbf{Z}\|_\ast \\
+    \mathbf{Z}_b & \in\mathbb{R}^{sd/B\times c/B},f^{(b)}:=\mathrm{circ}(\mathbf{X}_i^{(b)})\mathbf{Z}_b
+\end{align*}
+\tag{30}</script><p><strong>定理4.8</strong><br>前面给出了 ReLU 激活的 B-FNO 训练问题 \eqref{eq29}, 我们定义：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+    \mathbf{X}_b&:=
+    \begin{bmatrix}
+        \mathrm{circ}(\mathbf{X}_1^{(b)})\\
+        \cdots \\
+        \mathrm{circ}(\mathbf{X}_n^{(b)})
+    \end{bmatrix}\\
+    \{\mathbf{D}_{b,j} \}^{P_b}_{j=1}&:=\{\mathrm{diag}(1\{\mathbf{X}_b\mathbf{u}_j\geq 0 \}):\mathbf{u}_j\in\mathbb{R}^{sd/B} \}
+\end{align*}</script><p>其中 $P_b \leq 2r_b\left(\frac{e(n-1)}{r_b}\right)^{r_b}$ 和 $r_b := \mathrm{rank}(\mathbf{X}_b )$。 那么，对于 $m \geq m^\ast$ 和 $m^\ast \leq n/B\min\{sd, c\}$，标准的非凸训练问题等价于以下凸优化问题：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+    p^\ast_{BFN}&=\min_{\mathbf{Z}_{b,j}}\sum\limits^n_{i=1}\mathcal{L}([f^{(1)}(\mathbf{X}_i)\cdots f^{(B)}(\mathbf{X}_i)],\mathbf{Y}_i) \\
+    &+\beta\sum\limits^B_{b=1}\sum\limits^{P_b}_{j=1}\|\mathbf{Z}_{j,b}\|_{\ast,K_{b,j}}
+\end{align*}
+\tag{31}</script><p>其中，</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+    \mathbf{Z}_{b,j} &\in \mathbb{R}^{sd/B \times c/B}, \, f^{(b)}(\mathbf{X}_i) := \sum_{j=1}^{P_b} \mathbf{D}_{b,j}\mathrm{circ}(\mathbf{X}_i^{(b)})\mathbf{Z}_{b,j} \\
+    \mathbf{K}_{b,j} &:= (2\mathbf{D}_{b,j} - \mathbf{I}_{ns})\mathbf{X}_b.
+\end{align*}</script><h2 id="5，数值结果"><a href="#5，数值结果" class="headerlink" title="5，数值结果"></a>5，数值结果</h2><p>在本节中，我们试图将本文分析的Transformer头的性能与基线凸优化方法进行比较，这种比较使我们能够在一个实际例子中说明这些新颖的头脑所带来的隐性偏置。特别是，我们考虑了训练这些凸头的单个新块以执行图像分类任务。这本质上是无需微调骨干网络的迁移学习，这在边缘计算和内存受限设置中可能是必须的。对于 few-shot 微调 transformer 任务，非凸优化在不同的随机初始化下不稳定，此外，仅微调网络的最后一层是一种常见做法，它在伪相关基准测试中表现非常好。</p>
+<p>具体来说，我们试图对来自 CIFAR-100 数据集的图像进行分类，首先在 ImageNet-1k 数据集的 $224 \times 224$ 图像上使用 $16 \times 16$ 的块 ($ s=196$, $d=256$)。然后微调单凸头以对来自 CIFAR-100 的图像进行分类，同时保持预训练的骨干固定。</p>
+<p>对于主干 gMLP 架构，我们在使用凸头进行训练之前，将特征维度减少到 $d=100$，并使用平均池作为预处理步骤。同样，为了提高计算效率，我们训练标准 ReLU 架构的门控 ReLU 变体，因为这些门控 ReLU 激活网络是不受约束的。对于 BFNO，我们选择 $B=5$。所有头部都使用相同的维度 $(d=100, s=196, c=100)$，我们选择ReLU头部中的神经元数量为 $m=100$，自注意力网络我们选择 $m=5$ 使参数计数大致相等。作为我们的基线，我们比较了一个简单的线性模型（即逻辑回归）和 MLP 的凸等价物，如第2.1节中所讨论的。</p>
+<p>我们在表1中总结了结果，在这里，我们证明注意力变体优于标准凸 MLP 和线性基线。 这表明注意力结构的高阶信息和额外的自由度为困难的视觉任务提供了优势。 令人惊讶的是，对于自注意力、FNO 和 MLP-Mixer，线性和 ReLU 激活性能之间只有微小的差距，这表明这些架构的大部分优势在于它们的基本结构，而不是应用的非线性。 相反，对于 B-FNO，ReLU 和线性激活精度之间存在非常大的差距，这表明当应用组卷积时，这种非线性更为重要。 因此，这些凸化的架构为迁移学习的稳定和透明模型铺平了道路。</p>
+<h2 id="6，总结"><a href="#6，总结" class="headerlink" title="6，总结"></a>6，总结</h2><p>我们证明了自注意力块和常见替代方案（如 MLP-Mixer、FNO 和 B-FNO）等价于线性和 ReLU 激活函数下的凸优化问题，这些等效的凸公式隐含地聚类相关特征，并在确保全局表示的情况下，用块核范数正则化器作为惩罚项。 对于未来的工作，仍然需要利用这些独特的正则化器的结构来为这些网络设计高效的近似求解器，可能会找到更快的求解器，例如 FISTA 或相关算法。 从长期的实际采用来看，未来的理论工作还需要对实践中经常使用的更深层次的网络进行分析。 通过选定凸公式，可以将这项工作用于设计新的网络架构。</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>xinwen
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/03/22/Transformer/Unraveling%20Attention%20via%20Convex%20Duality-Analysis%20and%20Interpretations%20of%20Vision%20Transformers/" title="Transformer are Deep Infinite-Dimensional Non-Mercer Binary Kernel Machines">https://github.com/sophia-hxw/sophia-hxw.github.io/2023/03/22/Transformer/Unraveling Attention via Convex Duality-Analysis and Interpretations of Vision Transformers/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/non-mercer/" rel="tag"><i class="fa fa-tag"></i> non-mercer</a>
+              <a href="/tags/convex-duality/" rel="tag"><i class="fa fa-tag"></i> convex duality</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/03/22/Transformer/Transformer%20and%20Infinite-Dimensional%20Non-Mercer%20Binary%20Kernel%20Machines/" rel="prev" title="Transformer are Deep Infinite-Dimensional Non-Mercer Binary Kernel Machines">
+      <i class="fa fa-chevron-left"></i> Transformer are Deep Infinite-Dimensional Non-Mercer Binary Kernel Machines
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/03/23/CNN/activation%20functions/" rel="next" title="General activate functions">
+      General activate functions <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1%EF%BC%8C%E4%BB%8B%E7%BB%8D"><span class="nav-text">1，介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C"><span class="nav-text">1.1 相关工作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%EF%BC%8C%E9%A2%84%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-text">2，预备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E7%BA%BF%E6%80%A7%E5%92%8C-ReLU-MLPs-%E7%9A%84%E9%9A%90%E5%BC%8F%E5%87%B8%E6%80%A7"><span class="nav-text">2.1 线性和 ReLU MLPs 的隐式凸性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%EF%BC%8C%E8%87%AA%E6%B3%A8%E6%84%8F%E5%8A%9B%E7%9A%84%E9%9A%90%E5%BC%8F%E5%87%B8%E6%80%A7"><span class="nav-text">3，自注意力的隐式凸性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%EF%BC%8C%E6%9B%BF%E6%8D%A2%E6%B7%B7%E5%90%88%E6%9C%BA%E5%88%B6"><span class="nav-text">4，替换混合机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-MLP-Mixer"><span class="nav-text">4.1 MLP Mixer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-Fourier%E7%A5%9E%E7%BB%8F%E7%AE%97%E5%AD%90"><span class="nav-text">4.2 Fourier神经算子</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-1-%E5%9D%97%E5%AF%B9%E8%A7%92FNO"><span class="nav-text">4.2.1 块对角FNO</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5%EF%BC%8C%E6%95%B0%E5%80%BC%E7%BB%93%E6%9E%9C"><span class="nav-text">5，数值结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6%EF%BC%8C%E6%80%BB%E7%BB%93"><span class="nav-text">6，总结</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="xinwen"
+      src="/images/me.jpg">
+  <p class="site-author-name" itemprop="name">xinwen</p>
+  <div class="site-description" itemprop="description">想到哪儿记到哪儿的技术博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">74</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">70</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/sophia-hxw" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;sophia-hxw"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/sophia_xw" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;sophia_xw" rel="noopener" target="_blank"><i class="crosshairs fa-fw"></i>CSDN</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xinwen618@gmail.com" title="E-Mail → mailto:xinwen618@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2022 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xinwen</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">231k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:30</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+// 代码折叠
+<script src="/js/code-unfold.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'QS91rh0eXkhXnjzhcdHGIRzJ-gzGzoHsz',
+      appKey     : 'DD7UTgTkdGwFia0JrJRcs7fs',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

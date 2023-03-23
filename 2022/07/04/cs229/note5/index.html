@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"github.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="前言cs229讲义 斯坦福大学的CS229课程是学习机器学习的必备之课，之前是由吴恩达主讲的课程，后来由于不明原因课程被斯坦福大学下架。 note5的主要内容：模型选择，特征选择，贝叶斯估计 重新理解，加油~">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cs229之正则化与模型选择（note5）">
+<meta property="og:url" content="https://github.com/sophia-hxw/sophia-hxw.github.io/2022/07/04/cs229/note5/index.html">
+<meta property="og:site_name" content="橦言无忌">
+<meta property="og:description" content="前言cs229讲义 斯坦福大学的CS229课程是学习机器学习的必备之课，之前是由吴恩达主讲的课程，后来由于不明原因课程被斯坦福大学下架。 note5的主要内容：模型选择，特征选择，贝叶斯估计 重新理解，加油~">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-07-04T09:27:11.000Z">
+<meta property="article:modified_time" content="2022-08-01T13:27:47.000Z">
+<meta property="article:author" content="xinwen">
+<meta property="article:tag" content="cs229">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://github.com/sophia-hxw/sophia-hxw.github.io/2022/07/04/cs229/note5/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>cs229之正则化与模型选择（note5） | 橦言无忌</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">橦言无忌</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一个不想改变世界的程序媛</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">70</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">19</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">74</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/sophia-hxw" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://github.com/sophia-hxw/sophia-hxw.github.io/2022/07/04/cs229/note5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/me.jpg">
+      <meta itemprop="name" content="xinwen">
+      <meta itemprop="description" content="想到哪儿记到哪儿的技术博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="橦言无忌">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          cs229之正则化与模型选择（note5）
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-04 17:27:11" itemprop="dateCreated datePublished" datetime="2022-07-04T17:27:11+08:00">2022-07-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-01 21:27:47" itemprop="dateModified" datetime="2022-08-01T21:27:47+08:00">2022-08-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/cs229/" itemprop="url" rel="index"><span itemprop="name">cs229</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/07/04/cs229/note5/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/07/04/cs229/note5/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>cs229讲义 斯坦福大学的CS229课程是学习机器学习的必备之课，之前是由吴恩达主讲的课程，后来由于不明原因课程被斯坦福大学下架。</p>
+<p>note5的主要内容：模型选择，特征选择，贝叶斯估计</p>
+<p><strong>重新理解，加油~</strong><br><span id="more"></span></p>
+<h2 id="Part-VII-正则化和模型选择"><a href="#Part-VII-正则化和模型选择" class="headerlink" title="Part VII 正则化和模型选择"></a>Part VII 正则化和模型选择</h2><p>设想给一个机器学习的问题选择模型，例如，若选择多项式回归模型$h_{\theta}(x) = g(\theta_{0}+\theta_{1}x+\theta_{2}x^{2}…+\theta_{k}x^{k})$，然后$k$的取值。那怎么才能自动选择一个可在偏差（bias）和方差（variance）之间平衡的模型呢？或者换一个说法，怎么自动选出来一个带宽参数（bandwidth parameter） $\tau $ 用于局部加权回归（locally weighted regression），或者怎么自动选出一个参数 C 用于拉格朗日正则化的支持向量机算法（l1-regularized SVM）？</p>
+<p>为了具体一些，假设个数有限的模型集合$M = {M_{1},…,M_{d}} $。例如，在上面提到的例子，$M_{i} $ 就是 $i $次多项式回归模型。换个说法就是，如果我们要从支持向量机算法（SVM）、神经网络算法（neural network）、逻辑回归算法（logistic regression）当中三选一，那么这里的 M 就应该都包含这些模型。</p>
+<h3 id="1，交叉验证"><a href="#1，交叉验证" class="headerlink" title="1，交叉验证"></a>1，交叉验证</h3><p>假设有一个训练集$S $，了解了经验风险最小化（empirical risk minimization，缩写为 ERM），就像算法初始化一样，接下来通过ERM来进行模型选择：</p>
+<ul>
+<li>1，对训练集 $S $ 中的每一个模型$M_{i} $ 进行训练，得到相应的假设$h_{i} $。</li>
+<li>2，从这些假设中选取训练误差最小的假设（hypotheses）。</li>
+</ul>
+<p><strong>这个算法是行不通的。</strong></p>
+<p>若考虑多项式模型，要考虑多项式的阶（最高次项的次数），阶越高，对训练集 S 的拟合程度就越好，训练误差自然也就更小。然而，这个方法选出来的总是那种波动非常强（high-variance）的高次多项式模型（high-degree polynomial model），这种情况之前讨论过，通常都是很差的选择。</p>
+<p>下面这个算法就更好一些，叫做保留交叉验证（hold-out cross validation），也叫做简单交叉验证（simple cross validation），步骤如下：</p>
+<ul>
+<li>1，随机拆分训练集 $S $ 成 $S_{train} $ (如可选 70% 的比例) 和 $S_{cv} $ (训练集中剩余的 30%用于验证)。这里的 $S_{cv} $ 就叫做保留交叉验证集。</li>
+<li>2，只对集合 $S_{train} $ 中的每一个模型 Mi 进行训练，然后得到假设$h_{i} $。</li>
+<li>3，筛选并输出验证集上有最小误差的 $\hat{\epsilon}S_{cv}(h_{i}) $假设$h_{i} $ 。</li>
+</ul>
+<p>这样通过在部分未进行训练的样本集 $S_{cv}$ 上进行测试，我们对每个假设 hi 的真实泛化误差（generalization error）就能得到相对更好的估计，然后就能选择出来一个最小估计泛化误差的假设了。通常可以选择 $\frac{1}{4} ~ \frac{1}{3} $ 的数据样本用来作为交叉验证集，30% 是一个很典型的选择。</p>
+<p>还有另外一种备选方法，就是在第三步的时候，选择与最小估计经验误差 $\hat{\epsilon}S_{cv}(h_{i}) $ 对应的模型 $M_{i} $ ，然后在完整数据集 S 上用 $M_{i} $ 来再次训练。（这个思路通常都不错，但有一种情景例外，就是学习算法对初始条件和数据的扰动非常敏感的情况。在这样的方法中，适用于$S_{train} $ 的模型未必就能够同样适用于 $S_{cv} $，这样就最好还是放弃再训练的步骤。）</p>
+<p>使用保留交叉验证集的一个弊端就是“浪费”了30% 左右的训练样本数据集，甚至即便对整个训练集重新训练模型，也无非是尝试在一个 0.7m 规模的训练样本集上试图寻找一个好的模型来解决一个机器学习问题，而并不是使用了全部的 m 个训练样本，因为我们每次都是在仅 0.7 m 规模样本上进行训练得到模型。当然了，如果数据非常充足，或者是很廉价的话，也可以用这种方法，而如果训练样本数据本身就很稀缺的话，那就最好用其他方法了。</p>
+<p>下面就是一种这样的方法，名字叫k-折交叉验证(k-fold cross validation)，这样验证集数据规模都更小：</p>
+<ul>
+<li>1，随机将训练集 $S $ 切分成 $k $ 个不相交的子集，其中每一个子集的规模为 $\frac{m}{k} $ 个训练样本，把这些子集称为 $S_{1},…,S_{k} $。</li>
+<li>2，对每个模型 $M_{i} $，我们都按照下面的步骤来进行评估：对$j = 1, …, k $，在 $ S_{1}···\bigcup S_{j−1} \bigcup S_{j+1}\bigcup ···S_{k} $上（也就是除了 $S_{j} $ 之外的其他所有数据）对模型 $M_{i} $ 进行训练，然后得到假设 $h_{ij} $ 。接下来针对 $S_{j} $ 使用假设 $h_{ij} $ 进行测试，得到经验误差 $\hat{\epsilon}S_{j}(h_{ij}) $，对其取平均值（也就是对所有的 $j $ 都计算然后取平均值），计算得到的值就当做是模型 $M_{i} $ 的估计泛化误差。</li>
+<li>3，选择具有最小估计泛化误差的模型 $M_{i} $，然后在整个训练样本集 $S $ 上重新训练该模型，这样得到的假设就可以输出作为最终结果了。</li>
+</ul>
+<p>通常这里折叠的次数 $k $ 一般是 10，即 $k = 10 $。这样每次进行保留用于验证的数据块就只有 $\frac{1}{k} $ ，这就比之前的 30% 要小多了，当然这样一来这个过程也要比简单的保留交叉验证方法消耗更多算力成本，因为现在需要对每个模型都进行 k 次训练。</p>
+<p>虽然通常选择都是设置 $k = 10 $，不过如果一些问题中数据量确实很匮乏，那有时候也可以走一点极端，设 $k = m $，这样是为了每次能够尽可能多地利用数据，尽可能少排除数据。这种情况下，我们需要在训练样本集 $S $ 中除了某一个样本外，在其他所有样本上进行训练，然后在保留出来的单独样本上进行检验。然后把计算出来的 $m = k $个误差放到一起求平均值，这样就得到了对一个模型的泛化误差的估计。这个方法有专门的名字；由于每次都保留了一个训练样本，所以这个方法就叫做弃一法交叉验证（leave-one-out cross validation）。</p>
+<p>最后总结一下，咱们讲了不同版本的交叉验证，在上文中是用来作为选择模型的方法，实际上也可以更单纯地用来对一个具体的模型或者算法进行评估。例如，如果你已经实现了某种学习算法，然后想要估计一下算法的性能表现（或者是你创造了一种新的学习算法，然后希望在技术论文中报告你的算法在不同测试集上的表现），交叉验证都是个很好的解决方法。</p>
+<h3 id="2，特征选择"><a href="#2，特征选择" class="headerlink" title="2，特征选择"></a>2，特征选择</h3><p>模型选择的重要阶段就是特征选择，设想你面对一个监督学习问题，其中特征值的数量 $n $ 特别大（甚至可能比训练样本集规模还大，即$n &gt;&gt; m $），然而可能只有小部分的特征是与学习任务“相关”的。即便是针对 $n $ 个输入特征值使用一个简单的线性分类器，假设类的 VC 维也依然能达到 O(n)，就很有过拟合的潜在风险，除非训练样本集也足够巨大。</p>
+<p>在这样的背景下，就可以用特征选择算法来降低特征值的数目。假设有 $n $ 个特征，那么就有 $2^{n} $ 种可能的特征子集（因为 n 个特征中的任意一个都可以被某个特征子集包含或者排除），因此特征选择就可以看做是对 $2^{n} $ 个可能的模型进行选择。对于特别大的 $n $，要是彻底枚举和对比全部 $2^{n} $ 种模型，成本就太高了，所以通常的做法都是使用启发式搜索过程（heuristic search procedure）来找到一个好的特征子集。下面的搜索过程叫做向前搜索（forward search）：</p>
+<ul>
+<li>1，初始化集合  $ \mathcal{F} = \emptyset $. </li>
+<li>2，循环下面的过程<br>  {<br>  (a) 对于 $ i =1, …, n $ ，如果 $ i\notin \mathcal{F} $, 则令 $\mathcal{F}_{i} = \mathcal{F} \bigcup \{i\} $，然后使用某种交叉验证来评估特征  $\mathcal{F}_{i} $。（也就是说，仅仅使用  $\mathcal{F}_{i} $ 当中的特征来训练你的学习算法，然后估计一下泛化误差。）<br>  (b) 将  $\mathcal{F} $ 设为步骤 (a) 中的最佳特征子集。<br>  } </li>
+<li>3，整个搜索过程中筛选出来了最佳特征子集，将其输出。</li>
+</ul>
+<p>上述算法最外层的循环体可以在 $\mathcal{F} = \{1, … , n\} $  为全部特征时终止，或者也可以在 $|\mathcal{F}| $ 超过某个预设阈值时终止（当算法要用到的特征数量达到了最大值）。</p>
+<p>这个算法本质是模型特征选择包装器的一个实例，算法本身就是将学习算法进行“打包”的过程，然后重复调用这个学习算法来评估算法对不同特征子集的效果。除了向前搜索，还有其他的搜索过程，例如逆向搜索，从 $\mathcal{F} = \{1, …, n\} $ ，即全部特征开始，然后重复，每次删减一个特征，直到 $\mathcal{F} $ 为空集，即 $ \mathcal{F} = \emptyset $ 时终止。</p>
+<p>这种包装器特征选择算法通常效果不错，不过对算力开销也很大，尤其是要对学习算法进行多次调用。实际上，完整的向前搜索（是 $\mathcal{F} $ 从空集开始，到最终达到整个样本集规模，即 $\mathcal{F} = \{1, …, n\} $ 终止），要对学习算法调用约 $O(n^{2}) $ 次。</p>
+<p><strong>过滤器特征选择算法</strong>（Filter feature selection methods）给出的特征子集选择方法更具有启发性，而且在算力上的开销成本也更低。思路是，计算一个简单的分值 $S(i)$，用来衡量每个特征 $x_{i} $  对分类标签 $y $ 的信息量。然后，只需找到最大信息量分值 $S(i) $ 的一组，选择使用其中的 $k $ 个特征。</p>
+<p>怎么去定义用于衡量信息量的分值 $S(i) $ 呢？一种思路是使用 $x_{i} $ 和 $y $ 之间相关系数的值（或其绝对值），这可以在训练样本数据中算出。这样我们选出的就是与分类标签$y $关系最密切的特征值。实践中，通常（尤其当特征 $x_{i} $ 为离散值时）选择 $x_{i} $ 和 $y $ 的互信息（mutual information）来作为 $S(i) $，缩写为 $MI(x_{i}, y) $。</p>
+<script type="math/tex; mode=display">MI(x_{i},y) = \sum_{x_{i}\in\{0,1\}}\sum_{y\in\{0,1\}}p(x_{i},y)log\frac{p(x_{i},y)}{p(x_{i})p(y)}</script><p>上式中，假设了 $x_{i} $ 和 $y $ 都已经二值化，更广泛的情况下总和将会超过变量的范围。$p(x_{i},y)$， $p(x_{i}) $和 $p(y) $ 的概率都可以根据它们在训练集上的经验分布而推测得到。</p>
+<p>要对这个信息量$x_{i}$的作用有一个更直观的印象，也可以将互信息表达成 KL 散度（Kullback-Leibler divergence，也称 KL 距离，常用来衡量两个概率分布的距离）：</p>
+<script type="math/tex; mode=display">MI(x_{i},y) = KL(p(x_{i},y)||p(x_{i})p(y))</script><p>在下一节当中，会更多描述 KL ，这里比较通俗地说，这个概念对 $p(x_{i},y) $ 和 $p(xi)p(y)$ 的概率分布差异大小给出一个衡量。如果 $x_{i} $ 和 $y $ 是两个独立的随机变量，那么必然有 $p(x_{i}, y) = p(x_{i})p(y) $，而两个分布之间的 KL 散度就应该是 $0 $。这也符合下面这种很自然的认识：如果 $x_{i} $ 和 $y $ 相互独立，那么 $x_{i} $ 很明显对 $y $ 是“完全无信息量”的，因此对应的信息量分值 $S(i) $ 就应该很小。与之相反地，如果 $x_{i} $ 对 $y $ “有很大的信息量”，那么这两者的互信息$MI(x_{i},y) $ 就应该很大。</p>
+<p>最后一个细节：现在已经根据信息量分值 $S(i) $ 的高低来对特征组合进行了排序，那么要如何选择特征个数 $k$ 呢？一个标准办法就是使用交叉验证从可能的不同 $k $ 值中进行筛选。例如，在对文本分类使用朴素贝叶斯方法），这个问题中的词汇规模$n $ 通常都会特别大，使用交叉验证的方法来选择特征子集，一般都能提高分类器精度。</p>
+<h3 id="3，贝叶斯估计和正则化"><a href="#3，贝叶斯估计和正则化" class="headerlink" title="3，贝叶斯估计和正则化"></a>3，贝叶斯估计和正则化</h3><p>在本章，我们要讲一下我们“军火库”中的另外一种工具，用于我们对抗过拟合。</p>
+<p>在本章的开头部分，我们谈到了使用最大似然来进行参数拟合，然后根据下面的式子来选择参数：</p>
+<script type="math/tex; mode=display">\theta_{ML} = arg\mathop{max}\limits_{\theta}\prod\limits_{i=1}^{m}p(y^{(i)}|x^{(i)}; \theta)</script><p>在随后的讨论中，我们将$\theta$视为一个未知参数，概率统计中将$\theta $视为未知常值，并不是随机的，但恰好是未知的，我们的工作就是提出统计处理流程（如最大似然）来尝试估计这个参数。</p>
+<p>另外一种解决参数估计的方法是贝叶斯估计，$\theta$ 当做是未知的随机变量，先给定一个在 $\theta $ 上的先验分布$p(\theta) $，这个分布表示关于参数的“预先判断”。给定一个训练集合 $S = \{(x^{(i)},y^{(i)})\}^{m}_{i=1} $，当对一个新的 $x $ 进行预测的时候，可以计算在参数上的后验分布（posterior distribution）：</p>
+<script type="math/tex; mode=display">\begin{array}{ll}p(\theta|S) & = \quad \frac{p(S|\theta)p(\theta)}{p(S)}\\
+& = \quad \frac{(\prod_{i=1}^{m}p(y^{(i)}|x^{(i)};\theta))p(\theta)}{\int_{\theta}(\prod_{i=1}^{m}p(y^{(i)}|x^{(i)}, \theta)p(\theta))d\theta}\end{array}</script><p>上式中，$p(y^{(i)}|x^{(i)},\theta) $ 是机器学习问题中的模型。例如，如果是贝叶斯逻辑回归，可能就会选择 $p(y^{(i)}|x^{(i)}, \theta) = h_{\theta}(x^{(i)})^{y(i)}(1−h_{\theta}(x^{(i)}))(1−y^{(i)}) $，其中 $h_{\theta}(x^{(i)}) = 1/(1 + exp(−\theta^{T}x^{(i)}))^{3} $。</p>
+<p>若有一个新的测试样本 $x $，需要进行预测，可以使用$\theta$ 上的后验分布来计算分类标签上的后验分布：</p>
+<script type="math/tex; mode=display">p(y|x, \theta) = \int_{\theta}p(y|x,\theta)p(\theta|S)d\theta</script><p>上面等式中，$p(\theta|S) $ 前面介绍过，如果目标是要根据给定的 $x $ 来预测对应的 $y $ 值，那就可以输出：</p>
+<script type="math/tex; mode=display">E[y|x,S] = \int_{y}yp(y|x,S)dy</script><p>简单概述这个过程，可认为是一种“完全贝叶斯”预测，其中预测是通过计算相对于 $\theta$ 上的后验概率 $p(\theta|S) $ 的平均值而得出的。但是，这个后验分布的计算通常是比较困难的，需要对 $\theta$ 进行积分，而 $\theta$ 通常是高维度的，这通常是不能以闭合形式来实现的。</p>
+<p>因此在实际应用中，我们都是用一个与 $\theta$ 后验分布近似的分布来替代。常用的一个近似是把对 $\theta$ 的后验分布替换为一个单点估计。对 $\theta$的最大后验估计（MAP，maximum a posteriori estimate）为：</p>
+<script type="math/tex; mode=display">\theta_{MAP} = arg\mathop{max}\limits_{\theta}\prod\limits_{i=1}^{m}p(y^{(i)}|x^{(i)},\theta)p(\theta)</script><p>注意到了么，这个式子基本和对 $\theta$ 的最大似然估计（ML,maximum likelihood estimate）形式一样，除了末尾多了一个先验概率分布 $p(\theta)$。</p>
+<p>实际应用里面，对先验概率分布 $p(\theta) $ 的常见选择是假设 $\theta \sim N(0 ,\tau^{2}I) $。使用这样的一个先验概率分布，拟合出来的参数 $θ_{MAP} $ 将比最大似然估计得到的参数范数更小。在实践中，贝叶斯最大后验估计（Bayesian MAP estimate）对比参数的最大似然估计（ML estimate of the parameters），前者就更易于避免过拟合。例如，贝叶斯逻辑回归就是一种非常有效率的文本分类算法，即便在文本分类中参数规模 $n $ 通常是远远大于样本规模 $m $ 的，即 $n ≫ m $。</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>xinwen
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://github.com/sophia-hxw/sophia-hxw.github.io/2022/07/04/cs229/note5/" title="cs229之正则化与模型选择（note5）">https://github.com/sophia-hxw/sophia-hxw.github.io/2022/07/04/cs229/note5/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/cs229/" rel="tag"><i class="fa fa-tag"></i> cs229</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/06/22/cs229/note1/" rel="prev" title="cs229的lecture note1">
+      <i class="fa fa-chevron-left"></i> cs229的lecture note1
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/07/06/cs229/note10/" rel="next" title="cs229之主成分分析（note10）">
+      cs229之主成分分析（note10） <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-VII-%E6%AD%A3%E5%88%99%E5%8C%96%E5%92%8C%E6%A8%A1%E5%9E%8B%E9%80%89%E6%8B%A9"><span class="nav-text">Part VII 正则化和模型选择</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%EF%BC%8C%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81"><span class="nav-text">1，交叉验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%EF%BC%8C%E7%89%B9%E5%BE%81%E9%80%89%E6%8B%A9"><span class="nav-text">2，特征选择</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%EF%BC%8C%E8%B4%9D%E5%8F%B6%E6%96%AF%E4%BC%B0%E8%AE%A1%E5%92%8C%E6%AD%A3%E5%88%99%E5%8C%96"><span class="nav-text">3，贝叶斯估计和正则化</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="xinwen"
+      src="/images/me.jpg">
+  <p class="site-author-name" itemprop="name">xinwen</p>
+  <div class="site-description" itemprop="description">想到哪儿记到哪儿的技术博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">74</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">70</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/sophia-hxw" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;sophia-hxw"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/sophia_xw" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;sophia_xw" rel="noopener" target="_blank"><i class="crosshairs fa-fw"></i>CSDN</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xinwen618@gmail.com" title="E-Mail → mailto:xinwen618@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2022 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xinwen</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">231k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:30</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+// 代码折叠
+<script src="/js/code-unfold.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'QS91rh0eXkhXnjzhcdHGIRzJ-gzGzoHsz',
+      appKey     : 'DD7UTgTkdGwFia0JrJRcs7fs',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

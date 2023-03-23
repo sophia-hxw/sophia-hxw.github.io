@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"github.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="前言文章：ODE Transformer-An Ordinary Differential Equation-Inspired Model for Neural Machine Translation essay link ODE 跟Transformer关联的文章，第一次读文章，先看懂！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ODE Transformer">
+<meta property="og:url" content="https://github.com/sophia-hxw/sophia-hxw.github.io/2022/11/14/Transformer/ODE%20transformer/index.html">
+<meta property="og:site_name" content="橦言无忌">
+<meta property="og:description" content="前言文章：ODE Transformer-An Ordinary Differential Equation-Inspired Model for Neural Machine Translation essay link ODE 跟Transformer关联的文章，第一次读文章，先看懂！">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-11-14T03:29:03.000Z">
+<meta property="article:modified_time" content="2022-11-14T15:52:57.000Z">
+<meta property="article:author" content="xinwen">
+<meta property="article:tag" content="ODE">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://github.com/sophia-hxw/sophia-hxw.github.io/2022/11/14/Transformer/ODE%20transformer/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>ODE Transformer | 橦言无忌</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">橦言无忌</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一个不想改变世界的程序媛</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">70</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">19</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">74</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/sophia-hxw" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://github.com/sophia-hxw/sophia-hxw.github.io/2022/11/14/Transformer/ODE%20transformer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/me.jpg">
+      <meta itemprop="name" content="xinwen">
+      <meta itemprop="description" content="想到哪儿记到哪儿的技术博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="橦言无忌">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ODE Transformer
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-11-14 11:29:03 / 修改时间：23:52:57" itemprop="dateCreated datePublished" datetime="2022-11-14T11:29:03+08:00">2022-11-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Transformer/" itemprop="url" rel="index"><span itemprop="name">Transformer</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/11/14/Transformer/ODE%20transformer/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/11/14/Transformer/ODE%20transformer/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>10k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>10 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>文章：ODE Transformer-An Ordinary Differential Equation-Inspired Model for Neural Machine Translation</p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2104.02308v1">essay link</a></p>
+<p><strong>ODE 跟Transformer关联的文章，第一次读文章，先看懂！</strong><br><span id="more"></span></p>
+<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>前面有文献工作发现了，残量连接网络是ODE的Euler离散解法。本文探讨Transformer和ODE数值方法之间的关系，且发现了Transformer可以描述为ODE的高阶解法，同时也带领我们设计了一种新的架构（称为 ODE Transformer），类似于在 ODE 中受到很好启发的 Runge-Kutta 方法。</p>
+<p>作为Transformer的自然拓展，ODE Transformer容易实现，参数也更加高效。我们对三个 WMT 任务的实验证明了该模型的通用性，以及在几个强大的基线上的性能大幅改进。本文在数据集WMT14的En-De和En-Fr上分别获得了30.76和44.11的BLEU的分值，这为 WMT’14 En-Fr 任务设置了新的sota。</p>
+<h2 id="1，介绍"><a href="#1，介绍" class="headerlink" title="1，介绍"></a>1，介绍</h2><p>残差网络已被用作简化多层神经模型中信息流的标准方法，并取得了巨大成功。 给定输入 $y_{t}$，此类模型将深度 $t$ 处的层的输出定义为：</p>
+<script type="math/tex; mode=display">y_{t+1}=y_{t}+F(y_{t},\theta_{t}) \tag{1}</script><p>其中，$F(\cdot,\cdot)$ 是网络层的函数，$\theta_{t}$是参数。</p>
+<p>有意思的是，ML中最近的工作指出上式可以理解为ODE的Euler离散方法，类似下式：</p>
+<script type="math/tex; mode=display">\frac{dy(t)}{dt}=F(y(t),\theta(t)) \tag{2}</script><p>其中，$y(t)$和$\theta(t)$ 是关于 $t$ 连续的。</p>
+<p>用这样的方式，可以将残差网络理解为ODE模块，该发现也给理解残差网络从数值优化的角度提供了新思路。之后，可以尝试在多层网络上利用Euler方法，初始值就给定为$y(0)=y_0 $ 和 $\theta (0)=\theta_0 $。</p>
+<p>方程 (2) 的解法前提，只有当 $\theta(t) $ 沿 $t$ 缓慢变化时，才有足够低的误差界限（称之为稳定解）。 但这种假设并不总是适用于最先进的自然语言处理 (NLP) 系统，其中模型是非线性和超参的。 例如，语言建模和机器翻译系统为不同的层学习完全不同的参数，尤其是当层接近模型输入时。 </p>
+<p>此外，欧拉方法的截断误差不可忽略，因为它是真实解的一阶近似。 当更多的层被堆叠并且错误通过神经网络传播时，这些问题会使情况变得更糟。 这或许可以解释为什么最近的机器翻译 (MT) 系统无法从极深的模型中受益。</p>
+<p>在本文中，我们继续研究 ODE 启发方法，基本思想是使用高阶更精确地对 ODE 进行数值求解，这会导致生成更大的 ODE 块，产生一系列中间近似值。 我们发现较大的 ODE 块足以等价于多个一阶解的 ODE 块，好处是显而易见的：使用较少的 ODE 块降低了在块切换中引入错误的风险，而高阶方法减少了每个 ODE 块中的近似误差。</p>
+<p>我们的方法是参数有效的，因为$\theta(t) $在同一个 ODE 块中重复使用了，作为另一个“奖励”，可以通过学习块中不同中间近似的系数来改进模型。 我们在强 Transformer 系统中评估我们的方法，涵盖宽（和大）模型和深度模型。 它在 WMT14 En-De 和 En-Fr 测试集上获得了 30.76 和 44.11 的 BLEU 分数，该结果为 WMT14 En-Fr 任务设置了新的sota。</p>
+<h2 id="2，Transformer和ODE"><a href="#2，Transformer和ODE" class="headerlink" title="2，Transformer和ODE"></a>2，Transformer和ODE</h2><p>本文从 Transformer 的描述开始，然后是它与 ODE 的关系。 我们选择 Transformer 进行讨论和实验，因为它是最近 MT(机器翻译) 评估中最先进的模型之一。</p>
+<h3 id="2-1-Transformer"><a href="#2-1-Transformer" class="headerlink" title="2.1 Transformer"></a>2.1 Transformer</h3><p>Transformer 是编码器-解码器范式的一个例子，编码器是一堆相同的层，每层由一个自注意力块和一个前馈网络（FFN）块组成，它们都配备了残差连接和层归一化单元。 注意，术语“块”以许多不同的方式使用，在本文中指的是通过残差连接（有时称为残差块）增强的任何神经网络。</p>
+<p>遵循 Pre-norm 架构 ，我们将块定义为</p>
+<script type="math/tex; mode=display">y_{t+1}=y_{t}+G(LN(y_{t}),\theta_{t}) \tag{3}</script><p>其中$LN(\cdot)$ 是层归一化函数，为了简单起见，我们去掉了$LN(\cdot)$的参数，$G(\cdot)$是 自注意力或前馈网络。 解码器具有类似的架构，在 self-attention 和 FFN 块之间有一个额外的编码器-解码器注意块。</p>
+<h3 id="2-2-ODE"><a href="#2-2-ODE" class="headerlink" title="2.2 ODE"></a>2.2 ODE</h3><p>常微分方程是变量 $t$ 的函数 $y(t)$ 及其导数的方程，ODE 的一种简单形式是定义 $y(t)$ 的一阶导数的方程，如下所示:</p>
+<script type="math/tex; mode=display">\frac{dy(t)}{dt}=f(y(t),t) \tag{4}</script><p>其中 $f(y(t),t)$ 定义了一个时间相关向量场，如果我们知道它在 $y$ 的所有点和所有时间点 $t$ 的值。 上述方程涵盖了广泛的问题，因为变量的变化由其当前值和时间变量$t$决定。</p>
+<p>这个方程也适用于Pre-norm的Transformer块，为了记号简单，我们将$G(LN(y_t),\theta_t) $表示为一个新函数$F(y_t,\theta_t) $就有了：</p>
+<script type="math/tex; mode=display">F(y_{t},\theta_{t})=G(LN(y_{t},\theta_{t})) \tag{5}</script><p>将$y_t $和$\theta_t $转换成时间的连续函数$y(t)$和$\theta(t) $，重写方程(3)为：</p>
+<script type="math/tex; mode=display">y(t+\Delta t)=y(t)+\Delta t\cdot F(y(t),\theta(t)) \tag{6}</script><p>其中，$\Delta t$表示$t$的变化，也就是常说的步长，显然，在Transformer中有$\Delta t=1$，但可以使用一个约束来适应步长$\Delta t $，就得到了：</p>
+<script type="math/tex; mode=display">\lim\limits_{\Delta t\rightarrow 0}\frac{y(t+\Delta t)-y(t)}{\Delta t}=F(y(t),\theta(t)) \tag{7}</script><p>实际上有$\lim_{\Delta t\rightarrow 0}\frac{y(t+\Delta t)-y(t)}{\Delta t}=\frac{dy(t)}{dt} $，方程(7)是方程(4)的特例，唯一的区别就是在方程(4)的右边引进了$\theta(t)$。</p>
+<p>然后，我们说 Pre-norm Transformer 块描述了 ODE。 已经发现方程(3)与求解方程(7)中描述的 ODE 的欧拉方法具有相同的形式。 这建立了 Transformer 和 ODE 之间的关系，在给定 $F(\cdot,\cdot)$ 和学习参数 $\{\theta_t\}$ 的情况下，多块 Transformer 的前向传递是多次来运行欧拉方法。</p>
+<h2 id="3-ODE-Transformer"><a href="#3-ODE-Transformer" class="headerlink" title="3 ODE Transformer"></a>3 ODE Transformer</h2><p>在 ODE 的数值方法中，我们希望以最少的计算步骤确保 ODE 的精确解。 但是Euler方法并不“精确”，因为它是一阶方法，自然会出现局部截断误差。 如果我们多次运行它，全局误差可能会更大{全局误差就是我们通常所说的误差，$y(t)$ 与真值之间的差异。 局部误差是单步引入的误差，假设$y(t-1)$为真解，$y(t)$与其的差值}。 Transformer 显然就是这种情况，尤其是当多层神经网络在求解 ODE 时，易出现更不稳定的风险。</p>
+<h3 id="3-1-高阶ODE解法器"><a href="#3-1-高阶ODE解法器" class="headerlink" title="3.1 高阶ODE解法器"></a>3.1 高阶ODE解法器</h3><p>在这里，我们使用 Runge-Kutta 方法来获得 ODE 的高阶解，它们是具有不同阶精度的经典迭代方法。 正式地介绍$n$步求解的显式 Runge-Kutta 方法定义为：</p>
+<script type="math/tex; mode=display">y_{t+1} =y_{t}+\sum\limits_{i=1}^{n}\gamma_{i}F_{i} \tag{8}</script><script type="math/tex; mode=display">F_{1} =hf(y_{t},t) \tag{9}</script><script type="math/tex; mode=display">F_{i} =hf(y_{t}+\sum\limits^{i-1}_{j=1}\beta_{ij}F_{j},t+\alpha_{i}h) \tag{10}</script><p>其中 $ h $ 是步长，在大多数情况下可能就是 1。 $\mathrm{F}_i$ 是步骤 $t+\alpha_i h$ 处解的中间近似。</p>
+<p>$ \alpha $、$ \beta $ 和 $ \gamma $ 是可以由 $ y_{t+1} $ 的泰勒级数确定系数，方程(10)描述了在 $n $ 步 $\{t+\alpha_1 h,…,t+\alpha_n h \}$上的解近似序列 $\{F_1,…,F_n\}$，然后对这些近似值进行插值以形成最终解，如方程(8)。</p>
+<p>Runge-Kutta 方法直接适用于 Transformer 模块的设计，我们所需要的只是将函数 $f$ 替换为函数 $F$， 优点是函数 $F$ 在块中被重用。 此外，模型参数$\theta_t$ 可以在块内共享。（虽然我们可以区分一个块中不同步骤的参数，但我们发现它没有帮助并且使模型难以学习。） 这样，可以省略方程(10)中的$t+\alpha_i h$，用下式来计算 $F_i$：</p>
+<script type="math/tex; mode=display">F_{i}=F(y_{t}+\sum\limits^{i-1}_{j=1}\beta_{ij}F_{j},\theta_{t}) \tag{11}</script><p>这使得系统参数效率更高，正如我们的实验所示，高阶 Runge-Kutta 方法可以学习具有明显更小的模型和强大 NMT 系统。</p>
+<p>Runge-Kutta 方法是通用的，例如欧拉方法就是它们的一阶特例。 对于二阶 Runge-Kutta (RK2) 块，我们有：</p>
+<script type="math/tex; mode=display">y_{t+1}=y_{t}+\frac{1}{2}(F_{1}+F_{2}) \tag{12}</script><script type="math/tex; mode=display">F_{1}=F(y_{t},\theta_{t}) \tag{13}</script><script type="math/tex; mode=display">F_{2}=F(y_{t}+F_{1},\theta_{t}) \tag{14}</script><p>这也称为改进的欧拉方法，同样，我们可以将四阶 Runge-Kutta (RK4) 块定义为：</p>
+<script type="math/tex; mode=display">y_{t+1}=y_{t}+\frac{1}{6}(F_{1}+2F_{2}+2F_{3}+F_{4}) \tag{15}</script><script type="math/tex; mode=display">F_{1}=F(y_{t},\theta_{t}) \tag{16}</script><script type="math/tex; mode=display">F_{2}=F(y_{t}+\frac{1}{2}F_{1},\theta_{t}) \tag{17}</script><script type="math/tex; mode=display">F_{3}=F(y_{t}+\frac{1}{2}F_{2},\theta_{t}) \tag{18}</script><script type="math/tex; mode=display">F_{4}=F(y_{t}+F_{3},\theta_{t}) \tag{19}</script><p>参见图2 以比较不同的 Runge-Kutta 块，需要注意的是，这里介绍的方法可以从表示细化的角度来解释。 它为函数提供了一种更新函数本身的方法，例如，Universal Transformer 使用相同的函数和相同的参数以块方式来细化输入序列的表示。 在这里，我们展示了内部块细化可以在良好的理论支持下建模。</p>
+<h3 id="3-2-参数学习"><a href="#3-2-参数学习" class="headerlink" title="3.2 参数学习"></a>3.2 参数学习</h3><p>在我们的初步实验中，当模型很浅时，RK2 和 RK4 方法产生了有希望的 BLEU 改进，但发现对于更深层次的模型，这种改进并没有持续下去。 为了弄清楚为什么会发生这种情况，让我们从训练的角度回顾一下龙格-库塔方法，以 RK2 方法为例。 我们通过替换 $F_1$ 和 $F_2$重写方程(12)，如下：</p>
+<script type="math/tex; mode=display">y_{t+1}=y_{t}+\frac{1}{2}F(y_{t}+F(y_{t},\theta_{t}),\theta_{t}) \tag{20}</script><p>令 $\mathcal{E}$ 为训练损失，$L$ 为模型的块数，$y_{L}$ 为模型输出，$\mathcal{E}$ 在 $y_t$ 处的梯度是</p>
+<script type="math/tex; mode=display">\frac{\partial{\varepsilon}}{\partial{y_{t}}}=\frac{\partial\varepsilon}{\partial y_{L}}\cdot\frac{1}{2^{L-t}}\cdot\prod_{k=t}^{L-1}(1+g_{k}) \tag{21}</script><p>其中，</p>
+<script type="math/tex; mode=display">g_{k}=(1+\frac{\partial F(y_{k},\theta_{k})}{\partial y_{k}})\cdot (1+\frac{\partial F(y_{k}+F(y_{k},\theta_{k}),\theta_{k})}{\partial y_{k}+F(y_{k},\theta_{k})}) \tag{22}</script><p>从等式(29)看，$\frac{\partial \mathcal{E}}{\partial y_{t}}$ 与因子 $\frac{1}{2^{L-t}}$成正比，这导致当 $L$ 较大时梯度消失的风险更高。</p>
+<p>这个问题在某种程度上归因于$F_i$ 的小系数，即$\gamma_1 = \gamma_2 = \frac{1}{2}$。 一个自然的想法是根据经验设置 $\gamma_i = 1$ 以消除梯度计算中小于 1 的乘积因子，尽管这在理论上并不基于标准的龙格-库塔方法。 我们用新系数重写方程(20)，如下：</p>
+<script type="math/tex; mode=display">y_{t+1}=y_{t}+F(y_{t},\theta_{t})+F(y_{t}+F(y_{t},\theta_{t}),\theta_{t}) \tag{23}</script><p>然后，可以求梯度为：</p>
+<script type="math/tex; mode=display">\frac{\partial\varepsilon}{\partial y_{t}}=\frac{\partial\varepsilon}{\partial y_{L}}\cdot\prod^{L-1}_{k=t}g_{k} \tag{24}</script><p>这个模型很容易优化，因为 $\frac{\partial \mathcal{E}}{\partial_{y_L}}$ 可以传递给没有尺度的低级块。 请注意，这里的方法是参数共享的实例。 例如，在每个 ODE 块中，我们对所有中间步骤使用具有相同参数 $\theta_t$ 和相同函数 $F$。 设置 $\gamma_i = 1$，因为 $F_i$ 以相同的比例传递到下一步。 这里我们称之为隐式参数共享。</p>
+<p>另一种缩放 $F_i$ 的方法是在训练数据上自动学习系数（初始值 $\gamma_i = 1$），它帮助系统学习在一个块中流动 $F_i$ 的方式。 我们的实验表明，自动系数学习对于获得更好的结果是必要的。</p>
+<h2 id="4，实验"><a href="#4，实验" class="headerlink" title="4，实验"></a>4，实验</h2><h3 id="4-1-实验设置"><a href="#4-1-实验设置" class="headerlink" title="4.1 实验设置"></a>4.1 实验设置</h3><p>我们提出的方法在三个广泛使用的基准上进行了评估：WMT’14 英语-德语 (En-De)、WMT’14 英语-法语 (En-Fr) 和 WMT’16 英语-罗马尼亚语 (En-Ro) 翻译任务。</p>
+<h4 id="数据集和评价"><a href="#数据集和评价" class="headerlink" title="数据集和评价"></a>数据集和评价</h4><p>对于 En-De 任务，训练数据由大约 4.5M的标记化句子对组成，所有句子都被分割成子词单元的序列，使用共享词汇表进行了 32K 的合并操作。 我们选择 newstest2013 作为验证数据，选择 newstest2014 作为测试数据。 </p>
+<p>对于 En-Fr 任务，我们使用了 Fairseq 提供的数据集，即来自 WMT’14 的 36M 训练句子对，newstest2012+newstest2013 是验证数据，newstest2014 是测试数据。 </p>
+<p>对于 En-Ro 任务，我们复制了文章mehta2020delight的设置，分别使用 600K/2K/2K 句子对进行训练、评估和推理。</p>
+<p>我们根据 BLEU 来衡量性能，标记化的 BLEU 分数 和 sacrebleu 都是在 En-De 和 En-Fr 任务上报。 此外，我们报告了 En-Ro 任务的标记化 BLEU 分数，En-De 和 En-Fr 的beam尺寸和长度惩罚因子分别为 4 和 0.6 ，En-Ro 为 5 和 1.3 。</p>
+<h4 id="训练细节"><a href="#训练细节" class="headerlink" title="训练细节"></a>训练细节</h4><p>正如 li-etal-2020-shallow 的工作所建议的，我们使用相对位置表示 (RPR) 来获得更强的基线 。 所有实验都在 8 块 GPU 上进行训练，每个 GPU 上有 4,096 tokens。 对于 En-De 和 En-Fr 任务，我们采用梯度累积策略，步长分别为 2 和 8 。 我们使用了 Adam 优化器，其超参数设置为 $(0.9, 0.997)$，学习率的最大点设置为 $0.002$，以实现快速收敛。 我们将 SAN 和 FFN 合并视为默认的 ODE 块。</p>
+<p>更多细节参见我们提供的材料。</p>
+<h3 id="4-2-结果"><a href="#4-2-结果" class="headerlink" title="4.2 结果"></a>4.2 结果</h3><h4 id="En-De-和-En-Fr-的结果"><a href="#En-De-和-En-Fr-的结果" class="headerlink" title="En-De 和 En-Fr 的结果"></a>En-De 和 En-Fr 的结果</h4><p>表1将 ODE Transformer 与几个最先进的系统进行了比较，RK2-block 和 RK4-block 在不同的模型容量下都大大优于基线。 例如，当深度为 6 时，RK2-block 使用基本配置获得了 0.97 的 BLEU 改进。 RK4 块在 RK2 块之上产生 +$0.17$ BLEU 点的收益， 这一观察从经验上验证了高阶 ODE 函数更有效的猜想。 当我们切换到深度模型时，RK2-block 可与 li-etal-2020-shallow 中报告的 48 层强系统相媲美，但参数显着减少，这表明我们的方法是参数有效的。</p>
+<p>宽模型也可以受益于扩大层深度。 RK-2 ODE Transformer 在 En-De 和 En-Fr 任务上的 BLEU 分数分别为 30.76 和 44.11 ，显着超过标准 Big 模型 1.32 和 0.70 的 BLEU 分数。 这为这些任务设置了新的最先进技术，参数更少， 请注意，我们后续将报告更多关于 RK4 块的结果。</p>
+<h4 id="Rn-Ro-结果"><a href="#Rn-Ro-结果" class="headerlink" title="Rn-Ro 结果"></a>Rn-Ro 结果</h4><p>表2展示了 En-Ro 任务中几个强大系统的模型参数、总训练步骤和 BLEU 分数。 同样，ODE Transformer 的性能优于这些基线。 如 mehta2020delight 中所述，他们对模型进行了高达 170 epoches 的训练，并通过 DeLight 模型获得了 34.70 的 BLEU 分数。 然而，这里的观察是完全不同的， 在 20 epoch 之后，验证的困惑度开始增加。 因此，我们的基线略逊于他们的基线，但与 lin2020towards 中报告的结果相匹配。 ODE Transformer 使用 DeLight 以更少的训练成本实现了更好的性能， 对于更大的模型（表2中的第 6 行），它获得了 35.28 的 BLEU 分数。</p>
+<h4 id="参数有效性"><a href="#参数有效性" class="headerlink" title="参数有效性"></a>参数有效性</h4><p>表3总结了几个高效 Transformer 变体的结果，包括 Lite Transformer 、DeLight和 Evolved Transformer的轻型版本。 正如我们预期的那样，所提出的 ODE Transformer 有望用于较小的模型。 它在 BLEU 中与 DeLight 相当，但参数少了 9M。 在相同的模型容量下，它比 DeLight 高出 0.84 BLEU 点。 这些结果表明，所提出的方法与模型容量正交，它可能为在边缘设备上部署 NMT 系统提供新的选择。</p>
+<h3 id="4-3-分析"><a href="#4-3-分析" class="headerlink" title="4.3 分析"></a>4.3 分析</h3><p>在这里，我们调查一些有趣的问题。 为简单起见，在下文中，我们将具有可学习系数的 RK2-block 称为 RK2-block-v2。</p>
+<h4 id="BLEU-和编码深度"><a href="#BLEU-和编码深度" class="headerlink" title="BLEU 和编码深度"></a>BLEU 和编码深度</h4><p>图 3（左）描绘了几个 ODE Transformer 变体的 BLEU 分数和不同编码器深度下的基线。当深度 $\leq 24$ 时，所有 ODE Transformer 变体都明显优于基线。而 RK2-block-v2 几乎在所有深度上都达到了最佳性能，尤其是当模型变得更深时。直观地说，与 18 层基线系统相比，6 层 RK2 块能够提供相当的性能。同样，它表明所提出的方法是参数有效的。这里的另一个发现是 RK4 块在浅层模型上表现得很好，在表 1 中观察到了类似的现象。对于更深的模型，它不如 RK2-block，尽管高阶 ODE 求解器可以获得更低的误差。这是因为当模型很深时，原始系数可能会导致反向传播中的优化问题。此外，图 3（右）将 BLEU 绘制为当隐藏大小为 256 时模型大小的函数。我们的 RK2 方法使用更少的参数显着超过了基线。</p>
+<h4 id="不同-F-cdot-cdot-上的参数学习"><a href="#不同-F-cdot-cdot-上的参数学习" class="headerlink" title="不同$F(\cdot,\cdot) $上的参数学习"></a>不同$F(\cdot,\cdot) $上的参数学习</h4><p>正如我们所说，$F(\cdot,\cdot)$ 函数可以是子层，例如 SAN、FFN 或两者兼有 (SAN+FFN)。 如图 4 所示，高阶 ODE 与 FFN 协同相比 SAN 协同的效果更好。 一个探索可能是FFN组件的参数比SAN组件多。将 FFN 和 SAN 合并为 ODE 块的模型表现出最佳性能。</p>
+<h4 id="训练和验证难度"><a href="#训练和验证难度" class="headerlink" title="训练和验证难度"></a>训练和验证难度</h4><p>图 5 绘制了 RK 块和标准残差块的训练和验证困惑 (PPL) 曲线。 我们基于两种配置（基本模型和宽模型）比较行为。 直观地说，RK2 块在两种配置中都呈现较低的训练和验证 PPL。</p>
+<h4 id="梯度归一化后的可视化"><a href="#梯度归一化后的可视化" class="headerlink" title="梯度归一化后的可视化"></a>梯度归一化后的可视化</h4><p>为了研究所提出的 ODE Transformer 的优越性，我们在训练期间收集了几个训练有素的系统的梯度范数。 图 6 绘制了 RK2-block、RK4-block 和标准残差块（基线）的梯度范数。 正如我们所见，Pre-Norm 残差块能够使训练稳定。 由于中间近似之间的隐式参数共享，RK2-block 和 RK4-block 都提供了更丰富的信号。 并且两条学习曲线同样看起来几乎相同，这与表 1 中的结果一致。</p>
+<h4 id="不同ODE设计策略的比较"><a href="#不同ODE设计策略的比较" class="headerlink" title="不同ODE设计策略的比较"></a>不同ODE设计策略的比较</h4><p>然后，我们对几种ODE设计模式进行了综合分析。 正如 yiping2018beyond 中所述，计算机视觉中的几个模型，例如 LeapfrogNet、PolyNet 、Multi-step Net 也可以从 ODE 角度进行解释。 相关的 ODE 函数汇总在表 4 中。 在这里，我们使用相同的代码库重新实现这些方法以进行公平比较。 我们按照基本配置将编码器深度设置为 6 ，并对 En-De 任务进行了实验。</p>
+<p>在时间 $t$，多步欧拉方法需要先前的状态，例如 $y_{t-1}$，生成当前近似值，而不是基于当前时间状态的迭代细化。 基本上，这些方法参数效率不高，并且性能不如我们的方法。 注意，DLCL也可以看成是多步欧拉法，在deep Transformer中更具竞争力。 但是在浅基线上只有很小的改进。</p>
+<p>从理论上讲，Backward Euler 方法在数值分析中略好于 Forward Euler 方法，但改进微乎其微。 请注意，与上述方法相比，我们的 ODE Transformer 实现了一致的 BLEU 改进。 这里的原因是这种迭代细化使参数学习更加高效和有效。 所有模型都可以在我们的附件中找到。</p>
+<h4 id="阶段误差量化"><a href="#阶段误差量化" class="headerlink" title="阶段误差量化"></a>阶段误差量化</h4><p>在这里，我们旨在量化截断误差。 但是，我们无法在 NMT 中获得每个块输出的“真实”解，因为我们主要在编码器端进行实验。相反，我们在语言建模任务上进行了实验，也就是单层模型输出与真值之间的损失 相当于没有错误传播的截断错误。</p>
+<p>表 5 显示了 PTB 任务的 PPL。 所有 ODE Transformer 变体都显着减少了错误。 RK4-order 在两种设置上都达到了最低的 PPL。 此外，RK2 块甚至可以获得比 2 层残差块更低的 PPL。 这里的观察再次验证了我们的猜想。</p>
+<h2 id="5，相关工作"><a href="#5，相关工作" class="headerlink" title="5，相关工作"></a>5，相关工作</h2><h3 id="深度Transformer模型"><a href="#深度Transformer模型" class="headerlink" title="深度Transformer模型"></a>深度Transformer模型</h3><p>最近，Deep Transformer 在机器翻译方面取得了巨大成功。 一种直接的方法是缩短从上层到下层的路径，从而缓解梯度消失或爆炸问题。 对于更深层次的模型，训练成本是不可忽略的。 为了加快训练速度，另一种方法是先训练一个浅层模型，然后逐渐增加模型深度。</p>
+<p>除了模型架构改进之外，另一种简化优化的方法是利用精心设计的参数初始化策略，例如 depth-scale 、Lipschitz 约束 ，T-fixup  和 ADMIN 。</p>
+<p>请注意，ODE Transformer 与上述方法是正交的，我们将在未来的工作中对这些方法进行测试。</p>
+<h3 id="ODE"><a href="#ODE" class="headerlink" title="ODE"></a>ODE</h3><p>ResNet 和 ODE 之间的关系最早由 weinan2017proposal 提出。 这为社区带来了设计有效深度架构的全新视角。 一些有见地的架构zhang2017polynet,larsson2017fractalnet,yiping2018beyond,he2019ode 也可以从ODE的角度来解释。 但是，在自然语言处理中，从 ODE 角度设计模型的研究仍然很少见。 也许与我们最相关的工作是 lu2019understanding 的工作。 他们从多粒子动态系统的角度解释了 Transformer 架构，并将夹在 FFN 中的自注意力重新定位。 与他们的工作不同，我们认为堆叠的一阶 ODE 块可能会导致误差累积，从而阻碍模型性能。 我们通过引入高阶块来解决这个问题，并展示了显著的 BLEU 改进。</p>
+<h2 id="6，结论"><a href="#6，结论" class="headerlink" title="6，结论"></a>6，结论</h2><p>在本文中，我们探讨了 Transformer 和 ODE 之间的关系，提出了一种新的架构（ODE Transformer）来帮助模型从高阶 ODE 解决方案中受益。 实验结果表明，在模型容量相同的情况下，ODE Transformer 可以显著优于基线。 它在 WMT’14 En-De 和 En-Fr 测试数据上获得了 30.76 和 44.11 的 BLEU 分数，这为 En-Fr 任务设置了新的sota。</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>xinwen
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://github.com/sophia-hxw/sophia-hxw.github.io/2022/11/14/Transformer/ODE%20transformer/" title="ODE Transformer">https://github.com/sophia-hxw/sophia-hxw.github.io/2022/11/14/Transformer/ODE transformer/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/ODE/" rel="tag"><i class="fa fa-tag"></i> ODE</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/11/14/other/clock_chain_new_words/" rel="prev" title="区块链中的名词解释">
+      <i class="fa fa-chevron-left"></i> 区块链中的名词解释
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/11/14/math/several%20spaces/" rel="next" title="Several spaces in Real Variable Functions">
+      Several spaces in Real Variable Functions <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1%EF%BC%8C%E4%BB%8B%E7%BB%8D"><span class="nav-text">1，介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%EF%BC%8CTransformer%E5%92%8CODE"><span class="nav-text">2，Transformer和ODE</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Transformer"><span class="nav-text">2.1 Transformer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-ODE"><span class="nav-text">2.2 ODE</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-ODE-Transformer"><span class="nav-text">3 ODE Transformer</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E9%AB%98%E9%98%B6ODE%E8%A7%A3%E6%B3%95%E5%99%A8"><span class="nav-text">3.1 高阶ODE解法器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E5%8F%82%E6%95%B0%E5%AD%A6%E4%B9%A0"><span class="nav-text">3.2 参数学习</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%EF%BC%8C%E5%AE%9E%E9%AA%8C"><span class="nav-text">4，实验</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E5%AE%9E%E9%AA%8C%E8%AE%BE%E7%BD%AE"><span class="nav-text">4.1 实验设置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86%E5%92%8C%E8%AF%84%E4%BB%B7"><span class="nav-text">数据集和评价</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%AD%E7%BB%83%E7%BB%86%E8%8A%82"><span class="nav-text">训练细节</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E7%BB%93%E6%9E%9C"><span class="nav-text">4.2 结果</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#En-De-%E5%92%8C-En-Fr-%E7%9A%84%E7%BB%93%E6%9E%9C"><span class="nav-text">En-De 和 En-Fr 的结果</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Rn-Ro-%E7%BB%93%E6%9E%9C"><span class="nav-text">Rn-Ro 结果</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E6%9C%89%E6%95%88%E6%80%A7"><span class="nav-text">参数有效性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-%E5%88%86%E6%9E%90"><span class="nav-text">4.3 分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#BLEU-%E5%92%8C%E7%BC%96%E7%A0%81%E6%B7%B1%E5%BA%A6"><span class="nav-text">BLEU 和编码深度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8D%E5%90%8C-F-cdot-cdot-%E4%B8%8A%E7%9A%84%E5%8F%82%E6%95%B0%E5%AD%A6%E4%B9%A0"><span class="nav-text">不同$F(\cdot,\cdot) $上的参数学习</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%AD%E7%BB%83%E5%92%8C%E9%AA%8C%E8%AF%81%E9%9A%BE%E5%BA%A6"><span class="nav-text">训练和验证难度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A2%AF%E5%BA%A6%E5%BD%92%E4%B8%80%E5%8C%96%E5%90%8E%E7%9A%84%E5%8F%AF%E8%A7%86%E5%8C%96"><span class="nav-text">梯度归一化后的可视化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8D%E5%90%8CODE%E8%AE%BE%E8%AE%A1%E7%AD%96%E7%95%A5%E7%9A%84%E6%AF%94%E8%BE%83"><span class="nav-text">不同ODE设计策略的比较</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5%E8%AF%AF%E5%B7%AE%E9%87%8F%E5%8C%96"><span class="nav-text">阶段误差量化</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5%EF%BC%8C%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C"><span class="nav-text">5，相关工作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6Transformer%E6%A8%A1%E5%9E%8B"><span class="nav-text">深度Transformer模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ODE"><span class="nav-text">ODE</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6%EF%BC%8C%E7%BB%93%E8%AE%BA"><span class="nav-text">6，结论</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="xinwen"
+      src="/images/me.jpg">
+  <p class="site-author-name" itemprop="name">xinwen</p>
+  <div class="site-description" itemprop="description">想到哪儿记到哪儿的技术博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">74</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">70</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/sophia-hxw" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;sophia-hxw"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/sophia_xw" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;sophia_xw" rel="noopener" target="_blank"><i class="crosshairs fa-fw"></i>CSDN</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xinwen618@gmail.com" title="E-Mail → mailto:xinwen618@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2022 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xinwen</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">231k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:30</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+// 代码折叠
+<script src="/js/code-unfold.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'QS91rh0eXkhXnjzhcdHGIRzJ-gzGzoHsz',
+      appKey     : 'DD7UTgTkdGwFia0JrJRcs7fs',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

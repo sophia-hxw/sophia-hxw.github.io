@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"github.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="前言文章：Transformer with Fourier Integral Attentions essay link 无参数核估计，Fourier积分原理等跟Transformer关联的文章，似懂非懂啊，老天爷！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fourier Transformer">
+<meta property="og:url" content="https://github.com/sophia-hxw/sophia-hxw.github.io/2022/11/16/Transformer/Transformer%20with%20Fourier/index.html">
+<meta property="og:site_name" content="橦言无忌">
+<meta property="og:description" content="前言文章：Transformer with Fourier Integral Attentions essay link 无参数核估计，Fourier积分原理等跟Transformer关联的文章，似懂非懂啊，老天爷！">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-11-15T16:34:23.000Z">
+<meta property="article:modified_time" content="2022-11-15T17:35:40.000Z">
+<meta property="article:author" content="xinwen">
+<meta property="article:tag" content="Fourier">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://github.com/sophia-hxw/sophia-hxw.github.io/2022/11/16/Transformer/Transformer%20with%20Fourier/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Fourier Transformer | 橦言无忌</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">橦言无忌</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一个不想改变世界的程序媛</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">70</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">19</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">74</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/sophia-hxw" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://github.com/sophia-hxw/sophia-hxw.github.io/2022/11/16/Transformer/Transformer%20with%20Fourier/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/me.jpg">
+      <meta itemprop="name" content="xinwen">
+      <meta itemprop="description" content="想到哪儿记到哪儿的技术博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="橦言无忌">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Fourier Transformer
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-11-16 00:34:23 / 修改时间：01:35:40" itemprop="dateCreated datePublished" datetime="2022-11-16T00:34:23+08:00">2022-11-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Transformer/" itemprop="url" rel="index"><span itemprop="name">Transformer</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/11/16/Transformer/Transformer%20with%20Fourier/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/11/16/Transformer/Transformer%20with%20Fourier/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>17k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>15 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>文章：Transformer with Fourier Integral Attentions</p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2206.00206">essay link</a></p>
+<p><strong>无参数核估计，Fourier积分原理等跟Transformer关联的文章，似懂非懂啊，老天爷！</strong><br><span id="more"></span></p>
+<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>多头注意力赋予了Transformer最近的成功，这些最先进的模型在序列建模及其他方面效果显著。这些注意力机制计算q和k之间的成对点积，使用未归一化的Gaussian核并假设q遵循混合Gaussian分布，但实践中并不能保证这个假设成立。</p>
+<p>相对应的，本文首先将 Transformer 中的注意力解释为非参数核回归，然后提出了FourierFormer，一类将点积内核用新颖的广义Fourier积分内核取代的新Transformer。与点积核需要选择一个好的协方差矩阵来捕捉数据特征的依赖性不同，广义Fourier积分核可以自动捕捉这种依赖性，无需调试协方差矩阵。我们从理论上证明了本文提出的Fourier积分核可以有效地逼近任何k和q的分布。</p>
+<p>与具有点积注意力的传统Transformer相比，FourierFormers 获得了更好的精度并减少了注意力头之间的冗余。我们经验性地证实了 FourierFormers 在包括语言建模和图像分类在内的各种实际应用中优于基线Transformer的优势。</p>
+<h2 id="1，介绍"><a href="#1，介绍" class="headerlink" title="1，介绍"></a>1，介绍</h2><p>Transformers是强大的神经网络，在机器学习的许多领域都取得了巨大的成功并成为跨领域广泛应用的最先进模型，视频，点云，以及蛋白质序列。除了在监督学习任务上的出色表现外，Transformer 还可以有效地将学习到的知识从预训练任务转移到有限制或无监督的新任务。Transformers 的核心是点积自注意力，它主要是导致 Transformer 模型成功的原因。</p>
+<p>这种点积自注意力通过估计给定标记相对于所有其他标记的相对重要性来学习输入序列中标记之间的自我对齐，然后它将每个标记转换为其他标记的特征表示的加权平均值，其中权重与每对标记之间的重要性分数成正比。 自注意力中的重要性分数使一个标记能够关注序列中的其他标记，从而捕获上下文表示。</p>
+<h3 id="1-1-自注意力"><a href="#1-1-自注意力" class="headerlink" title="1.1 自注意力"></a>1.1 自注意力</h3><p>给定输入序列$\mathbf{X}:=[x_1,\cdots x_N]^T\in \mathbb{R}^{N\times D_x} $是$\mathbf{N}$维特征向量，自注意力计算$\mathbf{X}$给定下的$\mathbf{H}$输出序列。</p>
+<p><strong>Step 1将输入序列映射到不同子空间</strong><br>输入序列是$\mathbf{X}$，会通过三个线性变换转换为查询矩阵$\mathbf{Q}$，关键矩阵$\mathbf{K}$和值矩阵$\mathbf{V}$，也就是：</p>
+<script type="math/tex; mode=display">\mathbf{Q}=\mathbf{X}\mathbf{W}^T_Q;\quad \mathbf{K}=\mathbf{X}\mathbf{W}^T_K;\quad \mathbf{V}=\mathbf{X}\mathbf{W}^T_V</script><p>其中，$\mathbf{W}_Q , \mathbf{W}_K \in \mathbb{R}^{D\times D_x} $，有 $\mathbf{W}_V \in\mathbb{R}^{D_v\times D_x} $ 是权重矩阵。相应的$q,k,v$的矩阵表示如下：</p>
+<script type="math/tex; mode=display">\mathbf{Q}:=[q_1,\cdots q_N]^T, \mathbf{K}:=[k_1,\cdots k_N]^T,  \mathbf{V}:=[v_1,\cdots v_N]^T</script><p><strong>Step 2 用加权平均计算输出</strong><br>输出$\mathbf{H}:=[h_1,\cdots h_N]^T $可以表示为：</p>
+<script type="math/tex; mode=display">\mathbf{H}=softmax(\mathbf{Q}\mathbf{K}^{T}/\sqrt{\mathbf{D}})\mathbf{V := \mathbf{A}\mathbf{V}} \tag{1}</script><p>其中，softmax函数是作用在矩阵$(\mathbf{Q}\mathbf{K}^T)/\sqrt{D} $的每一行，对每一个查询向量$q_i,\; i=1,\cdots N $，方程(1)可以写成如下的向量形式来求每个输出向量$h_i$：</p>
+<script type="math/tex; mode=display">h_{i}=\sum\limits_{j=1}^{N}softmax(q_{i}^{T}k_{j}/\sqrt{\mathbf{D}})v_{j} := \sum\limits_{j=1}^{N}a_{ij}v_{j} \tag{2}</script><p>矩阵$\mathbf{A} \in\mathbb{R}^{N\times N},\; a_{ij}\in\mathbf{A}\; i,j=1\cdots N$分别为注意力矩阵和主力已分值。</p>
+<p>自注意力就是用方程(1)和方程(2)来计算的，也叫点乘注意力或者softmax注意力。在本文中，将使用这种注意力的Transformer称为具有点积注意力或点积Transformer的基线Transformer。 训练后的注意力矩阵 $\mathbf{A}$ 的结构决定了自注意力捕获每个标记的上下文表示能力。</p>
+<p><strong>多头注意力</strong><br>每个输出序列 $\mathbf{H}$ 形成一个注意力头，多头注意力连接多个头来计算最终输出。令 $H$ 为头的数量，$\mathbf{W}^O \in \mathbb{R}^{HD_v \times HD_v}$ 为输出的投影矩阵。 多头注意力定义为：</p>
+<script type="math/tex; mode=display">MultiHead(\{\mathbf{Q},\mathbf{K},\mathbf{V} \}^{H}_{i=1}) = Concat(\mathbf{H}_{1},\cdots \mathbf{H}_{H})\mathbf{W}^{O}</script><p>注意力机制的容量和学习不同句法和语义关系的能力决定了transformer的成功。然而，方程(1)和(2)意味着点积注意力会假设特征$q_i$和$k_j$是独立的。因此，点积注意力无法捕捉这些特征之间的相关性，从而限制了其表示能力并抑制了Transformer在实际任务中的性能，因为无法保证可以从复杂数据中学习到彼此独立的特征。捕获特征 $q_i$ 和 $k_j$ 之间相关性的一种解决方案是将协方差矩阵引入点积注意力的公式中，代价是计算复杂度显著增加，此外，选择好的协方差矩阵也很困难。</p>
+<h3 id="1-2-贡献"><a href="#1-2-贡献" class="headerlink" title="1.2 贡献"></a>1.2 贡献</h3><p>在本文中，我们首先建立了自注意力和非参数核回归之间的对应关系。 在这种自注意力的新视角下，我们解释了点积自注意力的局限性，即它可能无法捕获查询向量与关键向量之间的相关性特征。 </p>
+<p>然后，我们利用广义Fourier积分定理，它可以自动捕捉这些相关性，并为非参数回归问题推导出广义Fourier积分估计量。 使用这种新的密度估计器，我们提出了 FourierFormer，这是一种新型的Transformer，可以捕获自注意力中$q$和$k$的相关性。 总之，我们的贡献是三方面的：</p>
+<ul>
+<li>1, 我们从解决非参数核回归问题中推导出了自注意力的公式，从而为研究和进一步发展自注意力提供了非参数回归解释。</li>
+<li>2, 我们为非参数回归问题开发了广义Fourier积分估计器，并为这些估计器提供了理论支持。</li>
+<li>3, 我们提出了 FourierFormer，它的注意力使用广义Fourier积分估计器来更有效地捕获$q$和$k$的相关性。</li>
+</ul>
+<p>最后，我们凭经验证明，在包括 WikiText 语言建模和 ImageNet 图像分类在内的各种任务上，FourierFormer 比点积注意力的基线Transformer获得了明显更好的准确度。 我们还在实验中证明 FourierFormer 有助于减少注意力头之间的冗余。</p>
+<p><strong>组织</strong><br>我们将本文的结构如下：在Section2中，我们提出了自我注意和非参数核回归之间的对应关系。 在 Section3中，我们讨论了广义Fourier积分估计器并定义了 FourierFormer。 我们在 Section4中验证并实证分析了 FourierFormer 的优势。 我们在 Section5中讨论相关工作。 论文以Section6的总结来结束。 附录中提供了技术证明和更多实验细节。</p>
+<p><strong>记号</strong><br>对于任何 $\mathbf{N} \in \mathbb{N}$，我们表示 $[N] = \{1, 2, \ldots, N\}$。 对于任何 $D \geq 1$，我们用$\mathbb{L}_1(\mathbb{R}^D) $ 来表示 $ \mathbb{R}^D $ 上实值函数空间中的全体可积函数。 </p>
+<p>对于任意两个序列 $\{a_N\}_{N \geq 1},\{ b_N \}_{N \geq 1} $， 我们用 $a_N = \mathcal{O}(b_N)$ 表示在所有 $N \geq 1$ 的情况下，都有 $a_{N} \leq C b_N$ ，其中 $C$ 是一些通用常数。</p>
+<h2 id="2，自注意力的无参数回归解释"><a href="#2，自注意力的无参数回归解释" class="headerlink" title="2，自注意力的无参数回归解释"></a>2，自注意力的无参数回归解释</h2><p>在本节中，我们建立了自注意力和无参数核回归之间的联系。 特别是，我们将方程(2)中的自注意力推导为非参数核回归，其中向量 $k_j$ 和向量 $v_j$ 分别是训练输入和训练目标 , 而查询向量 $q_i$ 和输出向量 $h_i$ 形成了一组新的输入及其对应的待估计目标，且有 $i,j=1,\cdots,N$。 一般来说，我们将训练集 $\{ k_j, v_j\}$ for $j \in [N]$ 视为来自以下非参数回归模型：</p>
+<script type="math/tex; mode=display">v_{j}=f(k_{j})+\varepsilon_{j} \tag{3}</script><p>其中 $\varepsilon_1,\cdots,\varepsilon_N$ 是独立的噪声，使得 $\mathbb{E}(\varepsilon_j) = 0$。 此外，我们考虑一个随机设计，其中$k$向量 $k_1,k_2,\cdots ,k_N$ 是来自 $p$ 为密度函数分布的采样。 通过混用符号，我们还将 $p$ 表示为联合密度，其中$k$和$v$向量 $(v_1, k_1), \cdots, (v_N, k_N)$ 也是来自 $p$ 为联合密度函数分布的采样。 在这里，$f$ 是一个真实但未知的函数，我们需要估计它。</p>
+<p><strong>Nadaraya-Watson 验证</strong><br>我们估计函数 $f$ 的方法是基于 Nadaraya–Watson 的非参数核回归方法。 特别是，从非参数回归模型，对于所有 $ j \in [N]$，我们有 $\mathbb{E}[v_j|k_j] = f(k_j)$ 。 因此，在给定$k$向量的情况下，估计$v$向量的条件分布就足够了。 给定$k$向量的密度函数 $p$ 以及$k$和$v$向量的联合密度 $p$，对于任何从模型生成的向量对 $(v, k)$ 我们有：</p>
+<script type="math/tex; mode=display">\mathbb{E}=\int_{\mathbb{R}^{D}}v\cdot p(v|k)dv=\int \frac{v\cdot p(v,k)}{p(k)}dv \tag{4}</script><p>条件期望的公式表明，只要我们能够估计联合密度函数$p(v, k)$和边际密度函数$p(v)$，我们就能够获得条件期望的估计，从而获得函数$f$。 这种方法被广泛称为 Nadaraya-Watson 的非参数核回归方法。</p>
+<p><strong>核密度估计</strong><br>为了估计 $p(v, k)$ 和 $p(k)$，我们采用核密度估计方法。 特别是，通过使用带宽为 $\sigma$ 的各向同性Gaussian核，我们有以下 $p(v, k)$ 和 $p(k)$ 的估计量：</p>
+<script type="math/tex; mode=display">\hat{p}_{\sigma}(v,k)=\frac{1}{N}\sum\limits_{j=1}^{N}\varphi_{\sigma}(v-v_{j})\varphi_{\sigma}(k-k_{j});\\ \hat{p}_{\sigma}(k)=\frac{1}{N}\sum\limits_{j=1}^{N}\varphi_{\sigma}(k-k_{j}) \tag{5}</script><p>其中 $\varphi_\sigma(.)$ 是对角协方差矩阵 $\sigma^2 I_D$ 的各向同性多元Gaussian密度函数。 给定核密度估计器，我们得到函数 $f$ 的以下估计：</p>
+<script type="math/tex; mode=display">\hat{f}_{\sigma}(k)=\int_{\mathbb{R}^{D}}\frac{v\cdot \hat{p}_{\sigma}(v,k)}{\hat{p}_{\sigma}(k)}dv=\int_{\mathbb{R}^{D}}\frac{v\cdot \sum\limits_{j=1}^{N}\varphi_{\sigma}(v-v_{j})\varphi_{\sigma}(k-k_{j})}{\sum\limits_{j=1}^{N}\varphi_{\sigma}(k-k_{j})}dv \\ =\frac{\sum\limits_{j=1}^{N}\phi_{\sigma}(k-k_{j})\int v\cdot \varphi_{\sigma}(v-v_{j})dv}{\sum\limits_{j=1}^{N}\varphi_{\sigma}(k-k_{j})}=\frac{\sum\limits_{j=1}^{N}v_{j}\varphi_{\sigma}(k-k_{j})}{\sum\limits_{j=1}^{N}\varphi_{\sigma}(k-k_{j})} \tag{6}</script><p><strong>自注意力和无参数回归的关系</strong><br>通过将查询向量 $ q_i $ 代入方程(6) 中的函数  $\widehat{f}_\sigma $，我们得到</p>
+<script type="math/tex; mode=display">\widehat{f}_{\sigma}(q_{i})=\frac{\sum\limits_{j}^{N}v_{j}exp(-||q_{i}-k_{j}||^{2}/2\sigma^{2})}{\sum\limits_{j}^{N}exp(-||q_{i}-k_{j}||^{2}/2\sigma^{2})} \\ =\frac{\sum\limits_{j}^{N}v_{j}exp[-(||q_{i}||^{2}+||k_{j}||^{2})/2\sigma^{2}]exp(q_{i}k_{j}^{T}/\sigma^{2})}{\sum\limits_{j}^{N}exp[-(||q_{i}||^{2}+||k_{j^{'}}||^{2})/2\sigma^{2}]exp(q_{i}k_{j}^{T}/\sigma^{2})}\tag{7}</script><p>如果我们进一步假设 $k_j$ 向量被归一化，通常在实践中这样做是为了稳定transformers的训练，方程(7)中$\hat{f}_\sigma (q_i)$的值为：</p>
+<script type="math/tex; mode=display">\hat{f}_{\sigma}(q_{i})=\frac{\sum\limits_{j}^{N}v_{j}exp(q_{i}k_{j}^{T}/\sigma^{2})}{\sum\limits_{j}^{N}exp(q_{i}k_{j^{'}}^{T}/\sigma^{2})}=\sum\limits_{j}^{N}softmax(q_{i}^{T}k_{j}/\sigma^{2})v_{j} \tag{8}</script><p>当我们选择 $\sigma^2 = \sqrt{D}$，其中 $D$ 是 $q_i$ 和 $k_j$ 的维数，方程(8)和方程(2)中的自注意力等价，即$\widehat{f}_\sigma (q_i) = h_i$。 因此，我们已经证明自注意力使用各向同性Gaussian核执行非参数回归。</p>
+<p><strong>注意1</strong><br>$k_j$ 被归一化的假设是为了恢复Transformer中成对点积的注意力。 一般来说，这个假设是不必要的。 事实上，方程(7)中的各向同性Gaussian核比成对点积注意力的方程(8)中的点积核更可取，因为前者是 Lipschitz 而后者不是。 Lipschitz约束有助于提高模型的鲁棒性并稳定模型训练。</p>
+<p><strong>自注意力局限</strong><br>根据我们非参数回归的解释，自注意力源自使用各向同性Gaussian核进行核密度估计和非参数回归估计，这可能无法捕捉 $q_i$ 和 $k_j$中$D$维特征的复杂关联。 使用具有密集协方差矩阵的多元Gaussian核有助于捕捉这种相关性，然而，选择好的协方差矩阵具有挑战性且效率低下。 在下一节中，我们将讨论Fourier积分估计器及其作为计算自注意力的内核以克服这些限制。</p>
+<h2 id="3，FourierForm：广义Fourier积分原理的Transformer"><a href="#3，FourierForm：广义Fourier积分原理的Transformer" class="headerlink" title="3，FourierForm：广义Fourier积分原理的Transformer"></a>3，FourierForm：广义Fourier积分原理的Transformer</h2><p>在下文中，我们介绍了能够捕捉$q$和$k$之间复杂特征关系的广义积分定理。 然后，我们将这些定理应用于密度估计和非参数回归问题，我们还建立了这些估计器的收敛速度。 鉴于这些密度估计器，我们引入了一个名为 FourierFormer 的新型Transformer家族，它将广义Fourier积分定理集成到标准Transformer的点积注意力步骤中。</p>
+<h3 id="3-1-广义Fourier积分方法和应用"><a href="#3-1-广义Fourier积分方法和应用" class="headerlink" title="3.1 广义Fourier积分方法和应用"></a>3.1 广义Fourier积分方法和应用</h3><p>Fourier积分定理是数学中一个漂亮的结果，最近被用于非参数模式聚类、反卷积问题和生成建模，它是Fourier变换和Fourier逆变换的组合。 特别是，对于任何函数 $p \in \mathbb{L}_{1}(\mathbb{R}^{D})$，Fourier积分定理由下式给出：</p>
+<script type="math/tex; mode=display">p(k)=\frac{1}{(2\pi)^{D}}\int_{\mathbb{R}^{D}}\int_{\mathbb{R}^{D}}cos(s^{T}(k-y))p(y)dyds \\ =\frac{1}{\pi^{D}}\lim_{\mathrm{R}\rightarrow\infty}\int_{\mathbb{R}^{D}}\prod_{j=1}^{D}\frac{sin(R(k_{j}-y_j))}{k_{j}-y_{j}}p(y)dy \tag{9}</script><p>其中，$k=(k_1,\cdots k_D), y=(y_1,\cdots y_D) $，上式表明：</p>
+<script type="math/tex; mode=display">p_{\mathrm{R}}(k):=\frac{1}{\pi^{D}}\int_{\mathbb{R}^{D}}\prod_{j=1}^{D}\frac{sin(R(y_j-k_{j}))}{y_{j}-k_{j}}p(y)dy</script><p>$p_{\mathrm{R}}(k)$可用于估计函数$p$。</p>
+<p><strong>用Gaussian核做Fourier积分的优点</strong><br>估计器 $p_R$ 有两个重要的好处：（i）即使 $p$ 是非常复杂和高维的函数，它也可以自动保留 $p$ 内的相关结构。与基于多元Gaussian核构建的标准核估计器形成鲜明对比，我们需要在多元Gaussian核中选择好的协方差矩阵来保证这样的估计器工作良好。我们注意到，由于标准的 softmax Transformer 是基于多元Gaussian核构建的，因此在点积Transformer中选择好的协方差矩阵的问题是不可避免的； (ii) 当 $R \to \infty$ 时，估计器 $p_{R}$ 中 sinc 核的乘积不会衰减到点质量，它与多元Gaussian核估计量截然不同，后者在协方差矩阵变为 0 时收敛到一个点质量，这表明 $p_R$ 是函数 $p$ 的非平凡估计量。最后，在密度估计和非参数回归问题中Fourier积分优于Gaussian核的这些好处的详细说明，也是我们刚刚证明这些好处与Transformer中的自注意力有关，可以在第 8 节中找到。</p>
+<p><strong>广义Fourier积分估计</strong><br>借用Fourier积分估计器 $p_R$ 的上述优点，在本文中，我们想考虑该估计器的泛化，命名为广义Fourier积分估计器，由下式给出：</p>
+<script type="math/tex; mode=display">p_{\mathrm{R}}^{\phi}(k)=\frac{\mathrm{R}^{D}}{A^{D}}\int_\mathrm{R^D}\prod^D_{j=1}\phi(\frac{sin(R(y_j-k_j))}{R(y_j-k_j)})p(y)dy \tag{10}</script><p>其中 $A : = \int_{\mathbb{R}} \phi \left(\frac{\sin(z)}{z}\right) dz$ 和 $\phi: \mathbb{R} \to \mathbb {R}$ 是给定的函数。 当 $\phi(k) = k$ 对所有 $k \in \mathbb{R}^D$ 时，广义Fourier积分估计量 $p_{R}^{\phi}$ 变为Fourier积分估计器 $p_R$。 在函数 $\phi$ 的适当条件下，估计器$p_R^{\phi}$收敛到真函数$p$，即，</p>
+<script type="math/tex; mode=display">p(k)=\lim_{R\rightarrow \infty}p^{\phi}_R (k)=\lim_{R\rightarrow\infty}\frac{\mathrm{R}^{D}}{A^{D}}\int_\mathrm{R^D}\prod^D_{j=1}\phi(\frac{sin(R(y_j-k_j))}{R(y_j-k_j)})p(y)dy \tag{11}</script><p>我们将上述极限命名为广义Fourier积分定理。 此外，估计器 $p_R^{\phi}$ 也继承了Fourier积分估计器 $p_R$ 的类似优点。 因此，我们将使用广义Fourier积分定理作为构建密度估计器和非参数回归估计器的构建块，这对于开发 Section3.2 中的 FourierFormer 至关重要。</p>
+<h4 id="3-1-1-用广义Fourier积分原理估计密度"><a href="#3-1-1-用广义Fourier积分原理估计密度" class="headerlink" title="3.1.1 用广义Fourier积分原理估计密度"></a>3.1.1 用广义Fourier积分原理估计密度</h4><p>我们首先将广义Fourier积分定理应用于密度估计问题。 为了简化表示，我们假设 $k_1, k_2, \ldots, k_N \in \mathbb{R}^D$ 是来自一个分布的样本，其密度函数为 $p$，其中 $D \geq 1$ 是维度。 受广义Fourier积分定理的启发，我们得到以下$p$的广义Fourier密度估计$p_{N,R}^{\phi}$如下：</p>
+<script type="math/tex; mode=display">p^\phi_{N,R}(k):= \frac{R^D}{NA^D}\sum\limits^N_{j=1}\prod^{D}_{j=1}\phi\frac{sin(R(k_j-k_{ij}))}{R(k_j-j_{ij})} \tag{12}</script><p>其中 $A = \int_{\mathbb{R}} \phi \left(\frac{\sin(z)}{z}\right) dz$ 和 $k_i = (k_{i1}, \ ldots, k_{iD})$ 对于所有 $i \in [N]$。 为了量化广义Fourier密度估计 $p_{n,R}^{\phi}$ 和真实密度 $p$ 之间的误差，我们利用均方积分平方误差 MISE，给出如下表达式：</p>
+<script type="math/tex; mode=display">MISE(p^\phi_{N,R},p):=\int_\mathrm{R^D}(p^\phi_{N,R}(k)-p(k))^2dk \tag{13}</script><p>我们从 $p_{n,R}^{\phi}$ 和 $p$ 之间的 MISE 的以下界限开始。</p>
+<p><strong>定理1</strong><br>假设 $\int_{\mathbb{R}} \phi(\sin(z)/z)z^j dz = 0$ 对于所有 $j \in [m]$ 以及 $\int_{\mathbb{ R}} |\phi(\sin(z)/z)| |z|^{m + 1} dz &lt; \infty$ 对于一些 $m \in \mathbb{N}$。 然后，存在取决于 $d$ 和 $A$ 的通用常数 $C$ 和 $C^{‘}$，使得：</p>
+<script type="math/tex; mode=display">MISE(p^\phi_{N,R},p)\leq\frac{C}{R^{m+1}}+\frac{C^{'}R^D}{N}</script><p>定理1证明见附录B.1，且以下论述是有序的。 首先，通过选择 $R$ 来平衡定理1中 MISE 边界的偏差和方差，我们得到最优 $R$ 为 $R = \mathcal{O}(N^{1 /(D + m + 1)})$，选择 $R$，$p_{N, R}^{\phi}$ 的 MISE 率为 $\mathcal{O}(N^{-(m+1)/(D + m + 1) })$。 其次，当 $l \geq 4$ 和 $z \in \mathbb{R}$ 的 $\phi(z) = z^{l}$ 时，定理1中的假设满足 $m = 1$。 在这种情况下，$p_{N,R}^{\phi}$ 的 MISE 率为 $\mathcal{O}(N^{-2/(D+2)})$。 但是，当 $\phi(z) = z^{l}$ 和 $l \in \{1,2,3\}$ 时，这些假设不满足，这是由于当前定理1证明技术的限制，是基于估计量 $p_{n,R}^{\phi}$ 的Taylor展开。</p>
+<p>为了解决Taylor展开技术的局限性，我们利用Fourier分析中的 Plancherel 定理来建立当 $\phi(z) = z^{l}$ 和 $l \in \{1,2,3\}$时 $p_{N,R}^{\phi}$ 的 MISE 率。 这种设置的理论分析细节在附录A中。</p>
+<h3 id="3-2-FourierFormer：Transformer带Fourier注意力"><a href="#3-2-FourierFormer：Transformer带Fourier注意力" class="headerlink" title="3.2 FourierFormer：Transformer带Fourier注意力"></a>3.2 FourierFormer：Transformer带Fourier注意力</h3><p>受广义Fourier积分定理中函数相关结构的保留以及密度估计器的理论保证的启发，在本节中，我们采用了Section2中自注意力的非参数回归解释并在 Section3.2.1 中提出广义Fourier非参数回归估计器，我们还建立了该估计器的收敛特性。 然后，基于广义Fourier非参数回归估计器，我们在 Section3.2.2 中开发了 Fourier 注意力及其对应的 FourierFormer。</p>
+<h4 id="3-2-1-广义Fourier积分原理的非参数化回归"><a href="#3-2-1-广义Fourier积分原理的非参数化回归" class="headerlink" title="3.2.1 广义Fourier积分原理的非参数化回归"></a>3.2.1 广义Fourier积分原理的非参数化回归</h4><p>我们现在讨论广义Fourier积分定理在非参数回归设置中的应用，即我们假设 $(v_1, k_1), \ldots, (v_N, k_N)$ 是来自以下非参数回归模型的样本：</p>
+<script type="math/tex; mode=display">v_j:=f(k_j)+\varepsilon_j</script><p>其中 $\varepsilon_1, \ldots, \varepsilon_N$ 是独立的噪声，使得 $\mathbb{E}(\varepsilon_j) = 0$ 和$k$向量 $k_1, k_2、\ldots、k_N$ 来自密度函数为 $p$ 的样本。 给定广义Fourier密度估计器，根据第2节中的参数，基于广义Fourier密度估计器的函数 $f$ 的 Nadaraya-Watson 估计器为：</p>
+<script type="math/tex; mode=display">f_{N,R}(k):=\frac{\sum\limits^N_{i=1}v_i\prod^D_{j=1}\phi(\frac{sin(R(k_i-k_{ij}))}{R(k_i-k_{ij})})}{\sum\limits^N_{i=1}\prod^D_{j=1}\phi(\frac{sin(R(k_i-k_{ij}))}{R(k_i-k_{ij})})} \tag{14}</script><p>方程(14)中的广义Fourier非参数回归估计器$f_{N,R}$与方程(6)中估计器$\widehat{f}_{\sigma}$ 的主要区别是估计器 $f_{N,R}$ 利用广义Fourier密度估计器来估计给定$k$和$v$向量的条件分布，而不是如 $\widehat{f}_{\sigma}$ 中的各向同性Gaussian核密度估计器 。 </p>
+<p>正如我们在 Section3 中强调的那样，广义Fourier密度估计器的一个重要好处是它可以捕获$k$和$v$向量特征的复杂依赖关系，而Gaussian核需要具有良好的协方差矩阵来做到这一点，这在实践中计算成本很高。</p>
+<p>我们现在有以下结果，建立了 $f_{N,R}$ 的均方误差 (MSE)。</p>
+<p><strong>定理2</strong><br>假设 $\int_{\mathbb{R}} \phi \left(\frac{\sin(z)}{z}\right) z^j dz = 0$ 对于所有 $1 \leq j \leq m $，且 $\int_{\mathbb{R}} \left|\phi \left(\frac{\sin(z)}{z}\right)\right| |z|^j dz &lt; \infty$ 对于任何 $m + 1 \leq j \leq 2m + 2$ 对于一些 $m \in \mathbb{N}$ 成立。 那么，对于任何 $k \in \mathbb{R}^D$，存在一般常数 $C_1, C_2, C_3, C_4$ 使得以下成立 ：</p>
+<script type="math/tex; mode=display">\mathbb{E}[(f_{N,R}(k)-f(k))^2]\leq(\frac{C_1}{R^{2(m+1)}}+\frac{(f(k)+C_2)R^D}{N})/(p^2(kJ(R)))</script><p>其中 $J(R) = 1 - \frac{1}{p^2(k)} ( \frac{C_3}{R^{2(m+1)}} + \frac{ C_4 R^d \log (N R)}{N}) $。 这里，外部期望是关于$k$向量 $k_1,\ldots,k_N$ 和噪声 $\varepsilon_1,\ldots,\varepsilon_N$ 的。</p>
+<p>定理2证明见附录B.3，且关于定理2的一些评论是有序的。 首先，通过选择 $R$ 来平衡非参数广义Fourier估计器 $f_{N,R}$ 的 MSE 范围内的偏差和方差，我们得到最优半径 $R$ 为 $R = \mathcal{O}(N^{\frac{1}{2(m + 1) + D}})$。 选择最优半径 $R$，$f_{N,R}$ 的比率为 $\mathcal{O}(N^{-\frac{2(m+1)}{D + 2(m +1)}})$。 其次，当 $\phi(z) = z^{l}$ 对 $l \geq 6$ 时，定理2的函数 $\phi$ 的假设满足 $m = 1$。 在这种情况下，$f_{N,R}$ 的比率变为 $\mathcal{O}(N^{-\frac{4}{D + 4}})$。 在附录A中，我们还提供了当 $\phi(z) = z^l$ 对于某些 $l \leq 5$ 时的 $f_{N,R}$ 的比率，其中包括原始Fourier积分定理。</p>
+<h4 id="3-2-2-FourierFormer"><a href="#3-2-2-FourierFormer" class="headerlink" title="3.2.2 FourierFormer"></a>3.2.2 FourierFormer</h4><p>给定方程(14)中的广义Fourier非参数回归估计器 $f_{N,R}$，通过将$q$值 $q_1,\ldots,q_N$ 插入该函数 ，我们得到Fourier注意力的以下定义：</p>
+<p><strong>定义1(Fourier注意力)</strong><br>Fourier注意力是一种多头注意力，它使用广义Fourier非参数回归估计器 $f_{N,R}$ 进行非参数回归。 Fourier注意力的输出 $\hat{h}_i$计算公式为</p>
+<script type="math/tex; mode=display">\hat{h}_i:=f_{N,R}(q_i)=\frac{\sum\limits^N_{i=1}v_i\prod^D_{j=1}\phi(\frac{sin(R(q_{ij}-k_{ij}))}{R(q_{ij}-k_{ij})})}{\sum\limits^N_{i=1}\prod^D_{j=1}\phi(\frac{sin(R(q_{ij}-k_{ij}))}{R(q_{ij}-k_{ij})})} \quad \forall i\in [N]\tag{15}</script><p>给定定义1中的 Fourier注意力，我们接着给出 FourierFormer 的定义如下。</p>
+<p><strong>定义2(FourierFormer)</strong><br>FourierFormer 是一种Transformer，它使用Fourier注意力来捕获输入序列中，标记之间的依赖关系，以及每个标记中特征之间的相关性。</p>
+<p><strong>注意2 Fourier核的非负性</strong><br>通过第3.1.1节中的广义Fourier积分定理进行的密度估计不需要广义Fourier密度估计器是非负的。 然而，根据经验，我们观察到负密度估计器会导致训练FourierFormer的不稳定。 因此，在 FourierFormer 中，我们选择函数 $\phi$ 作为非负函数，以强制密度估计为非负。 特别是，我们选择 $\phi$ 为 $\phi(x) = x^{2m}$ 形式的幂函数，其中 $m$ 是一个正整数。 请注意，当 $m=2$ 和 $m=4$ 时，我们的广义Fourier积分估计器中的核是著名的 Fejer-de la Vallee Poussin 和 Jackson-de la Vallee Poussin 核。</p>
+<h3 id="3-3-Fourier注意力的高效实现"><a href="#3-3-Fourier注意力的高效实现" class="headerlink" title="3.3 Fourier注意力的高效实现"></a>3.3 Fourier注意力的高效实现</h3><p>Fourier内核在 Pytorch 开发的 C++/CUDA 扩展中高效实现。 这个想法类似于函数 cdist ，它计算两个行向量集合中每对之间的 p 范数距离。 在我们的例子中，我们的目标是计算在定义1中代表Fourier注意力的核函数。 这个实现的核心是下面的Fourier度量函数$d_f$：</p>
+<script type="math/tex; mode=display">d_f(q_i,k_j)=\prod^D_{d=1}\phi(\frac{sin(R(q_{id}-k_{jd}))}{(q_{id}-k_{jd})})</script><p>我们直接将 $d_f$ 实现为 torch.autograd.Function，其中我们提供了一种计算前向和后向函数的有效方法（$d_f$ 和 $d_f$ 的梯度）。 虽然前向函数的实现是直截了当的，但后向函数更加棘手，因为我们需要优化代码来一次计算与变量 $q$、$k$ 和 $R$ 的所有梯度有关的 $d_f$。 我们可以通过利用 GPU 架构和利用缩减技术来开发具有高度并行计算的后向函数。 计算时间与函数 cdist 相当； 因此，我们的 FourierFormer 实现在计算上是高效的。</p>
+<h2 id="4，实验结果"><a href="#4，实验结果" class="headerlink" title="4，实验结果"></a>4，实验结果</h2><p>在本节中，我们在数值上证明了 FourierFormer 在两个大规模任务上优于基线点积Transformer的优势：WikiText-103 上的语言建模和 ImageNet 上的图像分类。 我们的目标是证明：(i) FourierFormer 在具有不同数据模式的各种实际任务中实现比基线 Transformer 更好的精度，并且 (ii) FourierFormer 与基线 Transformer 相比有助于减少头部冗余。</p>
+<p>在本章节，我们将 FourierFormers 与相同配置的基线点积Transformer进行比较。 在所有实验中，我们将Fourier注意力中的常数 $R$ 设为可学习的标量，并设置选择函数 $\phi(x) = x^4 $。 我们所有的结果都是使用不同种子进行 5 次运行的平均值。 附录C中提供了有关模型和训练的更多详细信息。 我们还在附录D中提供了额外的实验结果。</p>
+<h3 id="4-1-WikiText-103的语言建模"><a href="#4-1-WikiText-103的语言建模" class="headerlink" title="4.1 WikiText-103的语言建模"></a>4.1 WikiText-103的语言建模</h3><p>WikiText-103 是来自 Wikipedia 的文章集合，它们具有长期的上下文依赖关系。 训练集由大约 28K 数量的文章组成，其中包含 1.03M 的运行词；这对应于大约 3600 个单词的文本块。 验证集和测试集分别有 $218K$ 和 $246K$ 的运行词。 每篇文章都包含 60 篇文章和大约 268K 数量的单词。 我们的实验遵循标准设置并将训练数据拆分为$L$-word 独立的长片段。 为了评估，我们使用批量大小为 1，并使用大小为 $L$ 的滑动窗口处理文本序列。 最后一个位置用于计算除了第一段的困惑度（PPL），所有位置都参与评估。</p>
+<p><strong>模型和基线</strong><br>我们的实现基于 schlag2021linear 的公共代码，我们在实验中使用他们的中小模型。 特别是对于小模型，key、value和query维度设置为128，训练和评估上下文长度设置为256。对于中模型，key、value和query维度设置为256，并且训练和评估上下文长度设置为 384。在两种配置中，head 的数量都是 8，前馈层维度是 2048，层数是 16。</p>
+<p><strong>结果</strong><br>我们在 Table1 中报告了 FourierFormer 与带点积注意力的基线Transformer的验证和测试困惑度 (PPL)。 FourierFormers 在中小模型配置中都比基线获得了更好的 PPL。对于小模型配置，FourierFormer 相对于基线的改进是验证中的 1.29 PPL 和测试中的 1.44 PPL。对于中模型配置，这些改进是验证中的 1.39 PPL 和测试中的 1.59 PPL。这些结果表明，FourierFormer 相对于基线点积Transformer的优势随着模型的大小而增长。这符合我们的预期，因为更大的模型具有更大的$q$和$k$维度，例如本实验中配置中等的语言模型的$q$和$k$的维度为 256，而配置较小的语言模型为 128。由于 FourierFormer 的优势来自于 FourierFormer 可以捕获$q$和$k$之间的特征相关性，因此$q$和$k$维度越大，FourierFormer 的优势就越大。</p>
+<h3 id="4-2-ImageNet上的图像分类任务"><a href="#4-2-ImageNet上的图像分类任务" class="headerlink" title="4.2 ImageNet上的图像分类任务"></a>4.2 ImageNet上的图像分类任务</h3><p><strong>数据集和指标</strong><br>ImageNet 数据集包含 1.28M 的训练图像和 50K 的验证图像。 对于这个基准，模型学习在 1000 个类别中预测输入图像的类别。 报告了前 1 和前 5 的分类精度。</p>
+<p><strong>模型和基线</strong><br>我们使用 DeiT-tiny 模型，有 12 个transformer 层，每层 4 个注意力头，模型维度为 192。为了训练模型，我们遵循与基线相同的设置和配置。</p>
+<p><strong>结果</strong><br>我们在 Table2 中总结了我们的结果。 与语言建模实验相同，对于这个图像分类任务，配备 FourierFormer 的 Deit 模型在 top-1 和 top-5 精度上都显着优于基线 Deit 点积Transformer。 该结果表明 FourierFormer 优于基线点积Transformer的优势适用于不同的数据模式。</p>
+<h3 id="4-3-FourierFormer帮助减少多头冗余"><a href="#4-3-FourierFormer帮助减少多头冗余" class="headerlink" title="4.3 FourierFormer帮助减少多头冗余"></a>4.3 FourierFormer帮助减少多头冗余</h3><p>为了研究注意力头之间的多样性，给定 WikiText-103 语言建模任务训练的模型，我们计算每层头之间的平均 $\mathcal{L}_2$ 距离。 我们在 Table3 中显示了头部之间距离的层平均均值和方差。 Table3 中的结果表明，FourierFormer 在注意力头之间获得了比具有点积注意力的基线Transformer更大的 $\mathcal{L}_2$ 距离，因此有助于减少头冗余。<br>请注意，我们对两个模型都使用了 Section4.1 中指定的小模型配置。</p>
+<h2 id="5，相关工作"><a href="#5，相关工作" class="headerlink" title="5，相关工作"></a>5，相关工作</h2><p><strong>Transformer中的注意力机制理解</strong><br>最近的工作试图从不同的角度了解Transformer的注意力。tsai2019transformer 认为注意力是在输入上用内核平滑，扩展这种内核方法，katharopoulos2020transformers,choromanski2021rethinking, wang2020linformer 线性化了点积注意力中的 softmax 核，并提出了一系列具有线性计算和内存复杂度的高效Transformer。cao2021choose 然后表明这些线性Transformer与 Petrov-Galerkin投影相当，表明点积注意力中的 softmax 归一化是足够的，但不是必需的。</p>
+<p>其他作品通过常/偏微分方程提供了对Transformer注意力的理解，包括 lu2019understanding, sander2022sinkformers。此外，tang2021probabilistic等将Transformer中的注意力与Gaussian混合模型联系起来。一些工作还将注意力机制与图形模型中的图结构学习和消息传递联系起来，如wang2018non。我们的工作重点是推导自注意力和非参数核回归之间的联系，并探索更好的回归估计器，例如广义Fourier非参数回归估计器，以提高Transformer的性能。</p>
+<p><strong>Transformer中的冗余</strong><br>dalvi2020analyzing等表明预训练Transformer中的神经元和注意力头是冗余的，并且可以在应用于下游任务时移除。 通过研究预训练网络中的上下文嵌入，已经证明从这些冗余模型中学习到的表示是高度各向异性的。 此外，sanh2019distilbert 等采用知识蒸馏和稀疏近似来提高Transformer的效率。 我们的 FourierFormer 是对这些方法的补充，可以与它们结合使用。</p>
+<h2 id="6，结论"><a href="#6，结论" class="headerlink" title="6，结论"></a>6，结论</h2><p>在本文中，我们建立了非参数核回归与 Transformer 中的自注意力之间的对应关系。然后，我们开发了广义Fourier积分估计器并提出了 FourierFormer，这是一类新的Transformer，它使用广义Fourier积分估计器来构建它们的注意力，以有效地捕获$q$和$k$向量中的特征之间的相关性。我们从理论上证明了广义Fourier积分估计器的近似保证，并在精度和头部冗余减少方面通过点积注意验证了 FourierFormer 相对于基线Transformer的优势。将鲁棒内核合并到 FourierFormer 的非参数回归框架中以增强模型在数据扰动和对抗性攻击下的鲁棒性是很有趣的。 </p>
+<p>FourierFormer 的一个限制是它仍然具有与具有点积注意力的基线Transformer相同的二次计算和内存复杂性。我们将实现线性计算和内存复杂性的 FourierFormer 线性版本的开发留作未来的工作。值得注意的是，FourierFormer 没有潜在的负面社会影响。</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>xinwen
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://github.com/sophia-hxw/sophia-hxw.github.io/2022/11/16/Transformer/Transformer%20with%20Fourier/" title="Fourier Transformer">https://github.com/sophia-hxw/sophia-hxw.github.io/2022/11/16/Transformer/Transformer with Fourier/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Fourier/" rel="tag"><i class="fa fa-tag"></i> Fourier</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/11/15/math/learning_video_source/" rel="prev" title="数学专业课学习资源">
+      <i class="fa fa-chevron-left"></i> 数学专业课学习资源
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/03/22/Transformer/Attention%20is%20all%20you%20need/" rel="next" title="Attention is all you need">
+      Attention is all you need <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1%EF%BC%8C%E4%BB%8B%E7%BB%8D"><span class="nav-text">1，介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E8%87%AA%E6%B3%A8%E6%84%8F%E5%8A%9B"><span class="nav-text">1.1 自注意力</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E8%B4%A1%E7%8C%AE"><span class="nav-text">1.2 贡献</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%EF%BC%8C%E8%87%AA%E6%B3%A8%E6%84%8F%E5%8A%9B%E7%9A%84%E6%97%A0%E5%8F%82%E6%95%B0%E5%9B%9E%E5%BD%92%E8%A7%A3%E9%87%8A"><span class="nav-text">2，自注意力的无参数回归解释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%EF%BC%8CFourierForm%EF%BC%9A%E5%B9%BF%E4%B9%89Fourier%E7%A7%AF%E5%88%86%E5%8E%9F%E7%90%86%E7%9A%84Transformer"><span class="nav-text">3，FourierForm：广义Fourier积分原理的Transformer</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E5%B9%BF%E4%B9%89Fourier%E7%A7%AF%E5%88%86%E6%96%B9%E6%B3%95%E5%92%8C%E5%BA%94%E7%94%A8"><span class="nav-text">3.1 广义Fourier积分方法和应用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-1-%E7%94%A8%E5%B9%BF%E4%B9%89Fourier%E7%A7%AF%E5%88%86%E5%8E%9F%E7%90%86%E4%BC%B0%E8%AE%A1%E5%AF%86%E5%BA%A6"><span class="nav-text">3.1.1 用广义Fourier积分原理估计密度</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-FourierFormer%EF%BC%9ATransformer%E5%B8%A6Fourier%E6%B3%A8%E6%84%8F%E5%8A%9B"><span class="nav-text">3.2 FourierFormer：Transformer带Fourier注意力</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-1-%E5%B9%BF%E4%B9%89Fourier%E7%A7%AF%E5%88%86%E5%8E%9F%E7%90%86%E7%9A%84%E9%9D%9E%E5%8F%82%E6%95%B0%E5%8C%96%E5%9B%9E%E5%BD%92"><span class="nav-text">3.2.1 广义Fourier积分原理的非参数化回归</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-2-FourierFormer"><span class="nav-text">3.2.2 FourierFormer</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-Fourier%E6%B3%A8%E6%84%8F%E5%8A%9B%E7%9A%84%E9%AB%98%E6%95%88%E5%AE%9E%E7%8E%B0"><span class="nav-text">3.3 Fourier注意力的高效实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%EF%BC%8C%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C"><span class="nav-text">4，实验结果</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-WikiText-103%E7%9A%84%E8%AF%AD%E8%A8%80%E5%BB%BA%E6%A8%A1"><span class="nav-text">4.1 WikiText-103的语言建模</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-ImageNet%E4%B8%8A%E7%9A%84%E5%9B%BE%E5%83%8F%E5%88%86%E7%B1%BB%E4%BB%BB%E5%8A%A1"><span class="nav-text">4.2 ImageNet上的图像分类任务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-FourierFormer%E5%B8%AE%E5%8A%A9%E5%87%8F%E5%B0%91%E5%A4%9A%E5%A4%B4%E5%86%97%E4%BD%99"><span class="nav-text">4.3 FourierFormer帮助减少多头冗余</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5%EF%BC%8C%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C"><span class="nav-text">5，相关工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6%EF%BC%8C%E7%BB%93%E8%AE%BA"><span class="nav-text">6，结论</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="xinwen"
+      src="/images/me.jpg">
+  <p class="site-author-name" itemprop="name">xinwen</p>
+  <div class="site-description" itemprop="description">想到哪儿记到哪儿的技术博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">74</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">70</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/sophia-hxw" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;sophia-hxw"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/sophia_xw" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;sophia_xw" rel="noopener" target="_blank"><i class="crosshairs fa-fw"></i>CSDN</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xinwen618@gmail.com" title="E-Mail → mailto:xinwen618@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2022 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xinwen</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">231k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:30</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+// 代码折叠
+<script src="/js/code-unfold.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'QS91rh0eXkhXnjzhcdHGIRzJ-gzGzoHsz',
+      appKey     : 'DD7UTgTkdGwFia0JrJRcs7fs',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
