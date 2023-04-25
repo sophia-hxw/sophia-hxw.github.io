@@ -21,15 +21,15 @@
     var CONFIG = {"hostname":"github.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="前言实变函数中理不清的几个空间问题，不断更新中，一边学习，一边总结~ 各种空间，还在学习中…">
+  <meta name="description" content="前言实变函数中理不清的几个空间问题，不断更新中，一边学习，一边总结~ 实变函数与泛函分析中的几个空间，各种空间，还在学习中…">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Several spaces in Real Variable Functions">
 <meta property="og:url" content="https://github.com/sophia-hxw/sophia-hxw.github.io/2022/11/14/math/several%20spaces/index.html">
 <meta property="og:site_name" content="橦言无忌">
-<meta property="og:description" content="前言实变函数中理不清的几个空间问题，不断更新中，一边学习，一边总结~ 各种空间，还在学习中…">
+<meta property="og:description" content="前言实变函数中理不清的几个空间问题，不断更新中，一边学习，一边总结~ 实变函数与泛函分析中的几个空间，各种空间，还在学习中…">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-11-14T03:51:06.000Z">
-<meta property="article:modified_time" content="2022-11-14T15:36:56.000Z">
+<meta property="article:modified_time" content="2023-04-25T07:06:35.301Z">
 <meta property="article:author" content="xinwen">
 <meta property="article:tag" content="real-variable-funcs">
 <meta name="twitter:card" content="summary">
@@ -132,7 +132,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">71</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">74</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -142,7 +142,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">75</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">77</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -222,10 +222,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-11-14 11:51:06 / 修改时间：23:36:56" itemprop="dateCreated datePublished" datetime="2022-11-14T11:51:06+08:00">2022-11-14</time>
+              <time title="创建时间：2022-11-14 11:51:06" itemprop="dateCreated datePublished" datetime="2022-11-14T11:51:06+08:00">2022-11-14</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-04-25 15:06:35" itemprop="dateModified" datetime="2023-04-25T15:06:35+08:00">2023-04-25</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -276,8 +282,8 @@
 
       
         <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>实变函数中理不清的几个空间问题，不断更新中，一边学习，一边总结~</p>
-<p><strong>各种空间，还在学习中…</strong><br><span id="more"></span></p>
-<h2 id="实变函数与泛函分析中的几个空间"><a href="#实变函数与泛函分析中的几个空间" class="headerlink" title="实变函数与泛函分析中的几个空间"></a>实变函数与泛函分析中的几个空间</h2><h2 id="一，度量空间"><a href="#一，度量空间" class="headerlink" title="一，度量空间"></a>一，度量空间</h2><p>设 $\mathbf{X}$ 是集合，对 $\forall x,y\in{X}$ 都有实数 $d(x,y)$ 对应，而且满足：</p>
+<p><strong>实变函数与泛函分析中的几个空间，各种空间，还在学习中…</strong><br><span id="more"></span></p>
+<h2 id="一，度量空间"><a href="#一，度量空间" class="headerlink" title="一，度量空间"></a>一，度量空间</h2><p>设 $\mathbf{X}$ 是集合，对 $\forall x,y\in{X}$ 都有实数 $d(x,y)$ 对应，而且满足：</p>
 <ul>
 <li>$d(x,y)\geqq 0,\quad d(x,y)=0 \; only \; if \; x=y$</li>
 <li>$d(x,y)\leqq d(x,z)+d(y,z)\quad for \; all \; z$</li>
@@ -458,7 +464,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E5%8F%98%E5%87%BD%E6%95%B0%E4%B8%8E%E6%B3%9B%E5%87%BD%E5%88%86%E6%9E%90%E4%B8%AD%E7%9A%84%E5%87%A0%E4%B8%AA%E7%A9%BA%E9%97%B4"><span class="nav-text">实变函数与泛函分析中的几个空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%EF%BC%8C%E5%BA%A6%E9%87%8F%E7%A9%BA%E9%97%B4"><span class="nav-text">一，度量空间</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%EF%BC%8C%E7%89%B9%E4%BE%8B"><span class="nav-text">1，特例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%EF%BC%8C%E5%AE%8C%E5%A4%87%E7%9A%84%E5%BA%A6%E9%87%8F%E7%A9%BA%E9%97%B4"><span class="nav-text">2，完备的度量空间</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%EF%BC%8C%E7%BA%BF%E6%80%A7%E7%A9%BA%E9%97%B4"><span class="nav-text">二，线性空间</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%EF%BC%8C%E7%89%B9%E4%BE%8B-1"><span class="nav-text">1，特例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%EF%BC%8C%E7%BB%B4%E5%BA%A6"><span class="nav-text">2，维度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%EF%BC%8C%E8%B5%8B%E8%8C%83%E7%BA%BF%E6%80%A7%E7%A9%BA%E9%97%B4"><span class="nav-text">三，赋范线性空间</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%EF%BC%8C%E4%B8%BE%E4%BE%8B"><span class="nav-text">1，举例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%EF%BC%8CBanach%E7%A9%BA%E9%97%B4-%E5%B7%B4%E6%8B%BF%E8%B5%AB%E7%A9%BA%E9%97%B4"><span class="nav-text">四，Banach空间(巴拿赫空间)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%EF%BC%8C%E4%B8%BE%E4%BE%8B-1"><span class="nav-text">1，举例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%EF%BC%8C%E5%86%85%E7%A7%AF%E7%A9%BA%E9%97%B4"><span class="nav-text">五，内积空间</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%EF%BC%8C%E5%AE%9A%E4%B9%89%E5%86%85%E7%A7%AF"><span class="nav-text">1，定义内积</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%EF%BC%8C%E5%AE%9A%E4%B9%89%E5%86%85%E7%A7%AF%E7%A9%BA%E9%97%B4"><span class="nav-text">2，定义内积空间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%EF%BC%8C%E7%94%A8%E5%86%85%E7%A7%AF%E5%AE%9A%E4%B9%89%E8%8C%83%E6%95%B0"><span class="nav-text">3，用内积定义范数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4%EF%BC%8C%E5%86%85%E7%A7%AF%E7%A9%BA%E9%97%B4%E4%B8%8A%E7%9A%84%E7%89%B9%E6%AE%8A%EF%BC%88%E8%B5%8B%E8%8C%83%E7%BA%BF%E6%80%A7%E7%A9%BA%E9%97%B4%E6%B2%A1%E6%9C%89%EF%BC%89"><span class="nav-text">4，内积空间上的特殊（赋范线性空间没有）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5%EF%BC%8C%E9%87%8D%E8%A6%81%E7%9A%84%E5%AE%9A%E4%B9%89%E6%88%96%E5%85%AC%E5%BC%8F"><span class="nav-text">5，重要的定义或公式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%EF%BC%8CHilbert%E7%A9%BA%E9%97%B4"><span class="nav-text">六，Hilbert空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%90%86%E4%B8%8D%E6%B8%85%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-text">理不清的关系</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%EF%BC%8C%E5%BA%A6%E9%87%8F%E7%A9%BA%E9%97%B4"><span class="nav-text">一，度量空间</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%EF%BC%8C%E7%89%B9%E4%BE%8B"><span class="nav-text">1，特例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%EF%BC%8C%E5%AE%8C%E5%A4%87%E7%9A%84%E5%BA%A6%E9%87%8F%E7%A9%BA%E9%97%B4"><span class="nav-text">2，完备的度量空间</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%EF%BC%8C%E7%BA%BF%E6%80%A7%E7%A9%BA%E9%97%B4"><span class="nav-text">二，线性空间</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%EF%BC%8C%E7%89%B9%E4%BE%8B-1"><span class="nav-text">1，特例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%EF%BC%8C%E7%BB%B4%E5%BA%A6"><span class="nav-text">2，维度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%EF%BC%8C%E8%B5%8B%E8%8C%83%E7%BA%BF%E6%80%A7%E7%A9%BA%E9%97%B4"><span class="nav-text">三，赋范线性空间</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%EF%BC%8C%E4%B8%BE%E4%BE%8B"><span class="nav-text">1，举例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%EF%BC%8CBanach%E7%A9%BA%E9%97%B4-%E5%B7%B4%E6%8B%BF%E8%B5%AB%E7%A9%BA%E9%97%B4"><span class="nav-text">四，Banach空间(巴拿赫空间)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%EF%BC%8C%E4%B8%BE%E4%BE%8B-1"><span class="nav-text">1，举例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%EF%BC%8C%E5%86%85%E7%A7%AF%E7%A9%BA%E9%97%B4"><span class="nav-text">五，内积空间</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%EF%BC%8C%E5%AE%9A%E4%B9%89%E5%86%85%E7%A7%AF"><span class="nav-text">1，定义内积</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%EF%BC%8C%E5%AE%9A%E4%B9%89%E5%86%85%E7%A7%AF%E7%A9%BA%E9%97%B4"><span class="nav-text">2，定义内积空间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%EF%BC%8C%E7%94%A8%E5%86%85%E7%A7%AF%E5%AE%9A%E4%B9%89%E8%8C%83%E6%95%B0"><span class="nav-text">3，用内积定义范数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4%EF%BC%8C%E5%86%85%E7%A7%AF%E7%A9%BA%E9%97%B4%E4%B8%8A%E7%9A%84%E7%89%B9%E6%AE%8A%EF%BC%88%E8%B5%8B%E8%8C%83%E7%BA%BF%E6%80%A7%E7%A9%BA%E9%97%B4%E6%B2%A1%E6%9C%89%EF%BC%89"><span class="nav-text">4，内积空间上的特殊（赋范线性空间没有）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5%EF%BC%8C%E9%87%8D%E8%A6%81%E7%9A%84%E5%AE%9A%E4%B9%89%E6%88%96%E5%85%AC%E5%BC%8F"><span class="nav-text">5，重要的定义或公式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%EF%BC%8CHilbert%E7%A9%BA%E9%97%B4"><span class="nav-text">六，Hilbert空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%90%86%E4%B8%8D%E6%B8%85%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-text">理不清的关系</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -474,7 +480,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">75</span>
+          <span class="site-state-item-count">77</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -487,7 +493,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-count">74</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -542,13 +548,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">236k</span>
+    <span title="站点总字数">238k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">3:35</span>
+    <span title="站点阅读时长">3:36</span>
 </div>
 
         
