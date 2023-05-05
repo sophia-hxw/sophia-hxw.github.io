@@ -1,9 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>怎么读论文？</title>
+    <url>/2023/05/05/other/how_to_read_paper/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>又言论文十问，由沈向洋博士提出</p>
+<p><strong>加油读文章</strong><br><span id="more"></span></p>
+<h2 id="哪十个问题呢？"><a href="#哪十个问题呢？" class="headerlink" title="哪十个问题呢？"></a>哪十个问题呢？</h2><ul>
+<li>Q1论文试图解决什么问题？</li>
+<li>Q2这是否是一个新的问题？</li>
+<li>Q3这篇文章要验证一个什么科学假设？</li>
+<li>Q4有哪些相关研究？如何归类？谁是这一课题在领域内值得关注的研究员？</li>
+<li>Q5论文中提到的解决方案之关键是什么？</li>
+<li>Q6论文中的实验是如何设计的？</li>
+<li>Q7用于定量评估的数据集是什么？代码有没有开源？</li>
+<li>Q8论文中的实验及结果有没有很好地支持需要验证的科学假设？</li>
+<li>Q9这篇论文到底有什么贡献？</li>
+<li>Q10下一步呢？有什么工作可以继续深入？</li>
+</ul>
+]]></content>
+      <categories>
+        <category>other</category>
+      </categories>
+      <tags>
+        <tag>paper reading</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Transformers from an Optimization Perspective</title>
     <url>/2023/05/05/Transformer/Transformers%20from%20an%20Optimization%20perspective/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2>]]></content>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>从优化的角度理解Transformer模型</p>
+<p><strong>加油读文章</strong><br><span id="more"></span></p>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><h2 id="翻译"><a href="#翻译" class="headerlink" title="翻译"></a>翻译</h2><p>诸如 Transformer 之类的深度学习模型通常是通过启发式方法和经验构建的。 为了补充基础研究，在这项工作中，我们关注了以下问题：是否有可能找到 Transformer 模型的能量函数，使得该能量函数的下降步骤与 Transformer 模型的前向传递相对应？ 通过找到这样的函数，我们可以将 Transformer 视为跨迭代的可解释优化过程的展开。 过去经常采用这种展开的观点来阐明更直接的深度模型，例如 MLP 和 CNN，然而，到目前为止，对于带自注意力机制（如 Transformer）的复杂模型，获得类似的等价性仍然难以捉摸。 为此，我们首先概述了几个主要障碍，然后提供了至少部分解决这些障碍的配套技术，首次证明了能量函数最小化与带自注意力机制的深层模型之间的密切联系。 这种解释有助于我们对 Transformer 的直觉和理解，同时可能为新模型设计奠定基础。</p>
+<h2 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h2><p>建立Transformer模型的能量函数，期待能量最小化的过程对应模型的前向传播过程，已经在 CNN 和 MLP 上有了一定成果，暂时没有在Transformer 模型上的研究成果出现，这是本文的出发点。</p>
+<h1 id="一，介绍"><a href="#一，介绍" class="headerlink" title="一，介绍"></a>一，介绍</h1><p>尽管深度学习在实践中取得了广泛的成功 [26、27]，但模型架构通常是启发式创建，多数时候仍然难以理解，因此，最近投入了大量精力来分析和重新解释流行的深度网络结构的各种方法。 出于我们的目的，这里需要特别注意深度模型层和一些优化过程展开迭代之间的一对一关联，这些优化过程旨在最小化可解释的能量函数 [14、15、53、55、41]。 通过这种方式，前向传递至少可以近似地被视为计算，所以具有最小能量的表示，其中模型参数决定了这种能量的形式，并且可以通过反向传递来训练下游感兴趣的任务，例如分类或回归等。</p>
+<p>站在这种所谓的展开优化视角，可以深入了解不同架构中归纳偏差的性质，同时可能作为一种指南，通过所涉及的基础能量函数的性质来指导深度网络结构的实例化。事实上，对后者的修改可以导致可预测的模型行为，这些行为在过去会被剪枝优化来保证包含有用的正则化因素 [59]，避免微妙的退化方案 [55]，或组合起来设计有效的新模型 [1、14]。</p>
+<p>尽管取得了这些成功，但该领域的大多数前置工作要么解决了相对简单的网络结构，例如 MLP [53]，要么将问题限制在不同于大系统的单个模型组件 [41] 上。 因此，诸如广泛使用的 Transformer [49] 之类的复杂模型大多被忽略了，这在很大程度上是因为很难同时将自注意力和前馈网络 (FFN) 模块映射到一个集成的优化过程，而且可以进行最小化的单个、统一的能量函数。</p>
+<p>我们通过以下步骤将展开的优化视角扩展到完整的 Transformer 堆栈：</p>
+<ul>
+<li><p>在提供了展开优化的背景细节和现有示例之后，第 2 节形式化了将 Transformer 层映射到优化步骤的四个关键挑战，降低了一个显式表示的能量函数。 包括：(i) 处理自注意力，(ii) 集成异构 Transformer 层模块（即自注意力和 FFN），(iii) 考虑非线性激活，以及 (iv) 允许任意、非结构化权重矩阵 .</p>
+</li>
+<li><p>随后，第 3 节推导了一个能量函数，该函数紧密地再现了每个挑战的自注意力(i) ，第 4 节严格推导了收敛结果，展示了如何通过一种新颖的交替最小化形式近似处理挑战 (ii)，以及第 5 节 提供通过近端方法解决挑战 (iii) 的明确细节； 对挑战 (iv) 的考虑与其他支持分析一起推迟到补充部分。</p>
+</li>
+<li><p>上述贡献最终形成了一个能量函数，当某些技术条件成立时，该能量函数被Transformer 层最小化。 为了提供进一步的动力，第 6 节凭经验证明，即使在技术条件难以正式验证的情况下，实际数据也会将这种能量最小化。</p>
+</li>
+</ul>
+<p>总的来说，这些结果为理解 Transformer 模型提供了补充基础，并为未来的增强提出了合理的途径。</p>
+<h1 id="二，由展开的优化形成的深层架构简介"><a href="#二，由展开的优化形成的深层架构简介" class="headerlink" title="二，由展开的优化形成的深层架构简介"></a>二，由展开的优化形成的深层架构简介</h1><p>展开优化视角的基本思想是在深度模型的层与旨在最小化参数化、特定于模型的能量函数的某些算法过程的迭代之间创建一对一的对应关系。 这样，前向传递可以被视为计算最小能量解的近似值。 同时，假设每个前向迭代都是可微的 w.r.t. 能量函数参数，我们可以通过反向传递的近似最小化步骤传递一些元目标函数（例如，分类、回归等）的梯度，这形成了一个可解释的双层优化过程[11、14、24]。 总的来说，展开的优化产生最小的能量表示，由此能量函数的特定结构可以根据相关的下游应用领域进行训练。</p>
+<h2 id="2-1-数学表示"><a href="#2-1-数学表示" class="headerlink" title="2.1 数学表示"></a>2.1 数学表示</h2><p>上面描述的双层优化过程可以更正式地表示为：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+Y^\ast(W,X)&=\mathop{argmin}_YE(Y;W,X)\tag{1}\\
+W^\ast(X)&=\mathop{argmin}_W\ell()
+\end{align*}</script><p>这里 S 是数据集的大小，li 是第 i 个损失函数，Xi ∈ Rn×d 是第 i 个输入实例（例如，语言模型的输入句子），其中 n 是标记的数量，d 是 令牌维度。 我们将 Y ∈ Rn×d 称为模型的隐藏表示，其中 Y ∗ 是（理想的）模型输出（例如，Transformer 编码器输出的一组词表示），它最小化到较低级别的能量函数 E : Rn× d → R 其形式由参数 W 决定（例如，这些也可以对应于 Transformer 模型中的可训练参数）。 最后，l 是元损失函数（例如，用于训练 Transformer 的损失函数），而 ψ : Rn×d → Rn×d 是将隐藏表示转换为模型输出的任意变换，它也可能具有 自己的可学习参数。 假设 ∂Y ∗(W, X)/∂W 和 ∂l/∂Y ∗(W, X) 是可计算的，其中前者涉及通过用于近似 Y ∗ (W, X ) 的迭代步骤传递梯度，然后 组合双层系统可以优化 w.r.t. W。</p>
+<p>请注意，在下文中，如果能量函数不包括令牌间的交互，我们将其视为向量的函数，并且为简单起见，我们使用小写字符 y 和 x 来表示 Y 和 X 的任意行。 此外，当从上下文中清楚时，我们省略写函数的参数，例如我们可以写 E(Y ) 来引用 E(Y ; W, X)。</p>
+<h2 id="2-2-相关工作和局限"><a href="#2-2-相关工作和局限" class="headerlink" title="2.2 相关工作和局限"></a>2.2 相关工作和局限</h2><p>在本节中，我们介绍了展开优化的相关工作，特别是分析了一些相关的限制，这些限制是我们努力的动力，并强调了所涉及的挑战。</p>
+<p><strong>优化诱导的前馈网络</strong><br>各种各样的先前工作已经从展开的优化角度研究了前馈结构 [14、16、20、22、47、53]。 在这里，我们仔细研究基于近端方法的 [53]。 [53]中的基本能量函数是</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{3}
+\end{align*}</script><p>其中 1 是一个所有元素都为 1 的向量，σ ̃∗ 是 σ ̃ 的凸共轭 [42]3 : a 7→ R a σ(r)dr,<br>0<br>σ 是激活函数，f (x) 是输入表示 x 的某种变换。 (3) 的近端算子 [12] 是</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{4}
+\end{align*}</script><p>这类似于 MLP 的前馈层。 请注意，虽然 W 原则上可以是任意矩阵，只要维数适当对齐，但在堆叠该模型的多个层后，实际上强制约束了有效变换：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{5}
+\end{align*}</script><p>很明显，在第一层之后，实际的前馈变换变成了 W W ⊤，这必然是半正定的 (PSD)。 因此，在此范例中实际上不可能不受约束的层权重。</p>
+<p><strong>优化诱导的注意力机制</strong><br>也有有限的工作试图从展开的优化角度解释注意力机制 [15, 41]。 例如，能量函数</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{6}
+\end{align*}</script><p>在[41]中提出，随后使用凹凸过程[57]进行更新，导致形式的迭代</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{7}
+\end{align*}</script><p>其中 S ∈ Rn×n 对应于注意力键，而 y 映射到注意力查询，β 是常数标量。 但至关重要的是，这种注意力机制实际上是交叉注意力（使用 y 来关注 S），这与 Transformers 的典型自注意力用例不一致。 此外，这项工作没有考虑聚合的 Transformer 前馈网络模块和随之而来的非线性。</p>
+<p><strong>优化诱导的图神经网络</strong><br>从类似的优化角度 [8、31、34、37、54、55、58、60] 也开发了各种图神经网络架构。 例如，图注意力机制是使用 [55] 中的迭代重新加权最小二乘法 (IRLS) 算法推导出来的。 虽然这个结果与自注意力相关，可以将其视为全连接图上的图注意力 [5]，但它无法产生 Transformer softmax 项或组合的自注意力/前馈 Transformer 堆栈。 尽管如此，我们稍后将展示如何利用 [55] 中的想法来通过 softmax 获得自我关注。</p>
+<h2 id="2-3-扩展到通用Transformer的主要挑战"><a href="#2-3-扩展到通用Transformer的主要挑战" class="headerlink" title="2.3 扩展到通用Transformer的主要挑战"></a>2.3 扩展到通用Transformer的主要挑战</h2><p>在本文中，我们关注比之前工作更复杂的模型，即 Transformer 编码器。 Transformer 层 [49] 通常由两个主要组件组成：自注意力层和前馈网络 (FFN) 层。 如果我们将 FFN 简化为具有非线性激活的单个线性变换，并忽略层范数和残差连接，4，一个 Transformer 层将简化为基本形式</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{8}
+\end{align*}</script><p>其中Wa和Wf分别代表self-attention和FFN层权重矩阵。 关于 (8) 和上面讨论的先前工作的局限性，我们提出了将展开优化正式应用于 Transformer 设置的四大挑战：</p>
+<ol>
+<li>Token-Level Interactions：如前所述，Transformer 模型不仅包括前馈过程，还包括跨 token 交互，这反映在被认为是 Transformers 的必要条件的自我注意机制上。 到目前为止，之前的工作还没有衍生出 Transformer 风格的自注意力，而是要么放松到交叉注意力 [41]，要么未能产生无处不在的 softmax 运算符 [55]。</li>
+<li>异构层类型：每个 Transformer 编码器层都由两个完全不同的组件组成：self-attention 和 FFN。 我们将这种结构称为“异构层类型”，其中每个组件都有自己的参数，可以看作是一个独特的展开优化过程。 然而，在聚合前向传递过程中是否有可能结合这两个分量的相应能量以获得具有任何类型的收敛保证（甚至近似）的统一目标仍然未知。</li>
+<li>非线性激活：至少在一些相对简单的前馈模式的孤立上下文中，可以从近端算子 [29、55] 的角度理解常见神经网络架构中使用的许多激活函数。 然而，当集成到上述异构 Transformer 层类型中时，优化过程变得相当复杂，并且不知道在包含近端步骤后是否仍然存在任何收敛特性。</li>
+<li>权重不对称：正如在 (5) 的讨论中提到的，大多数处理前馈网络的工作范围实际上仅限于具有对称（或更严格的 PSD）权重变换的模型 [1、14、53] ，这限制了由此产生的普遍性。 此外，图神经网络文献中的相关模型通常基于无向图 [54、55]，其中图传播也是对称的。 因此，尽管据我们所知之前没有解决/讨论过，但仍然不知道如何为更一般的不对称变换构造能量函数。<br>在本文中，我们提出了至少部分解决挑战 1、2 和 3 的技术，而对于 4，我们将初步讨论推迟到补充，将正式调查作为未来的方向。</li>
+</ol>
+<h1 id="三，Transformer-Self-Attention的一种新推导"><a href="#三，Transformer-Self-Attention的一种新推导" class="headerlink" title="三，Transformer Self-Attention的一种新推导"></a>三，Transformer Self-Attention的一种新推导</h1><p>现在，我们通过构建一个能量函数来解决挑战 1，该函数的迭代优化步骤与 Transformer 风格的 softmax 自注意力完全匹配，这是惯例。</p>
+<h2 id="3-1-通过展开的优化步骤进行基本的-Softmax-自注意力"><a href="#3-1-通过展开的优化步骤进行基本的-Softmax-自注意力" class="headerlink" title="3.1 通过展开的优化步骤进行基本的 Softmax 自注意力"></a>3.1 通过展开的优化步骤进行基本的 Softmax 自注意力</h2><p>考虑能量函数</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{9}
+\end{align*}</script><p>其中 yi ∈ Rd×1 是矩阵 Y ∈ Rn×d 的第 i 行，ρ : R+ → R 是凹非减函数，R : Rn×d → R 是凸函数。 有趣的是，尽管由于 ρ 的非凸性，E1 不一定是凸的，但在 ρ 和 R 的特定选择下，它可以通过类似 softmax 的结构进行优化，如下所示：</p>
+<p><strong>定理3.1</strong></p>
+<p>值得一提的是，虽然可能不是很明显，但更新步骤 (10) 可以通过主要化-最小化 (MM) 算法生成 [48]，其中主要化步骤产生凸上界，最小化步骤沿 上限的梯度。 因此，本次更新的核心本质上是凸函数上的梯度步，这将与后续章节的讨论相关； 请参阅补充文件中的证明和更多详细信息。</p>
+<p><strong>remark 3.2</strong><br>定理 3.1 的几个值得注意的推广是可能的。 首先，虽然在定理 3.1 中我们采用特定形式的 ρ 和 R 来恢复 softmax 算子，但是通过这些函数的其他选择，相应的展开优化算法可以生成不同/新颖类型的注意机制。 其次，获得（10）依赖于梯度步长的特定选择； 然而，对于更广泛的选择，由此产生的收敛更新有趣地导致残余连接作为优化轨迹的自然副产品（见补充）。 最后，定理 3.1 可以很容易地修改，以适应完全 Transformer 连接受某些图结构约束的情况，如 [10, 18] 中所示（同样，详见补充）。</p>
+<h2 id="3-2-包含可训练参数的扩展"><a href="#3-2-包含可训练参数的扩展" class="headerlink" title="3.2 包含可训练参数的扩展"></a>3.2 包含可训练参数的扩展</h2><h1 id="四，通过交替不精确最小化组合Transformer组件"><a href="#四，通过交替不精确最小化组合Transformer组件" class="headerlink" title="四，通过交替不精确最小化组合Transformer组件"></a>四，通过交替不精确最小化组合Transformer组件</h1><p>接下来我们将解决挑战 2 和异构 Transformer 层类型。 带着这个目标，我们首先介绍一个通用的优化场景。 具体来说，我们提出以下问题：<br>给定两个（凸）目标 f(y) 和 g(y)，在什么条件下和/或在什么程度上，将交替采取单独的梯度步骤 w.r.t. f 和 g 优化聚合函数 f + g？<br>我们将这种优化策略称为交替不精确最小化 (AIM)，我们将很快展示它收敛到包含 f + g 最佳点的有限半径球的条件。 稍后我们将讨论这些结果如何有助于解决挑战 2。<br>我们预先强调，如此定义的 AIM 与文献中通常所说的交替最小化完全不同 [19, 33]。 后者指的是在固定其他变量的情况下，以交替方式一次最小化具有多个变量的统一目标函数的场景，这样可以轻松实现下降。 相比之下，我们的 AIM 场景涉及多个带有共享变量的客观项，我们使用相同的变量交替最小化每个项，这是一个更具挑战性的分析过程。</p>
+<h2 id="4-1-一般交替不精确最小化"><a href="#4-1-一般交替不精确最小化" class="headerlink" title="4.1 一般交替不精确最小化"></a>4.1 一般交替不精确最小化</h2><p>给定两个目标 f, g : Rd → R，AIM 形式化为算法 1，其中 α1 和 α2 构成步长。 我们现在将研究算法 1 如何与由 h(y) = f(y) + g(y) 定义的组合目标的最小化相关。</p>
+<p>在下文中，我们假设 f、g 都是 Lipschitz 光滑且强凸的 [42]，分别具有 Lipschitz 常数 Lf 和 Lg，以及凸性参数 cf 和 cg。 因此，h 也将是 Lipschitz 光滑且强凸的，具有 Lipschitz 常数 Lh 和凸度 ch。 我们将 f、g 和 h 的最优点分别表示为 yf∗、yg∗ 和 yh∗。</p>
+<h1 id="五，展开范式中集成的非线性激活"><a href="#五，展开范式中集成的非线性激活" class="headerlink" title="五，展开范式中集成的非线性激活"></a>五，展开范式中集成的非线性激活</h1><p>之前已经考虑过在展开的优化设置中处理非线性激活 [16、47、51、55]。 然而，之前的工作在很大程度上依赖于近端算子来创建与简单线性滤波器配对的非线性激活，并且分析不会转移到这里正在研究的更复杂的 Transformer 案例。 虽然我们将在本节中将注意力集中在添加 ReLU 激活上，但为了简化说明以及它们在 Transformer 模型中的普遍性，我们的结果可以推广到更广泛的选择。<br>与第 4 节类似，我们首先通过将 ReLU 激活引入算法 1 来研究优化问题的一般形式，将此修改形式化为具有近端步骤的 AIM，然后分析适当约束下的收敛性。 稍后我们将这些结果应用到 Transformer。</p>
+<h1 id="六，实践验证"><a href="#六，实践验证" class="headerlink" title="六，实践验证"></a>六，实践验证</h1><p>尽管我们严格推导了收敛标准，即 Transformer 层将明确指定的能量函数下降到最优解周围的区域，但不可否认，该分析依赖于难以在现实世界数据集上正式验证的条件。 然而，我们的结果仍然适用于有针对性的经验证实，由此我们可以检查所提出的能量是否确实在典型基准的 Transformer 正向传递期间确实下降了。<br>为此，我们实现了一个 Transformer 模型，如前所述，直到已知的限制，如对称权重。 我们将该模型应用于两个基准测试，IMDB [35] 和 SST2 [46]，它们都是依赖 Glove-840b-300d [39] 作为词嵌入的常用情感分类数据集。 图 5 和图 6 显示了 Transformer 每一层的输出能量（如 (8) 中所定义）平均超过测试集中 200 个随机选择的样本。 图 5 使用随机初始化的权重，而图 6 涉及使用 SGD 和学习率 0.01 训练 2000 步的权重。 此外，对于经过训练的模型，我们将 E1 中的项 ∥Y ∥2F 更改为 ∥Y − X∥2F 以避免退化表示（有时会发生在经过训练的变形金刚 [45] 中），并指出这种修改同样有效 我们的理论涵盖了这一点，并在最终的 Transformer 架构中产生了一种常用的残差连接形式。 详情见补充。<br>从这些数字可以清楚地看出，即使使用真实世界的数据，我们得出的 Transformer 能量（平均）跨层单调递减，与我们的分析预测相符。 此外，对于 12 层，代表在实践中并不少见的深度范围（例如 BERT），模型没有进入波动区域。 此外，这种观察甚至适用于由实践中使用的许多/大多数典型组件组成的训练有素的 Transformer 模型，即具有自注意力的层、非线性变换后的线性变换和残差连接等。因此，尽管看似复杂， 引理 4.3 和定理 5.1 采用的条件在许多实际环境中仍然可能成立。</p>
+<h1 id="七，结论"><a href="#七，结论" class="headerlink" title="七，结论"></a>七，结论</h1><p>虽然我们在这里的贡献主要是理论性质的，但仍然有一些可能具有实际意义的重要信息。 首先，由于我们的首要目标是使用展开的优化视角尽可能接近地再现 Transformer 层，因此在构建核心底层能量函数时做出了非常具体的设计选择。 然而，在实践中，我们可以自由选择替代能源，这些替代能源可以导致不同形式的定制自注意力，这在特定应用程序的基础上可能是有利的。<br>作为后者的一个简短/简单的代表性示例，请考虑以下内容：规范的 Transformer 使用 softmax 对注意力系数进行归一化。 然而，多项工作质疑 softmax 归一化的适当性，例如 [32、40]。 在我们的优化展开视角下，我们可以看到 Transformer 中的 softmax 归一化源自特定选择的 ρ 函数，即 ρ(z) = −e−z（第 3.1 节和定理 3.1）。 但是，如果我们选择不同的 ρ，就会产生一种新的标准化方法，而不是具有可解释属性的 softmax。 例如，如果 ρ(z) = log(z + 2)，则注意力系数将表现为（为简单起见，我们假设所有 yi 都具有以下单位范数）：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\end{align*}</script><p>其中 ai,j 是第 i 个和第 j 个 token 之间的注意力系数。 由于 log(z + 2) 对于 z ∈ [0, 1] 的增长速度比 −e−z 慢，因此相关的注意力公式往往会鼓励标记之间出现更多不同的表示。 这是因为在新能源中，较大的 ∥yi − yj ∥（意味着不同的 yi 和 yj ）对能量的贡献比以前少，因此优化过程减少它的动力较小。 相反，如果我们选择在规定范围内增长快于 −e−z 的 ρ（例如 ρ(z) = log(z + 1)），那么派生模型可能会鼓励令牌之间有更多相似的表示。<br>这个总体框架还有其他具有实际意义的分支。 例如，注意力权重的实际分布可能会被产生它们的能量函数的属性更好地理解或影响。 此外，特别是对于数据有限且因此自由模型参数较少的机制，展开视角可用于设计具有与下游任务一致的归纳偏差的架构，以帮助弥补模型灵活性较低的问题。<br>最后，我们注意到本文中介绍的技术在某种意义上可以被视为构建更广泛的展开式体系结构系列的通用工具。 事实上，许多/大多数深度学习模型，包括具有前馈结构 [30]、令牌级交互 [50]、残差连接 [21] 和异构层类型的模型，都可以通过使用展开优化的镜头重新解释 我们引入的框架，至少要达到一些潜在的约束，比如对称权重（可以用其他方式处理）。</p>
+]]></content>
       <categories>
         <category>Transformer</category>
       </categories>
@@ -3775,45 +3878,6 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </tags>
   </entry>
   <entry>
-    <title>rpn的原理和作用</title>
-    <url>/2022/05/16/detection/principle-and-effects-of-rpn/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>rpn原理和作用</p>
-<span id="more"></span>
-<h2 id="1，作用"><a href="#1，作用" class="headerlink" title="1，作用"></a>1，作用</h2><p>RPN专门用来提取候选框，一方面RPN耗时少，另一方面RPN可以很容易结合到Fast RCNN中，成为一个整体。</p>
-<h2 id="2，实现细节"><a href="#2，实现细节" class="headerlink" title="2，实现细节"></a>2，实现细节</h2><p>一个特征图（Faster RCNN的公共Feature Map）经过sliding window处理，得到256维特征，对每个特征向量做两次全连接操作，一个得到2个分数，一个得到4个坐标{然后通过两次全连接得到结果2k个分数和4k个坐标[k指的是由锚点产生的K个框(K anchor boxes)]}</p>
-<h2 id="3，anchor-box是怎么选取的？"><a href="#3，anchor-box是怎么选取的？" class="headerlink" title="3，anchor box是怎么选取的？"></a>3，anchor box是怎么选取的？</h2><p>滑窗的中心在原像素空间的映射点称为anchor，以此anchor为中心，生成k(paper中default k=9, 3 scales and 3 aspect ratios/不同尺寸和不同长宽比)个proposals。三个面积尺寸$(128^{2}，256^{2}，512^{2})$，然后在每个面积尺寸下，取三种不同的长宽比例（1:1,1:2,2:1）</p>
-<h2 id="4，为什么提出anchor-box？"><a href="#4，为什么提出anchor-box？" class="headerlink" title="4，为什么提出anchor box？"></a>4，为什么提出anchor box？</h2><p>主要有两个原因：一个窗口只能检测一个目标、无法解决多尺度问题。<br>目前anchor box尺寸的选择主要有三种方式：人为经验选取、k-means聚类、作为超参数进行学习<br>为什么使用不同尺寸和不同长宽比？ 为了得到更大的交并比(IOU)。</p>
-]]></content>
-      <categories>
-        <category>detection</category>
-      </categories>
-      <tags>
-        <tag>rpn</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>roi align</title>
-    <url>/2022/05/16/detection/roi-align/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>roi align产生的背景，原理和应用场景</p>
-<p><strong>主要对比roi pooling</strong><br><span id="more"></span></p>
-<h2 id="1，背景"><a href="#1，背景" class="headerlink" title="1，背景"></a>1，背景</h2><p>在mask rcnn中提出，是为了解决roi pooling的两次量化带来的位置精度损失问题。</p>
-<h2 id="2，思路"><a href="#2，思路" class="headerlink" title="2，思路"></a>2，思路</h2><p>取消量化操作，使用双线性内插的方法获得坐标为浮点数的像素点上的图像数值,从而将整个特征聚集过程转化为一个连续的操作。值得注意的是，在具体的算法操作上，ROI Align并不是简单地补充出候选区域边界上的坐标点，然后将这些坐标点进行池化，而是重新设计了一套比较优雅的流程，大致算法流程为：</p>
-<ul>
-<li>遍历每一个候选区域，保持浮点数边界不做量化。</li>
-<li>将候选区域分割成k x k个单元，每个单元的边界也不做量化。</li>
-<li>在每个单元中计算固定四个坐标位置，用双线性内插的方法计算出这四个位置的值，然后进行最大池化操作。</li>
-</ul>
-<h2 id="3，区别"><a href="#3，区别" class="headerlink" title="3，区别"></a>3，区别</h2><p>ROI Align舍去了近似像素取整数的量化方法，改用双线性插值的方法确定特征图坐标对应于原图中的像素位置.ROI Align很好地解决了ROI Pooling操作中两次量化造成的区域不匹配(mis-alignment)的问题。</p>
-<h2 id="4，应用场景"><a href="#4，应用场景" class="headerlink" title="4，应用场景"></a>4，应用场景</h2><p>对于检测图片中大目标物体时，两种方案的差别不大，而如果是图片中有较多小目标物体需要检测，则优先选择RoiAlign，更精准些。</p>
-]]></content>
-      <categories>
-        <category>detection</category>
-      </categories>
-      <tags>
-        <tag>roi align</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>nms的原理和作用</title>
     <url>/2022/05/16/detection/-priciple-and-effects-of-nms/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>nms的原理，应用和发展方向</p>
@@ -3843,6 +3907,23 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </tags>
   </entry>
   <entry>
+    <title>rpn的原理和作用</title>
+    <url>/2022/05/16/detection/principle-and-effects-of-rpn/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>rpn原理和作用</p>
+<span id="more"></span>
+<h2 id="1，作用"><a href="#1，作用" class="headerlink" title="1，作用"></a>1，作用</h2><p>RPN专门用来提取候选框，一方面RPN耗时少，另一方面RPN可以很容易结合到Fast RCNN中，成为一个整体。</p>
+<h2 id="2，实现细节"><a href="#2，实现细节" class="headerlink" title="2，实现细节"></a>2，实现细节</h2><p>一个特征图（Faster RCNN的公共Feature Map）经过sliding window处理，得到256维特征，对每个特征向量做两次全连接操作，一个得到2个分数，一个得到4个坐标{然后通过两次全连接得到结果2k个分数和4k个坐标[k指的是由锚点产生的K个框(K anchor boxes)]}</p>
+<h2 id="3，anchor-box是怎么选取的？"><a href="#3，anchor-box是怎么选取的？" class="headerlink" title="3，anchor box是怎么选取的？"></a>3，anchor box是怎么选取的？</h2><p>滑窗的中心在原像素空间的映射点称为anchor，以此anchor为中心，生成k(paper中default k=9, 3 scales and 3 aspect ratios/不同尺寸和不同长宽比)个proposals。三个面积尺寸$(128^{2}，256^{2}，512^{2})$，然后在每个面积尺寸下，取三种不同的长宽比例（1:1,1:2,2:1）</p>
+<h2 id="4，为什么提出anchor-box？"><a href="#4，为什么提出anchor-box？" class="headerlink" title="4，为什么提出anchor box？"></a>4，为什么提出anchor box？</h2><p>主要有两个原因：一个窗口只能检测一个目标、无法解决多尺度问题。<br>目前anchor box尺寸的选择主要有三种方式：人为经验选取、k-means聚类、作为超参数进行学习<br>为什么使用不同尺寸和不同长宽比？ 为了得到更大的交并比(IOU)。</p>
+]]></content>
+      <categories>
+        <category>detection</category>
+      </categories>
+      <tags>
+        <tag>rpn</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>roi pooling</title>
     <url>/2022/05/16/detection/roi-pooling/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>roi pooling的基本原理和应用</p>
@@ -3869,6 +3950,28 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </categories>
       <tags>
         <tag>roi pooling</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>roi align</title>
+    <url>/2022/05/16/detection/roi-align/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>roi align产生的背景，原理和应用场景</p>
+<p><strong>主要对比roi pooling</strong><br><span id="more"></span></p>
+<h2 id="1，背景"><a href="#1，背景" class="headerlink" title="1，背景"></a>1，背景</h2><p>在mask rcnn中提出，是为了解决roi pooling的两次量化带来的位置精度损失问题。</p>
+<h2 id="2，思路"><a href="#2，思路" class="headerlink" title="2，思路"></a>2，思路</h2><p>取消量化操作，使用双线性内插的方法获得坐标为浮点数的像素点上的图像数值,从而将整个特征聚集过程转化为一个连续的操作。值得注意的是，在具体的算法操作上，ROI Align并不是简单地补充出候选区域边界上的坐标点，然后将这些坐标点进行池化，而是重新设计了一套比较优雅的流程，大致算法流程为：</p>
+<ul>
+<li>遍历每一个候选区域，保持浮点数边界不做量化。</li>
+<li>将候选区域分割成k x k个单元，每个单元的边界也不做量化。</li>
+<li>在每个单元中计算固定四个坐标位置，用双线性内插的方法计算出这四个位置的值，然后进行最大池化操作。</li>
+</ul>
+<h2 id="3，区别"><a href="#3，区别" class="headerlink" title="3，区别"></a>3，区别</h2><p>ROI Align舍去了近似像素取整数的量化方法，改用双线性插值的方法确定特征图坐标对应于原图中的像素位置.ROI Align很好地解决了ROI Pooling操作中两次量化造成的区域不匹配(mis-alignment)的问题。</p>
+<h2 id="4，应用场景"><a href="#4，应用场景" class="headerlink" title="4，应用场景"></a>4，应用场景</h2><p>对于检测图片中大目标物体时，两种方案的差别不大，而如果是图片中有较多小目标物体需要检测，则优先选择RoiAlign，更精准些。</p>
+]]></content>
+      <categories>
+        <category>detection</category>
+      </categories>
+      <tags>
+        <tag>roi align</tag>
       </tags>
   </entry>
   <entry>
