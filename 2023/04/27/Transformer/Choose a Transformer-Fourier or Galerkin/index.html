@@ -29,7 +29,7 @@
 <meta property="og:description" content="前言paper link 在算子学习的角度，将Transformer用在PDE的求解上">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-04-27T11:48:25.000Z">
-<meta property="article:modified_time" content="2023-05-05T08:00:12.791Z">
+<meta property="article:modified_time" content="2023-05-09T15:34:59.081Z">
 <meta property="article:author" content="xinwen">
 <meta property="article:tag" content="transformer">
 <meta property="article:tag" content="math">
@@ -231,7 +231,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-05-05 16:00:12" itemprop="dateModified" datetime="2023-05-05T16:00:12+08:00">2023-05-05</time>
+                <time title="修改时间：2023-05-09 23:34:59" itemprop="dateModified" datetime="2023-05-09T23:34:59+08:00">2023-05-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -291,15 +291,15 @@
 <li>softmax的作用和存在的必要性；</li>
 <li>层归一化的新替换方案；</li>
 </ul>
-<h2 id="一，介绍"><a href="#一，介绍" class="headerlink" title="一，介绍"></a>一，介绍</h2><p>偏微分方程 (PDE) 几乎来自每个多物理场和生物系统，从原子的相互作用到星系的合并，从细胞的形成到气候的变化。 几个世纪以来，科学家和工程师一直致力于逼近这些物理系统的控制PDE，计算机辅助模拟的出现为研究这些具有挑战性的问题提供了一种成本友好的方法。 传统方法，如有限元/差分法 [20、22]、谱方法 [12] 等，利用离散结构将无限维算子映射简化为有限维近似问题。 同时，在许多科学实践中，离散网格上可用的、PDE 控制现象的大量数据使现代黑盒模型（如物理信息神经网络（PINN）[71、62、49]）能够利用配置点上的测量 近似 PDE 解。</p>
+<h2 id="一，介绍"><a href="#一，介绍" class="headerlink" title="一，介绍"></a>一，介绍</h2><p>在我们的世界中，从宇宙星体的运动，到温度风速的气象预报，再到分子原子间的相互作用，很多工程学、自然科学、经济和商业过程都可以通过偏微分方程（PDE）描述。几个世纪以来，科学家和工程师一直致力于逼近这些物理系统的控制PDE，计算机辅助模拟的出现为研究这些具有挑战性的问题提供了一种成本友好的方法。 传统方法，如有限元、有限差分法 [20、22]、谱方法 [12] 等，利用离散结构将无限维算子映射简化为有限维近似问题。 同时，在许多科学实践中，离散网格上可用的、PDE 控制现象的大量数据使现代黑盒模型（如物理信息神经网络（PINN）[71、62、49]）能够利用配置点上的测量 近似 PDE 解。</p>
 <p>尽管如此，对于传统方法或数据驱动的函数学习器（如 PINN），给定 PDE，重点是逼近单个实例，例如，求解具有固定边界条件的某个系数的近似解，这个系数的微小变化会让数据驱动的函数学习器需要进行昂贵的再训练。 相比之下，算子学习者的目标是学习无限维函数空间之间的映射，这要困难得多但也有回报。 一个训练有素的算子学习者可以在没有重新训练或配置点的情况下评估许多实例，从而节省宝贵的资源，并且从长远来看将自己定位为更有效的方法。 数据驱动的分辨率不变算子学习是一个蓬勃发展的新研究方向 [60, 5, 56, 64, 90, 57, 61, 91, 37, 74]，开创性模型 DeepONet [60] 在架构上归因于运算符 [18] 的通用逼近定理。傅立叶神经算子 (FNO) [57]在某些基准测试中，展示了一种令人敬畏的最先进的性能，比 [100] 中的经典模型好几个数量级。</p>
 <p>在监督学习下，算子学习者接受算子的输入函数及其对输入的响应作为目标的训练，由于两个函数都是在离散网格点上采样的，因此这是 seq2seq 问题的特例 [81]。 当前最先进的 seq2seq 模型是在 [88] 中首次引入的 Transformer。 作为 Transformer 的核心和灵魂，缩放点积注意力机制能够通过捕获远程交互信息来挖掘算子的隐藏结构。 受到 Transformers [50、19、75、84、96、97、95、59、76、66] 中许多富有洞察力的开创性工作的启发，我们以数学上深刻的方式对注意力机制进行了最低限度的修改，以更好地服务于算子学习。</p>
 <p>在我们对缩放点积注意力在希尔伯特空间中的改编中，第一个也是最重要的变化是：没有 softmax 或其近似值。 在 vanilla attention [88] 中，矩阵乘法之后的 softmax 凸化了组合不同位置潜在表示的权重，这被认为是注意力机制正核解释中不可或缺的组成部分 [84]。 然而，softmax 全局作用于注意力矩阵的每一行的序列长度维度，进一步增加了经典 Transformer 中注意力的二次复杂度。 从理论上讲，与自然语言处理 (NLP) 传统中的“一行≈一词”不同，查询、键、值的列被视为离散网格上希尔伯特空间中的函数采样。 因此，去掉 softmax 允许我们验证离散的 Ladyzhenskaya–Babuška–Brezzi (LBB) 条件，这进一步证明了新提出的 Galerkin 类型的注意力可以明确地表示 Petrov-Galerkin 投影，并且这种近似能力是与序列长度无关（定理 4.3）。</p>
 <p>在数值上，无 softmax 模型节省了宝贵的计算资源，在训练 FLOP 和内存消耗方面优于使用 softmax 的模型（第 5 节）。 然而在消融研究中，无 softmax 模型的训练变得不稳定（表 8），为了解决这个问题，提出了一种新的 Galerkin 投影类型层归一化方案，作为在 Petrov-Galerkin 解释（等式（40））证明中明确导出的归一化廉价对角替代方案。 由于现在可以通过编码器层传播可学习的缩放比例，因此具有这种新层归一化方案的基于注意力的算子学习器表现出对与 PDE 相关的某些物理特性（例如能量衰减）的更好理解。 结合其他受近似理论启发的技巧，包括投影矩阵的对角占优重新缩放初始化和位置编码的逐层丰富，各种算子学习任务的评估精度得到显着提高。</p>
 <h3 id="主要贡献"><a href="#主要贡献" class="headerlink" title="主要贡献"></a>主要贡献</h3><ul>
-<li><p>没有softmax的注意力<br>我们提出了一种新的简单自注意算子及其没有 softmax 归一化的线性变体。 提供了两种新的解释，以及证明与 Petrov-Galerkin 投影相当的线性变体的近似能力。</p>
+<li><p>无softmax的注意力机制<br>我们提出了一种新的简单自注意算子及其没有 softmax 归一化的线性变体。 提供了两种新的数学解释，以及证明与 Petrov-Galerkin 投影相当的线性变体的近似能力。</p>
 </li>
-<li><p>PDE的算子学习<br>我们将新提出的注意力算子与当前最先进的算子学习器傅立叶神经算子 (FNO) [57] 相结合，以显著提高其在 PDE 算子学习基准问题中的评估准确性。 此外，新模型能够根据传统方法或 FNO 无法完成的噪声测量恢复系数。</p>
+<li><p>参数化PDE的算子学习<br>我们将新提出的注意力算子与当前最先进的算子学习器傅立叶神经算子 (FNO) [57] 相结合，以显著提高其在 PDE 算子学习基准问题中的评估准确性。 此外，新模型能够根据传统方法或 FNO 无法完成的噪声测量恢复系数。</p>
 </li>
 <li><p>实验结果<br>我们提出了三个基准问题，以表明使用新提出的注意力机制的算子学习器在计算、内存效率以及准确性方面优于传统的 softmax 归一化。 用于重现我们结果的 PyTorch 代码可作为开源软件使用。</p>
 </li>
@@ -344,12 +344,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/04/27/Transformer/A%20Mathematical%20Framework%20for%20Transformer%20Circuits/" rel="prev" title="A Mathematical Framework for Transformer Circuits">
-      <i class="fa fa-chevron-left"></i> A Mathematical Framework for Transformer Circuits
+    <a href="/2023/04/25/math/seven_concepts_algorithms/" rel="prev" title="seven concepts in designing and analysising of algoritms">
+      <i class="fa fa-chevron-left"></i> seven concepts in designing and analysising of algoritms
     </a></div>
       <div class="post-nav-item">
-    <a href="/2023/05/05/Transformer/Transformers%20from%20an%20Optimization%20perspective/" rel="next" title="Transformers from an Optimization Perspective">
-      Transformers from an Optimization Perspective <i class="fa fa-chevron-right"></i>
+    <a href="/2023/04/27/Transformer/A%20Mathematical%20Framework%20for%20Transformer%20Circuits/" rel="next" title="A Mathematical Framework for Transformer Circuits">
+      A Mathematical Framework for Transformer Circuits <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
