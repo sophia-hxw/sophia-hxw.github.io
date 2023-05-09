@@ -29,7 +29,7 @@
 <meta property="og:description" content="前言从优化的角度理解Transformer模型 论文百度云链接: https:&#x2F;&#x2F;pan.baidu.com&#x2F;s&#x2F;1fQiIXRyUw4LBhXIfqCVUKA提取码: 3w62  加油读文章">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-05-05T08:00:58.000Z">
-<meta property="article:modified_time" content="2023-05-09T02:46:00.098Z">
+<meta property="article:modified_time" content="2023-05-09T06:45:23.395Z">
 <meta property="article:author" content="xinwen">
 <meta property="article:tag" content="transformer">
 <meta property="article:tag" content="optimization">
@@ -231,7 +231,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-05-09 10:46:00" itemprop="dateModified" datetime="2023-05-09T10:46:00+08:00">2023-05-09</time>
+                <time title="修改时间：2023-05-09 14:45:23" itemprop="dateModified" datetime="2023-05-09T14:45:23+08:00">2023-05-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -263,14 +263,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>13k</span>
+              <span>10k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>12 分钟</span>
+              <span>9 分钟</span>
             </span>
 
         </div>
@@ -292,11 +292,11 @@
 <p>尽管取得了这些成功，但该领域的大多数前置工作要么解决了相对简单的网络结构，例如 MLP [53]，要么将问题限制在不同于大系统的单个模型组件 [41] 上。 因此，诸如广泛使用的 Transformer [49] 之类的复杂模型大多被忽略了，这在很大程度上是因为很难同时将自注意力和前馈网络 (FFN) 模块映射到一个集成的优化过程，而且可以进行最小化的单个、统一的能量函数。</p>
 <p>我们通过以下步骤将展开的优化视角扩展到完整的 Transformer 堆栈：</p>
 <ul>
-<li><p>在提供了展开优化的背景细节和现有示例之后，第 2 节形式化了将 Transformer 层映射到优化步骤的四个关键挑战，降低了一个显式表示的能量函数。 包括：(i) 处理自注意力，(ii) 集成异构 Transformer 层模块（即自注意力和 FFN），(iii) 考虑非线性激活，以及 (iv) 允许任意、非结构化权重矩阵 .</p>
+<li><p>在提供了展开优化的背景细节和现有示例之后，第 2 节形式化了将 Transformer 层映射到优化步骤的四个关键挑战，降低了一个显式表示的能量函数。 包括：(i) 处理自注意力，(ii) 集成异构 Transformer 层模块（即自注意力和 FFN），(iii) 考虑非线性激活，以及 (iv) 允许任意、非结构化权重矩阵。</p>
 </li>
-<li><p>随后，第 3 节推导了一个能量函数，该函数紧密地再现了每个挑战的自注意力(i) ，第 4 节严格推导了收敛结果，展示了如何通过一种新颖的交替最小化形式近似处理挑战 (ii)，以及第 5 节 提供通过近端方法解决挑战 (iii) 的明确细节； 对挑战 (iv) 的考虑与其他支持分析一起推迟到补充部分。</p>
+<li><p>随后，第 3 节推导了一个能量函数，该函数紧密地再现了挑战(i)中的自注意力 ，第 4 节严格推导了收敛结果，展示了如何通过一种新颖的交替最小化形式近似处理挑战 (ii)，以及第 5 节 提供通过近端方法解决挑战 (iii) 的明确细节； 对挑战 (iv) 的考虑与其他支持分析一起推迟到补充部分。</p>
 </li>
-<li><p>上述贡献最终形成了一个能量函数，当某些技术条件成立时，该能量函数被Transformer 层最小化。 为了提供进一步的动力，第 6 节凭经验证明，即使在技术条件难以正式验证的情况下，实际数据也会将这种能量最小化。</p>
+<li><p>上述贡献最终形成了一个能量函数，当某些技术条件成立时，该能量函数被 Transformer 层最小化。 为了提供进一步的动力，第 6 节凭经验证明，即使在技术条件难以正式验证的情况下，实际数据也会将这种能量最小化。</p>
 </li>
 </ul>
 <p>总的来说，这些结果为理解 Transformer 模型提供了补充基础，并为未来的增强提出了合理的途径。</p>
@@ -349,51 +349,24 @@ Y^{(t+1)}=ReLU[softmax(Y^{(t)}W_aY^{(t)\top})Y^{(t)}W_f]\tag{8}
 </li>
 </ol>
 <p>在本文中，我们提出了至少部分解决挑战 1、2 和 3 的技术，而对于 4，我们将初步讨论推迟到补充，将正式调查作为未来的方向。</p>
-<h1 id="三，Transformer-Self-Attention的一种新推导"><a href="#三，Transformer-Self-Attention的一种新推导" class="headerlink" title="三，Transformer Self-Attention的一种新推导"></a>三，Transformer Self-Attention的一种新推导</h1><p>现在，我们通过构建一个能量函数来解决挑战 1，该函数的迭代优化步骤与 Transformer 风格的 softmax 自注意力完全匹配，这是惯例。</p>
-<h2 id="3-1-展开的优化步骤-vs-基本的-Softmax-自注意力"><a href="#3-1-展开的优化步骤-vs-基本的-Softmax-自注意力" class="headerlink" title="3.1 展开的优化步骤 vs 基本的 Softmax 自注意力"></a>3.1 展开的优化步骤 vs 基本的 Softmax 自注意力</h2><p>考虑能量函数</p>
-<script type="math/tex; mode=display">
-\begin{align*}
-E_1(Y)=\sum^n_{i=1}\sum^n_{j=1}\rho\bigg(\frac{1}{2}\|y_i-y_j\|^2\bigg)+R(Y)\tag{9}
-\end{align*}</script><p>其中 $y_i\in\mathbb{R}^{d\times1}$ 是矩阵 $Y\in\mathbb{R}^{n\times d}$ 的第 $i$ 行，$\rho: \mathbb R^+ \to \mathbb R$ 是凹非减函数，$R:\mathbb R^{n\times d} \to \mathbb R$ 是凸函数。 有趣的是，尽管由于 $ρ$ 的非凸性，$E_1$ 不一定是凸的，但在 $ρ$ 和 $R$ 的特定选择下，它可以通过类似 softmax 的结构进行优化，如下所示：</p>
-<p><strong>定理3.1</strong></p>
-<p>假设 $\rho(z)=-exp\{-z\},\quad R(Y)=\frac{1}{2}|Y|^2_{\mathcal F}$，且 $\beta_i=exp\big\{-\frac{1}{2}|y_i^{(t)}|^2\big\}$，令 $Y^{(t)}$ 表示 $Y$ 中的任意固定值，则有如下更新策略：</p>
-<script type="math/tex; mode=display">
-\begin{align*}
-y^{(t+1)}_i=\frac{\sum^n_{j=1}\beta_j exp\{y_i^{(t)\top}y_j^{(t)}\}y^{(t)}_j}{\sum^n_{j=1}\beta_j exp\{y_i^{(t)\top}y_j^{(t)}\}},\;\forall i\tag{10}
-\end{align*}</script><p>满足 $E_1(Y^{(t+1)})\leq E_1(Y^{(t)})$，等式成立的条件是当且仅当 $Y^{(t)}$ 是 $E_1$的固定点。</p>
-<p>值得一提的是，虽然不是很明显，但更新步骤 (10) 可以通过最大-最小化 (MM) 算法生成 [48]，其中最大化步骤产生凸上界，最小化步骤沿上界的梯度下降。 因此，本次更新的核心本质上是凸函数上的梯度步，这将与后续章节的讨论相关； 请参阅补充文件中的证明和更多详细信息。</p>
-<p><strong>remark 3.2</strong><br>定理 3.1 有几个值得注意的地方。 首先，虽然在定理 3.1 中我们采用特定形式的 $ρ$ 和 $R$ 来恢复 softmax 算子，但是通过这些函数的其他选择，相应的展开优化算法可以生成不同类型的注意机制。 其次，获得（10）依赖于梯度步长的特定选择； 然而，对于更广泛的选择，由此产生的收敛更新会导致残余连接作为优化轨迹的自然副产品（见补充）。 最后，定理 3.1 可以很容易地修改，以适应完全 Transformer 连接受某些图结构约束的情况，如 [10, 18] 中所示（同样，详见补充）。</p>
-<h2 id="3-2-拓展到包含可训练参数"><a href="#3-2-拓展到包含可训练参数" class="headerlink" title="3.2 拓展到包含可训练参数"></a>3.2 拓展到包含可训练参数</h2><p>在聚合成矩阵形式后，我们到目前为止已经证明了迭代：</p>
-<script type="math/tex; mode=display">
-\begin{align*}
-Y^{(t+1)}=softmax_{\beta}\big(Y^{(t)}Y^{(t)\top}\big)Y^{(t)}\tag{11}
-\end{align*}</script><p>将减少（或保持不变）来自 (9) 的能量，其中 softmaxβ(y)i =<br>具有重新加权系数向量 β 的 softmax 运算符。 如果 β 独立于 i，即<br>5个<br>(11) βi exp{yi} 表示<br>是常数（它可以通过层归一化强制执行，如前所述，层归一化也可以包含在我们的框架中），那么这个重新加权的 softmax 相当于 Transformers 中使用的规范 softmax。</p>
-<p>现在考虑重新参数化 Y = ZWa，其中 Wa ∈ Rd×d 是可逆矩阵。 由此得出 Z(t+1)Wa = softmaxβ Z(t)WaWa⊤Z(t)⊤ Z(t)Wa，导致修改后的更新</p>
-<script type="math/tex; mode=display">
-\begin{align*}
-\tag{x}
-\end{align*}</script><p>其中 Was = WaWa⊤，我们采用上标“s”表示该矩阵是对称的。 总的来说，本节的结果直接解决了挑战 1，在有和没有可训练参数的情况下（对称权重的主要挥之不去的限制被降级为挑战 4）密切再现 softmax 风格的自注意力。</p>
-<h1 id="四，通过交替不精确最小化组合Transformer组件"><a href="#四，通过交替不精确最小化组合Transformer组件" class="headerlink" title="四，通过交替不精确最小化组合Transformer组件"></a>四，通过交替不精确最小化组合Transformer组件</h1><p>接下来我们将解决挑战 2 和异构 Transformer 层类型。 带着这个目标，我们首先介绍一个通用的优化场景。 具体来说，我们提出以下问题：<br>给定两个（凸）目标 f(y) 和 g(y)，在什么条件下和/或在什么程度上，将交替采取单独的梯度步骤 w.r.t. f 和 g 优化聚合函数 f + g？<br>我们将这种优化策略称为交替不精确最小化 (AIM)，我们将很快展示它收敛到包含 f + g 最佳点的有限半径球的条件。 稍后我们将讨论这些结果如何有助于解决挑战 2。<br>我们预先强调，如此定义的 AIM 与文献中通常所说的交替最小化完全不同 [19, 33]。 后者指的是在固定其他变量的情况下，以交替方式一次最小化具有多个变量的统一目标函数的场景，这样可以轻松实现下降。 相比之下，我们的 AIM 场景涉及多个带有共享变量的客观项，我们使用相同的变量交替最小化每个项，这是一个更具挑战性的分析过程。</p>
-<h2 id="4-1-一般交替不精确最小化"><a href="#4-1-一般交替不精确最小化" class="headerlink" title="4.1 一般交替不精确最小化"></a>4.1 一般交替不精确最小化</h2><p>给定两个目标 f, g : Rd → R，AIM 形式化为算法 1，其中 α1 和 α2 构成步长。 我们现在将研究算法 1 如何与由 h(y) = f(y) + g(y) 定义的组合目标的最小化相关。</p>
-<p>在下文中，我们假设 f、g 都是 Lipschitz 光滑且强凸的 [42]，分别具有 Lipschitz 常数 Lf 和 Lg，以及凸性参数 cf 和 cg。 因此，h 也将是 Lipschitz 光滑且强凸的，具有 Lipschitz 常数 Lh 和凸度 ch。 我们将 f、g 和 h 的最优点分别表示为 yf∗、yg∗ 和 yh∗。</p>
 <h1 id="五，展开范式中集成的非线性激活"><a href="#五，展开范式中集成的非线性激活" class="headerlink" title="五，展开范式中集成的非线性激活"></a>五，展开范式中集成的非线性激活</h1><p>之前已经考虑过在展开的优化设置中处理非线性激活 [16、47、51、55]。 然而，之前的工作在很大程度上依赖于近端算子来创建与简单线性滤波器匹配的非线性激活，并且分析无法转移到本文中的 Transformer 案例。 虽然我们将在本节中将注意力集中在添加 ReLU 激活上，但为了简化说明以及它们在 Transformer 模型中的普遍性，我们的结果可以推广到更广泛的选择。【意思是也可以考虑其他的激活函数？】</p>
 <p>与第 4 节类似，我们首先通过将 ReLU 激活引入算法 1 来研究优化问题的一般形式，将此修改形式化为具有近端步骤的 AIM，然后分析适当约束下的收敛性。 稍后我们将这些结果应用到 Transformer。</p>
 <h2 id="5-1-近端交替不精确最小化"><a href="#5-1-近端交替不精确最小化" class="headerlink" title="5.1 近端交替不精确最小化"></a>5.1 近端交替不精确最小化</h2><p>已经确定 [29, 47] 可以将 ReLU 激活建模为近端算子，如下所示：</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-ReLU(y)=\mathop{argmin}_z\frac{1}{2\lambda}\|z-y\|^2+\phi(z) \tag{17}
+ReLU(y)=argmin_z\frac{1}{2\lambda}\|z-y\|^2+\phi(z) \tag{17}
 \end{align*}</script><p>其中 $\phi$ 是第一象限的指示函数，且 $\phi(z)=\begin{cases}&amp;+\inf \quad &amp;if\;z&lt;0\\&amp;0 \quad &amp;if\; z\geq0\end{cases}$ 。此外，<br>在第 4 节中，我们演示了算法 1 的步骤如何一起形成损失 $h(y) = f(y) + g(y)$ 的不精确梯度下降迭代，其中噪声项 $\Delta_t$ 在（14）中定义。 在这里，通过在算法 2 中添加近端步骤，我们获得了近端梯度下降的不精确版本。 事实上，算法 2 的一轮相当于</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-y^{(t+1)}=\mathop{argmin}_z\frac{1}{2\lambda}\|z-y^{(t)}+\alpha_2\nabla h(y^{(t)})-\alpha_2\Delta_t\|^2+\phi(z) \tag{18}
+y^{(t+1)}=argmin_z\frac{1}{2\lambda}\|z-y^{(t)}+\alpha_2\nabla h(y^{(t)})-\alpha_2\Delta_t\|^2+\phi(z) \tag{18}
 \end{align*}</script><p>与精确版本 $y^{(t+1)} = argmin_z P(z;y^{(t)})$ 相比，这是噪声为 $\Delta_t$ 的典型近端梯度步长的不精确版本，其中 $P(z;y)$ 是近端问题</p>
 <script type="math/tex; mode=display">
 \begin{align*}
 P(z;y^{(t)})=\frac{1}{2\lambda}\|z-y^{(t)}+\alpha_2\nabla h(y^{(t)})\|^2+\phi(z) \tag{19}
 \end{align*}</script><p>虽然过去研究了各种形式的不精确近端梯度下降 [13、17、44、52]，但现有工作仍然假设恒定噪声 [13]、随机噪声 [52] 或递减(收敛)噪声 [17、44] . 至关重要的是，我们所知道的任何先前工作都不适用于我们的案例，其中噪声可能会随着迭代而增加。 此外，现有文献中的分析主要关注收敛到一个固定点，而在我们的场景中，我们反而考虑进入围绕特定点形成的特定区域。</p>
 <p>除了像第 4 节中那样限制 $\delta(y^{(t)})$ 之外，我们还需要类似限制当前位置 $y(t)$ 和梯度 $\alpha_2\nabla h(y^{(t)})$，定义为 $\mathfrak D(\xi_1,\xi_2) =\frac{1}{|\xi_1|^2}\sum^d_{i=1}min(\xi^2_{2,i}-\xi^2_{1,i},0)$。直观地，$\mathfrak D(\xi_1;\xi_2)$ 被定义为每一项为负，但只有当 $\xi_1$ 和 $\xi_2$ 都很大时才接近于 $0$。 然后我们有以下内容：</p>
-<h3 id="定理-5-1"><a href="#定理-5-1" class="headerlink" title="定理 5.1"></a>定理 5.1</h3><p>如果 $\alpha_1 \leq \alpha_2 \leq L^{−1}_h,\;\mathfrak D(\alpha_2\nabla h(y^{(t)});y^{(t)})\geq -\kappa $，对于任何 $\kappa \in (0,1)$，并且$\delta(y^{(t)})\leq\mathscr{L}’$，其中 $\mathscr{L}’=\frac{\alpha_2c_P\lambda\sqrt{1-\kappa}}{\sqrt{2}(\alpha_2-\alpha_1+\alpha_1\alpha_2L_g)} $，我们有 $h(y^{(t+1)}) +\phi(y^{(t+1)})\leq h(y^{(t)})+\phi(y^{(t)}) $。</p>
-<p>直观地，定理 5.1 表明保证 $h(y)+\phi(y)$ 下降的区域是 $S(\mathscr{L}’)$ 与引理 4.3 中定义的 $S$ 的交集，并且区域 $\mathcal{T}(\kappa) = \{y|\mathscr{D}(\alpha_2\nabla h(y);y) \geq −\kappa \}$。 虽然 $\mathcal{T}(\kappa)$ 的形状通常仍然难以指定，但我们注意到当 $\alpha_2 \to 0$ 或 $\kappa\to 1$ 时，$\mathcal{T} (\kappa)$ 趋向于整个空间。我们用二维合成示例，其中能量函数为 $h(y) = |W_y|^2_{\mathcal F} + |y − b|^2$，$W$ 和 $b$ 的条目是随机生成的。 参见图 4 使用不同值 $\kappa$ 的可视化，它表明当 $\kappa$ 足够小时，$\mathcal{T}(\kappa)$ 几乎是整个空间（原点周围的一小块区域除外），这确保了 $h(y) + \phi(y)$ 在大多数情况下的下降。</p>
+<h3 id="定理-5-1"><a href="#定理-5-1" class="headerlink" title="定理 5.1"></a>定理 5.1</h3><p>如果 $\alpha_1 \leq \alpha_2 \leq L^{−1}_h,\;\mathfrak D(\alpha_2\nabla h(y^{(t)});y^{(t)})\geq -\kappa$，对于任何 $\kappa \in (0,1)$，并且$\delta(y^{(t)})\leq\mathscr{L}’$，其中 $\mathscr{L}’=\frac{\alpha_2c_P\lambda\sqrt{1-\kappa}}{\sqrt{2}(\alpha_2-\alpha_1+\alpha_1\alpha_2L_g)}$，我们有 $h(y^{(t+1)}) +\phi(y^{(t+1)})\leq h(y^{(t)})+\phi(y^{(t)}) $。</p>
+<p>直观地，定理 5.1 表明保证 $h(y)+\phi(y)$ 下降的区域是 $S(\mathscr{L}’)$ 与引理 4.3 中定义的 $S$ 的交集，并且区域 $\mathcal{T}(\kappa) = \{y|\mathscr{D}(\alpha_2\nabla h(y);y) \geq −\kappa\}$。 虽然 $\mathcal{T}(\kappa)$ 的形状通常仍然难以指定，但我们注意到当 $\alpha_2 \to 0$ 或 $\kappa\to 1$ 时，$\mathcal{T} (\kappa)$ 趋向于整个空间。我们用二维合成示例，其中能量函数为 $h(y) = |W_y|^2_{\mathcal F} + |y − b|^2$，$W$ 和 $b$ 的条目是随机生成的。 参见图 4 使用不同值 $\kappa$ 的可视化，它表明当 $\kappa$ 足够小时，$\mathcal{T}(\kappa)$ 几乎是整个空间（原点周围的一小块区域除外），这确保了 $h(y) + \phi(y)$ 在大多数情况下的下降。</p>
 <h2 id="5-2-在Transformer模型中嵌入非线性"><a href="#5-2-在Transformer模型中嵌入非线性" class="headerlink" title="5.2 在Transformer模型中嵌入非线性"></a>5.2 在Transformer模型中嵌入非线性</h2><p>通过在前面的能量上加上惩罚项，并分别从 3.1 和 4.2 节中得到 $E_1$ 和 $E_2$，我们最终得到 Transformer 总能量 $E(Y) = E_1(Y) + E_2(Y) + \phi(Y)$。 并且 $E(Y)$ 的展开优化落入算法 2 的范围，使得前面的分析和定理 5.1 适用，我们可以得出结论，聚合更新规则</p>
 <script type="math/tex; mode=display">
 \begin{align*}
@@ -446,8 +419,8 @@ a_{i,j} = \frac{1}{2-y_i^\top y_j}(\sum^n_{k=1}\frac{1}{2-y_i^\top y_k})^{-1}
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/04/27/Transformer/Choose%20a%20Transformer-Fourier%20or%20Galerkin/" rel="prev" title="Choose a Transformer-Fourier or Galerkin">
-      <i class="fa fa-chevron-left"></i> Choose a Transformer-Fourier or Galerkin
+    <a href="/2023/04/27/Transformer/A%20Mathematical%20Framework%20for%20Transformer%20Circuits/" rel="prev" title="A Mathematical Framework for Transformer Circuits">
+      <i class="fa fa-chevron-left"></i> A Mathematical Framework for Transformer Circuits
     </a></div>
       <div class="post-nav-item">
     <a href="/2023/05/05/other/how_to_read_paper/" rel="next" title="怎么读论文？">
@@ -512,7 +485,7 @@ a_{i,j} = \frac{1}{2-y_i^\top y_j}(\sum^n_{k=1}\frac{1}{2-y_i^\top y_k})^{-1}
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-text">摘要</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BF%BB%E8%AF%91"><span class="nav-text">翻译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%90%86%E8%A7%A3"><span class="nav-text">理解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%EF%BC%8C%E4%BB%8B%E7%BB%8D"><span class="nav-text">一，介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%EF%BC%8C%E7%94%B1%E5%B1%95%E5%BC%80%E7%9A%84%E4%BC%98%E5%8C%96%E5%BD%A2%E6%88%90%E7%9A%84%E6%B7%B1%E5%B1%82%E6%9E%B6%E6%9E%84%E7%AE%80%E4%BB%8B"><span class="nav-text">二，由展开的优化形成的深层架构简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E6%95%B0%E5%AD%A6%E8%A1%A8%E7%A4%BA"><span class="nav-text">2.1 数学表示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C%E5%92%8C%E5%B1%80%E9%99%90"><span class="nav-text">2.2 相关工作和局限</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E8%AF%B1%E5%AF%BC%E7%9A%84%E5%89%8D%E9%A6%88%E7%BD%91%E7%BB%9C"><span class="nav-text">优化诱导的前馈网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E8%AF%B1%E5%AF%BC%E7%9A%84%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6"><span class="nav-text">优化诱导的注意力机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E8%AF%B1%E5%AF%BC%E7%9A%84%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="nav-text">优化诱导的图神经网络</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-%E6%89%A9%E5%B1%95%E5%88%B0%E9%80%9A%E7%94%A8Transformer%E7%9A%84%E4%B8%BB%E8%A6%81%E6%8C%91%E6%88%98"><span class="nav-text">2.3 扩展到通用Transformer的主要挑战</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%EF%BC%8CTransformer-Self-Attention%E7%9A%84%E4%B8%80%E7%A7%8D%E6%96%B0%E6%8E%A8%E5%AF%BC"><span class="nav-text">三，Transformer Self-Attention的一种新推导</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-%E5%B1%95%E5%BC%80%E7%9A%84%E4%BC%98%E5%8C%96%E6%AD%A5%E9%AA%A4-vs-%E5%9F%BA%E6%9C%AC%E7%9A%84-Softmax-%E8%87%AA%E6%B3%A8%E6%84%8F%E5%8A%9B"><span class="nav-text">3.1 展开的优化步骤 vs 基本的 Softmax 自注意力</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-%E6%8B%93%E5%B1%95%E5%88%B0%E5%8C%85%E5%90%AB%E5%8F%AF%E8%AE%AD%E7%BB%83%E5%8F%82%E6%95%B0"><span class="nav-text">3.2 拓展到包含可训练参数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%EF%BC%8C%E9%80%9A%E8%BF%87%E4%BA%A4%E6%9B%BF%E4%B8%8D%E7%B2%BE%E7%A1%AE%E6%9C%80%E5%B0%8F%E5%8C%96%E7%BB%84%E5%90%88Transformer%E7%BB%84%E4%BB%B6"><span class="nav-text">四，通过交替不精确最小化组合Transformer组件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-%E4%B8%80%E8%88%AC%E4%BA%A4%E6%9B%BF%E4%B8%8D%E7%B2%BE%E7%A1%AE%E6%9C%80%E5%B0%8F%E5%8C%96"><span class="nav-text">4.1 一般交替不精确最小化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94%EF%BC%8C%E5%B1%95%E5%BC%80%E8%8C%83%E5%BC%8F%E4%B8%AD%E9%9B%86%E6%88%90%E7%9A%84%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%BF%80%E6%B4%BB"><span class="nav-text">五，展开范式中集成的非线性激活</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-%E8%BF%91%E7%AB%AF%E4%BA%A4%E6%9B%BF%E4%B8%8D%E7%B2%BE%E7%A1%AE%E6%9C%80%E5%B0%8F%E5%8C%96"><span class="nav-text">5.1 近端交替不精确最小化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E7%90%86-5-1"><span class="nav-text">定理 5.1</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-%E5%9C%A8Transformer%E6%A8%A1%E5%9E%8B%E4%B8%AD%E5%B5%8C%E5%85%A5%E9%9D%9E%E7%BA%BF%E6%80%A7"><span class="nav-text">5.2 在Transformer模型中嵌入非线性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AD%EF%BC%8C%E5%AE%9E%E8%B7%B5%E9%AA%8C%E8%AF%81"><span class="nav-text">六，实践验证</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%83%EF%BC%8C%E7%BB%93%E8%AE%BA"><span class="nav-text">七，结论</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-text">摘要</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BF%BB%E8%AF%91"><span class="nav-text">翻译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%90%86%E8%A7%A3"><span class="nav-text">理解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%EF%BC%8C%E4%BB%8B%E7%BB%8D"><span class="nav-text">一，介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%EF%BC%8C%E7%94%B1%E5%B1%95%E5%BC%80%E7%9A%84%E4%BC%98%E5%8C%96%E5%BD%A2%E6%88%90%E7%9A%84%E6%B7%B1%E5%B1%82%E6%9E%B6%E6%9E%84%E7%AE%80%E4%BB%8B"><span class="nav-text">二，由展开的优化形成的深层架构简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E6%95%B0%E5%AD%A6%E8%A1%A8%E7%A4%BA"><span class="nav-text">2.1 数学表示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C%E5%92%8C%E5%B1%80%E9%99%90"><span class="nav-text">2.2 相关工作和局限</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E8%AF%B1%E5%AF%BC%E7%9A%84%E5%89%8D%E9%A6%88%E7%BD%91%E7%BB%9C"><span class="nav-text">优化诱导的前馈网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E8%AF%B1%E5%AF%BC%E7%9A%84%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6"><span class="nav-text">优化诱导的注意力机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E8%AF%B1%E5%AF%BC%E7%9A%84%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="nav-text">优化诱导的图神经网络</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-%E6%89%A9%E5%B1%95%E5%88%B0%E9%80%9A%E7%94%A8Transformer%E7%9A%84%E4%B8%BB%E8%A6%81%E6%8C%91%E6%88%98"><span class="nav-text">2.3 扩展到通用Transformer的主要挑战</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94%EF%BC%8C%E5%B1%95%E5%BC%80%E8%8C%83%E5%BC%8F%E4%B8%AD%E9%9B%86%E6%88%90%E7%9A%84%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%BF%80%E6%B4%BB"><span class="nav-text">五，展开范式中集成的非线性激活</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-%E8%BF%91%E7%AB%AF%E4%BA%A4%E6%9B%BF%E4%B8%8D%E7%B2%BE%E7%A1%AE%E6%9C%80%E5%B0%8F%E5%8C%96"><span class="nav-text">5.1 近端交替不精确最小化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E7%90%86-5-1"><span class="nav-text">定理 5.1</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-%E5%9C%A8Transformer%E6%A8%A1%E5%9E%8B%E4%B8%AD%E5%B5%8C%E5%85%A5%E9%9D%9E%E7%BA%BF%E6%80%A7"><span class="nav-text">5.2 在Transformer模型中嵌入非线性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AD%EF%BC%8C%E5%AE%9E%E8%B7%B5%E9%AA%8C%E8%AF%81"><span class="nav-text">六，实践验证</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%83%EF%BC%8C%E7%BB%93%E8%AE%BA"><span class="nav-text">七，结论</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -596,13 +569,13 @@ a_{i,j} = \frac{1}{2-y_i^\top y_j}(\sum^n_{k=1}\frac{1}{2-y_i^\top y_k})^{-1}
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">259k</span>
+    <span title="站点总字数">257k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">3:56</span>
+    <span title="站点阅读时长">3:53</span>
 </div>
 
         
