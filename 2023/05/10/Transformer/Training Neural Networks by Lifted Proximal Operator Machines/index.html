@@ -29,7 +29,7 @@
 <meta property="og:description" content="前言title: Training Neural Networks by Lifted Proximal Operator Machines 论文百度云盘链接:https:&#x2F;&#x2F;pan.baidu.com&#x2F;s&#x2F;14x2KrlBVhfdWWy8oQBjROw?pwd&#x3D;axgn  提升近端算子机对前馈神经网络的训练问题～">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-05-09T16:00:13.000Z">
-<meta property="article:modified_time" content="2023-05-09T16:04:11.225Z">
+<meta property="article:modified_time" content="2023-05-10T07:25:30.424Z">
 <meta property="article:author" content="xinwen">
 <meta property="article:tag" content="LPOM">
 <meta name="twitter:card" content="summary">
@@ -132,7 +132,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">76</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">77</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -142,7 +142,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">83</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">84</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -224,7 +224,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2023-05-10 00:00:13 / 修改时间：00:04:11" itemprop="dateCreated datePublished" datetime="2023-05-10T00:00:13+08:00">2023-05-10</time>
+              <time title="创建时间：2023-05-10 00:00:13 / 修改时间：15:25:30" itemprop="dateCreated datePublished" datetime="2023-05-10T00:00:13+08:00">2023-05-10</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -256,14 +256,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>625</span>
+              <span>21k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>19 分钟</span>
             </span>
 
         </div>
@@ -279,6 +279,263 @@
 <p>论文百度云盘链接:<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/14x2KrlBVhfdWWy8oQBjROw?pwd=axgn">https://pan.baidu.com/s/14x2KrlBVhfdWWy8oQBjROw?pwd=axgn</a> </p>
 <p><strong>提升近端算子机对前馈神经网络的训练问题～</strong><br><span id="more"></span></p>
 <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>我们提出了提升近端算子机 (LPOM) 来训练完全连接的前馈神经网络。 LPOM 将激活函数表示为等效的近端算子，并将近端算子作为惩罚添加到网络的目标函数中。 LPOM 在所有层级权重和激活中都是块多凸的。 这使我们能够开发一种新的具有收敛保证的块坐标下降（BCD）方法来解决它。 由于新颖的公式和求解方法，LPOM 仅使用激活函数本身，不需要任何梯度步骤。 因此，它避免了梯度消失或爆炸问题，这些问题通常归咎于基于梯度的方法。 此外，它还可以处理各种非递减 Lipschitz 连续激活函数。 此外，LPOM 几乎与随机梯度下降一样具有内存效率，并且其参数调整相对容易。 我们进一步实现和分析了 LPOM 的并行解决方案。 我们首先提出了一种具有收敛保证的通用异步并行 BCD 方法。 然后我们用它来解决 LPOM，从而得到异步并行 LPOM。 为了更快的速度，我们开发了同步并行 LPOM。 我们验证了 LPOM 在各种网络架构和数据集上的优势。 我们还将同步并行 LPOM 应用于自动编码器训练，并展示了其快速收敛和卓越的性能。</p>
+<h1 id="一，介绍"><a href="#一，介绍" class="headerlink" title="一，介绍"></a>一，介绍</h1><p>神经网络 (NN) 是强大的模型，在许多应用中取得了巨大成功，包括图像识别 [1]、语音识别 [2]、自然语言理解 [3] 和构建围棋游戏学习系统 [4] . 然而，由于它们的目标函数是高度非凸的，NN 的训练仍然是一个挑战，其中包括病态的 Hessian 和许多鞍点和局部最小值的存在 [5]。</p>
+<p>作为 NN 训练中的主要方法，基于梯度的方法主要包括 vanilla 【？】随机梯度下降 (SGD) [6] 和具有自适应学习率和动量项的 SGD，如 Nesterov momentum [7]、AdaGrad [8]、RMSProp [9] ]、Adam [10] 和 AMSGrad [11]。 SGD 及其变体使用小批量训练样本来估计全批量梯度，所以每一步的权重更新都很简单，此外估计的梯度也有噪声，这有助于避开鞍点 [12]。 尽管基于梯度的方法取得了巨大成功，但它们也有几个严重的缺点。 主要缺陷是它们遭受梯度消失或爆炸问题的困扰，这会减慢或破坏训练的稳定性。 已经开发了一些方法来缓解这样的问题，例如，引入整流线性单元 (ReLU)、批量归一化 (BN) [13] 或残差网络 (ResNets) [14]。 然而，嵌套计算目标函数梯度的问题仍然存在，而且它们的参数调整很困难，例如设置学习率和停止标准 [15]。 此外，它们不能直接处理不可微分的激活函数（例如，二值化神经网络 [16]），也不能并行更新跨层的权重 [15]。 有关 SGD 局限性的更多详细信息，请读者参考 [17] 和 [15]。</p>
+<p>由于上面讨论的 SGD 的局限性，在为神经网络开发新的训练方法方面有非常活跃的研究。 一种值得注意的方法是引入与网络激活相关的辅助变量，并将 NN 的训练制定为等式约束优化问题 [18]，这种方法用标准优化方法解决了产生的约束问题。 这种方法的另一个优点是它可以并行实现，因此可以解决分布式大规模问题。 已经提出了这种方向的几种方法，它们在如何放松约束和向目标函数添加惩罚方面有所不同。 </p>
+<p>Carreira-Perpinan 和 Wang [18] 使用二次惩罚来近似执行等式约束并解决了一系列无约束最小化问题。 zeng等[19] 也使用二次惩罚来近似强制执行等式约束，但为每一层引入了更多的辅助变量块。 受乘法器交替方向法 (ADMM) [20] 的启发，Taylor 等人[17] 和zhang等人[21]采用增广拉格朗日方法获得满足非线性等式约束的序列。 然而，引入的拉格朗日乘数需要更多的内存，而且 ADMM 不是为处理非线性等式约束而设计的。 Zhang 和 Brand [22] 以及 Askari 等人[23] 使用激活函数的等效表示，消除了非线性约束，然而[22]中的方法仅限于 ReLU 激活函数，虽然 [23] 中的公式可以处理一般的激活函数，但其求解方法需要针对每个激活函数进行调整，并且所提出的求解方法仅适用于 ReLU，而且这两种方法在速度或错误率方面无法与 SGD 竞争。 此外，在测试阶段，他们需要解决优化问题以预测新样本的标签，这在计算上是负担不起的。 相比之下，SGD 使用前馈传递来预测标签，即将激活从输入层传播到输出层并使用输出层的激活进行预测。 最近，Gu等人[24] 介绍了 [23] 的后续工作，他们的公式（见[24]中的（4）和（9））等同于我们的（见（19）或（20）），然而，他们的解决方法不如我们的方法有效和通用（见第 4.1 节的最后一段）。</p>
+<p>本文的主要贡献可归纳如下。</p>
+<ul>
+<li>我们开发了一种新的优化方法来训练完全连接的前馈神经网络，我们称之为提升近端算子机 (LPOM)，LPOM 允许我们使用简单的前馈传递来推断新样本，这与 SGD 相同。 此外，LPOM 是块多凸的，即在保持剩余权重和激活固定的前提下，对当前层的权重或者激活来说它是凸。 相比之下，大多数现有的 NN 训练方法不具有此属性。 这对神经网络的训练非常有利。</li>
+<li>相应地，我们提出了一种新的块坐标下降（BCD）方法来求解 LPOM 并证明其收敛性。 我们的BCD求解方法只用到了激活函数本身的映射，没有用到它的导数。 因此它避免了梯度消失或爆炸问题，这在基于梯度的方法中是众所周知的。 同时，LPOM 适用于各种非递减 Lipschitz 连续激活函数，它们可以是饱和的（例如，sigmoid 和 tanh），也可以是不可微的（例如，ReLU 和 leaky ReLU）。 此外，LPOM 不需要比分层激活更多的辅助变量，因此它的内存占用与 SGD 几乎相同，它还存储所有用于梯度计算的激活，而且在 LPOM 中调整惩罚参数很容易。</li>
+<li>我们以异步和同步方式实现和分析了 LPOM 的并行解决方案。 我们首先提出了一种通用的异步并行 BCD 方法。 我们证明了它的收敛性并用它来解决 LPOM，从而得到异步并行 LPOM，得到的结论也是同步并行LPOM的基础。 然后我们提出了同步并行 LPOM，并表明它在串行 LPOM 上实现了令人满意的加速，而不会降低性能。</li>
+</ul>
+<p>由于 SGD 是常用的 NN 训练方法，我们将其作为我们的主要竞争对手。 如表 1 所示，与 SGD 相比，LPOM 表现出一些有利的特性。 目前，我们仅在全连接 NN 上实施 LPOM。 卷积神经网络 (CNN) 是最流行的前馈网络。 然而，由于我们还没有解释 pooling operators 和 skip-connections，我们将来会在 CNNs 上实现 LPOM。 我们注意到，大多数现有的基于非梯度的方法也首先关注完全连接的神经网络 [17]、[18]、[19]、[21]、[22]、[23]。</p>
+<h1 id="二，相关工作"><a href="#二，相关工作" class="headerlink" title="二，相关工作"></a>二，相关工作</h1><p>在本节中，我们将回顾一些与我们的工作最相关的非基于梯度的 NN 训练方法。 我们在表 2 中总结了整篇论文中使用的主要符号。</p>
+<p>考虑用于监督学习的具有 n 层的标准前馈神经网络，其中第一层是输入层，第 n 层是输出层。 令 X1 2 Rn1 m 为一批训练样本，其中 n1 是训练样本的维数，也是输入层神经元的数量，m 是批量大小。 设 D 2 Rc m 是 X1 的标签，其中 c 是类数。 设 Wi 为第 i 层和第 di + 1Þ 层之间的权重矩阵，其中我们将额外的一列堆叠到 Wi 并将全行堆叠到 Xi 并省略相应的偏差。 令 fð Þ 为逐元素激活函数（例如，sigmoid、tanh 和 ReLU）。 让 ‘ð ; Þ 成为损失函数（例如，均方误差 (MSE) 或交叉熵）。 借助这些符号，NN 的批量训练问题可以表示为以下最小化：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{1}
+\end{align*}</script><p>在上面的公式中，NN 的目标函数是嵌套的，其中第 i 层的输出是第 i+1-th 层的输入，对于 i1⁄41;…;n 1.问题 (1) 可以通过 SGD 解决。 它计算 {W} 传播的梯度，然后通过梯度下降更新 {W}。</p>
+<p>为了使问题 (1) 在计算上更易于处理，最常见的方法是将每一层的激活作为辅助变量块引入。 那么问题（1）可以等效地改写为等式约束最小化问题[18]</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{2}
+\end{align*}</script><p>其中Xi是第i层的激活值，Xn也是神经网络的输出，其他符号同（1）。 与问题（1）相比，问题（2）的目标函数没有嵌套。 所以我们可能会使用更优雅的优化方法来解决它。 我们要注意，在使用 SGD 解决问题 (1) 时，还需要记录激活值 fXigni1⁄42 以计算梯度。</p>
+<p>Carreira-Perpinan 和 Wang [18] 提出了辅助坐标（MAC）的方法来近似解决问题（2）。 MAC 不是直接求解 (2)，而是通过使用二次惩罚来放宽等式约束并求解以下形式的无约束问题</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{3}
+\end{align*}</script><p>其中 m &gt; 0 随着迭代逐渐增加。 在<br>fWig;fXig 2 i1⁄42<br>i i 1 i 1 X1⁄4fðW XÞ<br>为了解耦非线性激活并获得更有效的子问题求解方法，Zeng 等人。 [19] 为问题（2）的每一层引入了一个新的辅助变量块，并提出了以下问题：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{4}
+\end{align*}</script><p>按照MAC的方法，他们没有直接解决上面的问题，而是优化了如下形式的问题</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{5}
+\end{align*}</script><p>泰勒等。 [17] 也试图优化问题 (4)。 受 ADMM [20] 的启发，他们只在输出层的约束中添加了一个拉格朗日乘子，而不是在每个等式约束中添加了一个拉格朗日乘子，从而得到</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{6}
+\end{align*}</script><p>其中 M 是拉格朗日乘数，b &gt; 0 和 mi &gt; 0 是常数。 请注意，输出层使用线性激活函数（即 fðxÞ 1⁄4 x）。 所以他们只是试探性地使用了 ADMM。 同样受到 ADMM 的启发，Zhang 等人。 [21] 使用了另一种变量拆分方案</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{7}
+\end{align*}</script><p>与 ADMM 一样，他们为 (7) 中的每个约束添加了拉格朗日乘数。 那么增广拉格朗日问题就变成了</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{8}
+\end{align*}</script><p>其中 Ai 和 Bi 是拉格朗日乘数。 然而，问题（7）包含非线性等式约束，ADMM 旨在处理线性约束问题。</p>
+<p>Zhang 和 Brand [22] 开发了一种新方法，仅使用 ReLU 激活函数来解决问题 (2)。 最值得注意的是，他们将 ReLU 激活函数表示为凸最小化问题。 即，他们使用 ReLU 激活函数将问题 (2) 中的等式约束重新解释为以下问题：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{9}
+\end{align*}</script><p>其中 max 是元素方面的最大值运算符。 根据解释，他们使用 ReLU 激活函数对问题 (2) 进行了近似，如下所示：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{10}
+\end{align*}</script><p>与基于 MAC 和 ADMM 的方法不同，这种松弛不包括非线性等式约束。 此外，问题（10）是分块多凸的，即它是凸 w.r.t. 当其余块固定时，每个变量块。 他们提出了一种新的 BCD 方法来求解。 然而，在测试时间，他们必须解决问题（10）固定的 fW i gn 1 或在输出层重新训练 W n 1 。 Askari i1⁄41 等人。 [23] 遵循了 Zhang 和 Brand [22] 提出的想法。 他们演示了如何将更一般的激活函数转换为凸最小化问题。 然而，他们训练的权重只能用于初始化 SGD 的前馈神经网络。 顾等。 [24] 介绍了 [23] 的后续工作。 它们的公式等同于 LPOM。 然而，他们的解决方法需要解决更新分层激活的约束问题，效率不高。 另外，他们的求解方法需要针对每个激活函数进行裁剪，所以不具有通用性。 值得注意的是，基于卷积和平均池化的组合也是线性的这一事实，他们结合了一个经验技巧来扩展他们的公式以直接处理卷积和平均池化。</p>
+<h1 id="三，LPOM"><a href="#三，LPOM" class="headerlink" title="三，LPOM"></a>三，LPOM</h1><p>在本节中，我们介绍了 LPOM 的概念，并讨论了它相对于现有 NN 训练方法的优势。</p>
+<h2 id="3-1-近端算子重新制定"><a href="#3-1-近端算子重新制定" class="headerlink" title="3.1 近端算子重新制定"></a>3.1 近端算子重新制定</h2><p>LPOM旨在解决问题（2）。 LPOM 的基本思想如下。 考虑只有一个约束的问题 (2) 的简化版本</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{11}
+\end{align*}</script><p>其中 x 和 y 是单变量的。 我们首先构造一个函数hðx； yÞ，使得 x 1⁄4 fðyÞ 1⁄4 argminx hðx； yÞ。 那么我们将问题（11）放宽为以下问题：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{12}
+\end{align*}</script><p>其中 m &gt; 0 是惩罚参数。</p>
+<p>我们首先描述问题 (11) 的 hðx;yÞ 的构造。 近端操作员 [26]</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{13}
+\end{align*}</script><p>是优化算法中更新变量的基本操作。 所以我们考虑用它来构造hðx； yÞ。 这里我们假设激活函数 f 是非递减的。 那么 f 1ðxÞ 1⁄4 fyjx 1⁄4 fðyÞg 是一个凸集。 f 1ðxÞ 是单例 fyg 当且仅当 f 在 fðyÞ 处严格递增。 定义</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{x}
+\end{align*}</script><p>请注意，fðxÞ 是明确定义的，如果允许取 þ1 的值，即使 f 1ðyÞ 对于 0 和 x 之间的某些 y 是非唯一的。 无论如何，我们没有在计算中明确使用 f 1、f 和 g（稍后定义）。 很容易证明(13)的最优性条件是02ðf 1ðxÞ xÞþðx yÞ。所以(13)的解正好是x 1⁄4 fðyÞ。 因此，我们可以选择hðx； yÞ 1⁄4 f ðxÞ þ 12 ðx yÞ2 ，其中 f ðxÞ 是单变量函数。<br>下面我们考虑原问题（2）。 我们首先扩展上面的hðx； yÞ 到矩阵形式 hðX； Y Þ，其中 X 和 Y 是大小相同的矩阵。 因为我们已经有了 hðx； yÞ，逐元素函数 hðX； Y Þ 是最需要的。 让下标 kl 指代矩阵的第 ðk;lÞth 项。 我们定义 hðX； Y Þ 1⁄4 k l hðXkl； YklÞ。 为了得到更紧凑的 hðX 表示； Y Þ，对于矩阵 X 1⁄4 ðXklÞ，我们定义 fðXÞ 1⁄4 ðfðXklÞÞ。 即，矩阵 X 是由 Xkl 表示的条目数组。 fðXÞ 是 X 上的逐元素函数，即它是一个与 X 及其 ðk 大小相同的矩阵； 第 lÞ 个条目是 f ðXkl Þ。 然后我们有</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{x}
+\end{align*}</script><p>因此，近端算子的矩阵形式在(13) 对于问题 (2) 变为</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{14}
+\end{align*}</script><p>其中 Xi 和 Wi 1Xi 1 分别扮演 (13) 中的 x 和 y 的角色。 类似地，我们可以证明问题（14）对于 Xi 的最优性条件是</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{15}
+\end{align*}</script><p>其中 f 1ðXiÞ 也是按元素定义的。 所以(14)的最优解是Xi 1⁄4 fðWi 1Xi 1Þ，这正是问题(2)中的约束条件。 因此我们可以天真地放松问题（2）作为</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{16}
+\end{align*}</script><p>然而，由于（2）中的递归约束不是独立的，问题（11）和问题（2）之间存在根本区别。 即，对于 i1⁄42;…;n 1，Xi 出现在 Xi 1⁄4fðWi 1Xi 1Þ 和 Xiþ1 1⁄4fðWiXiÞ 中。 所以它也出现在 hðXi;Wi 1Xi 1Þ 和 hðXiþ1;WiXiÞ 中。 为了正确逼近问题（2），Xi 1⁄4 fðWi 1Xi 1Þ 和 Xiþ1 1⁄4 fðWiXiÞ 都应满足最优条件</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{x}
+\end{align*}</script><p>对于 Xi，如下所示：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{17}
+\end{align*}</script><p>这也是 Xi 问题 (16) 的最优条件。<br>不幸的是，我们可以看到 Xi 1⁄4 fðWi 1Xi 1Þ 和 Xiþ1 1⁄4 fðWiXiÞ 并不都满足上述条件！</p>
+<p>为了使 Xi 1⁄4 fðWi 1Xi 1Þ 和 Xiþ1 1⁄4 fðWiXiÞ 都满足松弛问题的最优条件 w.r.t. Xi，我们需要将 (17) 修改为</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{18}
+\end{align*}</script><p>这对应于以下问题：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{19}
+\end{align*}</script><p>其中</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{x}
+\end{align*}</script><p>类似地，gðXÞ 是矩阵 X 的逐元素函数。问题 (19) 是 LPOM 的最终公式。 请注意，(2) 中的递归约束确保 fXigni1⁄42 匹配网络的前馈传递。 g 的引入导致正确的重新表述，还允许我们使用简单的前馈过程来推断新样本。 我们要强调的是，这是不平凡且不明显的。 我们在表 3 中给出了一些代表性激活函数的 fðxÞ 和 gðxÞ.</p>
+<h2 id="3-2-LPOM优势"><a href="#3-2-LPOM优势" class="headerlink" title="3.2 LPOM优势"></a>3.2 LPOM优势</h2><p>我们将 FðW;XÞ 表示为 (19) 中 LPOM 的目标函数。 那么我们有下面的定理</p>
+<h3 id="定理1"><a href="#定理1" class="headerlink" title="定理1"></a>定理1</h3><p>假设‘ðXn;DÞ 在 Xn 中是凸的并且 f 是非递减的。 然后 F ðW; XÞ 是块多凸的，即它在每个 Xi 和 Wi 中都是凸的，同时保持其他变量块固定。</p>
+<h3 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h3><p>F ðW; XÞ 可以等效地重写为</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{20}
+\end{align*}</script><p>其中….由于 f 和 f 都是非递减的，所以 fðxÞ 和 g~ðxÞ 都是凸的。 易证1T g~ðWi 1Xi 1Þ1 在Wi 1 固定时在Xi 1 中凸出，在Xi 1 固定时在Wi 1 中凸出。 当其他两个块固定时，FðW;XÞ 中的项 hXi;Wi 1Xi 1i 在一个块中是线性的。 证明完成。</p>
+<p>上述定理允许我们使用 BCD 方法来求解 LPOM。 由于每个子问题都是凸的，我们可以获得更新 Xi 和 Wi 的最优解。 相比之下，惩罚子问题和基于 ADMM 的方法都是非凸的。<br>与基于 ADMM 的方法 [17]、[21] 相比，LPOM 不包含拉格朗日乘数，并且不需要比 fXigni1⁄42 更多的辅助变量。 此外，我们的 LPOM 求解方法不需要额外的辅助变量（见第 4 节）。 所以 LPOM 比基于 ADMM 的方法具有更少的变量，因此需要更少的内存。 实际上，由于 SGD 需要保存 fXigni1⁄42，因此 LPOM 的内存成本与 SGD 几乎相同。2 与惩罚方法 [18]、[19] 相比，LPOM 的最优条件更简单。 例如，LPOM i1⁄42 i1⁄41 中 fXign 1 和 fWign 1 的最优条件是 (18) 和</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{21}
+\end{align*}</script><p>而那些用于 MAC 的是</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{22}
+\end{align*}</script><p>和</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{23}
+\end{align*}</script><p>我们可以看到 MAC 的最优条件有一个额外的 f0ðWiXiÞ，它是非线性的。 [19] 的最优条件可以在补充材料的附录 A 中找到，补充材料可以在计算机协会数字图书馆 <a target="_blank" rel="noopener" href="http://doi.ieeecomputersociety">http://doi.ieeecomputersociety</a> 上找到。 org/10.1109/TPAMI.2020.3048430. 他们还有一个额外的 f0ðUiÞ。 这可能意味着 MAC 和 [19] 的解集比 LPOM 的解集更复杂。 所以 LPOM 可能更容易找到好的解决方案。<br>与激活函数方法 [22]、[23] 的等效表示相比，LPOM 的公式和求解方法分别可以处理比 [22] 和 [23] 更通用的激活函数。 请注意，求解方法是通用的意味着它对于所有可行的激活函数都是相同的。 此外，当训练网络的权重时，在 LPOM 中引入 g 使我们能够应用前馈过程来预测测试样本的标签。 相比之下，Zhang 和 Brand [22] 只考虑了 ReLU 激活函数。 为了获得测试样本的潜在标签，他们必须解决优化问题或重新训练输出层。 尽管 [23] 中的公式适用于一般激活函数，但其求解方法并不通用，所提出的求解方法仅适用于 ReLU。 此外，Askari 等人的表述。 [23] 是不正确的，因为它对 fXign 1 和 fWign 1 的最优条件是</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{x}
+\end{align*}</script><p>和</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{x}
+\end{align*}</script><p>分别。 可以看出，式（2）中的递归等式约束不满足上述条件。 此外，不知何故 Askari 等人。 [23] 添加了额外的约束 Xi ！ 0 对于任何激活函数。 所以他们的公式不能很好地逼近原始问题（2）。 这可以解释为什么 Askari 等人的结果。 [23] 不好。 实际上，他们只能用 SGD 的 ReLU 激活来初始化前馈神经网络的权重。<br>与基于梯度的方法（例如 SGD）相比，LPOM 可以处理任何非递减 Lipschitz 连续激活函数而没有计算困难，包括饱和（例如，sigmoid 和 tanh）和不可微分（例如，ReLU 和 leaky ReLU）并且可以并行更新分层权重和激活（参见第 5 节）。 相比之下，基于梯度的方法只能处理有限的激活函数（例如 ReLU、leaky ReLU 和 softplus），以避免梯度消失或爆炸问题，并且在计算梯度时它们不容易跨层并行化 和激活。 此外，基于梯度的方法需要很多参数调整，这并不容易[15]，而 LPOM 中惩罚参数 mi 的调整要简单得多。</p>
+<h1 id="四，求解LPOM"><a href="#四，求解LPOM" class="headerlink" title="四，求解LPOM"></a>四，求解LPOM</h1><p>块多凸性（定理 1）激发了 BCD 方法来解决 LPOM。 即，我们通过固定所有其他变量块来更新 Xi 或 Wi。 我们在算法 1 中总结了整个求解过程，其中使用一小批训练样本执行优化。 我们可以证明算法 1.3 的收敛性 下面我们给出算法的细节，它是串行的。</p>
+<h2 id="4-1-更新-X"><a href="#4-1-更新-X" class="headerlink" title="4.1 更新 X"></a>4.1 更新 X</h2><p>我们首先描述 fXigni1⁄42 的更新。 我们将 fXigni1⁄42 从 i 1⁄4 2 连续更新到 n，就像神经网络的前馈过程一样。 对于 i1⁄42;…;n 1，固定 fWign 1 和其他 jn i1⁄41 fX gj1⁄42;j61⁄4i，问题 (19) 简化为</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{24}
+\end{align*}</script><p>优化条件是：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{25}
+\end{align*}</script><p>基于定点迭代[27]，为了避免使用 f 1，我们可以通过迭代更新 Xi</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{26}
+\end{align*}</script><p>直到收敛，其中上标t为迭代次数。 收敛分析如下：</p>
+<h3 id="定理2"><a href="#定理2" class="headerlink" title="定理2"></a>定理2</h3><p>假设 f 是可微的且 jf0ðxÞj k。 如果 r &lt; 1，则迭代收敛且收敛率</p>
+<p>请注意，上述定理中 r 的选择是相当保守的。 所以在我们的实验中，只要迭代收敛，我们就不服从选择。<br>当考虑 Xn 时，问题 (19) 简化为</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{27}
+\end{align*}</script><p>假设‘ðXn;DÞ 是可微的 w.r.t. Xn。 那么最优条件是</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{28}
+\end{align*}</script><p>同样通过定点迭代，我们可以通过迭代更新 Xn</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{29}
+\end{align*}</script><p>直到收敛。 收敛分析如下：</p>
+<h3 id="定理3"><a href="#定理3" class="headerlink" title="定理3"></a>定理3</h3><p>假设。。。那么迭代是收敛的，收敛速度是线性的，其中。。。</p>
+<p>如果。。。是 MSE 损失函数</p>
+<p>值得注意的是，（19）中的 f 和 g 是积分。 它们的表达式非常复杂，可能无法解析（见表 3）。 所以最好在计算中使用他们的导数而不是他们自己。 然而，f 的导数包括 f 1 （见（25）和（28））。 我们认为在更新 fXigni1⁄42 时最好避免使用 f 1。 原因如下。 对于常用的激活函数 f，f 1 的定义域（或等价于 f 的范围）通常不是 ð 1； ＋1＋。 所以我们需要在计算中约束f 1 的输入。 这导致受约束的问题无法像不受约束的问题那样有效地解决。 使用 f 1 的另一大缺点是它可能不是单值的（见表 3）。 这会给计算和确保收敛带来很大困难。 此外，不同的f 1 可以具有不同的域。 由于必须为每个 f 调整 fX gi1⁄42 的更新，因此整个求解方法不能适用于一般的激活函数。 这就是为什么 [23] 和 [24] 中的求解方法需要针对每个激活函数进行调整的原因。 由于我们只使用 f 而没有使用 f 1，我们的方法没有这样的限制。 所以我们的求解方法比[23]和[24]中的方法更实用。</p>
+<h2 id="4-2-更新W"><a href="#4-2-更新W" class="headerlink" title="4.2 更新W"></a>4.2 更新W</h2><p>fWign 1 的更新是完全并行的。 当 fXign i1⁄41 i1⁄42<br>固定，问题（19）减少到</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{30}
+\end{align*}</script><p>上述求解 Wi 的问题独立于 fW j gn 1 的其他问题。 所以可以并行解决。 我们将 (30) 重写为</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{31}
+\end{align*}</script><p>其中 g~ðxÞ 1⁄4 R x fðyÞdy，如前所述。 假设 0 fðxÞ 是 b-Lipschitz 连续的，这对于几乎所有使用的激活函数都是正确的。 则 g~ðxÞ 是 b-光滑的</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{32}
+\end{align*}</script><p>我们通过 APG [28] 通过局部线性化 g^ðWÞ 1⁄4 g~ðWXÞ 来解决问题 (31)。 然而，由于 g^ðWÞ 梯度的 Lipschitz 常数 bkXk2 可能非常大，收敛速度可能很慢。 因此，我们开发了一种 APG 变体，专为更有效地解决 (31) 问题而设计。</p>
+<p>从优化的角度来看，问题（31）可以更一般地表示为</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{33}
+\end{align*}</script><script type="math/tex; mode=display">
+\begin{align*}
+\tag{34}
+\end{align*}</script><p>对于任何给定的 yk 很容易求解。 我们提出算法 2 来解决 (33)，这是从其收敛定理的证明推导出来的</p>
+<h3 id="定理4"><a href="#定理4" class="headerlink" title="定理4"></a>定理4</h3><p>如果我们用算法2来解决问题（33），那么收敛速度至少为Oðk 2Þ</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{x}
+\end{align*}</script><p>当我们考虑解决问题（31）时，子问题（34）的实例化为</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{35}
+\end{align*}</script><p>这是一个最小二乘问题，它的解是</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{36}
+\end{align*}</script><p>其中 Y i;t 在算法 2 中扮演 y 的角色。</p>
+<h1 id="五，LPOM的并行"><a href="#五，LPOM的并行" class="headerlink" title="五，LPOM的并行"></a>五，LPOM的并行</h1><p>上一节介绍的求解方法是串行的。 在本节中，我们研究了 LPOM 的并行解决方案。</p>
+<h2 id="5-1-异步并行-LPOM"><a href="#5-1-异步并行-LPOM" class="headerlink" title="5.1 异步并行 LPOM"></a>5.1 异步并行 LPOM</h2><p>如第 4 节所述，求解 LPOM 的原始方法是 BCD。 因此很自然地使用异步-并行 BCD（async-BCD）[29]、[30] 来并行求解 LPOM。 然而，现有的 async-BCD 主要使用梯度下降来仅更新每个块一次，而在 LPOM 中，梯度 w.r.t. Xi 涉及激活函数的逆函数，这就是 LPOM 使用定点迭代代替的原因（参见（26）和（29））。 所以现有的async-BCD实际上并不适用。 在下文中，我们提出了一种新的异步 BCD 方法。</p>
+<p>假设优化问题是</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{37}
+\end{align*}</script><p>我们的 async-BCD 执行如下：如果 zi 被选为更新，更新为</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{38}
+\end{align*}</script><p>其中 zj’s, j 61⁄4 i，取 zi 可用的最新值。 请注意，由于通信延迟等原因，z 的此类值可能比正在计算的 zj 的实际 j 个最新值更旧。 近端项 g2 kzi zki k2 是保证我们的异步 BCD 收敛所必需的。<br>为了分析我们的异步 BCD 的收敛性，我们做出以下假设。</p>
+<h3 id="假设1"><a href="#假设1" class="headerlink" title="假设1"></a>假设1</h3><p>F ðzÞ F ðz1 ; . . . ; zn Þ 具有坐标 Lipschitz 连续梯度，即对于所有 i 2 f1； . . . ; ng，我们有</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{x}
+\end{align*}</script><h3 id="假设2"><a href="#假设2" class="headerlink" title="假设2"></a>假设2</h3><p>信息的陈旧性是有界的，即</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{x}
+\end{align*}</script><p>其中 tijðkÞ 是可用于在时间 k.4 更新 zi 的 zj 时间</p>
+<p>我们注意到这两个假设都是分析异步算法的标准 [29]、[30]。 现在我们要求我们的异步 BCD 的收敛保证。</p>
+<h3 id="定理5"><a href="#定理5" class="headerlink" title="定理5"></a>定理5</h3><p>假设 FðzÞ 是分块多凸的。 在假设 1 和 2 下，通过在</p>
+<p>由于 g&gt;0，根据上述定理，我们有 g&gt;L DðDþ1Þ。 因此 g 的选择取决于 D 和 L 的估计。我们的异步 BCD 可用于求解 LPOM，从而得到异步 LPOM。 对于 async-LPOM，我们可以将 D 设置为 CPU 核心数。 假设 fðxÞ 是 b-Lipschitz 连续的（在（32）中定义），我们可以将 L 设置为<br>L 1⁄4 b maxfkW2k2;…;kWn 1k2;kX1k2;…;kXn 1k2g。 g 的理论估计值非常大。 在实践中，我们通过逐渐增加其值来选择 g，直到 async-LPOM 收敛。 然而，async-LPOM 并没有完全利用问题 (19) 的属性，即每个 Xi 仅与 X i 1 i i n 1 相关，并且 X 和 fW gi1⁄41 可以完全并行更新。 所以 async-LPOM 并没有我们预期的那么快。 这促使我们考虑开发同步并行 LPOM (sync-LPOM)，它可以更好地利用 LPOM 的特性。</p>
+<h2 id="5-2-同步并行-LPOM"><a href="#5-2-同步并行-LPOM" class="headerlink" title="5.2 同步并行 LPOM"></a>5.2 同步并行 LPOM</h2><p>我们首先分析算法 1 中的串行 LPOM。当 fXigni1⁄42 固定时，每个 Wi 的更新独立于其他 Wj，j 1⁄46 i（见（30））。 因此算法 1 中的步骤 c 可以完全并行化完成。 我们生成 n 1 个线程，每个线程独立地求解每个 W i 。 在 fWign 1 固定的情况下，Xi (i2f2;…;n 1g) 的更新与 i1⁄41 与 Xi 1 和 Xiþ1 有关（参见 (26)），而 Xn 的更新与 Xn 1 有关 （见（29））。 所以我们只需要同步并行化步骤 a 和 b 。</p>
+<p>我们将 Xi 的更新并行化如下。 我们创建了 n 1 个线程。 每个线程迭代 Eq。 （26）或方程式。 (29) 更新 X 。 该步骤由每个线程独立且同时执行。 当所有线程完成该步骤时，我们重复该过程多次，直到达到最大时间。 然而，我们注意到更新相邻 Xi 时的耦合（参见 (26) 和 (29)）。 解耦块有助于并行算法的收敛。 最大化并行度也是并行算法所追求的。 那么更新Xi的奇偶交替方案是唯一可以同时具有最大并行度和最小耦合度的选择。 即，我们首先同步更新奇数子序列 fX3；X5；…g。 然后使用更新的 fX3； X5； . . .g，我们同步更新偶数子序列 fX2；X4；…g。 此外，受 SGD 中使用的动量的启发，我们考虑了每个 Xi 的先前值，5 导致更新后的 Xi 序列的移动平均值。 sync-LPOM 的整个算法在算法 3 中进行了总结。请注意，sync-LPOM 是 async-LPOM 的特例，其中允许更新块的顺序是非随机的。 所以定理 5 的结论也适用于 sync-LPOM。</p>
+<h1 id="六，实验"><a href="#六，实验" class="headerlink" title="六，实验"></a>六，实验</h1><p>在本节中，我们对所提出的 LPOM 和 sync-LPOM 进行了广泛的实验评估。 我们首先评估 LPOM 在图像分类任务上的性能。 我们还进行消融研究来分析 LPOM。 然后，我们研究了 sync-LPOM 在自动编码器训练任务上的计算效率和性能。<br>我们在自动编码器训练任务上测试 sync-LPOM 的原因如下。 首先，目前 LPOM 和 sync-LPOM 仅适用于全连接前馈神经网络。 其次，我们的主要目标是评估 sync-LPOM 的加速。 但是，如果存在具有主导计算的层，则无法加速 sync-LPOM。 比如784-10-10-10网络，X2的更新比X3和X4慢16倍。 串行 LPOM 和同步 LPOM 都将以更新 X2 为主。 因此同步 LPOM 不会比串行 LPOM 有加速。 因此，sync-LPOM 有利于等宽网络，这在分类网络中并不常见。 这促使我们选择自动编码器。 第三，深度自动编码器具有挑战性，因为它们必须在一层非常低维的约束下重建输入。 困难主要来自网络架构而不是使用的数据集。 在基准数据集上训练自动编码器被认为是评估前馈神经网络优化方法的标准问题 [18]，[32]。 出于上述原因，我们使用各种自动编码器架构和数据集测试 sync-LPOM。</p>
+<h2 id="6-1-LPOM结果"><a href="#6-1-LPOM结果" class="headerlink" title="6.1 LPOM结果"></a>6.1 LPOM结果</h2><p>我们通过与三种具有代表性的基于梯度的方法（SGD、Adam [10] 和 AMSGrad [11]）和三种基于非梯度的方法 [17]、[23]、[24] 进行比较来测试 LPOM。 其他基于非梯度的方法不训练用于分类任务的完全连接的前馈神经网络（例如，使用跳跃连接 [22]、训练自动编码器 [18] 和哈希学习 [21]）。 所以我们不跟他们比较。 为简单起见，我们使用 MSE 损失函数。 由于几种方法[23]，<br>[24]只给出了ReLU的求解方法，我们也使用了ReLU激活函数。 与 [23] 和 [24] 不同，我们不对权重 fW i gn 1 使用任何正则化，因为它 i1⁄41 通常无助于减少训练损失。 我们使用相同的输入和随机初始化运行 LPOM 和三种基于梯度的方法 [33]。 我们使用 MATLAB 实现 LPOM、SGD、Adam 和 AMSGrad。 对于 LPOM，我们在 (19) 中为所有网络设置 mi 1⁄4 2。 对于 SGD，学习率设置为最大可行值，并在总 epoch 的一半和四分之三处乘以 0.1。 对于 Adam 和 AMSGrad，我们仔细调整参数以达到最佳性能。 对于 [23] 和 [24]，我们使用作者提供的具有默认参数设置的源代码。 对于 [17]，我们阅读了论文图 1b 中的结果。</p>
+<h3 id="6-1-1-与基于梯度的方法比较"><a href="#6-1-1-与基于梯度的方法比较" class="headerlink" title="6.1.1 与基于梯度的方法比较"></a>6.1.1 与基于梯度的方法比较</h3><p>我们在 MNIST [34]、CIFAR-10 [35] 和 ImageNet [36] 数据集上进行实验。 MNIST 数据集有 60,000 个训练图像和 10,000 个测试图像，这些图像与来自 10 个类别的标签相关联。 我们使用 28 28 1⁄4 784 个原始像素作为输入，不使用任何预处理或数据增强。 对于所有比较的方法，在每个时期，整个训练样本都经过一次。 网络架构可能会影响性能。 由于过度参数化在训练 [37]、[38] 时极大地促进了基于梯度的方法，因此我们与过度参数化网络进行了比较。 在 [19] 之后，我们使用 784-2048-2048-2048-10 前馈网络。 我们以固定的批量大小 100 运行 100 个 epoch 的所有方法。训练和测试精度如图 1 和 2 所示。 1a 和 1b。 我们可以看到所有方法的最终训练准确率都大约等于 100%。 然而，LPOM 的测试精度与 Adam、AMSGrad 和 SGD 的测试精度相当或略好。 最终的测试准确率是：Adam 98.1%，AMSGrad 98.5%，SGD 98.5%，LPOM 98.6%。</p>
+<p>CIFAR-10 数据集有 50,000 个训练图像和 10,000 个测试彩色图像，与来自 10 个类别的标签相关联。 我们使用 32 32 31⁄43072 个原始像素作为输入。 与 [19] 中一样，我们使用 3072-4000-1000-4000-10 前馈网络。 我们通过分别减去训练数据集的红色、绿色和蓝色通道的均值来标准化每个彩色图像。 我们不使用任何数据扩充。 我们以固定的批量大小 100 运行 100 个 epoch 的所有方法。训练和测试精度如图 1 和 2 所示。 1c 和 1d。 我们可以看到只有 LPOM 的训练准确率大约等于 100%。 基于梯度的方法没有实现零训练损失。 这可能是因为使用的网络具有低维隐藏层，难以优化。 在比较测试精度时，我们可以看到 LPOM 能够匹配或击败其他方法。 最终的测试准确率是：Adam 53.5%，AMSGrad 54.7%，SGD 54.7%，LPOM 54.7%。 请注意，LPOM 获得了近乎完美的训练精度，但测试精度与其他训练精度低得多的方法相当。 我们要注意，这种情况不是过度拟合的问题。 首先，过度拟合用于评估可训练模型的性能而不是优化方法。 所以过拟合的定义不适用。 其次，如果一个模型达到了相当或更好的训练精度，但测试精度比其他模型差得多，我们可能会认为它过度拟合了训练数据集。 虽然 LPOM 训练的网络具有更好的训练精度，但其测试精度与其他方法训练的网络相当或略好。 所以过拟合现象不适用于这种情况。 第三，LPOM 是一种神经网络优化方法。 所以它的主要目标是拟合训练数据集。 测试准确性在很大程度上取决于训练期间使用的权重正则化的类型和数量，这是实践中的一个重要问题。 由于我们专注于优化，因此权重正则化不在我们的讨论范围之内。</p>
+<p>ImageNet 数据集包含来自 1,000 个类别的 1,281,167 张训练图像和 50,000 张验证图像。 ImageNet 数据集中的图像通常为 224 224 3 像素。 为了进行快速实验，我们改用 ImageNet32x32 数据集 [39]，该数据集可以从 ImageNet 项目的官方网站下载。6 ImageNet32x32 数据集保留了原始 ImageNet 数据集的复杂性，在自动化机器学习 (AutoML) 中被广泛采用 . 它是 ImageNet 数据集的下采样版本，大小为 32 32 3 像素。 它具有与 ImageNet 数据集相同数量的图像和类别。 我们将所有验证图像作为测试集。 我们对每个图像使用与 CIFAR-10 图像相同的预处理。 我们使用原始像素作为输入，不使用任何数据增强。 我们以固定批量大小 100 运行 100 个 epoch 的所有方法。我们使用 3072-1024-1024-1024-1000 前馈网络。 训练和测试精度如图 2 所示。我们可以看到 LPOM 达到了最好的训练和测试精度。 最终的训练精度为：Adam 0.102%、AMSGrad 0.611%、SGD 1.112% 和 LPOM 17.916%。 最终测试精度为：Adam 0.100%、AMSGrad 0.318%、SGD 0.596% 和 LPOM 2.064%。 与文献中报道的精度相比，这些精度非常低。 原因如下。 首先，我们使用全连接 NN 而不是 CNN。 其次，较低的图像分辨率会使分类任务变得更加困难。 第三，找到适合 ImageNet32x32 的全连接神经网络的最佳深度和隐藏层宽度需要付出很多努力，这不是我们论文的目标，我们在文献中没有找到这样的参考，所以我们只选择一个相对 简单的一个。 第四，我们不使用数据扩充来提高测试性能。 第五，我们没有对所有比较方法使用额外的学习技巧，例如权重正则化、BN 和动量。</p>
+<h3 id="6-1-2-与其他不基于梯度的方法比较"><a href="#6-1-2-与其他不基于梯度的方法比较" class="headerlink" title="6.1.2 与其他不基于梯度的方法比较"></a>6.1.2 与其他不基于梯度的方法比较</h3><p>我们首先在 MNIST 数据集上使用相同的架构与 [23] 和 [24] 进行比较。 与 [23] 中一样，我们使用固定批大小 100 运行 17 个 epoch 的所有方法。我们不使用任何预处理或数据扩充。 表 4 总结了三种方法的测试精度，其中最佳值以粗体显示。 由于 [24] 中的公式等同于 LPOM 的公式，我们可以看到 [24] 和具有 ReLU 激活函数的 LPOM 比 [23] 表现得更好。 这符合我们在第 3.2 节中的分析。 尽管使用等效公式，LPOM 仍然优于 [24]，这证明了我们求解方法的优越性。<br>按照 [17] 中的数据集和网络架构设置，我们在街景门牌号 (SVHN) 数据集 [40] 上测试 LPOM。 表 5 总结了 SGD、[17]、[23]、[24] 和 LPOM 的测试精度，其中最佳值以粗体显示。 我们可以看到 LPOM 实现了最佳性能。 这进一步证明了LPOM的优势。</p>
+<h3 id="6-1-3-LPOM-的消融研究"><a href="#6-1-3-LPOM-的消融研究" class="headerlink" title="6.1.3 LPOM 的消融研究"></a>6.1.3 LPOM 的消融研究</h3><p>我们对 LPOM 进行消融研究，以评估 (19) 中的惩罚参数 mi 和所用激活函数的影响。 我们使用 MSE 损失函数和 MNIST 数据集，而不使用任何预处理或数据扩充。 我们使用 784-400-200-100-50-10 前馈网络，这是 [23] 中最深的网络。 对于所有情况，我们使用相同的源代码和随机初始化 [33]。 对于每种情况，我们运行 LPOM 20 个周期，固定批大小为 100。</p>
+<p>我们使用表 3 中显示的所有激活函数测试 LPOM。我们分别为 leaky ReLU 和 ELU 激活函数设置 a1⁄40:01 和 a1⁄41。 对于 (19) 中的惩罚参数 mi，我们为每个激活函数设置 mi 1⁄4 m，其中 m 2 f2； 5; 10; 20； 50； 100克。 我们不调整不同 mi 的原因将在后面给出。 表 6 显示了具有各种 m 和激活函数的 LPOM 的最终训练和测试精度。 我们可以看到，具有每个激活函数的 LPOM 在相当大的 m 范围内保持稳定。 这进一步证实了LPOM的参数设置是非常容易的。 对于分类任务，当 m 为 50 时，具有 sigmoid、tanh、ReLU 或 leaky ReLU 激活函数的 LPOM 的性能优于其余两个函数。在图 3 中，我们将 LPOM 的行为与 mi 1⁄4 5 进行比较 不同的激活函数。 可以看出，具有 ReLU 或 leaky ReLU 激活函数的 LPOM 收敛得更快。<br>我们对 LPOM 的经验参数设置（即在 (19) 中设置 m 1⁄4 m）实际上具有理论依据。 顾等。 [24] 开发了一种可变缩放策略来证明我们对 LPOM 的参数设置在理论上保证了 ReLU 激活函数。 也就是说，理论上我们可以将（19）中的惩罚参数 mi 减少到 ReLU 的一个参数 m。 实际上，变量缩放策略仅适用于正齐次函数。 即，fð!xÞ 1⁄4 !fðxÞ 对于所有 ! ！ 0. 这样的函数可以写成</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{39}
+\end{align*}</script><p>其中 a &gt; 0 和 b ! 0. 我们在补充材料的附录 G 中提供证明，可在线获取。 (39) 中的形式包括线性、ReLU 和 leaky ReLU 激活函数。 我们在 (19) 中的经验设置 mi 1⁄4 m 尚未在理论上证明适用于所有可行的激活函数，例如 ELU、softplus、sigmoid 和 tanh。 然而，我们要注意，正齐次激活函数在实践中是最流行的。 ELU 和 softplus 激活函数是正齐次对应函数的平滑近似。 所以使用单一参数 m 也大致适用于 ELU 和 softplus。 至于 sigmoid 和 tanh 激活函数，我们可以从表 6 中看出，当在 (19) 中将 mi 设置为 1⁄4 m 时，它们也能很好地工作。 因此，我们认为在 LPOM 中使用单个惩罚参数应该足以满足大多数常用激活函数的需求。 最后，我们要强调的是，定理 3 为选择 mn 提供了理论参考。 例如，在使用MSE损失函数和tanh激活函数时，我们应该为LPOM设置mn &gt; 1。 总的来说，我们可以得出结论，LPOM 中惩罚参数的调整非常简单。</p>
+<h2 id="6-2-同步-LPOM-的结果"><a href="#6-2-同步-LPOM-的结果" class="headerlink" title="6.2 同步 LPOM 的结果"></a>6.2 同步 LPOM 的结果</h2><p>我们在 C++ 中实现了串行 LPOM、sync-LPOM、SGD、Adam 和 AMSGrad。 没有对权重 fW i gn 1 使用正则化。 我们使用 MSE 损失函数和 ReLU 激活函数。 较小的训练或测试损失值表示更好的性能。 对于所有方法，我们使用相同的输入、随机初始化 [33] 和批量大小（此处为 100）。 对于 sync-LPOM，我们使用 POSIX 线程作为并行编程框架。 对于 LPOM 和 sync-LPOM，我们设置 mi 1⁄4 20。对于 SGD，学习率设置为最大可行值，并在总 epoch 的一半和四分之三处乘以 0.1。 对于 Adam 和 AMSGrad，我们调整参数以获得最佳性能。 所有实验均在一台 Intel(R) Core(TM) i7-8700 CPU 3.20 GHz 12 核计算机上进行。 与 [32] 一样，我们在三个灰度图像数据集上进行测试，总结在表 7 中。Curves 数据集由合成曲线组成，MNIST 数据集包含手写数字，Faces 数据集是增强的 Oli - vetti 人脸数据集。</p>
+<h3 id="6-2-1-CPU-的计算效率"><a href="#6-2-1-CPU-的计算效率" class="headerlink" title="6.2.1 CPU 的计算效率"></a>6.2.1 CPU 的计算效率</h3><p>所有方法的编码和解码时间都相等。 所以我们只比较训练中的时间成本。 我们在 MNIST 数据集上进行了三组实验。<br>为了编程方便，我们将每一层分配给一个 CPU 内核，这样可以减少不同层更新之间的干扰，从而可以更好地比较加速性能。 因此，对于 sync-LPOM，理想的核心数等于网络层数。 我们首先在各种等宽自动编码器（此处维度为 784）上测试具有理想 CPU 内核的 sync-LPOM 的加速。 层加速比定义为</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{x}
+\end{align*}</script><p>训练时间和层加速比如图 1 和 2 所示。 分别为 4a 和 4b。 我们可以看到，随着隐藏层的增加，sync-LPOM 的训练时间比串行 LPOM 增加得更慢，并且层加速比几乎是线性的。<br>然后使用固定深度和宽度（这里是 784）的自动编码器，我们测试了具有不同数量 CPU 内核的同步 LPOM 的加速。 这里的核心加速比定义为</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\tag{x}
+\end{align*}</script><p>结果示于图1和2中。 4c 和 4d。 令 n 为层数。 当d n=2 时，我们可以看到所有核心加速比都随着CPU 核心的增加而线性增长。 当 d &gt; n=2 时，核心加速比变为常数（见图 4d）。 理由如下。 由于sync-LPOM更新Xi的奇偶交替方案，我们只需要n=2个核来同步更新Xi。 同步更新 Wi 需要 n 1 个核。 然而，更新 Xi 比更新 Wi 更昂贵。 因此，n=2 内核的内核加速比与 n 内核具有竞争力。<br>在图 4e 中，我们使用自动编码器 784-1024-500-1024-784 [41] 绘制了 Adam、AMSGrad、SGD、LPOM 和 sync-LPOM 的训练损失与运行时间的关系图。 对于 SGD，学习率在第 300 和 450 轮时乘以 0.1。 我们可以看到 sync-LPOM 收敛最快，训练损失最低。</p>
+<h3 id="6-2-2-优化性能"><a href="#6-2-2-优化性能" class="headerlink" title="6.2.2 优化性能"></a>6.2.2 优化性能</h3><p>我们使用 [32]、[41] 中考虑的两个浅自动编码器和三个深自动编码器测试 sync-LPOM。 表 7 给出了使用的数据集、训练集和测试集的大小以及测试的编码器网络架构。 请注意，我们使用对称自动编码器，其中解码器架构是编码器的镜像。 我们运行 100 个 epoch 的所有方法。 对于 SGD，学习率在第 50 和第 75 轮时乘以 0.1。<br>单层和多层自编码器的训练和测试损失如图 1 和 2 所示。 分别为 5a 和 5b。 我们可以看到 sync-LPOM 确实具有最好的性能。 Adam 和 AMSGrad 在前几个 epoch 中实现了比 SGD 更低的训练和测试损失。 然而，它们在训练结束时不如 SGD。 一些在测试集上使用多层自动编码器重建的样本如图 6 所示。我们可以看到 sync-LPOM 具有最好的重建性能。 深度自动编码器问题比影子问题更难。 训练和测试损失如图 1 和 2 所示。 5c、5d 和 5e。 可以看出，在 Curves 和 MNIST 数据集上，sync-LPOM 略优于 SGD。 然而，当考虑 Faces 数据集时，我们可以看到 sync-LPOM 明显优于 SGD、Adam 和 AMSGrad。</p>
+<h3 id="6-2-3-讨论"><a href="#6-2-3-讨论" class="headerlink" title="6.2.3 讨论"></a>6.2.3 讨论</h3><p>我们还使用表 7 中所示的五个自动编码器测试了 sync-LPOM 相对于 SGD 的实际加速。对于每个反编码器，我们首先运行 sync-LPOM 50 个时期并记录其运行时间和训练损失。 我们将其时间和损失序列分别表示为 ft1g50 和 fe1g50。 设e1为fe1g50中第一个小于或等于e1的元素，称为初始稳定点。 然后我们运行 SGD，直到它的训练损失 e2k 小于或等于 e1j。 我们将相应的运行时间表示为 t2k。 然后，sync-LPOM 相对于 SGD 的实际加速比定义为：t2k=t1j，其中大于 1 的值意味着 sync-LPOM 比 SGD 更快，可以实现令人满意的训练损失。 如果 SGD 运行时间比 t1j 长 20 倍，但其损失仍然高于 e1j，我们终止 SGD 并将实际加速比标记为：&gt; 20x。 每个自动编码器的实际加速比显示在图 5 中相应数字下方，以粗体显示。 我们可以看到 sync-LPOM 使用各种自动编码器实现了优于 SGD 的加速。</p>
+<p>我们要注意，我们不与并行 SGD 进行比较。 原因如下。 首先，LPOM 可以跨数据或层并行化。 我们只利用它的层并行化。 实现数据并行化或多或少是一项工程工作。 所以我们不做这方面的工作。 由于 [42] 中的并行 SGD 是数据并行的，因此我们不将其包括在内进行比较。 其次，async-SGD 和 sync-SGD 可以实现加速，但它们的性能比 SGD [43] 差得多。 第三，我们从未声称 sync-LPOM 在一个时期内比 SGD 更快。 我们只声称它比 SGD 更快以实现相对较低的训练损失。 所以我们用serial SGD作为我们的竞争对手，这样比较合理。</p>
+<p>sync-LPOM（或 LPOM）实现比 SGD 更低的训练和测试损失是因为它适当地提升了问题的维度并解决了提升的问题。 所以它可以很容易地移动到更高维度空间中的好点。 相反，SGD 直接优化问题。 所以优化路径受损失情况的限制，非常复杂。 因此，我们将 sync-LPOM（或 LPOM）的成功归功于“维度的祝福”。</p>
+<h1 id="七，结论"><a href="#七，结论" class="headerlink" title="七，结论"></a>七，结论</h1><p>在这项工作中，我们开发了 LPOM 来训练全连接的前馈神经网络。 通过将激活函数重写为等效的近端算子，LPOM 将 NN 的训练公式化为块多凸模型。 这引出了我们具有收敛保证的新型 BCD 求解方法。 由于公式和求解方法，LPOM 避免了梯度消失或爆炸问题，适用于一般非递减 Lipschitz 连续激活函数。 此外，它不需要比分层激活更多的辅助变量，并且其参数调整相对简单。 也可以并行解决。 我们首先提出了一种具有收敛保证的新异步 BCD 方法。 然后我们用它来求解LPOM，得到async-LPOM。 为了更快的速度，我们开发了 sync-LPOM。 我们的实验结果表明，LPOM 在全连接前馈 NN 上的效果优于 SGD、Adam、AMS-Grad、[17]、[23] 和 [24]。 我们还验证了 sync-LPOM 在各种自动编码器训练问题上的效率和有效性。 未来的工作包括扩展 LPOM 以训练卷积和递归神经网络，并将 LPOM 应用于网络量化。</p>
 
     </div>
 
@@ -318,7 +575,10 @@
     <a href="/2023/05/09/Transformer/A%20Survey%20of%20Transformers/" rel="prev" title="A Survey of Transformers">
       <i class="fa fa-chevron-left"></i> A Survey of Transformers
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2023/05/17/other/Numerical_Methods_for_algorithmic_Systems_and_Neural_Networks/" rel="next" title="Numerical Methods for algorithmic Systems and Neural Networks">
+      Numerical Methods for algorithmic Systems and Neural Networks <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -378,7 +638,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-text">摘要</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%EF%BC%8C%E4%BB%8B%E7%BB%8D"><span class="nav-text">一，介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%EF%BC%8C%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C"><span class="nav-text">二，相关工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%EF%BC%8CLPOM"><span class="nav-text">三，LPOM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-%E8%BF%91%E7%AB%AF%E7%AE%97%E5%AD%90%E9%87%8D%E6%96%B0%E5%88%B6%E5%AE%9A"><span class="nav-text">3.1 近端算子重新制定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-LPOM%E4%BC%98%E5%8A%BF"><span class="nav-text">3.2 LPOM优势</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E7%90%861"><span class="nav-text">定理1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%81%E6%98%8E"><span class="nav-text">证明</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%EF%BC%8C%E6%B1%82%E8%A7%A3LPOM"><span class="nav-text">四，求解LPOM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-%E6%9B%B4%E6%96%B0-X"><span class="nav-text">4.1 更新 X</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E7%90%862"><span class="nav-text">定理2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E7%90%863"><span class="nav-text">定理3</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-%E6%9B%B4%E6%96%B0W"><span class="nav-text">4.2 更新W</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E7%90%864"><span class="nav-text">定理4</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94%EF%BC%8CLPOM%E7%9A%84%E5%B9%B6%E8%A1%8C"><span class="nav-text">五，LPOM的并行</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-%E5%BC%82%E6%AD%A5%E5%B9%B6%E8%A1%8C-LPOM"><span class="nav-text">5.1 异步并行 LPOM</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%81%87%E8%AE%BE1"><span class="nav-text">假设1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%81%87%E8%AE%BE2"><span class="nav-text">假设2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E7%90%865"><span class="nav-text">定理5</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-%E5%90%8C%E6%AD%A5%E5%B9%B6%E8%A1%8C-LPOM"><span class="nav-text">5.2 同步并行 LPOM</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AD%EF%BC%8C%E5%AE%9E%E9%AA%8C"><span class="nav-text">六，实验</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1-LPOM%E7%BB%93%E6%9E%9C"><span class="nav-text">6.1 LPOM结果</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-1-%E4%B8%8E%E5%9F%BA%E4%BA%8E%E6%A2%AF%E5%BA%A6%E7%9A%84%E6%96%B9%E6%B3%95%E6%AF%94%E8%BE%83"><span class="nav-text">6.1.1 与基于梯度的方法比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-2-%E4%B8%8E%E5%85%B6%E4%BB%96%E4%B8%8D%E5%9F%BA%E4%BA%8E%E6%A2%AF%E5%BA%A6%E7%9A%84%E6%96%B9%E6%B3%95%E6%AF%94%E8%BE%83"><span class="nav-text">6.1.2 与其他不基于梯度的方法比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-3-LPOM-%E7%9A%84%E6%B6%88%E8%9E%8D%E7%A0%94%E7%A9%B6"><span class="nav-text">6.1.3 LPOM 的消融研究</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-2-%E5%90%8C%E6%AD%A5-LPOM-%E7%9A%84%E7%BB%93%E6%9E%9C"><span class="nav-text">6.2 同步 LPOM 的结果</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-1-CPU-%E7%9A%84%E8%AE%A1%E7%AE%97%E6%95%88%E7%8E%87"><span class="nav-text">6.2.1 CPU 的计算效率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-2-%E4%BC%98%E5%8C%96%E6%80%A7%E8%83%BD"><span class="nav-text">6.2.2 优化性能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-3-%E8%AE%A8%E8%AE%BA"><span class="nav-text">6.2.3 讨论</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%83%EF%BC%8C%E7%BB%93%E8%AE%BA"><span class="nav-text">七，结论</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -394,7 +654,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-count">84</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -407,7 +667,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">76</span>
+        <span class="site-state-item-count">77</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -462,13 +722,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">264k</span>
+    <span title="站点总字数">285k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">4:01</span>
+    <span title="站点阅读时长">4:19</span>
 </div>
 
         
