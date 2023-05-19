@@ -6,6 +6,7 @@
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>数值方法和DNN的交叉学科所包含的知识，可以逐步补充完整的～</p>
 <p><strong>作者</strong><br>Sebastian Kinnewig, Leon Kolditz, Julian Roth, Thomas Wick   </p>
 <p><strong>参考链接</strong><br><a href="https://www.ifam.uni-hannover.de/en/wick/">https://www.ifam.uni-hannover.de/en/wick/</a><br><a href="https://www.ifam.uni-hannover.de/en/">https://www.ifam.uni-hannover.de/en/</a></p>
+<p><strong>文章百度云链接</strong><br><a href="https://pan.baidu.com/s/1YU0E964JNArGj80lc1BPEg">https://pan.baidu.com/s/1YU0E964JNArGj80lc1BPEg</a><br>提取码: r9hx </p>
 <p><strong>多多补充～</strong><br><span id="more"></span></p>
 <p><img src="Numerical_Methods_for_algorithmic_Systems_and_Neural_Networks.jpeg" alt="img"></p>
 ]]></content>
@@ -33,78 +34,92 @@
 <li>相应地，我们提出了一种新的块坐标下降（BCD）方法来求解 LPOM 并证明其收敛性。 我们的BCD求解方法只用到了激活函数本身的映射，没有用到它的导数。 因此它避免了梯度消失或爆炸问题，这在基于梯度的方法中是众所周知的。 同时，LPOM 适用于各种非递减 Lipschitz 连续激活函数，它们可以是饱和的（例如，sigmoid 和 tanh），也可以是不可微的（例如，ReLU 和 leaky ReLU）。 此外，LPOM 不需要比分层激活更多的辅助变量，因此它的内存占用与 SGD 几乎相同，它还存储所有用于梯度计算的激活，而且在 LPOM 中调整惩罚参数很容易。</li>
 <li>我们以异步和同步方式实现和分析了 LPOM 的并行解决方案。 我们首先提出了一种通用的异步并行 BCD 方法。 我们证明了它的收敛性并用它来解决 LPOM，从而得到异步并行 LPOM，得到的结论也是同步并行LPOM的基础。 然后我们提出了同步并行 LPOM，并表明它在串行 LPOM 上实现了令人满意的加速，而不会降低性能。</li>
 </ul>
-<p>由于 SGD 是常用的 NN 训练方法，我们将其作为我们的主要竞争对手。 如表 1 所示，与 SGD 相比，LPOM 表现出一些有利的特性。 目前，我们仅在全连接 NN 上实施 LPOM。 卷积神经网络 (CNN) 是最流行的前馈网络。 然而，由于我们还没有解释 pooling operators 和 skip-connections，我们将来会在 CNNs 上实现 LPOM。 我们注意到，大多数现有的基于非梯度的方法也首先关注完全连接的神经网络 [17]、[18]、[19]、[21]、[22]、[23]。</p>
-<h1 id="二，相关工作"><a href="#二，相关工作" class="headerlink" title="二，相关工作"></a>二，相关工作</h1><p>在本节中，我们将回顾一些与我们的工作最相关的非基于梯度的 NN 训练方法。 我们在表 2 中总结了整篇论文中使用的主要符号。</p>
-<p>考虑用于监督学习的具有 n 层的标准前馈神经网络，其中第一层是输入层，第 n 层是输出层。 令 X1 2 Rn1 m 为一批训练样本，其中 n1 是训练样本的维数，也是输入层神经元的数量，m 是批量大小。 设 D 2 Rc m 是 X1 的标签，其中 c 是类数。 设 Wi 为第 i 层和第 di + 1Þ 层之间的权重矩阵，其中我们将额外的一列堆叠到 Wi 并将全行堆叠到 Xi 并省略相应的偏差。 令 fð Þ 为逐元素激活函数（例如，sigmoid、tanh 和 ReLU）。 让 ‘ð ; Þ 成为损失函数（例如，均方误差 (MSE) 或交叉熵）。 借助这些符号，NN 的批量训练问题可以表示为以下最小化：</p>
+<p>由于 SGD 是常用的 NN 训练方法，我们将其作为我们的主要竞争对手。 如表 1 所示，与 SGD 相比，LPOM 表现出一些有利的特性。 目前，我们仅在全连接 NN 上实施 LPOM，卷积神经网络 (CNN) 是最流行的前馈网络。 然而，由于我们还没有解释 pooling operators 和 skip-connections，我们将来会在 CNNs 上实现 LPOM。 我们注意到，大多数现有的基于非梯度的方法也首先关注完全连接的神经网络 [17]、[18]、[19]、[21]、[22]、[23]。</p>
+<h1 id="二，相关工作"><a href="#二，相关工作" class="headerlink" title="二，相关工作"></a>二，相关工作</h1><p>在本节中，我们将回顾一些与我们的工作最相关的、基于无梯度的 NN 训练方法，在表 2 中总结了整篇论文中使用的主要符号。</p>
+<p>考虑监督学习中的 $N$ 层标准前馈神经网络，其中第一层是输入层，第 $N$ 层是输出层，令 $X^1\in \mathbb R^{n_1\times m}$ 为一批训练样本，其中 $n_1$ 是训练样本的维数，也是输入层神经元的数量，$m$ 是批量大小。 设 $D\in \mathbb R^{c\times m} $ 是 $X^1$ 的标签，其中 $c$ 是类数。 设 $W^i$ 为第 $i$ 层和第 $i + 1$ 层之间的权重矩阵，其中我们将额外的一列堆叠到 $W^i$ 并将全行堆叠到 $X^i$ 并省略相应的偏差。 令 $\phi(\cdot)$ 为逐元素激活函数（例如，sigmoid、tanh 和 ReLU）。 让 $\ell(\cdot,\cdot)$ 成为损失函数（例如，均方误差 (MSE) 或交叉熵）。 借助这些符号，NN 的批量训练问题可以表示为以下最小化问题：</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{1}
-\end{align*}</script><p>在上面的公式中，NN 的目标函数是嵌套的，其中第 i 层的输出是第 i+1-th 层的输入，对于 i1⁄41;…;n 1.问题 (1) 可以通过 SGD 解决。 它计算 {W} 传播的梯度，然后通过梯度下降更新 {W}。</p>
-<p>为了使问题 (1) 在计算上更易于处理，最常见的方法是将每一层的激活作为辅助变量块引入。 那么问题（1）可以等效地改写为等式约束最小化问题[18]</p>
+\min_{W^i}\ell(\phi(W^{n-1}\phi(\cdots\phi(W^2\phi(W^1X^1))\cdots)),D) \tag{1}
+\end{align*}</script><p>在上面的公式中，NN 的目标函数是嵌套的，其中第 $i$ 层的输出是第 $i+1$ 层的输入。问题 (1) 可以通过 SGD 求解，它计算 $\{W^i\}^{n-1}_{i=1}$ 传播的梯度，然后通过梯度下降更新 $\{W\}^{n-1}_{i=1}$。</p>
+<p>为了使问题 (1) 在计算上更易于处理，最常见的方法是将每一层的激活作为辅助变量块引入。 那么问题（1）可以等效地改写为以下等式约束最小化问题[18]：</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{2}
-\end{align*}</script><p>其中Xi是第i层的激活值，Xn也是神经网络的输出，其他符号同（1）。 与问题（1）相比，问题（2）的目标函数没有嵌套。 所以我们可能会使用更优雅的优化方法来解决它。 我们要注意，在使用 SGD 解决问题 (1) 时，还需要记录激活值 fXigni1⁄42 以计算梯度。</p>
+&\min_{\{W^i\},\{X^i\}}\ell(X^i,D)\\
+&s.t. \; X^i=\phi(W^{i-1}X^{i-1})\quad i=2,3...n\tag{2}
+\end{align*}</script><p>其中 $X^i$ 是第 $i$ 层的激活值，$X^n$ 是神经网络的输出，其他符号同（1）。 与问题（1）相比，问题（2）的目标函数没有嵌套，所以我们可能会使用更优雅的优化方法来解决它。 我们要注意，在使用 SGD 解决问题 (1) 时，还需要记录激活值 $\{X^i\}^n_{i=2}$ 以计算梯度。</p>
 <p>Carreira-Perpinan 和 Wang [18] 提出了辅助坐标（MAC）的方法来近似解决问题（2）。 MAC 不是直接求解 (2)，而是通过使用二次惩罚来放宽等式约束并求解以下形式的无约束问题</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{3}
-\end{align*}</script><p>其中 m &gt; 0 随着迭代逐渐增加。 在<br>fWig;fXig 2 i1⁄42<br>i i 1 i 1 X1⁄4fðW XÞ<br>为了解耦非线性激活并获得更有效的子问题求解方法，Zeng 等人。 [19] 为问题（2）的每一层引入了一个新的辅助变量块，并提出了以下问题：</p>
+\min_{\{W^i\},\{X^i\}}\ell(X^n,D)+\frac{\mu}{2}\sum^n_{i=2}\|X^i-\phi(W^{i-1}X^{i-1})\|^2_F \tag{3}
+\end{align*}</script><p>随着迭代逐渐增加，其中 $\mu &gt; 0$。为了解耦非线性激活并获得更有效的子问题求解方法，Zeng 等人[19] 为问题（2）的每一层引入了一个新的辅助变量块，并提出了以下问题：</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{4}
+&\min_{\{X^i\},\{W^i\},\{U^i\}}\ell(X^n,D)\\
+&s.t.\; U^i=W^{i-1}X^{i-1},X^i=\phi(U^i) \tag{4}
 \end{align*}</script><p>按照MAC的方法，他们没有直接解决上面的问题，而是优化了如下形式的问题</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{5}
-\end{align*}</script><p>泰勒等。 [17] 也试图优化问题 (4)。 受 ADMM [20] 的启发，他们只在输出层的约束中添加了一个拉格朗日乘子，而不是在每个等式约束中添加了一个拉格朗日乘子，从而得到</p>
+\min_{\{X^i\},\{W^i\},\{U^i\}}\ell(X^n,D)+\frac{\mu}{2}(\|U^i-W^{i-1}X^{i-1}\|^2_F+\|X^i-\phi(U^i)\|^2_F) \tag{5}
+\end{align*}</script><p>泰勒等[17] 也试图优化问题 (4)，受 ADMM[20] 的启发，他们只在输出层的约束中添加了一个拉格朗日乘子，而不是在每个等式约束中添加了一个拉格朗日乘子，从而得到</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{6}
-\end{align*}</script><p>其中 M 是拉格朗日乘数，b &gt; 0 和 mi &gt; 0 是常数。 请注意，输出层使用线性激活函数（即 fðxÞ 1⁄4 x）。 所以他们只是试探性地使用了 ADMM。 同样受到 ADMM 的启发，Zhang 等人。 [21] 使用了另一种变量拆分方案</p>
+&\min_{\{X^i\},\{W^i\},\{U^i\},M}\ell(X^n,D)\\
+&+\langle U^n,M\rangle+\frac{\beta}{2}\|U^n-W^{n-1}X^{n-1}\|^2_F\\
+&+\sum^{n-1}_{i=2}\frac{\mu_i}{2}(\|U^i-W^{i-1}X^{i-1}\|^2_F+\|X^i-\phi(U^i)\|^2_F) \tag{6}
+\end{align*}</script><p>其中 $M$ 是拉格朗日乘数，$\beta &gt; 0$ 和 $\mu &gt; 0$ 是常数，请注意，输出层使用线性激活函数（即 $\phi(x)=x$），所以他们只是试探性地使用了 ADMM。 同样受到 ADMM 的启发，Zhang 等人[21] 使用了另一种变量拆分方案：</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{7}
-\end{align*}</script><p>与 ADMM 一样，他们为 (7) 中的每个约束添加了拉格朗日乘数。 那么增广拉格朗日问题就变成了</p>
+&\min_{\{X^i\},\{W^i\},\{U^i\}}\ell(X^n,D)\\
+&s.t.\; U^{i-1}=X^{i-1},X^i=\phi(W^{i-1}U^{i-1}) \tag{7}
+\end{align*}</script><p>与 ADMM 一样，他们为 (7) 中的每个约束添加了拉格朗日乘子，那么增广拉格朗日问题就变成了</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{8}
-\end{align*}</script><p>其中 Ai 和 Bi 是拉格朗日乘数。 然而，问题（7）包含非线性等式约束，ADMM 旨在处理线性约束问题。</p>
+&\min_{\{X^i\},\{W^i\},\{U^i\},\{A^i\},\{B^i\}}\ell(X^n,D)\\
+&+\frac{\mu}{2}\sum^{n}_{i=2}\big(\|U^{i-1}-X^{i-1}+A^{i-1}\|^2_F\\
+&+\|X^i-\phi(W^{i-1}U^{i-1}+B^{i-1})\|^2_F\big) \tag{8}
+\end{align*}</script><p>其中 $A^i$ 和 $B^i$ 是拉格朗日乘数，然而，问题（7）包含非线性等式约束，ADMM 旨在处理线性约束问题。</p>
 <p>Zhang 和 Brand [22] 开发了一种新方法，仅使用 ReLU 激活函数来解决问题 (2)。 最值得注意的是，他们将 ReLU 激活函数表示为凸最小化问题。 即，他们使用 ReLU 激活函数将问题 (2) 中的等式约束重新解释为以下问题：</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{9}
-\end{align*}</script><p>其中 max 是元素方面的最大值运算符。 根据解释，他们使用 ReLU 激活函数对问题 (2) 进行了近似，如下所示：</p>
+X^i &= \phi(W^{i-1}X^{i-1})\\
+&= max(W^{i-1}X^{i-1},0)\\
+&= \mathop{argmin}_{U^i\geq 0}\|U^i-W^{i-1}X^{i-1}\|^2_F \tag{9}
+\end{align*}</script><p>其中 $max$ 是基于元素的最大值运算符。 根据解释，他们使用 ReLU 激活函数对问题 (2) 进行了近似，如下所示：</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{10}
-\end{align*}</script><p>与基于 MAC 和 ADMM 的方法不同，这种松弛不包括非线性等式约束。 此外，问题（10）是分块多凸的，即它是凸 w.r.t. 当其余块固定时，每个变量块。 他们提出了一种新的 BCD 方法来求解。 然而，在测试时间，他们必须解决问题（10）固定的 fW i gn 1 或在输出层重新训练 W n 1 。 Askari i1⁄41 等人。 [23] 遵循了 Zhang 和 Brand [22] 提出的想法。 他们演示了如何将更一般的激活函数转换为凸最小化问题。 然而，他们训练的权重只能用于初始化 SGD 的前馈神经网络。 顾等。 [24] 介绍了 [23] 的后续工作。 它们的公式等同于 LPOM。 然而，他们的解决方法需要解决更新分层激活的约束问题，效率不高。 另外，他们的求解方法需要针对每个激活函数进行裁剪，所以不具有通用性。 值得注意的是，基于卷积和平均池化的组合也是线性的这一事实，他们结合了一个经验技巧来扩展他们的公式以直接处理卷积和平均池化。</p>
+&\min_{\{W^i\},\{X^i\}}+\sum^n_{i=2}\frac{\mu_i}{2}\|X^i-W^{i-1}X^{i-1}\|^2_F\\
+&s.t.\; X^i\geq 0,\; i=2,3...n \tag{10}
+\end{align*}</script><p>与基于 MAC 和 ADMM 的方法不同，这种松弛不包括非线性等式约束，此外，问题（10）是分块多凸的，即当其余块固定时，每个变量块它是凸的。 他们提出了一种新的 BCD 方法来求解。 然而，测试时，他们必须在固定 $\{W^i \}^{n-1}_{i=1}$ 情况下求解问题（10）或者在输出层重新训练 $W^{n-1} $。 Askari i1⁄41 等人[23] 遵循了 Zhang 和 Brand [22] 提出的想法，他们演示了如何将更一般的激活函数转换为凸最小化问题。 然而，他们训练的权重只能用于初始化 SGD 的前馈神经网络。 顾等[24] 介绍了 [23] 的后续工作，它们的公式等同于 LPOM。 然而，他们的解决方法需要解决更新基于层的激活函数约束问题，效率不高。 另外，他们的求解方法需要针对每个激活函数进行裁剪，所以不具有通用性。 值得注意的是，基于卷积和平均池化的组合也是线性的这一事实，他们结合了一个经验技巧来扩展他们的公式以直接处理卷积和平均池化。</p>
 <h1 id="三，LPOM"><a href="#三，LPOM" class="headerlink" title="三，LPOM"></a>三，LPOM</h1><p>在本节中，我们介绍了 LPOM 的概念，并讨论了它相对于现有 NN 训练方法的优势。</p>
-<h2 id="3-1-近端算子重新制定"><a href="#3-1-近端算子重新制定" class="headerlink" title="3.1 近端算子重新制定"></a>3.1 近端算子重新制定</h2><p>LPOM旨在解决问题（2）。 LPOM 的基本思想如下。 考虑只有一个约束的问题 (2) 的简化版本</p>
+<h2 id="3-1-近端算子重构"><a href="#3-1-近端算子重构" class="headerlink" title="3.1 近端算子重构"></a>3.1 近端算子重构</h2><p>LPOM旨在解决问题（2），基本思想如下，考虑只有一个约束的问题 (2) 的简化版本</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{11}
-\end{align*}</script><p>其中 x 和 y 是单变量的。 我们首先构造一个函数hðx； yÞ，使得 x 1⁄4 fðyÞ 1⁄4 argminx hðx； yÞ。 那么我们将问题（11）放宽为以下问题：</p>
+\min_{x,y}s(x),s.t.\; x=\phi(y) \tag{11}
+\end{align*}</script><p>其中 $x$ 和 $y$ 是单变量，我们首先构造一个函数 $h(x,y)$，使得 $x=\phi(y)=\mathop{argmin}_xh(x,y)$。 那么我们将问题（11）放宽为以下问题：</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{12}
-\end{align*}</script><p>其中 m &gt; 0 是惩罚参数。</p>
-<p>我们首先描述问题 (11) 的 hðx;yÞ 的构造。 近端操作员 [26]</p>
+\min_{x,y}s(x)+\mu h(x,y) \tag{12}
+\end{align*}</script><p>其中 $\mu &gt; 0$ 是惩罚参数。</p>
+<p>我们首先描述问题 (11) 中 $h(x,y)$ 的构造，近端算子[26]</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{13}
-\end{align*}</script><p>是优化算法中更新变量的基本操作。 所以我们考虑用它来构造hðx； yÞ。 这里我们假设激活函数 f 是非递减的。 那么 f 1ðxÞ 1⁄4 fyjx 1⁄4 fðyÞg 是一个凸集。 f 1ðxÞ 是单例 fyg 当且仅当 f 在 fðyÞ 处严格递增。 定义</p>
+\mathop{prox}_f(y)=f(x)+\frac{1}{2}(x,y)^2 \tag{13}
+\end{align*}</script><p>这是优化算法中更新变量的基本操作，所以我们考虑用它来构造 $h(x,y)$。 这里我们假设激活函数 $\phi$ 是非递减的，那么 $\phi^{-1}(x)=\{y|x=\phi(y)\}$ 是一个凸集，$\phi^{-1}(x)$ 是单例，当且仅当 $\phi$ 在 $\phi(y)$ 处严格递增。 定义如下所示 $f(x)$</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{x}
-\end{align*}</script><p>请注意，fðxÞ 是明确定义的，如果允许取 þ1 的值，即使 f 1ðyÞ 对于 0 和 x 之间的某些 y 是非唯一的。 无论如何，我们没有在计算中明确使用 f 1、f 和 g（稍后定义）。 很容易证明(13)的最优性条件是02ðf 1ðxÞ xÞþðx yÞ。所以(13)的解正好是x 1⁄4 fðyÞ。 因此，我们可以选择hðx； yÞ 1⁄4 f ðxÞ þ 12 ðx yÞ2 ，其中 f ðxÞ 是单变量函数。<br>下面我们考虑原问题（2）。 我们首先扩展上面的hðx； yÞ 到矩阵形式 hðX； Y Þ，其中 X 和 Y 是大小相同的矩阵。 因为我们已经有了 hðx； yÞ，逐元素函数 hðX； Y Þ 是最需要的。 让下标 kl 指代矩阵的第 ðk;lÞth 项。 我们定义 hðX； Y Þ 1⁄4 k l hðXkl； YklÞ。 为了得到更紧凑的 hðX 表示； Y Þ，对于矩阵 X 1⁄4 ðXklÞ，我们定义 fðXÞ 1⁄4 ðfðXklÞÞ。 即，矩阵 X 是由 Xkl 表示的条目数组。 fðXÞ 是 X 上的逐元素函数，即它是一个与 X 及其 ðk 大小相同的矩阵； 第 lÞ 个条目是 f ðXkl Þ。 然后我们有</p>
+f(x)=\int^x_0(\phi^{-1}(y)-y)dy 
+\end{align*}</script><p>请注意，如果允许取 $+\infty $ ，那么$f(x)$ 是适定的，即使 $\phi^{-1}(y)$  对于 $0$ 和 $x$ 之间的某些 y 是非唯一的。 无论如何，我们没有在计算中明确使用 $\phi^{-1}、f$ 和 $g$（稍后定义）。 很容易证明(13)的最优性条件是 $0\in(\phi^{-1}(x)-x)+(x-y)$，所以(13)的解正好是 $x=\phi(y)$。 因此，我们可以选择 $h(x,y)=f(x)+\frac{1}{2}(x,y)^2$，其中 $f(x)$ 是单变量函数。</p>
+<p>下面我们考虑原问题（2）， 我们首先扩展上面的 $h(x,y)$ 到矩阵形式 $h(X,Y)$，其中 $X$ 和 $Y$ 是大小相同的矩阵。 因为我们已经有了 $h(x,y)$，逐元素函数 $h(X,Y)$ 是最需要的，让下标 $kl$ 指代矩阵的第 $(k,l)$ 项。 我们定义 $h(x,y)=\sum_k\sum_l h(X_{kl},Y_{kl})$。 为了得到更紧凑的 $h(X,Y)$ 表示，对于矩阵 $X=(X_{kl})$，我们定义 $f(x)=(f(X_{kl}))$，即，矩阵 $X$ 是由 $X_{kl}$ 表示的条目数组。 $f(X)$ 是 $X$ 上的逐元素函数，即它是一个与 $X$ 大小相同的矩阵，第 $(k,l)$ 项是 $f(X_{kl})$。 然后我们有</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{x}
-\end{align*}</script><p>因此，近端算子的矩阵形式在(13) 对于问题 (2) 变为</p>
+h(X,Y) &= \sum_k\sum_l h(X_{kl},Y_{kl})\\
+&= \sum_k\sum_l \big\{f(X_{kl})+\frac{1}{2}(X_{kl}-Y_{kl})^2\big\}\\
+&= \pmb{1}^\top f(X)\pmb{1}+\frac{1}{2}\|X-Y \|^2_F \tag{x}
+\end{align*}</script><p>因此，(13)中的近端算子的矩阵形式对于问题 (2) 变为</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{14}
+\mathop{argmin}_{X^i}&h(X^i,W^{i-1}X^{i-1})\\
+&\equiv\pmb{1}^\top f(X^i)\pmb{1}+\frac{1}{2}\|X^i-W^{i-1}X^{i-1} \|^2_F \tag{14}
 \end{align*}</script><p>其中 Xi 和 Wi 1Xi 1 分别扮演 (13) 中的 x 和 y 的角色。 类似地，我们可以证明问题（14）对于 Xi 的最优性条件是</p>
 <script type="math/tex; mode=display">
 \begin{align*}
@@ -522,6 +537,27 @@
 <td>$\mathfrak B$</td>
 <td>$\mathfrak C$</td>
 <td>$\mathfrak D$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="二，数学符号"><a href="#二，数学符号" class="headerlink" title="二，数学符号"></a>二，数学符号</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>含义</th>
+<th>示例</th>
+<th>markdown代码</th>
+<th>含义</th>
+<th>示例</th>
+<th>markdown代码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>恒等于</td>
+<td>$\equiv$</td>
+<td><code>$\equiv$</code></td>
 </tr>
 </tbody>
 </table>
@@ -4108,42 +4144,6 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </tags>
   </entry>
   <entry>
-    <title>边缘提取方法</title>
-    <url>/2022/05/19/cv_engineering/edge-extract/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Chen Mingming老师组的三个边缘提取的模型，还有部分数据集，效果不错~</p>
-<p><strong>用边缘特征做过一些图像应用哦</strong><br><span id="more"></span></p>
-<h2 id="1，边缘提取hed"><a href="#1，边缘提取hed" class="headerlink" title="1，边缘提取hed"></a>1，边缘提取hed</h2><p><a href="https://github.com/s9xie/hed">github link</a></p>
-<ul>
-<li>作者<br>南开大学程明明</li>
-<li>对应文章   <ul>
-<li>author = {“Xie, Saining and Tu, Zhuowen”},</li>
-<li>Title = {Holistically-Nested Edge Detection},</li>
-<li>Booktitle = “Proceedings of IEEE International Conference on Computer Vision”,</li>
-<li>Year = {2015},</li>
-</ul>
-</li>
-<li>结果<br>BSDS benchmark数据集：<br>ODS=.790 and OIS=.808<br>BSD500 数据集：<br>ODS F-score of .790<br>NYU Depth 数据集：<br>ODS F-score of .746<br>速度： (0.4s per image)</li>
-</ul>
-<h2 id="2，边缘提取rcf"><a href="#2，边缘提取rcf" class="headerlink" title="2，边缘提取rcf"></a>2，边缘提取rcf</h2><p><a href="https://github.com/meteorshowers/RCF-pytorch">pytorch版本：github</a><br><a href="https://github.com/yun-liu/rcf">caffe版本：github</a></p>
-<ul>
-<li>作者<br>南开大学程明明</li>
-<li>文章<br>title={Richer Convolutional Features for Edge Detection},<br>author={Liu, Yun and Cheng, Ming-Ming and Hu, Xiaowei and Bian, Jia-Wang and Zhang, Le and Bai, Xiang and Tang, Jinhui},<br>journal={IEEE Transactions on Pattern Analysis and Machine Intelligence},<br>year={2019}</li>
-<li>特性<br>Using VGG16 network；<br>BSDS500 benchmark 数据集：<br>ODS F-measure of 0.811， speed (8 FPS)<br>fast version of RCF 快速版本：<br>ODS F-measure of 0.806 with 30 FPS</li>
-</ul>
-<h2 id="3，边缘提取dfi"><a href="#3，边缘提取dfi" class="headerlink" title="3，边缘提取dfi"></a>3，边缘提取dfi</h2><p><a href="https://github.com/backseason/DFI">github link</a></p>
-<ul>
-<li>作者<br>南开大学程明明</li>
-<li>文章<br>title={Dynamic Feature Integration for Simultaneous Detection of Salient Object, Edge and Skeleton},<br>author={Jiang-Jiang Liu and Qibin Hou and Ming-Ming Cheng},<br>journal={IEEE Transactions on Image Processing},<br>year={2020}</li>
-</ul>
-]]></content>
-      <categories>
-        <category>cv engineering</category>
-      </categories>
-      <tags>
-        <tag>edge extract</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>hi3559a开发记录</title>
     <url>/2022/05/19/hardware/hi3559a-coding/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>hisi视觉模型开发，主要是检测任务，三个类别，本文包含项目开发的基本流程，包括模型训练，模型转化以及hisi官方提供的关于yolov3的源码及其调用分析。</p>
@@ -4199,6 +4199,42 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </categories>
       <tags>
         <tag>hi3559a cv model</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>边缘提取方法</title>
+    <url>/2022/05/19/cv_engineering/edge-extract/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Chen Mingming老师组的三个边缘提取的模型，还有部分数据集，效果不错~</p>
+<p><strong>用边缘特征做过一些图像应用哦</strong><br><span id="more"></span></p>
+<h2 id="1，边缘提取hed"><a href="#1，边缘提取hed" class="headerlink" title="1，边缘提取hed"></a>1，边缘提取hed</h2><p><a href="https://github.com/s9xie/hed">github link</a></p>
+<ul>
+<li>作者<br>南开大学程明明</li>
+<li>对应文章   <ul>
+<li>author = {“Xie, Saining and Tu, Zhuowen”},</li>
+<li>Title = {Holistically-Nested Edge Detection},</li>
+<li>Booktitle = “Proceedings of IEEE International Conference on Computer Vision”,</li>
+<li>Year = {2015},</li>
+</ul>
+</li>
+<li>结果<br>BSDS benchmark数据集：<br>ODS=.790 and OIS=.808<br>BSD500 数据集：<br>ODS F-score of .790<br>NYU Depth 数据集：<br>ODS F-score of .746<br>速度： (0.4s per image)</li>
+</ul>
+<h2 id="2，边缘提取rcf"><a href="#2，边缘提取rcf" class="headerlink" title="2，边缘提取rcf"></a>2，边缘提取rcf</h2><p><a href="https://github.com/meteorshowers/RCF-pytorch">pytorch版本：github</a><br><a href="https://github.com/yun-liu/rcf">caffe版本：github</a></p>
+<ul>
+<li>作者<br>南开大学程明明</li>
+<li>文章<br>title={Richer Convolutional Features for Edge Detection},<br>author={Liu, Yun and Cheng, Ming-Ming and Hu, Xiaowei and Bian, Jia-Wang and Zhang, Le and Bai, Xiang and Tang, Jinhui},<br>journal={IEEE Transactions on Pattern Analysis and Machine Intelligence},<br>year={2019}</li>
+<li>特性<br>Using VGG16 network；<br>BSDS500 benchmark 数据集：<br>ODS F-measure of 0.811， speed (8 FPS)<br>fast version of RCF 快速版本：<br>ODS F-measure of 0.806 with 30 FPS</li>
+</ul>
+<h2 id="3，边缘提取dfi"><a href="#3，边缘提取dfi" class="headerlink" title="3，边缘提取dfi"></a>3，边缘提取dfi</h2><p><a href="https://github.com/backseason/DFI">github link</a></p>
+<ul>
+<li>作者<br>南开大学程明明</li>
+<li>文章<br>title={Dynamic Feature Integration for Simultaneous Detection of Salient Object, Edge and Skeleton},<br>author={Jiang-Jiang Liu and Qibin Hou and Ming-Ming Cheng},<br>journal={IEEE Transactions on Image Processing},<br>year={2020}</li>
+</ul>
+]]></content>
+      <categories>
+        <category>cv engineering</category>
+      </categories>
+      <tags>
+        <tag>edge extract</tag>
       </tags>
   </entry>
   <entry>
@@ -4542,28 +4578,6 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </tags>
   </entry>
   <entry>
-    <title>roi align</title>
-    <url>/2022/05/16/detection/roi-align/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>roi align产生的背景，原理和应用场景</p>
-<p><strong>主要对比roi pooling</strong><br><span id="more"></span></p>
-<h2 id="1，背景"><a href="#1，背景" class="headerlink" title="1，背景"></a>1，背景</h2><p>在mask rcnn中提出，是为了解决roi pooling的两次量化带来的位置精度损失问题。</p>
-<h2 id="2，思路"><a href="#2，思路" class="headerlink" title="2，思路"></a>2，思路</h2><p>取消量化操作，使用双线性内插的方法获得坐标为浮点数的像素点上的图像数值,从而将整个特征聚集过程转化为一个连续的操作。值得注意的是，在具体的算法操作上，ROI Align并不是简单地补充出候选区域边界上的坐标点，然后将这些坐标点进行池化，而是重新设计了一套比较优雅的流程，大致算法流程为：</p>
-<ul>
-<li>遍历每一个候选区域，保持浮点数边界不做量化。</li>
-<li>将候选区域分割成k x k个单元，每个单元的边界也不做量化。</li>
-<li>在每个单元中计算固定四个坐标位置，用双线性内插的方法计算出这四个位置的值，然后进行最大池化操作。</li>
-</ul>
-<h2 id="3，区别"><a href="#3，区别" class="headerlink" title="3，区别"></a>3，区别</h2><p>ROI Align舍去了近似像素取整数的量化方法，改用双线性插值的方法确定特征图坐标对应于原图中的像素位置.ROI Align很好地解决了ROI Pooling操作中两次量化造成的区域不匹配(mis-alignment)的问题。</p>
-<h2 id="4，应用场景"><a href="#4，应用场景" class="headerlink" title="4，应用场景"></a>4，应用场景</h2><p>对于检测图片中大目标物体时，两种方案的差别不大，而如果是图片中有较多小目标物体需要检测，则优先选择RoiAlign，更精准些。</p>
-]]></content>
-      <categories>
-        <category>detection</category>
-      </categories>
-      <tags>
-        <tag>roi align</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>roi pooling</title>
     <url>/2022/05/16/detection/roi-pooling/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>roi pooling的基本原理和应用</p>
@@ -4590,6 +4604,28 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </categories>
       <tags>
         <tag>roi pooling</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>roi align</title>
+    <url>/2022/05/16/detection/roi-align/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>roi align产生的背景，原理和应用场景</p>
+<p><strong>主要对比roi pooling</strong><br><span id="more"></span></p>
+<h2 id="1，背景"><a href="#1，背景" class="headerlink" title="1，背景"></a>1，背景</h2><p>在mask rcnn中提出，是为了解决roi pooling的两次量化带来的位置精度损失问题。</p>
+<h2 id="2，思路"><a href="#2，思路" class="headerlink" title="2，思路"></a>2，思路</h2><p>取消量化操作，使用双线性内插的方法获得坐标为浮点数的像素点上的图像数值,从而将整个特征聚集过程转化为一个连续的操作。值得注意的是，在具体的算法操作上，ROI Align并不是简单地补充出候选区域边界上的坐标点，然后将这些坐标点进行池化，而是重新设计了一套比较优雅的流程，大致算法流程为：</p>
+<ul>
+<li>遍历每一个候选区域，保持浮点数边界不做量化。</li>
+<li>将候选区域分割成k x k个单元，每个单元的边界也不做量化。</li>
+<li>在每个单元中计算固定四个坐标位置，用双线性内插的方法计算出这四个位置的值，然后进行最大池化操作。</li>
+</ul>
+<h2 id="3，区别"><a href="#3，区别" class="headerlink" title="3，区别"></a>3，区别</h2><p>ROI Align舍去了近似像素取整数的量化方法，改用双线性插值的方法确定特征图坐标对应于原图中的像素位置.ROI Align很好地解决了ROI Pooling操作中两次量化造成的区域不匹配(mis-alignment)的问题。</p>
+<h2 id="4，应用场景"><a href="#4，应用场景" class="headerlink" title="4，应用场景"></a>4，应用场景</h2><p>对于检测图片中大目标物体时，两种方案的差别不大，而如果是图片中有较多小目标物体需要检测，则优先选择RoiAlign，更精准些。</p>
+]]></content>
+      <categories>
+        <category>detection</category>
+      </categories>
+      <tags>
+        <tag>roi align</tag>
       </tags>
   </entry>
   <entry>
