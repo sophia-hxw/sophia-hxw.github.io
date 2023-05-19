@@ -118,45 +118,51 @@ h(X,Y) &= \sum_k\sum_l h(X_{kl},Y_{kl})\\
 \end{align*}</script><p>因此，(13)中的近端算子的矩阵形式对于问题 (2) 变为</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\mathop{argmin}_{X^i}&h(X^i,W^{i-1}X^{i-1})\\
+\mathop{argmin}_{X^i}\;&h(X^i,W^{i-1}X^{i-1})\\
 &\equiv\pmb{1}^\top f(X^i)\pmb{1}+\frac{1}{2}\|X^i-W^{i-1}X^{i-1} \|^2_F \tag{14}
-\end{align*}</script><p>其中 Xi 和 Wi 1Xi 1 分别扮演 (13) 中的 x 和 y 的角色。 类似地，我们可以证明问题（14）对于 Xi 的最优性条件是</p>
+\end{align*}</script><p>其中 $X^i$ 和 $W^{i-1}X^{i-1}$ 分别扮演 (13) 中的 $x$ 和 $y$ 的角色。 类似地，我们可以证明问题（14）对于 $X^i$ 的最优性条件是</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{15}
-\end{align*}</script><p>其中 f 1ðXiÞ 也是按元素定义的。 所以(14)的最优解是Xi 1⁄4 fðWi 1Xi 1Þ，这正是问题(2)中的约束条件。 因此我们可以天真地放松问题（2）作为</p>
+0\in\phi^{-1}(X^i)-W^{i-1}X^{i-1} \tag{15}
+\end{align*}</script><p>其中 $\phi^{-1}(X^i)$ 也是按元素定义的， 所以(14)的最优解是 $X^i=\phi(W^{i-1}X^{i-1})$，这正是问题(2)中的约束条件。 因此我们可以自然地放松问题（2）为：</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{16}
-\end{align*}</script><p>然而，由于（2）中的递归约束不是独立的，问题（11）和问题（2）之间存在根本区别。 即，对于 i1⁄42;…;n 1，Xi 出现在 Xi 1⁄4fðWi 1Xi 1Þ 和 Xiþ1 1⁄4fðWiXiÞ 中。 所以它也出现在 hðXi;Wi 1Xi 1Þ 和 hðXiþ1;WiXiÞ 中。 为了正确逼近问题（2），Xi 1⁄4 fðWi 1Xi 1Þ 和 Xiþ1 1⁄4 fðWiXiÞ 都应满足最优条件</p>
+&\min_{\{W^i\},\{X^i\}}\ell(X^n,D)\\
+&+\sum^n_{i=2}\mu_i(\pmb 1^\top f(X^i)\pmb 1+\frac{1}{2}\|X^i-W^{i-1}X^{i-1} \|^2_F) \tag{16}
+\end{align*}</script><p>然而，由于（2）中的递归约束不是独立的，问题（11）和问题（2）之间存在根本区别。 即对于 $i=2…n-1$，$X^i$ 出现在 $X^i=\phi(W^{i-1}X^{i-1})$ 和 $X^{i+1}=\phi(W^iX^i)$ 中。 所以它也出现在 $h(X^i,W^{i-1}X^{i-1})$ 和 $h(X^{i+1},W^iX^i)$ 中。 为了正确逼近问题（2），$X^i=\phi(W^{i-1}X^{i-1})$ 和 $X^{i+1}=\phi(W^iX^i)$ 都应满足最优条件</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{x}
-\end{align*}</script><p>对于 Xi，如下所示：</p>
+\min_{X^i}\mu_i h(X^i,W^{i-1}X^{i-1})+\mu_{i+1}h(X^{i+1},W^iX^i) 
+\end{align*}</script><p>对于 $X^i$，如下所示：</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{17}
-\end{align*}</script><p>这也是 Xi 问题 (16) 的最优条件。<br>不幸的是，我们可以看到 Xi 1⁄4 fðWi 1Xi 1Þ 和 Xiþ1 1⁄4 fðWiXiÞ 并不都满足上述条件！</p>
-<p>为了使 Xi 1⁄4 fðWi 1Xi 1Þ 和 Xiþ1 1⁄4 fðWiXiÞ 都满足松弛问题的最优条件 w.r.t. Xi，我们需要将 (17) 修改为</p>
+0\in&\mu_i(\phi^{-1}(X^i)-W^{i-1}X^{i-1}) \\
+&+\mu_{i+1}(W^i)^\top(W^iX^i-X^{i+1}),\; i=2,...n-1 tag{17}
+\end{align*}</script><p>这也是问题 (16) 中关于 $X^i$ 的最优条件。</p>
+<p>不幸的是，我们可以看到 $X^i=\phi(W^{i-1}X^{i-1})$ 和 $X^{i+1}=\phi(W^iX^i)$ 并不都满足上述条件！</p>
+<p>为了使 $X^i=\phi(W^{i-1}X^{i-1})$ 和 $X^{i+1}=\phi(W^iX^i)$ 都满足松弛问题的最优条件，我们需要将 (17) 修改为</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{18}
+0\in&\mu_i(\phi^{-1}(X^i)-W^{i-1}X^{i-1}) \\
+&+\mu_{i+1}(W^i)^\top(\phi(W^iX^i)-X^{i+1}),\; i=2,...n-1\tag{18}
 \end{align*}</script><p>这对应于以下问题：</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{19}
+\min_{\{W^i\},\{X^i\}}&\ell(X^n,D)+\sum^n_{i=2}\mu_i \big(\pmb 1^\top f(X^i)\pmb 1 \\
+&+\pmb 1^\top g(W^{i-1}X^{i-1})\pmb 1+\frac{1}{2}\|X^i-W^{i-1}X^{i-1} \|^2_F\big) \tag{19}
 \end{align*}</script><p>其中</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{x}
-\end{align*}</script><p>类似地，gðXÞ 是矩阵 X 的逐元素函数。问题 (19) 是 LPOM 的最终公式。 请注意，(2) 中的递归约束确保 fXigni1⁄42 匹配网络的前馈传递。 g 的引入导致正确的重新表述，还允许我们使用简单的前馈过程来推断新样本。 我们要强调的是，这是不平凡且不明显的。 我们在表 3 中给出了一些代表性激活函数的 fðxÞ 和 gðxÞ.</p>
-<h2 id="3-2-LPOM优势"><a href="#3-2-LPOM优势" class="headerlink" title="3.2 LPOM优势"></a>3.2 LPOM优势</h2><p>我们将 FðW;XÞ 表示为 (19) 中 LPOM 的目标函数。 那么我们有下面的定理</p>
-<h3 id="定理1"><a href="#定理1" class="headerlink" title="定理1"></a>定理1</h3><p>假设‘ðXn;DÞ 在 Xn 中是凸的并且 f 是非递减的。 然后 F ðW; XÞ 是块多凸的，即它在每个 Xi 和 Wi 中都是凸的，同时保持其他变量块固定。</p>
-<h3 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h3><p>F ðW; XÞ 可以等效地重写为</p>
+g(x)=\int^x_0(\phi(y)-y)dy
+\end{align*}</script><p>类似地，$g(X)$ 是矩阵 $X$ 的逐元素函数，问题 (19) 是 LPOM 的最终公式。 请注意，(2) 中的递归约束确保 $\{X^i\}^n_{i=2}$ 匹配网络的前馈传递 $g$ 的引入诱导出正确的再表述，还允许我们使用简单的前馈过程来推断新样本。 我们要强调的是，这是不平凡且不明显的，在表 3 中给出了一些代表性激活函数的 $f(x)$ 和 $g(x)$.</p>
+<h2 id="3-2-LPOM优势"><a href="#3-2-LPOM优势" class="headerlink" title="3.2 LPOM优势"></a>3.2 LPOM优势</h2><p>我们将 $F(W,X)$ 表示为 (19) 中 LPOM 的目标函数，那么我们有下面的定理</p>
+<h3 id="定理1"><a href="#定理1" class="headerlink" title="定理1"></a>定理1</h3><p>假设 $\ell(X^n,D) $ 在 $X^n$ 中是凸的并且 $f$ 是非递减的。 然后 $F(W,X)$ 是块多凸的，即在保持其他变量块固定时，它在每个 $X^i$ 和 $W^i$ 中都是凸的。</p>
+<h3 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h3><p>$F(W,X)$ 可以等效地重写为</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{20}
-\end{align*}</script><p>其中….由于 f 和 f 都是非递减的，所以 fðxÞ 和 g~ðxÞ 都是凸的。 易证1T g~ðWi 1Xi 1Þ1 在Wi 1 固定时在Xi 1 中凸出，在Xi 1 固定时在Wi 1 中凸出。 当其他两个块固定时，FðW;XÞ 中的项 hXi;Wi 1Xi 1i 在一个块中是线性的。 证明完成。</p>
+F(W,X) &= \ell(X^n,D)+\sum^n_{i=2}\mu_i\big(\pmb 1^\top \tilde{f}(X^i)\pmb 1\\
+&+\pmb 1^\top\tilde{g}(W^{i-1}X^{i-1})\pmb 1-\langle X^i,W^{i-1}X^{i-1}\rangle \big) \tag{20}
+\end{align*}</script><p>其中 $\tilde{f}(X)=\int^x_0\phi^{-1}(y)dy $，且 $\tilde{g}(x)\int^x_0\phi(y)dy $。由于 $\phi$ 和 $\phi^{-1}$ 都是非递减的，所以 $\tilde{f}(X)$ 和 $\tilde{g}(x)$ 都是凸的。 易证 $\pmb 1^\top\tilde{g}(W^{i-1}X^{i-1})\pmb 1$ 在 $W^{i-1}$ 固定时在$X^{i-1}$ 中是凸的，在 $X^{i-1}$ 固定时在 $W^{i-1}$ 中是凸的。 当其他两个块固定时，$F(W,X)$ 中的项 $\langle X^i,W^{i-1}X^{i-1}\rangle$ 在一个块中是线性的。 证明完成。</p>
 <p>上述定理允许我们使用 BCD 方法来求解 LPOM。 由于每个子问题都是凸的，我们可以获得更新 Xi 和 Wi 的最优解。 相比之下，惩罚子问题和基于 ADMM 的方法都是非凸的。<br>与基于 ADMM 的方法 [17]、[21] 相比，LPOM 不包含拉格朗日乘数，并且不需要比 fXigni1⁄42 更多的辅助变量。 此外，我们的 LPOM 求解方法不需要额外的辅助变量（见第 4 节）。 所以 LPOM 比基于 ADMM 的方法具有更少的变量，因此需要更少的内存。 实际上，由于 SGD 需要保存 fXigni1⁄42，因此 LPOM 的内存成本与 SGD 几乎相同。2 与惩罚方法 [18]、[19] 相比，LPOM 的最优条件更简单。 例如，LPOM i1⁄42 i1⁄41 中 fXign 1 和 fWign 1 的最优条件是 (18) 和</p>
 <script type="math/tex; mode=display">
 \begin{align*}
@@ -4144,6 +4150,42 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </tags>
   </entry>
   <entry>
+    <title>边缘提取方法</title>
+    <url>/2022/05/19/cv_engineering/edge-extract/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Chen Mingming老师组的三个边缘提取的模型，还有部分数据集，效果不错~</p>
+<p><strong>用边缘特征做过一些图像应用哦</strong><br><span id="more"></span></p>
+<h2 id="1，边缘提取hed"><a href="#1，边缘提取hed" class="headerlink" title="1，边缘提取hed"></a>1，边缘提取hed</h2><p><a href="https://github.com/s9xie/hed">github link</a></p>
+<ul>
+<li>作者<br>南开大学程明明</li>
+<li>对应文章   <ul>
+<li>author = {“Xie, Saining and Tu, Zhuowen”},</li>
+<li>Title = {Holistically-Nested Edge Detection},</li>
+<li>Booktitle = “Proceedings of IEEE International Conference on Computer Vision”,</li>
+<li>Year = {2015},</li>
+</ul>
+</li>
+<li>结果<br>BSDS benchmark数据集：<br>ODS=.790 and OIS=.808<br>BSD500 数据集：<br>ODS F-score of .790<br>NYU Depth 数据集：<br>ODS F-score of .746<br>速度： (0.4s per image)</li>
+</ul>
+<h2 id="2，边缘提取rcf"><a href="#2，边缘提取rcf" class="headerlink" title="2，边缘提取rcf"></a>2，边缘提取rcf</h2><p><a href="https://github.com/meteorshowers/RCF-pytorch">pytorch版本：github</a><br><a href="https://github.com/yun-liu/rcf">caffe版本：github</a></p>
+<ul>
+<li>作者<br>南开大学程明明</li>
+<li>文章<br>title={Richer Convolutional Features for Edge Detection},<br>author={Liu, Yun and Cheng, Ming-Ming and Hu, Xiaowei and Bian, Jia-Wang and Zhang, Le and Bai, Xiang and Tang, Jinhui},<br>journal={IEEE Transactions on Pattern Analysis and Machine Intelligence},<br>year={2019}</li>
+<li>特性<br>Using VGG16 network；<br>BSDS500 benchmark 数据集：<br>ODS F-measure of 0.811， speed (8 FPS)<br>fast version of RCF 快速版本：<br>ODS F-measure of 0.806 with 30 FPS</li>
+</ul>
+<h2 id="3，边缘提取dfi"><a href="#3，边缘提取dfi" class="headerlink" title="3，边缘提取dfi"></a>3，边缘提取dfi</h2><p><a href="https://github.com/backseason/DFI">github link</a></p>
+<ul>
+<li>作者<br>南开大学程明明</li>
+<li>文章<br>title={Dynamic Feature Integration for Simultaneous Detection of Salient Object, Edge and Skeleton},<br>author={Jiang-Jiang Liu and Qibin Hou and Ming-Ming Cheng},<br>journal={IEEE Transactions on Image Processing},<br>year={2020}</li>
+</ul>
+]]></content>
+      <categories>
+        <category>cv engineering</category>
+      </categories>
+      <tags>
+        <tag>edge extract</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>hi3559a开发记录</title>
     <url>/2022/05/19/hardware/hi3559a-coding/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>hisi视觉模型开发，主要是检测任务，三个类别，本文包含项目开发的基本流程，包括模型训练，模型转化以及hisi官方提供的关于yolov3的源码及其调用分析。</p>
@@ -4199,42 +4241,6 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </categories>
       <tags>
         <tag>hi3559a cv model</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>边缘提取方法</title>
-    <url>/2022/05/19/cv_engineering/edge-extract/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Chen Mingming老师组的三个边缘提取的模型，还有部分数据集，效果不错~</p>
-<p><strong>用边缘特征做过一些图像应用哦</strong><br><span id="more"></span></p>
-<h2 id="1，边缘提取hed"><a href="#1，边缘提取hed" class="headerlink" title="1，边缘提取hed"></a>1，边缘提取hed</h2><p><a href="https://github.com/s9xie/hed">github link</a></p>
-<ul>
-<li>作者<br>南开大学程明明</li>
-<li>对应文章   <ul>
-<li>author = {“Xie, Saining and Tu, Zhuowen”},</li>
-<li>Title = {Holistically-Nested Edge Detection},</li>
-<li>Booktitle = “Proceedings of IEEE International Conference on Computer Vision”,</li>
-<li>Year = {2015},</li>
-</ul>
-</li>
-<li>结果<br>BSDS benchmark数据集：<br>ODS=.790 and OIS=.808<br>BSD500 数据集：<br>ODS F-score of .790<br>NYU Depth 数据集：<br>ODS F-score of .746<br>速度： (0.4s per image)</li>
-</ul>
-<h2 id="2，边缘提取rcf"><a href="#2，边缘提取rcf" class="headerlink" title="2，边缘提取rcf"></a>2，边缘提取rcf</h2><p><a href="https://github.com/meteorshowers/RCF-pytorch">pytorch版本：github</a><br><a href="https://github.com/yun-liu/rcf">caffe版本：github</a></p>
-<ul>
-<li>作者<br>南开大学程明明</li>
-<li>文章<br>title={Richer Convolutional Features for Edge Detection},<br>author={Liu, Yun and Cheng, Ming-Ming and Hu, Xiaowei and Bian, Jia-Wang and Zhang, Le and Bai, Xiang and Tang, Jinhui},<br>journal={IEEE Transactions on Pattern Analysis and Machine Intelligence},<br>year={2019}</li>
-<li>特性<br>Using VGG16 network；<br>BSDS500 benchmark 数据集：<br>ODS F-measure of 0.811， speed (8 FPS)<br>fast version of RCF 快速版本：<br>ODS F-measure of 0.806 with 30 FPS</li>
-</ul>
-<h2 id="3，边缘提取dfi"><a href="#3，边缘提取dfi" class="headerlink" title="3，边缘提取dfi"></a>3，边缘提取dfi</h2><p><a href="https://github.com/backseason/DFI">github link</a></p>
-<ul>
-<li>作者<br>南开大学程明明</li>
-<li>文章<br>title={Dynamic Feature Integration for Simultaneous Detection of Salient Object, Edge and Skeleton},<br>author={Jiang-Jiang Liu and Qibin Hou and Ming-Ming Cheng},<br>journal={IEEE Transactions on Image Processing},<br>year={2020}</li>
-</ul>
-]]></content>
-      <categories>
-        <category>cv engineering</category>
-      </categories>
-      <tags>
-        <tag>edge extract</tag>
       </tags>
   </entry>
   <entry>

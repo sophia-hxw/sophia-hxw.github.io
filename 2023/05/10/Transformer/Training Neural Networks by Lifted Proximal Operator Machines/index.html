@@ -29,7 +29,7 @@
 <meta property="og:description" content="前言title: Training Neural Networks by Lifted Proximal Operator Machines 论文百度云盘链接:https:&#x2F;&#x2F;pan.baidu.com&#x2F;s&#x2F;14x2KrlBVhfdWWy8oQBjROw?pwd&#x3D;axgn  提升近端算子机对前馈神经网络的训练问题～">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-05-09T16:00:13.000Z">
-<meta property="article:modified_time" content="2023-05-19T07:57:58.105Z">
+<meta property="article:modified_time" content="2023-05-19T16:16:51.039Z">
 <meta property="article:author" content="xinwen">
 <meta property="article:tag" content="LPOM">
 <meta name="twitter:card" content="summary">
@@ -230,7 +230,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-05-19 15:57:58" itemprop="dateModified" datetime="2023-05-19T15:57:58+08:00">2023-05-19</time>
+                <time title="修改时间：2023-05-20 00:16:51" itemprop="dateModified" datetime="2023-05-20T00:16:51+08:00">2023-05-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -262,14 +262,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>23k</span>
+              <span>24k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>21 分钟</span>
+              <span>22 分钟</span>
             </span>
 
         </div>
@@ -379,45 +379,51 @@ h(X,Y) &= \sum_k\sum_l h(X_{kl},Y_{kl})\\
 \end{align*}</script><p>因此，(13)中的近端算子的矩阵形式对于问题 (2) 变为</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\mathop{argmin}_{X^i}&h(X^i,W^{i-1}X^{i-1})\\
+\mathop{argmin}_{X^i}\;&h(X^i,W^{i-1}X^{i-1})\\
 &\equiv\pmb{1}^\top f(X^i)\pmb{1}+\frac{1}{2}\|X^i-W^{i-1}X^{i-1} \|^2_F \tag{14}
-\end{align*}</script><p>其中 Xi 和 Wi 1Xi 1 分别扮演 (13) 中的 x 和 y 的角色。 类似地，我们可以证明问题（14）对于 Xi 的最优性条件是</p>
+\end{align*}</script><p>其中 $X^i$ 和 $W^{i-1}X^{i-1}$ 分别扮演 (13) 中的 $x$ 和 $y$ 的角色。 类似地，我们可以证明问题（14）对于 $X^i$ 的最优性条件是</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{15}
-\end{align*}</script><p>其中 f 1ðXiÞ 也是按元素定义的。 所以(14)的最优解是Xi 1⁄4 fðWi 1Xi 1Þ，这正是问题(2)中的约束条件。 因此我们可以天真地放松问题（2）作为</p>
+0\in\phi^{-1}(X^i)-W^{i-1}X^{i-1} \tag{15}
+\end{align*}</script><p>其中 $\phi^{-1}(X^i)$ 也是按元素定义的， 所以(14)的最优解是 $X^i=\phi(W^{i-1}X^{i-1})$，这正是问题(2)中的约束条件。 因此我们可以自然地放松问题（2）为：</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{16}
-\end{align*}</script><p>然而，由于（2）中的递归约束不是独立的，问题（11）和问题（2）之间存在根本区别。 即，对于 i1⁄42;…;n 1，Xi 出现在 Xi 1⁄4fðWi 1Xi 1Þ 和 Xiþ1 1⁄4fðWiXiÞ 中。 所以它也出现在 hðXi;Wi 1Xi 1Þ 和 hðXiþ1;WiXiÞ 中。 为了正确逼近问题（2），Xi 1⁄4 fðWi 1Xi 1Þ 和 Xiþ1 1⁄4 fðWiXiÞ 都应满足最优条件</p>
+&\min_{\{W^i\},\{X^i\}}\ell(X^n,D)\\
+&+\sum^n_{i=2}\mu_i(\pmb 1^\top f(X^i)\pmb 1+\frac{1}{2}\|X^i-W^{i-1}X^{i-1} \|^2_F) \tag{16}
+\end{align*}</script><p>然而，由于（2）中的递归约束不是独立的，问题（11）和问题（2）之间存在根本区别。 即对于 $i=2…n-1$，$X^i$ 出现在 $X^i=\phi(W^{i-1}X^{i-1})$ 和 $X^{i+1}=\phi(W^iX^i)$ 中。 所以它也出现在 $h(X^i,W^{i-1}X^{i-1})$ 和 $h(X^{i+1},W^iX^i)$ 中。 为了正确逼近问题（2），$X^i=\phi(W^{i-1}X^{i-1})$ 和 $X^{i+1}=\phi(W^iX^i)$ 都应满足最优条件</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{x}
-\end{align*}</script><p>对于 Xi，如下所示：</p>
+\min_{X^i}\mu_i h(X^i,W^{i-1}X^{i-1})+\mu_{i+1}h(X^{i+1},W^iX^i) 
+\end{align*}</script><p>对于 $X^i$，如下所示：</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{17}
-\end{align*}</script><p>这也是 Xi 问题 (16) 的最优条件。<br>不幸的是，我们可以看到 Xi 1⁄4 fðWi 1Xi 1Þ 和 Xiþ1 1⁄4 fðWiXiÞ 并不都满足上述条件！</p>
-<p>为了使 Xi 1⁄4 fðWi 1Xi 1Þ 和 Xiþ1 1⁄4 fðWiXiÞ 都满足松弛问题的最优条件 w.r.t. Xi，我们需要将 (17) 修改为</p>
+0\in&\mu_i(\phi^{-1}(X^i)-W^{i-1}X^{i-1}) \\
+&+\mu_{i+1}(W^i)^\top(W^iX^i-X^{i+1}),\; i=2,...n-1 tag{17}
+\end{align*}</script><p>这也是问题 (16) 中关于 $X^i$ 的最优条件。</p>
+<p>不幸的是，我们可以看到 $X^i=\phi(W^{i-1}X^{i-1})$ 和 $X^{i+1}=\phi(W^iX^i)$ 并不都满足上述条件！</p>
+<p>为了使 $X^i=\phi(W^{i-1}X^{i-1})$ 和 $X^{i+1}=\phi(W^iX^i)$ 都满足松弛问题的最优条件，我们需要将 (17) 修改为</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{18}
+0\in&\mu_i(\phi^{-1}(X^i)-W^{i-1}X^{i-1}) \\
+&+\mu_{i+1}(W^i)^\top(\phi(W^iX^i)-X^{i+1}),\; i=2,...n-1\tag{18}
 \end{align*}</script><p>这对应于以下问题：</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{19}
+\min_{\{W^i\},\{X^i\}}&\ell(X^n,D)+\sum^n_{i=2}\mu_i \big(\pmb 1^\top f(X^i)\pmb 1 \\
+&+\pmb 1^\top g(W^{i-1}X^{i-1})\pmb 1+\frac{1}{2}\|X^i-W^{i-1}X^{i-1} \|^2_F\big) \tag{19}
 \end{align*}</script><p>其中</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{x}
-\end{align*}</script><p>类似地，gðXÞ 是矩阵 X 的逐元素函数。问题 (19) 是 LPOM 的最终公式。 请注意，(2) 中的递归约束确保 fXigni1⁄42 匹配网络的前馈传递。 g 的引入导致正确的重新表述，还允许我们使用简单的前馈过程来推断新样本。 我们要强调的是，这是不平凡且不明显的。 我们在表 3 中给出了一些代表性激活函数的 fðxÞ 和 gðxÞ.</p>
-<h2 id="3-2-LPOM优势"><a href="#3-2-LPOM优势" class="headerlink" title="3.2 LPOM优势"></a>3.2 LPOM优势</h2><p>我们将 FðW;XÞ 表示为 (19) 中 LPOM 的目标函数。 那么我们有下面的定理</p>
-<h3 id="定理1"><a href="#定理1" class="headerlink" title="定理1"></a>定理1</h3><p>假设‘ðXn;DÞ 在 Xn 中是凸的并且 f 是非递减的。 然后 F ðW; XÞ 是块多凸的，即它在每个 Xi 和 Wi 中都是凸的，同时保持其他变量块固定。</p>
-<h3 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h3><p>F ðW; XÞ 可以等效地重写为</p>
+g(x)=\int^x_0(\phi(y)-y)dy
+\end{align*}</script><p>类似地，$g(X)$ 是矩阵 $X$ 的逐元素函数，问题 (19) 是 LPOM 的最终公式。 请注意，(2) 中的递归约束确保 $\{X^i\}^n_{i=2}$ 匹配网络的前馈传递 $g$ 的引入诱导出正确的再表述，还允许我们使用简单的前馈过程来推断新样本。 我们要强调的是，这是不平凡且不明显的，在表 3 中给出了一些代表性激活函数的 $f(x)$ 和 $g(x)$.</p>
+<h2 id="3-2-LPOM优势"><a href="#3-2-LPOM优势" class="headerlink" title="3.2 LPOM优势"></a>3.2 LPOM优势</h2><p>我们将 $F(W,X)$ 表示为 (19) 中 LPOM 的目标函数，那么我们有下面的定理</p>
+<h3 id="定理1"><a href="#定理1" class="headerlink" title="定理1"></a>定理1</h3><p>假设 $\ell(X^n,D) $ 在 $X^n$ 中是凸的并且 $f$ 是非递减的。 然后 $F(W,X)$ 是块多凸的，即在保持其他变量块固定时，它在每个 $X^i$ 和 $W^i$ 中都是凸的。</p>
+<h3 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h3><p>$F(W,X)$ 可以等效地重写为</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{20}
-\end{align*}</script><p>其中….由于 f 和 f 都是非递减的，所以 fðxÞ 和 g~ðxÞ 都是凸的。 易证1T g~ðWi 1Xi 1Þ1 在Wi 1 固定时在Xi 1 中凸出，在Xi 1 固定时在Wi 1 中凸出。 当其他两个块固定时，FðW;XÞ 中的项 hXi;Wi 1Xi 1i 在一个块中是线性的。 证明完成。</p>
+F(W,X) &= \ell(X^n,D)+\sum^n_{i=2}\mu_i\big(\pmb 1^\top \tilde{f}(X^i)\pmb 1\\
+&+\pmb 1^\top\tilde{g}(W^{i-1}X^{i-1})\pmb 1-\langle X^i,W^{i-1}X^{i-1}\rangle \big) \tag{20}
+\end{align*}</script><p>其中 $\tilde{f}(X)=\int^x_0\phi^{-1}(y)dy $，且 $\tilde{g}(x)\int^x_0\phi(y)dy $。由于 $\phi$ 和 $\phi^{-1}$ 都是非递减的，所以 $\tilde{f}(X)$ 和 $\tilde{g}(x)$ 都是凸的。 易证 $\pmb 1^\top\tilde{g}(W^{i-1}X^{i-1})\pmb 1$ 在 $W^{i-1}$ 固定时在$X^{i-1}$ 中是凸的，在 $X^{i-1}$ 固定时在 $W^{i-1}$ 中是凸的。 当其他两个块固定时，$F(W,X)$ 中的项 $\langle X^i,W^{i-1}X^{i-1}\rangle$ 在一个块中是线性的。 证明完成。</p>
 <p>上述定理允许我们使用 BCD 方法来求解 LPOM。 由于每个子问题都是凸的，我们可以获得更新 Xi 和 Wi 的最优解。 相比之下，惩罚子问题和基于 ADMM 的方法都是非凸的。<br>与基于 ADMM 的方法 [17]、[21] 相比，LPOM 不包含拉格朗日乘数，并且不需要比 fXigni1⁄42 更多的辅助变量。 此外，我们的 LPOM 求解方法不需要额外的辅助变量（见第 4 节）。 所以 LPOM 比基于 ADMM 的方法具有更少的变量，因此需要更少的内存。 实际上，由于 SGD 需要保存 fXigni1⁄42，因此 LPOM 的内存成本与 SGD 几乎相同。2 与惩罚方法 [18]、[19] 相比，LPOM 的最优条件更简单。 例如，LPOM i1⁄42 i1⁄41 中 fXign 1 和 fWign 1 的最优条件是 (18) 和</p>
 <script type="math/tex; mode=display">
 \begin{align*}
@@ -742,13 +748,13 @@ h(X,Y) &= \sum_k\sum_l h(X_{kl},Y_{kl})\\
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">286k</span>
+    <span title="站点总字数">287k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">4:20</span>
+    <span title="站点阅读时长">4:21</span>
 </div>
 
         
