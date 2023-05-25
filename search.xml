@@ -163,117 +163,130 @@ g(x)=\int^x_0(\phi(y)-y)dy
 F(W,X) &= \ell(X^n,D)+\sum^n_{i=2}\mu_i\big(\pmb 1^\top \tilde{f}(X^i)\pmb 1\\
 &+\pmb 1^\top\tilde{g}(W^{i-1}X^{i-1})\pmb 1-\langle X^i,W^{i-1}X^{i-1}\rangle \big) \tag{20}
 \end{align*}</script><p>其中 $\tilde{f}(X)=\int^x_0\phi^{-1}(y)dy $，且 $\tilde{g}(x)\int^x_0\phi(y)dy $。由于 $\phi$ 和 $\phi^{-1}$ 都是非递减的，所以 $\tilde{f}(X)$ 和 $\tilde{g}(x)$ 都是凸的。 易证 $\pmb 1^\top\tilde{g}(W^{i-1}X^{i-1})\pmb 1$ 在 $W^{i-1}$ 固定时在$X^{i-1}$ 中是凸的，在 $X^{i-1}$ 固定时在 $W^{i-1}$ 中是凸的。 当其他两个块固定时，$F(W,X)$ 中的项 $\langle X^i,W^{i-1}X^{i-1}\rangle$ 在一个块中是线性的。 证明完成。</p>
-<p>上述定理允许我们使用 BCD 方法来求解 LPOM。 由于每个子问题都是凸的，我们可以获得更新 Xi 和 Wi 的最优解。 相比之下，惩罚子问题和基于 ADMM 的方法都是非凸的。<br>与基于 ADMM 的方法 [17]、[21] 相比，LPOM 不包含拉格朗日乘数，并且不需要比 fXigni1⁄42 更多的辅助变量。 此外，我们的 LPOM 求解方法不需要额外的辅助变量（见第 4 节）。 所以 LPOM 比基于 ADMM 的方法具有更少的变量，因此需要更少的内存。 实际上，由于 SGD 需要保存 fXigni1⁄42，因此 LPOM 的内存成本与 SGD 几乎相同。2 与惩罚方法 [18]、[19] 相比，LPOM 的最优条件更简单。 例如，LPOM i1⁄42 i1⁄41 中 fXign 1 和 fWign 1 的最优条件是 (18) 和</p>
+<p>上述定理允许我们使用 BCD 方法来求解 LPOM。 由于每个子问题都是凸的，我们可以获得更新 $X_i$ 和 $W_i$ 的最优解。 相比之下，惩罚子问题和基于 ADMM 的方法都是非凸的。</p>
+<p>与基于 ADMM 的方法 [17]、[21] 相比，LPOM 不包含拉格朗日乘数，并且不需要比 $\{X^i\}^n_{i=2}$ 更多的辅助变量。 此外，我们的 LPOM 求解方法不需要额外的辅助变量（见第 4 节），所以 LPOM 比基于 ADMM 的方法具有更少的变量，因此需要更少的内存。 实际上，由于 SGD 需要保存 $\{X^i\}^n_{i=2}$ ，因此 LPOM 的内存成本与 SGD 几乎相同。与惩罚方法 [18]、[19] 相比，LPOM 的最优条件更简单。 例如，LPOM 中 $\{X^i\}^{n-1}_{i=2}$  和 $\{W^i\}^n_{i=2}$  的最优条件是 (18) 和</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{21}
-\end{align*}</script><p>而那些用于 MAC 的是</p>
+(\phi(W^iX^i)-X^{i+1})(X^i)^\top=\pmb 0,\; i=1,...n-1 \tag{21}
+\end{align*}</script><p>而用于 MAC 的是</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{22}
+&(X^i-\phi(W^{i-1}X^{i-1}))\\
+&+(W^i)^\top[(\phi(W^iX^i)-X^{i+1})\circ\phi'(W^iX^i)]=\pmb 0,\; i=2,...n-1 \tag{22}
 \end{align*}</script><p>和</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{23}
-\end{align*}</script><p>我们可以看到 MAC 的最优条件有一个额外的 f0ðWiXiÞ，它是非线性的。 [19] 的最优条件可以在补充材料的附录 A 中找到，补充材料可以在计算机协会数字图书馆 <a href="http://doi.ieeecomputersociety">http://doi.ieeecomputersociety</a> 上找到。 org/10.1109/TPAMI.2020.3048430. 他们还有一个额外的 f0ðUiÞ。 这可能意味着 MAC 和 [19] 的解集比 LPOM 的解集更复杂。 所以 LPOM 可能更容易找到好的解决方案。<br>与激活函数方法 [22]、[23] 的等效表示相比，LPOM 的公式和求解方法分别可以处理比 [22] 和 [23] 更通用的激活函数。 请注意，求解方法是通用的意味着它对于所有可行的激活函数都是相同的。 此外，当训练网络的权重时，在 LPOM 中引入 g 使我们能够应用前馈过程来预测测试样本的标签。 相比之下，Zhang 和 Brand [22] 只考虑了 ReLU 激活函数。 为了获得测试样本的潜在标签，他们必须解决优化问题或重新训练输出层。 尽管 [23] 中的公式适用于一般激活函数，但其求解方法并不通用，所提出的求解方法仅适用于 ReLU。 此外，Askari 等人的表述。 [23] 是不正确的，因为它对 fXign 1 和 fWign 1 的最优条件是</p>
+[(\phi(W^iX^i)-X^{i+1})\circ\phi'(W^iX^i)](X^i)^\top=\pmb 0,\; i=1,...n-1 \tag{23}
+\end{align*}</script><p>我们可以看到 MAC 的最优条件有一个额外的 $\phi’(W^iX^i)$，它是非线性的。 [19] 的最优条件可以在补充材料的附录 A 中找到， 他们还有一个额外的 $\phi’(U^i) $。 这可能意味着 MAC 和 [19] 的解集比 LPOM 的解集更复杂，所以 LPOM 可能更容易找到好的解决方案。</p>
+<p>与激活函数方法 [22]、[23] 的等效表示相比，LPOM 的公式和求解方法可以处理比 [22] 和 [23] 更通用的激活函数。 请注意，求解方法是通用的意味着它对于所有可行的激活函数都是相同的。 此外，当训练网络的权重时，在 LPOM 中引入 $g$ 使我们能够应用前馈过程来预测测试样本的标签。 相比之下，Zhang 和 Brand [22] 只考虑了 ReLU 激活函数，为了获得测试样本的潜在标签，他们必须解决优化问题或重新训练输出层。 尽管 [23] 中的公式适用于一般激活函数，但其求解方法并不通用，所提出的求解方法仅适用于 ReLU。 此外，Askari 等人的表述[23] 是不正确的，因为它对 $\{X^i\}^{n-1}_{i=2} $ 和 $\{W^i\}_{i=2}^{n-1} $ 的最优条件分别是</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{x}
+0\in\mu_i(\phi^{-1}(X^i)-W^{i-1}X^{i-1})-\mu_{i+1}(W^i)^\top X^{i+1}
 \end{align*}</script><p>和</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{x}
-\end{align*}</script><p>分别。 可以看出，式（2）中的递归等式约束不满足上述条件。 此外，不知何故 Askari 等人。 [23] 添加了额外的约束 Xi ！ 0 对于任何激活函数。 所以他们的公式不能很好地逼近原始问题（2）。 这可以解释为什么 Askari 等人的结果。 [23] 不好。 实际上，他们只能用 SGD 的 ReLU 激活来初始化前馈神经网络的权重。<br>与基于梯度的方法（例如 SGD）相比，LPOM 可以处理任何非递减 Lipschitz 连续激活函数而没有计算困难，包括饱和（例如，sigmoid 和 tanh）和不可微分（例如，ReLU 和 leaky ReLU）并且可以并行更新分层权重和激活（参见第 5 节）。 相比之下，基于梯度的方法只能处理有限的激活函数（例如 ReLU、leaky ReLU 和 softplus），以避免梯度消失或爆炸问题，并且在计算梯度时它们不容易跨层并行化 和激活。 此外，基于梯度的方法需要很多参数调整，这并不容易[15]，而 LPOM 中惩罚参数 mi 的调整要简单得多。</p>
-<h1 id="四，求解LPOM"><a href="#四，求解LPOM" class="headerlink" title="四，求解LPOM"></a>四，求解LPOM</h1><p>块多凸性（定理 1）激发了 BCD 方法来解决 LPOM。 即，我们通过固定所有其他变量块来更新 Xi 或 Wi。 我们在算法 1 中总结了整个求解过程，其中使用一小批训练样本执行优化。 我们可以证明算法 1.3 的收敛性 下面我们给出算法的细节，它是串行的。</p>
-<h2 id="4-1-更新-X"><a href="#4-1-更新-X" class="headerlink" title="4.1 更新 X"></a>4.1 更新 X</h2><p>我们首先描述 fXigni1⁄42 的更新。 我们将 fXigni1⁄42 从 i 1⁄4 2 连续更新到 n，就像神经网络的前馈过程一样。 对于 i1⁄42;…;n 1，固定 fWign 1 和其他 jn i1⁄41 fX gj1⁄42;j61⁄4i，问题 (19) 简化为</p>
+X^{i+1}(X^i)^\top = 0,\; i=1,...n-1
+\end{align*}</script><p>可以看出，式（2）中的递归等式约束不满足上述条件。 此外，不知何故 Askari 等人[23] 对于任何激活函数，都添加了额外的约束 $X^i\geq 0$， 所以他们的公式不能很好地逼近原始问题（2），这可以解释为什么 Askari 等人的结果[23] 不好。 实际上，他们只能用 SGD 的 ReLU 激活来初始化前馈神经网络的权重。</p>
+<p>与基于梯度的方法（例如 SGD）相比，LPOM 可以处理任何非递减 Lipschitz 连续激活函数而没有计算困难，包括饱和（例如，sigmoid 和 tanh）和不可微分（例如，ReLU 和 leaky ReLU）并且可以并行更新分层权重和激活（参见第 5 节）。 相比之下，基于梯度的方法只能处理有限的激活函数（例如 ReLU、leaky ReLU 和 softplus），以避免梯度消失或爆炸问题，并且在计算梯度时它们不容易跨层并行化和激活。 此外，基于梯度的方法需要很多参数调整，这并不容易[15]，而 LPOM 中惩罚参数 $\mu$ 的调整要简单得多。</p>
+<h1 id="四，求解LPOM"><a href="#四，求解LPOM" class="headerlink" title="四，求解LPOM"></a>四，求解LPOM</h1><p>块多凸性（定理 1）启发了 BCD 方法来解决 LPOM。 即，我们通过固定所有其他变量块来更新 $X^i$ 或 $W^i$。 我们在算法 1 中总结了整个求解过程，其中使用一小批训练样本执行优化。 我们可以证明算法 1.3 的收敛性 下面我们给出算法的细节，它是串行的。</p>
+<h3 id="算法一"><a href="#算法一" class="headerlink" title="算法一"></a>算法一</h3><p>Input: 训练数据，批次大小 $m_1$，迭代次数 $S$ 和 $K_1$<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for s=1 to S do</span><br><span class="line">  随机选择 </span><br></pre></td></tr></table></figure></p>
+<p>Output: $\{W^i\}^{n-1}_{i=1}$</p>
+<h2 id="4-1-更新-X-i-n-i-2"><a href="#4-1-更新-X-i-n-i-2" class="headerlink" title="4.1 更新 $\{X^i\}^n_{i=2}$"></a>4.1 更新 $\{X^i\}^n_{i=2}$</h2><p>我们首先描述 $\{X^i\}^n_{i=2} $ 的更新。 我们将 $\{X^i\}^n_{i=2} $ 从 $i=2$ 连续更新到 $n$，就像神经网络的前馈过程一样。 对于 $i=2,…n-1$，固定 $\{W^i\}^{n-1}_{i=1} $ 和其他 $\{X^j\}^n_{j=2,j\neq i} $，问题 (19) 简化为</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{24}
+&\min_{X^i}\mu_i\big(\pmb 1^\top f(X^i)\pmb 1+\frac{1}{2}\|X^i-W^{i-1}X^{i-1}\|^2_F \big)\\
+&+\mu_{i+1}\big(\pmb 1 ^\top g(W^iX^i)\pmb 1+\frac{1}{2}\|X^{i+1}-W^iX^i\|^2_F \big) \tag{24}
 \end{align*}</script><p>优化条件是：</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{25}
-\end{align*}</script><p>基于定点迭代[27]，为了避免使用 f 1，我们可以通过迭代更新 Xi</p>
+0\in&\mu_i(\phi^{-1}(X^i)-W^{i-1}X^{i-1})\\
+&+\mu_{i+1}((W^i)^\top(\phi(W^iX^i)-X^{i+1})) \tag{25}
+\end{align*}</script><p>基于定点迭代[27]，为了避免使用 $\phi^{-1}$，我们可以通过迭代更新 $X^i$</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{26}
-\end{align*}</script><p>直到收敛，其中上标t为迭代次数。 收敛分析如下：</p>
-<h3 id="定理2"><a href="#定理2" class="headerlink" title="定理2"></a>定理2</h3><p>假设 f 是可微的且 jf0ðxÞj k。 如果 r &lt; 1，则迭代收敛且收敛率</p>
-<p>请注意，上述定理中 r 的选择是相当保守的。 所以在我们的实验中，只要迭代收敛，我们就不服从选择。<br>当考虑 Xn 时，问题 (19) 简化为</p>
+X^{i,t+1}=\phi\bigg(W^{i-1}X^{i-1}-\frac{\mu_{i+1}}{\mu_i}(W^i)^\top(\phi(W^iX^{i,t})-X^{i+1})\bigg) \tag{26}
+\end{align*}</script><p>直到收敛，其中上标 $t$ 为迭代次数。 收敛分析如下：</p>
+<h3 id="定理2"><a href="#定理2" class="headerlink" title="定理2"></a>定理2</h3><p>假设 $\phi$ 是可微的且 $|\phi’(x)|\leq \kappa$。 如果 $\rho &lt; 1$，则迭代收敛且收敛率是线性的，其中，$\rho=\frac{\mu_{i+1}}{\mu_i}\kappa^2\sqrt{\bigg||(W^i)^\top||W^i| \bigg|_1\bigg||(W^i)^\top||W^i| \bigg|_{\infty}}$</p>
+<p>请注意，上述定理中 $\rho $ 的选择是相当保守的，所以在我们的实验中，只要迭代收敛，我们就不用服从选择。<br>当考虑 $X^n$ 时，问题 (19) 简化为</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{27}
-\end{align*}</script><p>假设‘ðXn;DÞ 是可微的 w.r.t. Xn。 那么最优条件是</p>
+\min_{X^n}\ell(X^n,D)+\mu_n\bigg(\pmb 1^\top f(X^n)\pmb 1+\frac{1}{2}\|X^n-W^{n-1}X^{n-1} \|^2_F \bigg) \tag{27}
+\end{align*}</script><p>假设 $\ell(X^n,D)$ 是可微的。 那么最优条件是:</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{28}
-\end{align*}</script><p>同样通过定点迭代，我们可以通过迭代更新 Xn</p>
+0\in\frac{\partial \ell(X^n,D)}{\partial X^n}+\mu_n(\phi^{-1}(X^n)-W^{n-1}X^{n-1}) \tag{28}
+\end{align*}</script><p>同样通过定点迭代，我们可以通过迭代更新 $X^n$ 的公式为：</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{29}
+X^{n,t+1}=\phi(W^{n-1}X^{n-1}-\frac{1}{\mu_n}\frac{\partial\ell(X^n,D)}{\partial X^n}) \tag{29}
 \end{align*}</script><p>直到收敛。 收敛分析如下：</p>
-<h3 id="定理3"><a href="#定理3" class="headerlink" title="定理3"></a>定理3</h3><p>假设。。。那么迭代是收敛的，收敛速度是线性的，其中。。。</p>
-<p>如果。。。是 MSE 损失函数</p>
-<p>值得注意的是，（19）中的 f 和 g 是积分。 它们的表达式非常复杂，可能无法解析（见表 3）。 所以最好在计算中使用他们的导数而不是他们自己。 然而，f 的导数包括 f 1 （见（25）和（28））。 我们认为在更新 fXigni1⁄42 时最好避免使用 f 1。 原因如下。 对于常用的激活函数 f，f 1 的定义域（或等价于 f 的范围）通常不是 ð 1； ＋1＋。 所以我们需要在计算中约束f 1 的输入。 这导致受约束的问题无法像不受约束的问题那样有效地解决。 使用 f 1 的另一大缺点是它可能不是单值的（见表 3）。 这会给计算和确保收敛带来很大困难。 此外，不同的f 1 可以具有不同的域。 由于必须为每个 f 调整 fX gi1⁄42 的更新，因此整个求解方法不能适用于一般的激活函数。 这就是为什么 [23] 和 [24] 中的求解方法需要针对每个激活函数进行调整的原因。 由于我们只使用 f 而没有使用 f 1，我们的方法没有这样的限制。 所以我们的求解方法比[23]和[24]中的方法更实用。</p>
-<h2 id="4-2-更新W"><a href="#4-2-更新W" class="headerlink" title="4.2 更新W"></a>4.2 更新W</h2><p>fWign 1 的更新是完全并行的。 当 fXign i1⁄41 i1⁄42<br>固定，问题（19）减少到</p>
+<h3 id="定理3"><a href="#定理3" class="headerlink" title="定理3"></a>定理3</h3><p>假设 $\phi(x)$ 是可微的，$|\phi’(x)|\leq \kappa$，而且 $\bigg||(\frac{\partial^2\ell(X,D)}{\partial X_{kl}\partial X_{pq}})| \bigg|_1\leq \eta$，如果有 $\tau&lt;1$，那么迭代是收敛的，收敛速度是线性的，其中 $\tau=\frac{\kappa\eta}{\mu_n}$.</p>
+<p>如果 $\ell(X^n,D)$ 是 MSE 损失函数，也就是 $\ell(X^n,D)=\frac{1}{2}|X^n-D |^2_F $，那么 $\bigg||(\frac{\partial^2\ell(X,D)}{\partial X_{kl}\partial X_{pq}})| \bigg|_1=1$，所以有 $\mu_n&gt;\kappa$.</p>
+<p>值得注意的是，（19）中的 $f$ 和 $g$ 是积分，它们的表达式非常复杂，可能无法解析（见表 3）。 所以最好在计算中使用他们的导数而不是他们自己。 然而，$f$ 的导数包括 $\phi^{-1}$ （见（25）和（28）），我们认为在更新 $\{X^i\}^n_{i=2}$ 时最好避免使用 $\phi^{-1}$。 原因如下，对于常用的激活函数 $\phi$，$\phi^{-1}$ 的定义域（或等价于 $\phi$ 的范围）通常不是 $(-\infty,+\infty)$。 所以我们需要在计算中约束 $\phi^{-1}$ 的输入，这导致受约束的问题无法像不受约束的问题那样有效地解决。 使用 $\phi^{-1}$ 的另一大缺点是它可能不是单值的（见表 3），这会给计算和确保收敛带来很大困难。 此外，不同的 $\phi^{-1}$ 可以具有不同的域，由于必须为每个 $\phi^{-1}$ 调整 $\{X^i\}^n_{i=2}$ 的更新，因此整个求解方法不能适用于一般的激活函数，这就是为什么 [23] 和 [24] 中的求解方法需要针对每个激活函数进行调整的原因。 由于我们只使用 $\phi$ 而没有使用 $\phi^{-1}$，我们的方法没有这样的限制。 所以我们的求解方法比[23]和[24]中的方法更实用。</p>
+<h2 id="4-2-更新-W-i-n-1-i-1"><a href="#4-2-更新-W-i-n-1-i-1" class="headerlink" title="4.2 更新$\{W^i\}^{n-1}_{i=1}$"></a>4.2 更新$\{W^i\}^{n-1}_{i=1}$</h2><p>$\{W^i\}^{n-1}_{i=1}$ 的更新是完全并行的。 当 $\{X^i\}^n_{i=2}$ 固定，问题（19）减少到：</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{30}
-\end{align*}</script><p>上述求解 Wi 的问题独立于 fW j gn 1 的其他问题。 所以可以并行解决。 我们将 (30) 重写为</p>
+\min_{W^i}\pmb 1^\top g(W^iX^i)\pmb 1+\frac{1}{2}\|W^iX^i-X^{i+1} \|^2_F,\;i=1,...n-1 \tag{30}
+\end{align*}</script><p>上述求解 $W^i$ 的问题独立于 $\{W^j\}^{n-1}_{j=1,j\neq i}$ 的其他问题，所以可以并行解决，我们将 (30) 重写为</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{31}
-\end{align*}</script><p>其中 g~ðxÞ 1⁄4 R x fðyÞdy，如前所述。 假设 0 fðxÞ 是 b-Lipschitz 连续的，这对于几乎所有使用的激活函数都是正确的。 则 g~ðxÞ 是 b-光滑的</p>
+\min_{W^i}\pmb 1^\top \tilde g(W^iX^i)\pmb 1+\langle X^{i+1},W^iX^i \rangle \tag{31}
+\end{align*}</script><p>其中 $\tilde g(x)=\int^x_0\phi(y)dy$，如前所述，假设 $\phi(x)$ 是 $\beta-Lipschitz$ 连续的，这对于几乎所有使用的激活函数都是正确的。 则 $\tilde g(x)$ 是 $\beta-$ 光滑的</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{32}
-\end{align*}</script><p>我们通过 APG [28] 通过局部线性化 g^ðWÞ 1⁄4 g~ðWXÞ 来解决问题 (31)。 然而，由于 g^ðWÞ 梯度的 Lipschitz 常数 bkXk2 可能非常大，收敛速度可能很慢。 因此，我们开发了一种 APG 变体，专为更有效地解决 (31) 问题而设计。</p>
+|\tilde g'(x)-\tilde g'(y)|=|\phi(x)-\phi(y)|\leq\beta|x-y| \tag{32}
+\end{align*}</script><p>我们借用 APG [28] 中通过局部线性化 $\hat g(W)=\tilde{g}(WX) $ 来解决问题 (31)。 然而，由于 $\hat g(W)$ 梯度的 $Lipschitz$ 常数 $\beta|x|^2_2$ 可能非常大，收敛速度可能很慢。 因此，我们开发了一种 APG 变体，专为更有效地解决 (31) 问题而设计。</p>
 <p>从优化的角度来看，问题（31）可以更一般地表示为</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{33}
-\end{align*}</script><script type="math/tex; mode=display">
-\begin{align*}
-\tag{34}
-\end{align*}</script><p>对于任何给定的 yk 很容易求解。 我们提出算法 2 来解决 (33)，这是从其收敛定理的证明推导出来的</p>
-<h3 id="定理4"><a href="#定理4" class="headerlink" title="定理4"></a>定理4</h3><p>如果我们用算法2来解决问题（33），那么收敛速度至少为Oðk 2Þ</p>
+\min_xG(x)\equiv\varphi(Ax)+\psi(x) \tag{33}
+\end{align*}</script><p>其中，$\varphi(y)$ 和 $\psi(x)$ 都是凸的，$\varphi(y)$ 是 $L_{\varphi}-$ 光滑的，也就是有：$|\nabla \varphi(x)-\nabla\varphi(y)|\leq L_{\varphi}|x-y|,\;\forall x,y$。假设有如下的最小化问题：</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{x}
-\end{align*}</script><p>当我们考虑解决问题（31）时，子问题（34）的实例化为</p>
+x_{k+1}=\mathop{argmin}_x\langle \nabla\varphi(Ay_k),A(x-y_k)\rangle+\frac{L_{\varphi}}{2}\|\|^2+\Psi(x) \tag{34}
+\end{align*}</script><p>对于任何给定的 $y_k$ 很容易求解，我们提出算法 2 来解决 (33)，这是从其收敛定理的证明推导出来的。</p>
+<h3 id="定理4"><a href="#定理4" class="headerlink" title="定理4"></a>定理4</h3><p>如果我们用算法2来解决问题（33），那么收敛速度至少为 $O(k^{-2})$</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{35}
+G(x_k)-G(x^\ast)+\frac{L_{\varphi}}{2}\|z_k\|^2\leq\frac{4}{k^2}\bigg(G(x_1)-G(x^\ast)+\frac{L_{\varphi}}{2}\|z_1\|^2 \bigg) 
+\end{align*}</script><p>其中，$z_k=A[\theta_{k-1}x_{k-1}-x_k+(1-\theta_{k-1})x^\ast]$，$x^\ast$ 是问题（33）的最优解。</p>
+<p>当我们考虑解决问题（31）时，子问题（34）的实例化为：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+W^{i,t+1}=&\mathop{argmin}_W\langle\phi(Y^{i,t}X^i),(W-Y^{i,t})X^i\rangle\\
+&+\frac{\beta}{2}\|(W-Y^{i,t})X^i\|^2_F-\langle X^{i+1},WX^i\rangle \tag{35}
 \end{align*}</script><p>这是一个最小二乘问题，它的解是</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{36}
-\end{align*}</script><p>其中 Y i;t 在算法 2 中扮演 y 的角色。</p>
-<h1 id="五，LPOM的并行"><a href="#五，LPOM的并行" class="headerlink" title="五，LPOM的并行"></a>五，LPOM的并行</h1><p>上一节介绍的求解方法是串行的。 在本节中，我们研究了 LPOM 的并行解决方案。</p>
-<h2 id="5-1-异步并行-LPOM"><a href="#5-1-异步并行-LPOM" class="headerlink" title="5.1 异步并行 LPOM"></a>5.1 异步并行 LPOM</h2><p>如第 4 节所述，求解 LPOM 的原始方法是 BCD。 因此很自然地使用异步-并行 BCD（async-BCD）[29]、[30] 来并行求解 LPOM。 然而，现有的 async-BCD 主要使用梯度下降来仅更新每个块一次，而在 LPOM 中，梯度 w.r.t. Xi 涉及激活函数的逆函数，这就是 LPOM 使用定点迭代代替的原因（参见（26）和（29））。 所以现有的async-BCD实际上并不适用。 在下文中，我们提出了一种新的异步 BCD 方法。</p>
+W^{i,t+1}=Y^{i,t}-\frac{1}{\beta}(\phi(Y^{i,t}X^i)-X^{i+1})(X^i) \tag{36}
+\end{align*}</script><p>其中 $Y^{i,t}$ 在算法 2 中扮演 $y_k$ 的角色。</p>
+<h1 id="五，LPOM的并行"><a href="#五，LPOM的并行" class="headerlink" title="五，LPOM的并行"></a>五，LPOM的并行</h1><p>上一节介绍的求解方法是串行的，在本节中，我们研究了 LPOM 的并行解决方案。</p>
+<h2 id="5-1-异步并行-LPOM"><a href="#5-1-异步并行-LPOM" class="headerlink" title="5.1 异步并行 LPOM"></a>5.1 异步并行 LPOM</h2><p>如第 4 节所述，求解 LPOM 的原始方法是 BCD。 因此很自然地使用异步-并行 BCD（async-BCD）[29]、[30] 来并行求解 LPOM。 然而，现有的 async-BCD 主要使用梯度下降来仅一次更新每个块，而在 LPOM 中，梯度 （ $X^i$） 涉及激活函数的逆函数，这就是 LPOM 使用定点迭代来代替的原因（参见（26）和（29））。 所以现有的async-BCD实际上并不适用，在下文中，我们提出了一种新的异步 BCD 方法。</p>
 <p>假设优化问题是</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{37}
-\end{align*}</script><p>我们的 async-BCD 执行如下：如果 zi 被选为更新，更新为</p>
+\min_{\{z_i\}}F(z_1,...,z_n) \tag{37}
+\end{align*}</script><p>我们的 async-BCD 执行如下：如果 $z_i$ 被选为更新，更新为</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{38}
-\end{align*}</script><p>其中 zj’s, j 61⁄4 i，取 zi 可用的最新值。 请注意，由于通信延迟等原因，z 的此类值可能比正在计算的 zj 的实际 j 个最新值更旧。 近端项 g2 kzi zki k2 是保证我们的异步 BCD 收敛所必需的。<br>为了分析我们的异步 BCD 的收敛性，我们做出以下假设。</p>
-<h3 id="假设1"><a href="#假设1" class="headerlink" title="假设1"></a>假设1</h3><p>F ðzÞ F ðz1 ; . . . ; zn Þ 具有坐标 Lipschitz 连续梯度，即对于所有 i 2 f1； . . . ; ng，我们有</p>
+z_i^{k+1}=&\mathop{argmin}_{z_i}F(z_1,...z_{i-1},z_i,z_{i+1},...,z_n)\\
+&+\frac{\gamma}{2}\|z_i-z_i^k\|^2 \tag{38}
+\end{align*}</script><p>其中 $z_j,j\neq i$，取 $z_i$ 可用的最新值。 请注意，由于通信延迟等原因，$z_j$ 的此类值可能比正在计算的 $z_j$ 的实际 $j$ 个最新值更旧。 近端项 $\frac{\gamma}{2}|z_i-z_i^k|^2$ 是保证我们的异步 BCD 收敛所必需的。</p>
+<p>为了分析我们的异步 BCD 的收敛性，我们做出以下假设。</p>
+<h3 id="假设1"><a href="#假设1" class="headerlink" title="假设1"></a>假设1</h3><p>$F(z)\equiv F(z_1,…z_n) $ 具有坐标 $Lipschitz$ 连续梯度，即对于所有 $i\in\{1,…n\}$，我们有</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{x}
-\end{align*}</script><h3 id="假设2"><a href="#假设2" class="headerlink" title="假设2"></a>假设2</h3><p>信息的陈旧性是有界的，即</p>
+\|\nabla_iF(z)-\nabla_iF(\overline z) \|\leq L_i\|z-\overline z\|
+\end{align*}</script><h3 id="假设2"><a href="#假设2" class="headerlink" title="假设2"></a>假设2</h3><p>信息的陈旧性（有效性？）是有界的，即</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{x}
-\end{align*}</script><p>其中 tijðkÞ 是可用于在时间 k.4 更新 zi 的 zj 时间</p>
-<p>我们注意到这两个假设都是分析异步算法的标准 [29]、[30]。 现在我们要求我们的异步 BCD 的收敛保证。</p>
-<h3 id="定理5"><a href="#定理5" class="headerlink" title="定理5"></a>定理5</h3><p>假设 FðzÞ 是分块多凸的。 在假设 1 和 2 下，通过在</p>
-<p>由于 g&gt;0，根据上述定理，我们有 g&gt;L DðDþ1Þ。 因此 g 的选择取决于 D 和 L 的估计。我们的异步 BCD 可用于求解 LPOM，从而得到异步 LPOM。 对于 async-LPOM，我们可以将 D 设置为 CPU 核心数。 假设 fðxÞ 是 b-Lipschitz 连续的（在（32）中定义），我们可以将 L 设置为<br>L 1⁄4 b maxfkW2k2;…;kWn 1k2;kX1k2;…;kXn 1k2g。 g 的理论估计值非常大。 在实践中，我们通过逐渐增加其值来选择 g，直到 async-LPOM 收敛。 然而，async-LPOM 并没有完全利用问题 (19) 的属性，即每个 Xi 仅与 X i 1 i i n 1 相关，并且 X 和 fW gi1⁄41 可以完全并行更新。 所以 async-LPOM 并没有我们预期的那么快。 这促使我们考虑开发同步并行 LPOM (sync-LPOM)，它可以更好地利用 LPOM 的特性。</p>
-<h2 id="5-2-同步并行-LPOM"><a href="#5-2-同步并行-LPOM" class="headerlink" title="5.2 同步并行 LPOM"></a>5.2 同步并行 LPOM</h2><p>我们首先分析算法 1 中的串行 LPOM。当 fXigni1⁄42 固定时，每个 Wi 的更新独立于其他 Wj，j 1⁄46 i（见（30））。 因此算法 1 中的步骤 c 可以完全并行化完成。 我们生成 n 1 个线程，每个线程独立地求解每个 W i 。 在 fWign 1 固定的情况下，Xi (i2f2;…;n 1g) 的更新与 i1⁄41 与 Xi 1 和 Xiþ1 有关（参见 (26)），而 Xn 的更新与 Xn 1 有关 （见（29））。 所以我们只需要同步并行化步骤 a 和 b 。</p>
-<p>我们将 Xi 的更新并行化如下。 我们创建了 n 1 个线程。 每个线程迭代 Eq。 （26）或方程式。 (29) 更新 X 。 该步骤由每个线程独立且同时执行。 当所有线程完成该步骤时，我们重复该过程多次，直到达到最大时间。 然而，我们注意到更新相邻 Xi 时的耦合（参见 (26) 和 (29)）。 解耦块有助于并行算法的收敛。 最大化并行度也是并行算法所追求的。 那么更新Xi的奇偶交替方案是唯一可以同时具有最大并行度和最小耦合度的选择。 即，我们首先同步更新奇数子序列 fX3；X5；…g。 然后使用更新的 fX3； X5； . . .g，我们同步更新偶数子序列 fX2；X4；…g。 此外，受 SGD 中使用的动量的启发，我们考虑了每个 Xi 的先前值，5 导致更新后的 Xi 序列的移动平均值。 sync-LPOM 的整个算法在算法 3 中进行了总结。请注意，sync-LPOM 是 async-LPOM 的特例，其中允许更新块的顺序是非随机的。 所以定理 5 的结论也适用于 sync-LPOM。</p>
+k-\tau^i_j(k)\leq \Delta,\; k=0,1...
+\end{align*}</script><p>其中 $\tau^i_j(k)$ 是可用于在时间 $k$ 更新 $z_i$ 的 $z_j$ 时间</p>
+<p>我们注意到这两个假设都是分析异步算法的标准 [29]、[30]，现在我们要求我们的异步 BCD 的收敛保证。</p>
+<h3 id="定理5"><a href="#定理5" class="headerlink" title="定理5"></a>定理5</h3><p>假设 $F(z)$ 是分块多凸的。 在假设 1 和 2 下，通过设置（38）中的逼近参数 $\gamma$ 使 $\frac{\gamma}{2}+\frac{L^2}{2\gamma}(\Delta+1)-\frac{L^2}{2\gamma}(\Delta+1)^2&gt;0 $，其中 $L=max\{L_i\}$，那么有 $|\Delta_i F(z^k)|\to 0,\forall i \in \{1,…n\}$</p>
+<p>由于 $\gamma&gt;0$，根据上述定理，我们有 $\gamma&gt;L\sqrt{\Delta(\Delta+1)}$。 因此 $\gamma$ 的选择取决于 $\Delta$ 和 $L$ 的估计。我们的异步 BCD 可用于求解 LPOM，从而得到异步 LPOM，对于 async-LPOM，我们可以将 $\Delta$ 设置为 CPU 核心数。 假设 $\phi(x)$ 是 $\beta-Lipschitz$ 连续的（在（32）中定义），我们可以将 $L$ 设置为 $L=\beta max\{|W^2|^2_2,…|W^{n-1}|^2_2,|X^1|^2_2,…|X^{n-1}|^2_2 \} $。 $\gamma$ 的理论估计值非常大，在实践中，我们通过逐渐增加其值来选择 $\gamma$，直到 async-LPOM 收敛。 然而，async-LPOM 并没有完全利用问题 (19) 的属性，即每个 $X^i$ 仅与 $X^{i-1}$ 相关，并且 $X^i$ 和 $\{W^i\}^{n-1}_{i=1}$ 可以完全并行更新。 所以 async-LPOM 并没有我们预期的那么快。 这促使我们考虑开发同步并行 LPOM (sync-LPOM)，它可以更好地利用 LPOM 的特性。</p>
+<h2 id="5-2-同步并行-LPOM"><a href="#5-2-同步并行-LPOM" class="headerlink" title="5.2 同步并行 LPOM"></a>5.2 同步并行 LPOM</h2><p>我们首先分析算法 1 中的串行 LPOM。当 $\{X^i\}_{i=2}^n$ 固定时，每个 $W^i$ 的更新独立于其他 $W^j，j \neq i$（见（30））。 因此算法 1 中的步骤 c 可以完全并行化完成。 我们生成 $n-1$ 个线程，每个线程独立地求解每个 $W^ i$ 。 在 $\{W^i\}^{n-1}_{i=1} $ 固定的情况下，$X^i (i\in\{2,…n-1\})$ 的更新与 $X^{i-1}$ 和 $X^{i+1}$ 有关（参见 (26)），而 $X^n$ 的更新与 $X^{n-1}$ 有关 （见（29））。 所以我们只需要同步并行化步骤 a 和 b 。</p>
+<p>我们将 $X^i$ 的更新并行化如下，我们创建了 $n-1$ 个线程。 每个线程迭代方程（26）或方程(29) 来更新 $X^i$， 该步骤由每个线程独立且同时执行。 当所有线程完成该步骤时，我们重复该过程多次，直到达到最大时间。 然而，我们注意到更新相邻 $X^i$ 时的耦合（参见 (26) 和 (29)， 解耦块有助于并行算法的收敛，最大化并行度也是并行算法所追求的。 那么更新 $X^i$ 的奇偶交替方案是唯一可以同时具有最大并行度和最小耦合度的选择。 即，我们首先同步更新奇数子序列 $\{X^3,X^5,…\}$，然后使用更新的 $\{X^3,X^5,…\}$，我们同步更新偶数子序列 $\{X^2,X^4,…\}$。 此外，受 SGD 中使用的动量的启发，我们考虑了每个 $X^i$ 的先前值，导致更新后的 $X^i$ 序列的移动平均值，sync-LPOM 的整个算法在算法 3 中进行了总结。请注意，sync-LPOM 是 async-LPOM 的特例，其中允许更新块的顺序是非随机的。 所以定理 5 的结论也适用于 sync-LPOM。</p>
 <h1 id="六，实验"><a href="#六，实验" class="headerlink" title="六，实验"></a>六，实验</h1><p>在本节中，我们对所提出的 LPOM 和 sync-LPOM 进行了广泛的实验评估。 我们首先评估 LPOM 在图像分类任务上的性能。 我们还进行消融研究来分析 LPOM。 然后，我们研究了 sync-LPOM 在自动编码器训练任务上的计算效率和性能。<br>我们在自动编码器训练任务上测试 sync-LPOM 的原因如下。 首先，目前 LPOM 和 sync-LPOM 仅适用于全连接前馈神经网络。 其次，我们的主要目标是评估 sync-LPOM 的加速。 但是，如果存在具有主导计算的层，则无法加速 sync-LPOM。 比如784-10-10-10网络，X2的更新比X3和X4慢16倍。 串行 LPOM 和同步 LPOM 都将以更新 X2 为主。 因此同步 LPOM 不会比串行 LPOM 有加速。 因此，sync-LPOM 有利于等宽网络，这在分类网络中并不常见。 这促使我们选择自动编码器。 第三，深度自动编码器具有挑战性，因为它们必须在一层非常低维的约束下重建输入。 困难主要来自网络架构而不是使用的数据集。 在基准数据集上训练自动编码器被认为是评估前馈神经网络优化方法的标准问题 [18]，[32]。 出于上述原因，我们使用各种自动编码器架构和数据集测试 sync-LPOM。</p>
 <h2 id="6-1-LPOM结果"><a href="#6-1-LPOM结果" class="headerlink" title="6.1 LPOM结果"></a>6.1 LPOM结果</h2><p>我们通过与三种具有代表性的基于梯度的方法（SGD、Adam [10] 和 AMSGrad [11]）和三种基于非梯度的方法 [17]、[23]、[24] 进行比较来测试 LPOM。 其他基于非梯度的方法不训练用于分类任务的完全连接的前馈神经网络（例如，使用跳跃连接 [22]、训练自动编码器 [18] 和哈希学习 [21]）。 所以我们不跟他们比较。 为简单起见，我们使用 MSE 损失函数。 由于几种方法[23]，<br>[24]只给出了ReLU的求解方法，我们也使用了ReLU激活函数。 与 [23] 和 [24] 不同，我们不对权重 fW i gn 1 使用任何正则化，因为它 i1⁄41 通常无助于减少训练损失。 我们使用相同的输入和随机初始化运行 LPOM 和三种基于梯度的方法 [33]。 我们使用 MATLAB 实现 LPOM、SGD、Adam 和 AMSGrad。 对于 LPOM，我们在 (19) 中为所有网络设置 mi 1⁄4 2。 对于 SGD，学习率设置为最大可行值，并在总 epoch 的一半和四分之三处乘以 0.1。 对于 Adam 和 AMSGrad，我们仔细调整参数以达到最佳性能。 对于 [23] 和 [24]，我们使用作者提供的具有默认参数设置的源代码。 对于 [17]，我们阅读了论文图 1b 中的结果。</p>
 <h3 id="6-1-1-与基于梯度的方法比较"><a href="#6-1-1-与基于梯度的方法比较" class="headerlink" title="6.1.1 与基于梯度的方法比较"></a>6.1.1 与基于梯度的方法比较</h3><p>我们在 MNIST [34]、CIFAR-10 [35] 和 ImageNet [36] 数据集上进行实验。 MNIST 数据集有 60,000 个训练图像和 10,000 个测试图像，这些图像与来自 10 个类别的标签相关联。 我们使用 28 28 1⁄4 784 个原始像素作为输入，不使用任何预处理或数据增强。 对于所有比较的方法，在每个时期，整个训练样本都经过一次。 网络架构可能会影响性能。 由于过度参数化在训练 [37]、[38] 时极大地促进了基于梯度的方法，因此我们与过度参数化网络进行了比较。 在 [19] 之后，我们使用 784-2048-2048-2048-10 前馈网络。 我们以固定的批量大小 100 运行 100 个 epoch 的所有方法。训练和测试精度如图 1 和 2 所示。 1a 和 1b。 我们可以看到所有方法的最终训练准确率都大约等于 100%。 然而，LPOM 的测试精度与 Adam、AMSGrad 和 SGD 的测试精度相当或略好。 最终的测试准确率是：Adam 98.1%，AMSGrad 98.5%，SGD 98.5%，LPOM 98.6%。</p>
@@ -315,7 +328,8 @@ F(W,X) &= \ell(X^n,D)+\sum^n_{i=2}\mu_i\big(\pmb 1^\top \tilde{f}(X^i)\pmb 1\\
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Transformer模型的发展综述～</p>
 <p>论文百度云链接: <a href="https://pan.baidu.com/s/1fwGSq4SysfLSOzSPKRQzjg">https://pan.baidu.com/s/1fwGSq4SysfLSOzSPKRQzjg</a><br>提取码: r2ii<br>—来自百度网盘超级会员v6的分享</p>
 <p><strong>继续加油读文章</strong><br><span id="more"></span></p>
-<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1>]]></content>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>Transformers 在自然语言处理、计算机视觉、音频处理等许多人工智能领域取得了巨大的成功。 因此，自然会引起学术界和工业界研究人员的极大兴趣。 到目前为止，已经提出了各种各样的 Transformer 变体（又名 X-formers），但是，仍然缺乏对这些 Transformer 变体的系统和全面的文献综述。 在本次调查中，我们对各种 X-formers 进行了全面审查。 我们首先简要介绍 vanilla Transformer，然后提出一个新的 X-formers 分类法。 接下来，我们从架构修改、预训练、应用三个角度介绍各种X-former。 最后，我们概述了未来研究的一些潜在方向。</p>
+<h1 id=""><a href="#" class="headerlink" title=" "></a> </h1>]]></content>
       <categories>
         <category>Transformer</category>
       </categories>
@@ -464,6 +478,18 @@ F(W,X) &= \ell(X^n,D)+\sum^n_{i=2}\mu_i\big(\pmb 1^\top \tilde{f}(X^i)\pmb 1\\
 <td>-</td>
 <td>$\ell$</td>
 <td><code>$\ell$</code></td>
+</tr>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>$\tau$</td>
+<td><code>$\tau$</code></td>
+</tr>
+<tr>
+<td>$\Phi$</td>
+<td><code>$\Phi$</code></td>
+<td>$\varphi$</td>
+<td><code>$\varphi$</code></td>
 </tr>
 </tbody>
 </table>
@@ -775,28 +801,6 @@ a_{i,j} = \frac{1}{2-y_i^\top y_j}(\sum^n_{k=1}\frac{1}{2-y_i^\top y_k})^{-1}
       </tags>
   </entry>
   <entry>
-    <title>A Mathematical Framework for Transformer Circuits</title>
-    <url>/2023/04/27/Transformer/A%20Mathematical%20Framework%20for%20Transformer%20Circuits/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><a href="https://transformer-circuits.pub/2021/framework/index.html">link</a></p>
-<p><strong>transformerd的数学框架？</strong><br><span id="more"></span></p>
-<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Transformer语言模型在新兴产业中的使用越来越广泛，比如GPT-3，LaMDA，Codex，Meena，Gopher和其他类似模型。<br>然而，随着这些模型的扩展，它们的开放性和高容量为意想不到的甚至有害的行为创造了越来越大的范围。 即使在大型模型经过训练多年后，创建者和用户仍会定期发现他们以前没有意识到的模型功能（包括有问题的行为）。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">【GPT-3】</span><br><span class="line">Language models are few-shot learners  [PDF]</span><br><span class="line">T.B. Brown, B. Mann, N. Ryder, M. Subbiah, J. Kaplan, P. Dhariwal, A. Neelakantan, P. Shyam, G. Sastry, A. Askell, others.</span><br><span class="line">arXiv preprint arXiv:2005.14165. 2020.</span><br><span class="line">【LaMDA】</span><br><span class="line">LaMDA: our breakthrough conversation technology  [link]</span><br><span class="line">E. Collins, Z. Ghahramani. 2021.</span><br><span class="line">【Codex】</span><br><span class="line">Evaluating large language models trained on code</span><br><span class="line">M. Chen, J. Tworek, H. Jun, Q. Yuan, H.P.d.O. Pinto, J. Kaplan, H. Edwards, Y. Burda, N. Joseph, G. Brockman, others.</span><br><span class="line">arXiv preprint arXiv:2107.03374. 2021.</span><br><span class="line">【Meena】</span><br><span class="line">Towards a human-like open-domain chatbot</span><br><span class="line">D. Adiwardana, M. Luong, D.R. So, J. Hall, N. Fiedel, R. Thoppilan, Z. Yang, A. Kulshreshtha, G. Nemade, Y. Lu, others.</span><br><span class="line">arXiv preprint arXiv:2001.09977. 2020.</span><br><span class="line">【Gopher】</span><br><span class="line">Scaling Language Models: Methods, Analysis &amp; Insights from Training Gopher  [PDF]</span><br><span class="line">J.W. Rae, S. Borgeaud, T. Cai, K. Millican, J. Hoffmann, F. Song, J. Aslanides, S. Henderson, R. Ring, S. Young, E. Rutherford, T. Hennigan, J. Menick, A. Cassirer, R. Powell, G.v.d. Driessche, L.A. Hendricks, M. Rauh, P. Huang, A. Glaese, J. Welbl, S. Dathathri, S. Huang, J. Uesato, J. Mellor, I. Higgins, A. Creswell, N. McAleese, A. Wu, E. Elsen, S. Jayakumar, E. Buchatskaya, D. Budden, E. Sutherland, K. Simonyan, M. Paganini, L. Sifre, L. Martens, X.L. Li, A. Kuncoro, A. Nematzadeh, E. Gribovskaya, D. Donato, A. Lazaridou, A. Mensch, J. Lespiau, M. Tsimpoukelli, N. Grigorev, D. Fritz, T. Sottiaux, M. Pajarskas, T. Pohlen, Z. Gong, D. Toyama, C.d.M. d’Autume, Y. Li, T. Terzi, V. Mikulik, I. Babuschkin, A. Clark, D.d.L. Casas, A. Guy, C. Jones, J. Bradbury, M. Johnson, B. Hechtman, L. Weidinger, I. Gabriel, W. Isaac, E. Lockhart, S. Osindero, L. Rimell, C. Dyer, O. Vinyals, K. Ayoub, J. Stanway, L. Bennett, D. Hassabis, K. Kavukcuoglu, G. Irving.</span><br><span class="line">Preprint. 2021.</span><br></pre></td></tr></table></figure>
-<p>解决这些问题的一种途径是寻求可解释性，试图对Transformer模型的详细计算进行逆向工程，类似于程序员将复杂的二进制文件反编译为人类可读的源代码。 如果这是可能的，它可能会提供一种更系统的方法来解释当前的安全问题、识别新的问题，甚至可能预测尚未构建的强大的未来模型的安全问题。 之前的一个项目，Distill Circuits, 曾尝试对视觉模型进行逆向工程，但到目前为止还没有类似的Tranformer或语言模型项目。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Thread: Circuits</span><br><span class="line">N. Cammarata, S. Carter, G. Goh, C. Olah, M. Petrov, L. Schubert, C. Voss, B. Egan, S.K. Lim.</span><br><span class="line">Distill. 2020.</span><br><span class="line">DOI: 10.23915/distill.00024</span><br></pre></td></tr></table></figure>
-<p>在本文中，我们尝试采取原始、初级的步骤来对Transformer模型进行逆向工程，因为现代语言模型令人难以置信的复杂性和规模，我们发现从最简单的模型开始并从那里开始工作是最有成效的。 我们的目标是发现简单的算法模式、主题或框架，这些模式、主题或框架随后可以应用于更大、更复杂的模型。 具体来说，在本文中，我们将研究只有两层或更少层且只有注意力块的Transformer——这与像 GPT-3 这样的大型现代Transformer形成对比，GPT-3有 96 层，且注意力块与 MLP 块交替出现。</p>
-<p>我们发现，通过以一种新的但在数学上等效的方式将Transformer的操作概念化，我们能够理解这些小模型，并对它们的内部运作方式获得重要的理解。 特别值得注意的是，我们发现我们称之为“感应头”的特定注意力头可以解释这些小模型中的上下文学习，并且这些头只在至少具有两个注意力层的模型中出现。 我们还介绍了对特定数据进行操作的一些示例。</p>
-<p>在第一篇论文中，我们并未尝试将我们的见解应用于更大的模型，但在即将发表的一篇论文中，我们将证明我们理解Transformer的数学框架和感应头的概念仍然至少部分相关，对于更大、更真实的模型——尽管我们距离能够完全逆向工程这些模型还有很长的路要走。</p>
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><h3 id="REVERSE-ENGINEERING-RESULTS"><a href="#REVERSE-ENGINEERING-RESULTS" class="headerlink" title="REVERSE ENGINEERING RESULTS"></a>REVERSE ENGINEERING RESULTS</h3><p>为了挑战Tranformer的逆向工程，我们先在其他算法和仅有注意力的模型上进行了尝试，有以下结论：</p>
-<h3 id="CONCEPTUAL-TAKE-AWAYS"><a href="#CONCEPTUAL-TAKE-AWAYS" class="headerlink" title="CONCEPTUAL TAKE-AWAYS"></a>CONCEPTUAL TAKE-AWAYS</h3><h2 id="Transformer回顾"><a href="#Transformer回顾" class="headerlink" title="Transformer回顾"></a>Transformer回顾</h2>]]></content>
-      <categories>
-        <category>Transformer</category>
-      </categories>
-      <tags>
-        <tag>transformer</tag>
-        <tag>math</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Choose a Transformer-Fourier or Galerkin</title>
     <url>/2023/04/27/Transformer/Choose%20a%20Transformer-Fourier%20or%20Galerkin/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><a href="https://arxiv.org/pdf/2105.14995.pdf">paper link</a></p>
@@ -825,6 +829,28 @@ a_{i,j} = \frac{1}{2-y_i^\top y_j}(\sum^n_{k=1}\frac{1}{2-y_i^\top y_k})^{-1}
 <h3 id="attention机制和变体"><a href="#attention机制和变体" class="headerlink" title="attention机制和变体"></a>attention机制和变体</h3><p>除了 [88] 中开创性的缩放点积注意力之外，早期的 [7] 提出了一种基于附加内容的注意力，然而，由于多重非线性组合，梯度消失问题。 [25] 展示了在投影后移除 [7] 中的 softmax 归一化的第一个努力，然而，它在加性插值传播阶段之前仍然使用 Sigmoid 非线性，并且表现比它的 softmax 对应物差。 当前流行的将注意力线性化的方法利用特征映射的存在假设来近似 softmax 内核 [50、19、70]。 另一种类型的线性化利用矩阵乘积的低阶特性，使用各种方法，例如采样或投影 [73、11、79、92] 或快速多极分解 [65]。 [75] 中的猜想启发我们移除 softmax 整体。 [76] 首先提出了在没有 softmax 的情况下针对线性复杂度注意力的逆序列长度缩放归一化，但是，缩放归一化尚未在示例中得到广泛研究并且表现更差。</p>
 <h3 id="Transformer的变量学习"><a href="#Transformer的变量学习" class="headerlink" title="Transformer的变量学习"></a>Transformer的变量学习</h3><p>[84] 中的内核解释启发我们使用 Galerkin 投影重新表述注意力。 [95，定理 2] 给出了去除 softmax 归一化以制定傅里叶型注意力的理论基础。 Nyström 近似 [97] 本质上承认注意力矩阵和积分核之间的相似性。 [96, 66, 59] 启发我们尝试不同的层归一化和重新缩放的对角占优初始化方案。 在我们的工作中反复使用位置编码来丰富潜在表示的做法可以追溯到 [2, 26]，最近，有助于 AlphaFold 2 [48] 的成功，因为如果 目标在坐标系和/或变换组中具有依赖性 ansatz，但难以明确量化。 其他关于调整注意机制以保存重要物理特性的研究在 [82, 31, 44] 中。</p>
 <h2 id="三，PDE的算子学习"><a href="#三，PDE的算子学习" class="headerlink" title="三，PDE的算子学习"></a>三，PDE的算子学习</h2>]]></content>
+      <categories>
+        <category>Transformer</category>
+      </categories>
+      <tags>
+        <tag>transformer</tag>
+        <tag>math</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>A Mathematical Framework for Transformer Circuits</title>
+    <url>/2023/04/27/Transformer/A%20Mathematical%20Framework%20for%20Transformer%20Circuits/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><a href="https://transformer-circuits.pub/2021/framework/index.html">link</a></p>
+<p><strong>transformerd的数学框架？</strong><br><span id="more"></span></p>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Transformer语言模型在新兴产业中的使用越来越广泛，比如GPT-3，LaMDA，Codex，Meena，Gopher和其他类似模型。<br>然而，随着这些模型的扩展，它们的开放性和高容量为意想不到的甚至有害的行为创造了越来越大的范围。 即使在大型模型经过训练多年后，创建者和用户仍会定期发现他们以前没有意识到的模型功能（包括有问题的行为）。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">【GPT-3】</span><br><span class="line">Language models are few-shot learners  [PDF]</span><br><span class="line">T.B. Brown, B. Mann, N. Ryder, M. Subbiah, J. Kaplan, P. Dhariwal, A. Neelakantan, P. Shyam, G. Sastry, A. Askell, others.</span><br><span class="line">arXiv preprint arXiv:2005.14165. 2020.</span><br><span class="line">【LaMDA】</span><br><span class="line">LaMDA: our breakthrough conversation technology  [link]</span><br><span class="line">E. Collins, Z. Ghahramani. 2021.</span><br><span class="line">【Codex】</span><br><span class="line">Evaluating large language models trained on code</span><br><span class="line">M. Chen, J. Tworek, H. Jun, Q. Yuan, H.P.d.O. Pinto, J. Kaplan, H. Edwards, Y. Burda, N. Joseph, G. Brockman, others.</span><br><span class="line">arXiv preprint arXiv:2107.03374. 2021.</span><br><span class="line">【Meena】</span><br><span class="line">Towards a human-like open-domain chatbot</span><br><span class="line">D. Adiwardana, M. Luong, D.R. So, J. Hall, N. Fiedel, R. Thoppilan, Z. Yang, A. Kulshreshtha, G. Nemade, Y. Lu, others.</span><br><span class="line">arXiv preprint arXiv:2001.09977. 2020.</span><br><span class="line">【Gopher】</span><br><span class="line">Scaling Language Models: Methods, Analysis &amp; Insights from Training Gopher  [PDF]</span><br><span class="line">J.W. Rae, S. Borgeaud, T. Cai, K. Millican, J. Hoffmann, F. Song, J. Aslanides, S. Henderson, R. Ring, S. Young, E. Rutherford, T. Hennigan, J. Menick, A. Cassirer, R. Powell, G.v.d. Driessche, L.A. Hendricks, M. Rauh, P. Huang, A. Glaese, J. Welbl, S. Dathathri, S. Huang, J. Uesato, J. Mellor, I. Higgins, A. Creswell, N. McAleese, A. Wu, E. Elsen, S. Jayakumar, E. Buchatskaya, D. Budden, E. Sutherland, K. Simonyan, M. Paganini, L. Sifre, L. Martens, X.L. Li, A. Kuncoro, A. Nematzadeh, E. Gribovskaya, D. Donato, A. Lazaridou, A. Mensch, J. Lespiau, M. Tsimpoukelli, N. Grigorev, D. Fritz, T. Sottiaux, M. Pajarskas, T. Pohlen, Z. Gong, D. Toyama, C.d.M. d’Autume, Y. Li, T. Terzi, V. Mikulik, I. Babuschkin, A. Clark, D.d.L. Casas, A. Guy, C. Jones, J. Bradbury, M. Johnson, B. Hechtman, L. Weidinger, I. Gabriel, W. Isaac, E. Lockhart, S. Osindero, L. Rimell, C. Dyer, O. Vinyals, K. Ayoub, J. Stanway, L. Bennett, D. Hassabis, K. Kavukcuoglu, G. Irving.</span><br><span class="line">Preprint. 2021.</span><br></pre></td></tr></table></figure>
+<p>解决这些问题的一种途径是寻求可解释性，试图对Transformer模型的详细计算进行逆向工程，类似于程序员将复杂的二进制文件反编译为人类可读的源代码。 如果这是可能的，它可能会提供一种更系统的方法来解释当前的安全问题、识别新的问题，甚至可能预测尚未构建的强大的未来模型的安全问题。 之前的一个项目，Distill Circuits, 曾尝试对视觉模型进行逆向工程，但到目前为止还没有类似的Tranformer或语言模型项目。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Thread: Circuits</span><br><span class="line">N. Cammarata, S. Carter, G. Goh, C. Olah, M. Petrov, L. Schubert, C. Voss, B. Egan, S.K. Lim.</span><br><span class="line">Distill. 2020.</span><br><span class="line">DOI: 10.23915/distill.00024</span><br></pre></td></tr></table></figure>
+<p>在本文中，我们尝试采取原始、初级的步骤来对Transformer模型进行逆向工程，因为现代语言模型令人难以置信的复杂性和规模，我们发现从最简单的模型开始并从那里开始工作是最有成效的。 我们的目标是发现简单的算法模式、主题或框架，这些模式、主题或框架随后可以应用于更大、更复杂的模型。 具体来说，在本文中，我们将研究只有两层或更少层且只有注意力块的Transformer——这与像 GPT-3 这样的大型现代Transformer形成对比，GPT-3有 96 层，且注意力块与 MLP 块交替出现。</p>
+<p>我们发现，通过以一种新的但在数学上等效的方式将Transformer的操作概念化，我们能够理解这些小模型，并对它们的内部运作方式获得重要的理解。 特别值得注意的是，我们发现我们称之为“感应头”的特定注意力头可以解释这些小模型中的上下文学习，并且这些头只在至少具有两个注意力层的模型中出现。 我们还介绍了对特定数据进行操作的一些示例。</p>
+<p>在第一篇论文中，我们并未尝试将我们的见解应用于更大的模型，但在即将发表的一篇论文中，我们将证明我们理解Transformer的数学框架和感应头的概念仍然至少部分相关，对于更大、更真实的模型——尽管我们距离能够完全逆向工程这些模型还有很长的路要走。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><h3 id="REVERSE-ENGINEERING-RESULTS"><a href="#REVERSE-ENGINEERING-RESULTS" class="headerlink" title="REVERSE ENGINEERING RESULTS"></a>REVERSE ENGINEERING RESULTS</h3><p>为了挑战Tranformer的逆向工程，我们先在其他算法和仅有注意力的模型上进行了尝试，有以下结论：</p>
+<h3 id="CONCEPTUAL-TAKE-AWAYS"><a href="#CONCEPTUAL-TAKE-AWAYS" class="headerlink" title="CONCEPTUAL TAKE-AWAYS"></a>CONCEPTUAL TAKE-AWAYS</h3><h2 id="Transformer回顾"><a href="#Transformer回顾" class="headerlink" title="Transformer回顾"></a>Transformer回顾</h2>]]></content>
       <categories>
         <category>Transformer</category>
       </categories>
@@ -4150,42 +4176,6 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </tags>
   </entry>
   <entry>
-    <title>边缘提取方法</title>
-    <url>/2022/05/19/cv_engineering/edge-extract/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Chen Mingming老师组的三个边缘提取的模型，还有部分数据集，效果不错~</p>
-<p><strong>用边缘特征做过一些图像应用哦</strong><br><span id="more"></span></p>
-<h2 id="1，边缘提取hed"><a href="#1，边缘提取hed" class="headerlink" title="1，边缘提取hed"></a>1，边缘提取hed</h2><p><a href="https://github.com/s9xie/hed">github link</a></p>
-<ul>
-<li>作者<br>南开大学程明明</li>
-<li>对应文章   <ul>
-<li>author = {“Xie, Saining and Tu, Zhuowen”},</li>
-<li>Title = {Holistically-Nested Edge Detection},</li>
-<li>Booktitle = “Proceedings of IEEE International Conference on Computer Vision”,</li>
-<li>Year = {2015},</li>
-</ul>
-</li>
-<li>结果<br>BSDS benchmark数据集：<br>ODS=.790 and OIS=.808<br>BSD500 数据集：<br>ODS F-score of .790<br>NYU Depth 数据集：<br>ODS F-score of .746<br>速度： (0.4s per image)</li>
-</ul>
-<h2 id="2，边缘提取rcf"><a href="#2，边缘提取rcf" class="headerlink" title="2，边缘提取rcf"></a>2，边缘提取rcf</h2><p><a href="https://github.com/meteorshowers/RCF-pytorch">pytorch版本：github</a><br><a href="https://github.com/yun-liu/rcf">caffe版本：github</a></p>
-<ul>
-<li>作者<br>南开大学程明明</li>
-<li>文章<br>title={Richer Convolutional Features for Edge Detection},<br>author={Liu, Yun and Cheng, Ming-Ming and Hu, Xiaowei and Bian, Jia-Wang and Zhang, Le and Bai, Xiang and Tang, Jinhui},<br>journal={IEEE Transactions on Pattern Analysis and Machine Intelligence},<br>year={2019}</li>
-<li>特性<br>Using VGG16 network；<br>BSDS500 benchmark 数据集：<br>ODS F-measure of 0.811， speed (8 FPS)<br>fast version of RCF 快速版本：<br>ODS F-measure of 0.806 with 30 FPS</li>
-</ul>
-<h2 id="3，边缘提取dfi"><a href="#3，边缘提取dfi" class="headerlink" title="3，边缘提取dfi"></a>3，边缘提取dfi</h2><p><a href="https://github.com/backseason/DFI">github link</a></p>
-<ul>
-<li>作者<br>南开大学程明明</li>
-<li>文章<br>title={Dynamic Feature Integration for Simultaneous Detection of Salient Object, Edge and Skeleton},<br>author={Jiang-Jiang Liu and Qibin Hou and Ming-Ming Cheng},<br>journal={IEEE Transactions on Image Processing},<br>year={2020}</li>
-</ul>
-]]></content>
-      <categories>
-        <category>cv engineering</category>
-      </categories>
-      <tags>
-        <tag>edge extract</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>hi3559a开发记录</title>
     <url>/2022/05/19/hardware/hi3559a-coding/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>hisi视觉模型开发，主要是检测任务，三个类别，本文包含项目开发的基本流程，包括模型训练，模型转化以及hisi官方提供的关于yolov3的源码及其调用分析。</p>
@@ -4241,6 +4231,42 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </categories>
       <tags>
         <tag>hi3559a cv model</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>边缘提取方法</title>
+    <url>/2022/05/19/cv_engineering/edge-extract/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Chen Mingming老师组的三个边缘提取的模型，还有部分数据集，效果不错~</p>
+<p><strong>用边缘特征做过一些图像应用哦</strong><br><span id="more"></span></p>
+<h2 id="1，边缘提取hed"><a href="#1，边缘提取hed" class="headerlink" title="1，边缘提取hed"></a>1，边缘提取hed</h2><p><a href="https://github.com/s9xie/hed">github link</a></p>
+<ul>
+<li>作者<br>南开大学程明明</li>
+<li>对应文章   <ul>
+<li>author = {“Xie, Saining and Tu, Zhuowen”},</li>
+<li>Title = {Holistically-Nested Edge Detection},</li>
+<li>Booktitle = “Proceedings of IEEE International Conference on Computer Vision”,</li>
+<li>Year = {2015},</li>
+</ul>
+</li>
+<li>结果<br>BSDS benchmark数据集：<br>ODS=.790 and OIS=.808<br>BSD500 数据集：<br>ODS F-score of .790<br>NYU Depth 数据集：<br>ODS F-score of .746<br>速度： (0.4s per image)</li>
+</ul>
+<h2 id="2，边缘提取rcf"><a href="#2，边缘提取rcf" class="headerlink" title="2，边缘提取rcf"></a>2，边缘提取rcf</h2><p><a href="https://github.com/meteorshowers/RCF-pytorch">pytorch版本：github</a><br><a href="https://github.com/yun-liu/rcf">caffe版本：github</a></p>
+<ul>
+<li>作者<br>南开大学程明明</li>
+<li>文章<br>title={Richer Convolutional Features for Edge Detection},<br>author={Liu, Yun and Cheng, Ming-Ming and Hu, Xiaowei and Bian, Jia-Wang and Zhang, Le and Bai, Xiang and Tang, Jinhui},<br>journal={IEEE Transactions on Pattern Analysis and Machine Intelligence},<br>year={2019}</li>
+<li>特性<br>Using VGG16 network；<br>BSDS500 benchmark 数据集：<br>ODS F-measure of 0.811， speed (8 FPS)<br>fast version of RCF 快速版本：<br>ODS F-measure of 0.806 with 30 FPS</li>
+</ul>
+<h2 id="3，边缘提取dfi"><a href="#3，边缘提取dfi" class="headerlink" title="3，边缘提取dfi"></a>3，边缘提取dfi</h2><p><a href="https://github.com/backseason/DFI">github link</a></p>
+<ul>
+<li>作者<br>南开大学程明明</li>
+<li>文章<br>title={Dynamic Feature Integration for Simultaneous Detection of Salient Object, Edge and Skeleton},<br>author={Jiang-Jiang Liu and Qibin Hou and Ming-Ming Cheng},<br>journal={IEEE Transactions on Image Processing},<br>year={2020}</li>
+</ul>
+]]></content>
+      <categories>
+        <category>cv engineering</category>
+      </categories>
+      <tags>
+        <tag>edge extract</tag>
       </tags>
   </entry>
   <entry>
@@ -4567,23 +4593,6 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </tags>
   </entry>
   <entry>
-    <title>rpn的原理和作用</title>
-    <url>/2022/05/16/detection/principle-and-effects-of-rpn/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>rpn原理和作用</p>
-<span id="more"></span>
-<h2 id="1，作用"><a href="#1，作用" class="headerlink" title="1，作用"></a>1，作用</h2><p>RPN专门用来提取候选框，一方面RPN耗时少，另一方面RPN可以很容易结合到Fast RCNN中，成为一个整体。</p>
-<h2 id="2，实现细节"><a href="#2，实现细节" class="headerlink" title="2，实现细节"></a>2，实现细节</h2><p>一个特征图（Faster RCNN的公共Feature Map）经过sliding window处理，得到256维特征，对每个特征向量做两次全连接操作，一个得到2个分数，一个得到4个坐标{然后通过两次全连接得到结果2k个分数和4k个坐标[k指的是由锚点产生的K个框(K anchor boxes)]}</p>
-<h2 id="3，anchor-box是怎么选取的？"><a href="#3，anchor-box是怎么选取的？" class="headerlink" title="3，anchor box是怎么选取的？"></a>3，anchor box是怎么选取的？</h2><p>滑窗的中心在原像素空间的映射点称为anchor，以此anchor为中心，生成k(paper中default k=9, 3 scales and 3 aspect ratios/不同尺寸和不同长宽比)个proposals。三个面积尺寸$(128^{2}，256^{2}，512^{2})$，然后在每个面积尺寸下，取三种不同的长宽比例（1:1,1:2,2:1）</p>
-<h2 id="4，为什么提出anchor-box？"><a href="#4，为什么提出anchor-box？" class="headerlink" title="4，为什么提出anchor box？"></a>4，为什么提出anchor box？</h2><p>主要有两个原因：一个窗口只能检测一个目标、无法解决多尺度问题。<br>目前anchor box尺寸的选择主要有三种方式：人为经验选取、k-means聚类、作为超参数进行学习<br>为什么使用不同尺寸和不同长宽比？ 为了得到更大的交并比(IOU)。</p>
-]]></content>
-      <categories>
-        <category>detection</category>
-      </categories>
-      <tags>
-        <tag>rpn</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>roi pooling</title>
     <url>/2022/05/16/detection/roi-pooling/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>roi pooling的基本原理和应用</p>
@@ -4632,6 +4641,23 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </categories>
       <tags>
         <tag>roi align</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>rpn的原理和作用</title>
+    <url>/2022/05/16/detection/principle-and-effects-of-rpn/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>rpn原理和作用</p>
+<span id="more"></span>
+<h2 id="1，作用"><a href="#1，作用" class="headerlink" title="1，作用"></a>1，作用</h2><p>RPN专门用来提取候选框，一方面RPN耗时少，另一方面RPN可以很容易结合到Fast RCNN中，成为一个整体。</p>
+<h2 id="2，实现细节"><a href="#2，实现细节" class="headerlink" title="2，实现细节"></a>2，实现细节</h2><p>一个特征图（Faster RCNN的公共Feature Map）经过sliding window处理，得到256维特征，对每个特征向量做两次全连接操作，一个得到2个分数，一个得到4个坐标{然后通过两次全连接得到结果2k个分数和4k个坐标[k指的是由锚点产生的K个框(K anchor boxes)]}</p>
+<h2 id="3，anchor-box是怎么选取的？"><a href="#3，anchor-box是怎么选取的？" class="headerlink" title="3，anchor box是怎么选取的？"></a>3，anchor box是怎么选取的？</h2><p>滑窗的中心在原像素空间的映射点称为anchor，以此anchor为中心，生成k(paper中default k=9, 3 scales and 3 aspect ratios/不同尺寸和不同长宽比)个proposals。三个面积尺寸$(128^{2}，256^{2}，512^{2})$，然后在每个面积尺寸下，取三种不同的长宽比例（1:1,1:2,2:1）</p>
+<h2 id="4，为什么提出anchor-box？"><a href="#4，为什么提出anchor-box？" class="headerlink" title="4，为什么提出anchor box？"></a>4，为什么提出anchor box？</h2><p>主要有两个原因：一个窗口只能检测一个目标、无法解决多尺度问题。<br>目前anchor box尺寸的选择主要有三种方式：人为经验选取、k-means聚类、作为超参数进行学习<br>为什么使用不同尺寸和不同长宽比？ 为了得到更大的交并比(IOU)。</p>
+]]></content>
+      <categories>
+        <category>detection</category>
+      </categories>
+      <tags>
+        <tag>rpn</tag>
       </tags>
   </entry>
   <entry>
