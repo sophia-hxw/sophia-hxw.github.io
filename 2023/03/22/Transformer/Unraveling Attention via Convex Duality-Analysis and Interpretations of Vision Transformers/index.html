@@ -29,7 +29,7 @@
 <meta property="og:description" content="前言文章：Unraveling Attention via Convex Duality-Analysis and Interpretations of Vision Transformers essay link 通过凸对偶性解释Transformer网络~">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-03-22T12:52:45.000Z">
-<meta property="article:modified_time" content="2023-04-25T07:05:03.273Z">
+<meta property="article:modified_time" content="2023-05-26T07:18:28.437Z">
 <meta property="article:author" content="xinwen">
 <meta property="article:tag" content="non-mercer">
 <meta property="article:tag" content="convex duality">
@@ -231,7 +231,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-04-25 15:05:03" itemprop="dateModified" datetime="2023-04-25T15:05:03+08:00">2023-04-25</time>
+                <time title="修改时间：2023-05-26 15:18:28" itemprop="dateModified" datetime="2023-05-26T15:18:28+08:00">2023-05-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -282,11 +282,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>文章：Unraveling Attention via Convex Duality-Analysis and Interpretations of Vision Transformers</p>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>文章：Unraveling Attention via Convex Duality-Analysis and Interpretations of Vision Transformers</p>
 <p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2205.08078">essay link</a></p>
 <p><strong>通过凸对偶性解释Transformer网络~</strong><br><span id="more"></span></p>
-<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>使用自注意力或其替代方案的视觉Transformer已经在许多图像相关任务中展示了有潜力的结果，然而，注意力的基础归纳偏差尚不清楚。为了解决这个问题，本文从凸对偶的角度分析了注意力。对于非线性点积自注意力，以及 MLP 混合器和傅里叶神经算子 (FNO) 等替代机制，我们推导出等效的有限维凸问题，这些问题可解释并可求全局最优解。凸程序带来的块核范数正则化促使了潜在特征和token维度的低秩，特别是，我们展示了自注意力网络如何根据token的潜在相似性隐式地对其进行聚类。我们通过微调各种凸注意力头进行实验，采用的是 CIFAR-100 分类问题的预训练主干，结果表明与现有的 MLP 或线性头相比，注意力机制占优。</p>
-<h2 id="1，介绍"><a href="#1，介绍" class="headerlink" title="1，介绍"></a>1，介绍</h2><p>Transformers 最近在语言和视觉的表示学习方面取得了巨大的成功，这主要是由于注意机制有效地混合了各层对token的表示以学习输入的语义。 在点积自注意力出现后，出现了几种有效的替代方法，可以很好地适应大型预训练任务的序列大小。然而，可学习的注意力归纳偏置没有得到很好的探索，对注意力归纳偏置的理论理解可以激发设计更高效的架构，并可以解释这些网络的泛化能力。</p>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>使用自注意力或其替代方案的视觉Transformer已经在许多图像相关任务中展示了有潜力的结果，然而，注意力的基础归纳偏差尚不清楚。为了解决这个问题，本文从凸对偶的角度分析了注意力。对于非线性点积自注意力，以及 MLP 混合器和傅里叶神经算子 (FNO) 等替代机制，我们推导出等效的有限维凸问题，这些问题可解释并可求全局最优解。凸程序带来的块核范数正则化促使了潜在特征和token维度的低秩，特别是，我们展示了自注意力网络如何根据token的潜在相似性隐式地对其进行聚类。我们通过微调各种凸注意力头进行实验，采用的是 CIFAR-100 分类问题的预训练主干，结果表明与现有的 MLP 或线性头相比，注意力机制占优。</p>
+<h1 id="1，介绍"><a href="#1，介绍" class="headerlink" title="1，介绍"></a>1，介绍</h1><p>Transformers 最近在语言和视觉的表示学习方面取得了巨大的成功，这主要是由于注意机制有效地混合了各层对token的表示以学习输入的语义。 在点积自注意力出现后，出现了几种有效的替代方法，可以很好地适应大型预训练任务的序列大小。然而，可学习的注意力归纳偏置没有得到很好的探索，对注意力归纳偏置的理论理解可以激发设计更高效的架构，并可以解释这些网络的泛化能力。</p>
 <p>自注意力是首个视觉Transformer (ViT)中的基本构建块，它由两个线性函数的外积组成，后跟一个非线性函数以及与另一个线性函数的积，这使得它是非凸和不可解释的。理解注意力的一种方法是设计新的自注意力替代方案，其表现同样出色，这可能有助于解释其潜在机制。一组工作涉及基于多层感知器 (MLP) 的架构，tolstikhin2021mlp 等，而另一系列工作提出基于傅立叶的模型 lee2021fnet 等，其他人提出用矩阵分解 geng2021attention等 代替 self-attention。虽然所有这些作品都有吸引人的应用，利用了注意力结构的一般概念，但它们缺乏从优化角度对这些架构及微调后的应用做理论分析。</p>
 <p>为了解决这个缺点，我们利用凸对偶性来分析具有 ReLU 激活的单个自注意力块。 由于自注意力会导致序列的平方复杂度，因此我们选择分析更高效的模块。 作为更高效模块的代表，我们专注于 MLP 混合器和傅立叶神经运算符（FNO）。 MLP 混合器（纯粹）在token和特征维度上使用 MLP 投影来混合token，相比之下，FNO 基于 2D 傅里叶变换来实现利用循环卷积混合token。</p>
 <p>我们发现所有这三个分析模块都等同于有限维凸优化问题，表明“可证明地将它们优化到全局最优值”是有保障的。此外，我们对凸模型引起的偏差进行了观察，特别是，自注意力和 MLP-Mixer 模块的凸等价物类似于 MLP 的加权组合，但具有额外的自由度（例如，更高维度的归纳参数），以及将它们的各个子模块联系在一起以利用全局信息的独特块核范数正则化操作。相比之下，凸化的 FNO 混合器相当于循环卷积，而对 FNO 架构的轻微修改可以诱导出等效的分组卷积。我们在CIFAR-100 分类问题上进行Transformer的迁移学习，微调单个凸注意头来进行注意力头的实验测试和比较。我们观察到这些注意力模块的归纳偏差优于传统的凸模型。</p>
@@ -296,16 +296,16 @@
 <li>通过分析这些等效的凸应用，本文为这些注意力模块的优化目标提供了可解释性。</li>
 <li>实验验证了（凸）视觉 Transformer 在迁移学习任务中的表现优于基线凸方法。</li>
 </ul>
-<h3 id="1-1-相关工作"><a href="#1-1-相关工作" class="headerlink" title="1.1 相关工作"></a>1.1 相关工作</h3><p>这项工作主要与两条研究路线有关。</p>
+<h2 id="1-1-相关工作"><a href="#1-1-相关工作" class="headerlink" title="1.1 相关工作"></a>1.1 相关工作</h2><p>这项工作主要与两条研究路线有关。</p>
 <p><strong>自注意力的解释</strong><br>一种方法是通过实验观察注意力网络的特性来理解它们，例如，DINO 提出了一种针对 ViTs 的对比自监督学习方法。 据观察，学习到的注意力映射保留了图像的语义区域。 另一项工作比较了经过训练的 ViT 和 CNN 的跨层对齐，得出的结论是 ViT 在网络的各个层之间具有更统一的表示结构。 另一项工作使用深度泰勒分解方法来可视化输入图像中会引起特定 ViT 预测的部分。</p>
 <p>另一种方法是分析注意力网络的表现力，一项工作将多头自注意力解释为贝叶斯推理，并提供了工具来决定使用多少个头，以及如何在不同的头中强化特征的区别表达。 其他分析表明，稀疏Transformer可以逼近任何函数，多头自注意力网络至少跟卷积网络的表达力相当，点积自注意力网络不是Lipschitz 连续的。</p>
 <p><strong>凸神经网络</strong><br>从 pilanci2020neural 开始，已有大量工作证明各种 ReLU 及其变体的激活神经网络架构具有等效的凸优化问题。 这些包括双层卷积和矢量输出网络、更深层次的网络、具有批量标准化的网络和 Wasserstein GANs。最近的工作还展示了如何有效地优化这些等效凸网络的最简单形式，并结合额外的约束来增强对抗性鲁棒性。 然而，这些工作都没有分析过Transformer的构建块，而Transformer是许多最先进的视觉和语言处理任务中的主要方法。</p>
-<h2 id="2，预备工作"><a href="#2，预备工作" class="headerlink" title="2，预备工作"></a>2，预备工作</h2><p>一般来说，我们分析监督学习问题，其中输入训练数据 $\{\mathbf{X}_i \in \mathbb{R}^{s \times d}\}_{i=1}^n$ 是嵌入层patch的结果，我们有相应的任意大小的标签 $\{\mathbf{Y}_i \in \mathbb{R}^{r \times c}\}_{i=1}^n$。 对于任意<strong>凸损失函数</strong> $\mathcal{L}(\cdot, \cdot)$，我们求解优化问题</p>
+<h1 id="2，预备工作"><a href="#2，预备工作" class="headerlink" title="2，预备工作"></a>2，预备工作</h1><p>一般来说，我们分析监督学习问题，其中输入训练数据 $\{\mathbf{X}_i \in \mathbb{R}^{s \times d}\}_{i=1}^n$ 是嵌入层patch的结果，我们有相应的任意大小的标签 $\{\mathbf{Y}_i \in \mathbb{R}^{r \times c}\}_{i=1}^n$。 对于任意<strong>凸损失函数</strong> $\mathcal{L}(\cdot, \cdot)$，我们求解优化问题</p>
 <script type="math/tex; mode=display">
 p^\ast:=\min_{\theta}\sum\limits^n_{i=1}\mathcal{L}(f_{\theta}(\mathbf{X}_i),\mathbf{Y}_i)+\mathcal{R}(\theta) 
 \tag{1}</script><p>$\theta$ 是可学习的参数，$f_{\theta}(\cdot)$ 是神经网络，$\mathcal{R}(\cdot)$ 是正则化器。 请注意，此公式包括了去噪和分类场景：在 $r = 1$ 的分类设置中，可以将全局平均池化吸收到凸损失 $\mathcal{L}$ 中，而如果 $r = s$，可以直接使用平方损失或其他凸损失函数，也可以使用这个公式来应用于监督学习和自监督学习。</p>
 <p>在本文中，我们将 $(\cdot)_+ := \max \{0, \cdot\}$ 表示为 非线性的ReLU。 我们使用上标，比如 $\mathbf{A}^{(i_i, i_2)}$ 来表示矩阵块，用方括号，比如 $\mathbf{A}[i_1, i_2]$ 来表示矩阵的元素，其中参数指的是行（或行块）$i_1$ 和列（或列块）$i_2$。</p>
-<h3 id="2-1-线性和-ReLU-MLPs-的隐式凸性"><a href="#2-1-线性和-ReLU-MLPs-的隐式凸性" class="headerlink" title="2.1 线性和 ReLU MLPs 的隐式凸性"></a>2.1 线性和 ReLU MLPs 的隐式凸性</h3><p>之前，已经证明标准的两层 ReLU MLP 等价于凸优化问题，简要描述相关背景，为本文中的大部分分析提供背景。 特别是，我们表示一个网络的隐藏层中有 $m$ 个神经元，权重衰减参数 $\beta &gt;0$ 和数据 $\mathbf{X} \in \mathbb{R} ^{n \times d}$, $\mathbf{Y} \in \mathbb{R}^{n \times c}$ 为:</p>
+<h2 id="2-1-线性和-ReLU-MLPs-的隐式凸性"><a href="#2-1-线性和-ReLU-MLPs-的隐式凸性" class="headerlink" title="2.1 线性和 ReLU MLPs 的隐式凸性"></a>2.1 线性和 ReLU MLPs 的隐式凸性</h2><p>之前，已经证明标准的两层 ReLU MLP 等价于凸优化问题，简要描述相关背景，为本文中的大部分分析提供背景。 特别是，我们表示一个网络的隐藏层中有 $m$ 个神经元，权重衰减参数 $\beta &gt;0$ 和数据 $\mathbf{X} \in \mathbb{R} ^{n \times d}$, $\mathbf{Y} \in \mathbb{R}^{n \times c}$ 为:</p>
 <script type="math/tex; mode=display">
 p^\ast_{RMLP}:=\min_{\mathbf{w}_{2j},\mathbf{w}_{2j}}\mathcal{L}\bigg ( \sum\limits^m_{j=1}(\mathbf{X}\mathbf{w}_{1j})_+\mathbf{w}^\top_{2j},\mathbf{Y} \bigg )+\frac{\beta}{2}\sum\limits^m_{j=1}(\|\mathbf{w}_{1j}\|^2_2+\|\mathbf{w}_{2j}\|^2_2) 
 \tag{2}</script><p>虽然这个问题如上所述是非凸的，但已经证明目标等同于等价凸优化问题的解决方案，并且两个问题的解决方案之间存在一对一的映射。 特别是，该分析利用了 <strong>hrperplane arrangements</strong>，枚举了 所有可能的非线性 ReLU 激活模式：</p>
@@ -336,7 +336,7 @@ p^\ast_{RMLP}=\min_{\mathbf{z}^m_{j=1}}\mathcal{L}\bigg (\sum\limits^m_{j=1}\mat
 \tag{8}</script><p>我们注意到，对于线性和门控 ReLU 公式，凸权重的正则化成为了标准核范数，因为不再需要强制 ReLU 约束。已经证明，门控 ReLU 和 ReLU 网络之间存在小的近似差距，并且 ReLU 网络可以从门控 ReLU 问题的解决方案中形成。</p>
 <p>在解决这些问题的有效算法方面，使用应用于凸线性和门控 ReLU 的加速近端梯度下降算法，可以在 $\mathcal{O}(1 /\sqrt{\epsilon})$ 迭代下获得 $\epsilon$ 的精度。对于凸 ReLU 公式，sahiner2020mathbftor 提出了适用于这种情况的凸 MLP 的 Frank-Wolfe 算法，对于 $\epsilon$ 精度，在一般情况下需要 $\mathcal{O}(1/\epsilon)$ 迭代。</p>
 <p>在后续部分中，我们将通过类似的凸对偶技术演示具有线性和 ReLU 激活的常见视觉Transformer块如何与等效凸优化问题相关联。</p>
-<h2 id="3，自注意力的隐式凸性"><a href="#3，自注意力的隐式凸性" class="headerlink" title="3，自注意力的隐式凸性"></a>3，自注意力的隐式凸性</h2><p>规范的 Vision Transformer (ViT) 使用自注意力和 MLP 作为其主干，特别是，自注意力网络的单个“头”由以下给出：</p>
+<h1 id="3，自注意力的隐式凸性"><a href="#3，自注意力的隐式凸性" class="headerlink" title="3，自注意力的隐式凸性"></a>3，自注意力的隐式凸性</h1><p>规范的 Vision Transformer (ViT) 使用自注意力和 MLP 作为其主干，特别是，自注意力网络的单个“头”由以下给出：</p>
 <script type="math/tex; mode=display">
 f_j(\mathbf{X}_i):=\sigma\bigg(\frac{\mathbf{X}_i\mathbf{Q}_j\mathbf{K}^\top_j\mathbf{X}^\top_i}{\sqrt{d}}\bigg)\mathbf{X}_i\mathbf{V}_j 
 \tag{9}</script><p>其中 $\mathbf{Q}, \mathbf{K}, \mathbf{V}$ 都是可学习的参数，$\sigma(\cdot)$ 通常（但不总是）表示非线性的 softmax。 在实践中，人们通常使用 $m$ 个注意力“头”，它们沿着特征维度连接在一起，然后是一个“通道混合”层，或者一个分类头：</p>
@@ -394,8 +394,8 @@ p^\ast_{SA}:=&\min_{\mathbf{Z}_j\in\mathbb{R}^{d^2\times dc}}\sum\limits^n_{i=1}
 <p>有趣的是，虽然标准 ReLU MLP 的超平面排列仅取决于数据矩阵 $\mathbf{X}$，但对于自注意力网络，它们更复杂，而不是取决于 $\mathbf{X}_i \otimes \mathbf{X}_i$。这些超平面排列定义了约束核范数惩罚项的约束。人们可能会将 ReLU 激活自注意力模型视为两个模型的融合—，一种使用 $\mathbf{X}_i \otimes \mathbf{X}_i$ 生成超平面排列，另一种将 $\mathbf{X}_i$ 用于线性预测。因此，与线性自注意力情况不同，即使在 $\beta = 0$ 的情况下，ReLU 自注意力网络 \eqref{eq15} 也不等同于 ReLU MLP 模型 \eqref{eq5}。</p>
 <p>此外，在 \eqref{eq13} 中的线性激活情况下，每个线性模型由 $\mathbf{G}_i$ 中的单项进行缩放，而在 ReLU 情况下，每个线性模型由对角矩阵 $\mathbf{G}_{i,j}^{(k, \ell)}$ 进行缩放，将来自 $\mathbf{X}_i$ 的二阶信息与由 ReLU 激活函数诱导的超平面排列联合起来。例如，人们可能会注意到区别项：</p>
 <script type="math/tex; mode=display">\mathbf{G}^{(k,\ell )}_{i,j}=\sum\limits^s_{t=1}\mathbf{X}_i[t,k]\mathbf{X}_i[t,\ell ]\mathbf{D}^{(i,t)}_j \tag{16}</script><p>是对于对角线 $\mathbf{D}_{j}^{(i, t)} \in \{0, 1\}^{s \times s}$ 而言。 因此，$\mathbf{G}_{i,j}^{(k, \ell)}$ 可以看作是特征 $k$ 和 $\ell$ 之间的相关性，由对角线 $\{0, 1\}$ 进行加权。换句话说，一种“局部”相关性，其中局部性是通过 $\mathbf{D}_{j}^{(i, t)}$ 中的 $\{0, 1\}$ 值来体现。这种局部相关性对预测的每个token进行缩放，本质上是为未被 $\mathbf{D}_{j}^{(i, t)}$ 掩盖的token赋予权重。</p>
-<h2 id="4，替换混合机制"><a href="#4，替换混合机制" class="headerlink" title="4，替换混合机制"></a>4，替换混合机制</h2><p>虽然自注意力是最初提出的用于视觉Transformer的token混合器，但还有许多其他替代方法已显示出产生类似结果，同时计算效率更高，我们在这里处理两个这样的架构。</p>
-<h3 id="4-1-MLP-Mixer"><a href="#4-1-MLP-Mixer" class="headerlink" title="4.1 MLP Mixer"></a>4.1 MLP Mixer</h3><p>我们首先分析 MLP-Mixer 架构，这是一种替代自注意力网络的全 MLP 结构，在图像分类基准上具有竞争性能。 该提案很简单，—沿输入的一个维度应用 MLP，然后沿相反维度应用 MLP。 因此，这种 MLP-Mixer 架构的最简单形式可以写成：</p>
+<h1 id="4，替换混合机制"><a href="#4，替换混合机制" class="headerlink" title="4，替换混合机制"></a>4，替换混合机制</h1><p>虽然自注意力是最初提出的用于视觉Transformer的token混合器，但还有许多其他替代方法已显示出产生类似结果，同时计算效率更高，我们在这里处理两个这样的架构。</p>
+<h2 id="4-1-MLP-Mixer"><a href="#4-1-MLP-Mixer" class="headerlink" title="4.1 MLP Mixer"></a>4.1 MLP Mixer</h2><p>我们首先分析 MLP-Mixer 架构，这是一种替代自注意力网络的全 MLP 结构，在图像分类基准上具有竞争性能。 该提案很简单，—沿输入的一个维度应用 MLP，然后沿相反维度应用 MLP。 因此，这种 MLP-Mixer 架构的最简单形式可以写成：</p>
 <script type="math/tex; mode=display">
 \begin{align*}
 p^\ast_{MM}&:=\min_{\mathbf{W}_{1j},\mathbf{W}_{2j}}\sum\limits^n_{i=1}\mathcal{L}(\sum\limits^m_{j=1}\sigma(\mathbf{W}_{1j}\mathbf{X}_i)\mathbf{W}_{2j},\mathbf{Y}_i)\\
@@ -452,7 +452,7 @@ p^\ast_{MM}=\min_{\tilde{\mathbf{Z}}}\sum\limits^n_{i=1}\mathcal{L}\bigg (\sum\l
   & + \beta\sum\limits^P_{j=1}\|\tilde{\mathbf{Z}}_j\|_{\ast,K_j}
 \end{align*}
 \tag{21}</script><p>现在我们再次清楚地看到与\eqref{eq15} ReLU 自注意力的差异，对角线排列由 $\mathbf{X}_i$ 而不是 Gram 矩阵加权， $\tilde{\mathbf{ Z}}_j^{(t, k)}$ 只是简单的预测，而不是线性模型的权重。</p>
-<h3 id="4-2-Fourier神经算子"><a href="#4-2-Fourier神经算子" class="headerlink" title="4.2 Fourier神经算子"></a>4.2 Fourier神经算子</h3><p>与自注意力或类似 MLP 的注意力机制相比，还有一系列基于傅立叶的自注意力替代方案，最近在视觉任务中显示出前景。 我们介绍傅里叶神经算子 (FNO) ，其工作方式如下：</p>
+<h2 id="4-2-Fourier神经算子"><a href="#4-2-Fourier神经算子" class="headerlink" title="4.2 Fourier神经算子"></a>4.2 Fourier神经算子</h2><p>与自注意力或类似 MLP 的注意力机制相比，还有一系列基于傅立叶的自注意力替代方案，最近在视觉任务中显示出前景。 我们介绍傅里叶神经算子 (FNO) ，其工作方式如下：</p>
 <ul>
 <li>i. 二维 DFT 首先应用于空间token； </li>
 <li>ii. 每个token乘以自己的权重矩阵； </li>
@@ -501,7 +501,7 @@ p^\ast_{FN}=\min_{\mathbf{Z}\in\mathbb{R}^{sd\times c}}\sum\limits^n_{i=1}\mathc
     p^\ast_{FN}=\min_{\mathbf{Z}_j\in\mathbb{R}^{sd\times c}}\sum\limits^n_{i=1}\mathcal{L}\bigg(\sum\limits^P_{j=1}\mathbf{D}_j^{(i)}\mathrm{circ}(\mathbf{X}_i)\mathbf{Z}_j,\mathbf{Y}_i)+\\
     \beta\sum\limits^P_{j=1}\|\mathbf{Z}_j\|_{\ast,K_j},\mathbf{K}_j:=(2\mathbf{D}_j-\mathbf{I}_{ns})\mathbf{X} 
 \end{align*}
-\tag{26}</script><h4 id="4-2-1-块对角FNO"><a href="#4-2-1-块对角FNO" class="headerlink" title="4.2.1 块对角FNO"></a>4.2.1 块对角FNO</h4><p>虽然 FNO 公式非常优雅，但它需要许多参数（每个token的 $d^2$ 个）。 因此，对自适应傅里叶神经算子 (AFNO) 的形式提出了修改。 一个重要的修改涉及强制token权重服从块对角线结构，与标准 FNO 相比，这显着提高了 AFNO 的训练和泛化能力，我们称这种架构为 B-FNO，归结为：</p>
+\tag{26}</script><h3 id="4-2-1-块对角FNO"><a href="#4-2-1-块对角FNO" class="headerlink" title="4.2.1 块对角FNO"></a>4.2.1 块对角FNO</h3><p>虽然 FNO 公式非常优雅，但它需要许多参数（每个token的 $d^2$ 个）。 因此，对自适应傅里叶神经算子 (AFNO) 的形式提出了修改。 一个重要的修改涉及强制token权重服从块对角线结构，与标准 FNO 相比，这显着提高了 AFNO 的训练和泛化能力，我们称这种架构为 B-FNO，归结为：</p>
 <script type="math/tex; mode=display">
 \begin{align*}
     f_{BFN}(\mathbf{X}_i)&:=\sigma\bigg (\mathbf{F}^{-1}
@@ -566,11 +566,11 @@ p^\ast_{FN}=\min_{\mathbf{Z}\in\mathbb{R}^{sd\times c}}\sum\limits^n_{i=1}\mathc
 \begin{align*}
     \mathbf{Z}_{b,j} &\in \mathbb{R}^{sd/B \times c/B}, \, f^{(b)}(\mathbf{X}_i) := \sum_{j=1}^{P_b} \mathbf{D}_{b,j}\mathrm{circ}(\mathbf{X}_i^{(b)})\mathbf{Z}_{b,j} \\
     \mathbf{K}_{b,j} &:= (2\mathbf{D}_{b,j} - \mathbf{I}_{ns})\mathbf{X}_b.
-\end{align*}</script><h2 id="5，数值结果"><a href="#5，数值结果" class="headerlink" title="5，数值结果"></a>5，数值结果</h2><p>在本节中，我们试图将本文分析的Transformer头的性能与基线凸优化方法进行比较，这种比较使我们能够在一个实际例子中说明这些新颖的头脑所带来的隐性偏置。特别是，我们考虑了训练这些凸头的单个新块以执行图像分类任务。这本质上是无需微调骨干网络的迁移学习，这在边缘计算和内存受限设置中可能是必须的。对于 few-shot 微调 transformer 任务，非凸优化在不同的随机初始化下不稳定，此外，仅微调网络的最后一层是一种常见做法，它在伪相关基准测试中表现非常好。</p>
+\end{align*}</script><h1 id="5，数值结果"><a href="#5，数值结果" class="headerlink" title="5，数值结果"></a>5，数值结果</h1><p>在本节中，我们试图将本文分析的Transformer头的性能与基线凸优化方法进行比较，这种比较使我们能够在一个实际例子中说明这些新颖的头脑所带来的隐性偏置。特别是，我们考虑了训练这些凸头的单个新块以执行图像分类任务。这本质上是无需微调骨干网络的迁移学习，这在边缘计算和内存受限设置中可能是必须的。对于 few-shot 微调 transformer 任务，非凸优化在不同的随机初始化下不稳定，此外，仅微调网络的最后一层是一种常见做法，它在伪相关基准测试中表现非常好。</p>
 <p>具体来说，我们试图对来自 CIFAR-100 数据集的图像进行分类，首先在 ImageNet-1k 数据集的 $224 \times 224$ 图像上使用 $16 \times 16$ 的块 ($ s=196$, $d=256$)。然后微调单凸头以对来自 CIFAR-100 的图像进行分类，同时保持预训练的骨干固定。</p>
 <p>对于主干 gMLP 架构，我们在使用凸头进行训练之前，将特征维度减少到 $d=100$，并使用平均池作为预处理步骤。同样，为了提高计算效率，我们训练标准 ReLU 架构的门控 ReLU 变体，因为这些门控 ReLU 激活网络是不受约束的。对于 BFNO，我们选择 $B=5$。所有头部都使用相同的维度 $(d=100, s=196, c=100)$，我们选择ReLU头部中的神经元数量为 $m=100$，自注意力网络我们选择 $m=5$ 使参数计数大致相等。作为我们的基线，我们比较了一个简单的线性模型（即逻辑回归）和 MLP 的凸等价物，如第2.1节中所讨论的。</p>
 <p>我们在表1中总结了结果，在这里，我们证明注意力变体优于标准凸 MLP 和线性基线。 这表明注意力结构的高阶信息和额外的自由度为困难的视觉任务提供了优势。 令人惊讶的是，对于自注意力、FNO 和 MLP-Mixer，线性和 ReLU 激活性能之间只有微小的差距，这表明这些架构的大部分优势在于它们的基本结构，而不是应用的非线性。 相反，对于 B-FNO，ReLU 和线性激活精度之间存在非常大的差距，这表明当应用组卷积时，这种非线性更为重要。 因此，这些凸化的架构为迁移学习的稳定和透明模型铺平了道路。</p>
-<h2 id="6，总结"><a href="#6，总结" class="headerlink" title="6，总结"></a>6，总结</h2><p>我们证明了自注意力块和常见替代方案（如 MLP-Mixer、FNO 和 B-FNO）等价于线性和 ReLU 激活函数下的凸优化问题，这些等效的凸公式隐含地聚类相关特征，并在确保全局表示的情况下，用块核范数正则化器作为惩罚项。 对于未来的工作，仍然需要利用这些独特的正则化器的结构来为这些网络设计高效的近似求解器，可能会找到更快的求解器，例如 FISTA 或相关算法。 从长期的实际采用来看，未来的理论工作还需要对实践中经常使用的更深层次的网络进行分析。 通过选定凸公式，可以将这项工作用于设计新的网络架构。</p>
+<h1 id="6，总结"><a href="#6，总结" class="headerlink" title="6，总结"></a>6，总结</h1><p>我们证明了自注意力块和常见替代方案（如 MLP-Mixer、FNO 和 B-FNO）等价于线性和 ReLU 激活函数下的凸优化问题，这些等效的凸公式隐含地聚类相关特征，并在确保全局表示的情况下，用块核范数正则化器作为惩罚项。 对于未来的工作，仍然需要利用这些独特的正则化器的结构来为这些网络设计高效的近似求解器，可能会找到更快的求解器，例如 FISTA 或相关算法。 从长期的实际采用来看，未来的理论工作还需要对实践中经常使用的更深层次的网络进行分析。 通过选定凸公式，可以将这项工作用于设计新的网络架构。</p>
 
     </div>
 
@@ -674,7 +674,7 @@ p^\ast_{FN}=\min_{\mathbf{Z}\in\mathbb{R}^{sd\times c}}\sum\limits^n_{i=1}\mathc
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1%EF%BC%8C%E4%BB%8B%E7%BB%8D"><span class="nav-text">1，介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C"><span class="nav-text">1.1 相关工作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%EF%BC%8C%E9%A2%84%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-text">2，预备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E7%BA%BF%E6%80%A7%E5%92%8C-ReLU-MLPs-%E7%9A%84%E9%9A%90%E5%BC%8F%E5%87%B8%E6%80%A7"><span class="nav-text">2.1 线性和 ReLU MLPs 的隐式凸性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%EF%BC%8C%E8%87%AA%E6%B3%A8%E6%84%8F%E5%8A%9B%E7%9A%84%E9%9A%90%E5%BC%8F%E5%87%B8%E6%80%A7"><span class="nav-text">3，自注意力的隐式凸性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%EF%BC%8C%E6%9B%BF%E6%8D%A2%E6%B7%B7%E5%90%88%E6%9C%BA%E5%88%B6"><span class="nav-text">4，替换混合机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-MLP-Mixer"><span class="nav-text">4.1 MLP Mixer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-Fourier%E7%A5%9E%E7%BB%8F%E7%AE%97%E5%AD%90"><span class="nav-text">4.2 Fourier神经算子</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-1-%E5%9D%97%E5%AF%B9%E8%A7%92FNO"><span class="nav-text">4.2.1 块对角FNO</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5%EF%BC%8C%E6%95%B0%E5%80%BC%E7%BB%93%E6%9E%9C"><span class="nav-text">5，数值结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6%EF%BC%8C%E6%80%BB%E7%BB%93"><span class="nav-text">6，总结</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1%EF%BC%8C%E4%BB%8B%E7%BB%8D"><span class="nav-text">1，介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C"><span class="nav-text">1.1 相关工作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2%EF%BC%8C%E9%A2%84%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-text">2，预备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E7%BA%BF%E6%80%A7%E5%92%8C-ReLU-MLPs-%E7%9A%84%E9%9A%90%E5%BC%8F%E5%87%B8%E6%80%A7"><span class="nav-text">2.1 线性和 ReLU MLPs 的隐式凸性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3%EF%BC%8C%E8%87%AA%E6%B3%A8%E6%84%8F%E5%8A%9B%E7%9A%84%E9%9A%90%E5%BC%8F%E5%87%B8%E6%80%A7"><span class="nav-text">3，自注意力的隐式凸性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4%EF%BC%8C%E6%9B%BF%E6%8D%A2%E6%B7%B7%E5%90%88%E6%9C%BA%E5%88%B6"><span class="nav-text">4，替换混合机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-MLP-Mixer"><span class="nav-text">4.1 MLP Mixer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-Fourier%E7%A5%9E%E7%BB%8F%E7%AE%97%E5%AD%90"><span class="nav-text">4.2 Fourier神经算子</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-1-%E5%9D%97%E5%AF%B9%E8%A7%92FNO"><span class="nav-text">4.2.1 块对角FNO</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5%EF%BC%8C%E6%95%B0%E5%80%BC%E7%BB%93%E6%9E%9C"><span class="nav-text">5，数值结果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6%EF%BC%8C%E6%80%BB%E7%BB%93"><span class="nav-text">6，总结</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

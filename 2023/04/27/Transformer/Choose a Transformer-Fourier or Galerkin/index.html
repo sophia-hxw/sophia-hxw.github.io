@@ -29,7 +29,7 @@
 <meta property="og:description" content="前言paper link 在算子学习的角度，将Transformer用在PDE的求解上">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-04-27T11:48:25.000Z">
-<meta property="article:modified_time" content="2023-05-09T15:34:59.081Z">
+<meta property="article:modified_time" content="2023-05-26T07:23:19.828Z">
 <meta property="article:author" content="xinwen">
 <meta property="article:tag" content="transformer">
 <meta property="article:tag" content="math">
@@ -231,7 +231,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-05-09 23:34:59" itemprop="dateModified" datetime="2023-05-09T23:34:59+08:00">2023-05-09</time>
+                <time title="修改时间：2023-05-26 15:23:19" itemprop="dateModified" datetime="2023-05-26T15:23:19+08:00">2023-05-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -282,21 +282,21 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2105.14995.pdf">paper link</a></p>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2105.14995.pdf">paper link</a></p>
 <p><strong>在算子学习的角度，将Transformer用在PDE的求解上</strong><br><span id="more"></span></p>
-<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p><strong>原文翻译</strong><br>在本文中，我们首次将 Attention Is All You Need [88] 中的自注意力机制应用于与偏微分方程相关的数据驱动算子学习问题。 努力解释启发式，并提高注意机制的功效。 通过在希尔伯特空间中使用算子逼近理论，首次证明了缩放点积注意力中的 softmax 归一化是充分的，但不是必需的。 在没有 softmax 的情况下，线性化 Transformer 变体的近似能力可以证明与 Petrov-Galerkin 投影分层相当，并且其估计与序列长度无关。 提出了一种模仿 Petrov-Galerkin 投影的新层归一化方案，以允许缩放通过注意力层传播，这有助于模型在使用非归一化数据的算子学习任务中实现显着的准确性。 最后，我们提出了三个算子学习实验，包括粘性 Burgers 方程、界面 Darcy 流和逆界面系数识别问题。 新提出的简单且基于注意力的算子学习器 Galerkin Transformer 与其 带softmax 归一化的相应模型相比，在训练成本和评估准确性方面都有显着改进。</p>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p><strong>原文翻译</strong><br>在本文中，我们首次将 Attention Is All You Need [88] 中的自注意力机制应用于与偏微分方程相关的数据驱动算子学习问题。 努力解释启发式，并提高注意机制的功效。 通过在希尔伯特空间中使用算子逼近理论，首次证明了缩放点积注意力中的 softmax 归一化是充分的，但不是必需的。 在没有 softmax 的情况下，线性化 Transformer 变体的近似能力可以证明与 Petrov-Galerkin 投影分层相当，并且其估计与序列长度无关。 提出了一种模仿 Petrov-Galerkin 投影的新层归一化方案，以允许缩放通过注意力层传播，这有助于模型在使用非归一化数据的算子学习任务中实现显着的准确性。 最后，我们提出了三个算子学习实验，包括粘性 Burgers 方程、界面 Darcy 流和逆界面系数识别问题。 新提出的简单且基于注意力的算子学习器 Galerkin Transformer 与其 带softmax 归一化的相应模型相比，在训练成本和评估准确性方面都有显着改进。</p>
 <p><strong>主要做了三个方面的事情：</strong></p>
 <ul>
 <li>尝试解释self-attention，提升其运算效率；</li>
 <li>softmax的作用和存在的必要性；</li>
 <li>层归一化的新替换方案；</li>
 </ul>
-<h2 id="一，介绍"><a href="#一，介绍" class="headerlink" title="一，介绍"></a>一，介绍</h2><p>在我们的世界中，从宇宙星体的运动，到温度风速的气象预报，再到分子原子间的相互作用，很多工程学、自然科学、经济和商业过程都可以通过偏微分方程（PDE）描述。几个世纪以来，科学家和工程师一直致力于逼近这些物理系统的控制PDE，计算机辅助模拟的出现为研究这些具有挑战性的问题提供了一种成本友好的方法。 传统方法，如有限元、有限差分法 [20、22]、谱方法 [12] 等，利用离散结构将无限维算子映射简化为有限维近似问题。 同时，在许多科学实践中，离散网格上可用的、PDE 控制现象的大量数据使现代黑盒模型（如物理信息神经网络（PINN）[71、62、49]）能够利用配置点上的测量 近似 PDE 解。</p>
+<h1 id="一，介绍"><a href="#一，介绍" class="headerlink" title="一，介绍"></a>一，介绍</h1><p>在我们的世界中，从宇宙星体的运动，到温度风速的气象预报，再到分子原子间的相互作用，很多工程学、自然科学、经济和商业过程都可以通过偏微分方程（PDE）描述。几个世纪以来，科学家和工程师一直致力于逼近这些物理系统的控制PDE，计算机辅助模拟的出现为研究这些具有挑战性的问题提供了一种成本友好的方法。 传统方法，如有限元、有限差分法 [20、22]、谱方法 [12] 等，利用离散结构将无限维算子映射简化为有限维近似问题。 同时，在许多科学实践中，离散网格上可用的、PDE 控制现象的大量数据使现代黑盒模型（如物理信息神经网络（PINN）[71、62、49]）能够利用配置点上的测量 近似 PDE 解。</p>
 <p>尽管如此，对于传统方法或数据驱动的函数学习器（如 PINN），给定 PDE，重点是逼近单个实例，例如，求解具有固定边界条件的某个系数的近似解，这个系数的微小变化会让数据驱动的函数学习器需要进行昂贵的再训练。 相比之下，算子学习者的目标是学习无限维函数空间之间的映射，这要困难得多但也有回报。 一个训练有素的算子学习者可以在没有重新训练或配置点的情况下评估许多实例，从而节省宝贵的资源，并且从长远来看将自己定位为更有效的方法。 数据驱动的分辨率不变算子学习是一个蓬勃发展的新研究方向 [60, 5, 56, 64, 90, 57, 61, 91, 37, 74]，开创性模型 DeepONet [60] 在架构上归因于运算符 [18] 的通用逼近定理。傅立叶神经算子 (FNO) [57]在某些基准测试中，展示了一种令人敬畏的最先进的性能，比 [100] 中的经典模型好几个数量级。</p>
 <p>在监督学习下，算子学习者接受算子的输入函数及其对输入的响应作为目标的训练，由于两个函数都是在离散网格点上采样的，因此这是 seq2seq 问题的特例 [81]。 当前最先进的 seq2seq 模型是在 [88] 中首次引入的 Transformer。 作为 Transformer 的核心和灵魂，缩放点积注意力机制能够通过捕获远程交互信息来挖掘算子的隐藏结构。 受到 Transformers [50、19、75、84、96、97、95、59、76、66] 中许多富有洞察力的开创性工作的启发，我们以数学上深刻的方式对注意力机制进行了最低限度的修改，以更好地服务于算子学习。</p>
 <p>在我们对缩放点积注意力在希尔伯特空间中的改编中，第一个也是最重要的变化是：没有 softmax 或其近似值。 在 vanilla attention [88] 中，矩阵乘法之后的 softmax 凸化了组合不同位置潜在表示的权重，这被认为是注意力机制正核解释中不可或缺的组成部分 [84]。 然而，softmax 全局作用于注意力矩阵的每一行的序列长度维度，进一步增加了经典 Transformer 中注意力的二次复杂度。 从理论上讲，与自然语言处理 (NLP) 传统中的“一行≈一词”不同，查询、键、值的列被视为离散网格上希尔伯特空间中的函数采样。 因此，去掉 softmax 允许我们验证离散的 Ladyzhenskaya–Babuška–Brezzi (LBB) 条件，这进一步证明了新提出的 Galerkin 类型的注意力可以明确地表示 Petrov-Galerkin 投影，并且这种近似能力是与序列长度无关（定理 4.3）。</p>
 <p>在数值上，无 softmax 模型节省了宝贵的计算资源，在训练 FLOP 和内存消耗方面优于使用 softmax 的模型（第 5 节）。 然而在消融研究中，无 softmax 模型的训练变得不稳定（表 8），为了解决这个问题，提出了一种新的 Galerkin 投影类型层归一化方案，作为在 Petrov-Galerkin 解释（等式（40））证明中明确导出的归一化廉价对角替代方案。 由于现在可以通过编码器层传播可学习的缩放比例，因此具有这种新层归一化方案的基于注意力的算子学习器表现出对与 PDE 相关的某些物理特性（例如能量衰减）的更好理解。 结合其他受近似理论启发的技巧，包括投影矩阵的对角占优重新缩放初始化和位置编码的逐层丰富，各种算子学习任务的评估精度得到显着提高。</p>
-<h3 id="主要贡献"><a href="#主要贡献" class="headerlink" title="主要贡献"></a>主要贡献</h3><ul>
+<h2 id="主要贡献"><a href="#主要贡献" class="headerlink" title="主要贡献"></a>主要贡献</h2><ul>
 <li><p>无softmax的注意力机制<br>我们提出了一种新的简单自注意算子及其没有 softmax 归一化的线性变体。 提供了两种新的数学解释，以及证明与 Petrov-Galerkin 投影相当的线性变体的近似能力。</p>
 </li>
 <li><p>参数化PDE的算子学习<br>我们将新提出的注意力算子与当前最先进的算子学习器傅立叶神经算子 (FNO) [57] 相结合，以显著提高其在 PDE 算子学习基准问题中的评估准确性。 此外，新模型能够根据传统方法或 FNO 无法完成的噪声测量恢复系数。</p>
@@ -304,10 +304,10 @@
 <li><p>实验结果<br>我们提出了三个基准问题，以表明使用新提出的注意力机制的算子学习器在计算、内存效率以及准确性方面优于传统的 softmax 归一化。 用于重现我们结果的 PyTorch 代码可作为开源软件使用。</p>
 </li>
 </ul>
-<h2 id="二，相关工作"><a href="#二，相关工作" class="headerlink" title="二，相关工作"></a>二，相关工作</h2><h3 id="PDE相关的算子学习"><a href="#PDE相关的算子学习" class="headerlink" title="PDE相关的算子学习"></a>PDE相关的算子学习</h3><p>在 [4, 5] 中，参数 PDE 的解算子的某些核形式是使用图神经网络来近似的。 另一个值得注意的并发方法是 DeepONet [60、61]。 [56] 通过利用多级网格结构进一步改进了内核方法。 [57] 提出了一种离散化不变的运算符学习器，以在某些基准问题中实现最先进的性能。 [90, 91] 提出了一种大致等同于附加注意力的 DeepONet，类似于 [7] 中的神经图灵机 (NMT)。 模型/降维与神经网络相结合是另一种流行的学习参数 PDE 解算子的方法 [10、64、55、24]。 深度卷积神经网络 (DCNN) 被广泛应用于学习具有固定离散化大小的解图 [1、9、40、36、35、100、86]。 最近，DCNN 已成功应用于各种反问题 [35, 47]，例如电阻抗层析成像 (EIT)。 据我们所知，对于一类具有随机界面几何形状的系数，还没有关于数据驱动方法的反界面系数识别的工作。</p>
-<h3 id="attention机制和变体"><a href="#attention机制和变体" class="headerlink" title="attention机制和变体"></a>attention机制和变体</h3><p>除了 [88] 中开创性的缩放点积注意力之外，早期的 [7] 提出了一种基于附加内容的注意力，然而，由于多重非线性组合，梯度消失问题。 [25] 展示了在投影后移除 [7] 中的 softmax 归一化的第一个努力，然而，它在加性插值传播阶段之前仍然使用 Sigmoid 非线性，并且表现比它的 softmax 对应物差。 当前流行的将注意力线性化的方法利用特征映射的存在假设来近似 softmax 内核 [50、19、70]。 另一种类型的线性化利用矩阵乘积的低阶特性，使用各种方法，例如采样或投影 [73、11、79、92] 或快速多极分解 [65]。 [75] 中的猜想启发我们移除 softmax 整体。 [76] 首先提出了在没有 softmax 的情况下针对线性复杂度注意力的逆序列长度缩放归一化，但是，缩放归一化尚未在示例中得到广泛研究并且表现更差。</p>
-<h3 id="Transformer的变量学习"><a href="#Transformer的变量学习" class="headerlink" title="Transformer的变量学习"></a>Transformer的变量学习</h3><p>[84] 中的内核解释启发我们使用 Galerkin 投影重新表述注意力。 [95，定理 2] 给出了去除 softmax 归一化以制定傅里叶型注意力的理论基础。 Nyström 近似 [97] 本质上承认注意力矩阵和积分核之间的相似性。 [96, 66, 59] 启发我们尝试不同的层归一化和重新缩放的对角占优初始化方案。 在我们的工作中反复使用位置编码来丰富潜在表示的做法可以追溯到 [2, 26]，最近，有助于 AlphaFold 2 [48] 的成功，因为如果 目标在坐标系和/或变换组中具有依赖性 ansatz，但难以明确量化。 其他关于调整注意机制以保存重要物理特性的研究在 [82, 31, 44] 中。</p>
-<h2 id="三，PDE的算子学习"><a href="#三，PDE的算子学习" class="headerlink" title="三，PDE的算子学习"></a>三，PDE的算子学习</h2>
+<h1 id="二，相关工作"><a href="#二，相关工作" class="headerlink" title="二，相关工作"></a>二，相关工作</h1><h2 id="PDE相关的算子学习"><a href="#PDE相关的算子学习" class="headerlink" title="PDE相关的算子学习"></a>PDE相关的算子学习</h2><p>在 [4, 5] 中，参数 PDE 的解算子的某些核形式是使用图神经网络来近似的。 另一个值得注意的并发方法是 DeepONet [60、61]。 [56] 通过利用多级网格结构进一步改进了内核方法。 [57] 提出了一种离散化不变的运算符学习器，以在某些基准问题中实现最先进的性能。 [90, 91] 提出了一种大致等同于附加注意力的 DeepONet，类似于 [7] 中的神经图灵机 (NMT)。 模型/降维与神经网络相结合是另一种流行的学习参数 PDE 解算子的方法 [10、64、55、24]。 深度卷积神经网络 (DCNN) 被广泛应用于学习具有固定离散化大小的解图 [1、9、40、36、35、100、86]。 最近，DCNN 已成功应用于各种反问题 [35, 47]，例如电阻抗层析成像 (EIT)。 据我们所知，对于一类具有随机界面几何形状的系数，还没有关于数据驱动方法的反界面系数识别的工作。</p>
+<h2 id="attention机制和变体"><a href="#attention机制和变体" class="headerlink" title="attention机制和变体"></a>attention机制和变体</h2><p>除了 [88] 中开创性的缩放点积注意力之外，早期的 [7] 提出了一种基于附加内容的注意力，然而，由于多重非线性组合，梯度消失问题。 [25] 展示了在投影后移除 [7] 中的 softmax 归一化的第一个努力，然而，它在加性插值传播阶段之前仍然使用 Sigmoid 非线性，并且表现比它的 softmax 对应物差。 当前流行的将注意力线性化的方法利用特征映射的存在假设来近似 softmax 内核 [50、19、70]。 另一种类型的线性化利用矩阵乘积的低阶特性，使用各种方法，例如采样或投影 [73、11、79、92] 或快速多极分解 [65]。 [75] 中的猜想启发我们移除 softmax 整体。 [76] 首先提出了在没有 softmax 的情况下针对线性复杂度注意力的逆序列长度缩放归一化，但是，缩放归一化尚未在示例中得到广泛研究并且表现更差。</p>
+<h2 id="Transformer的变量学习"><a href="#Transformer的变量学习" class="headerlink" title="Transformer的变量学习"></a>Transformer的变量学习</h2><p>[84] 中的内核解释启发我们使用 Galerkin 投影重新表述注意力。 [95，定理 2] 给出了去除 softmax 归一化以制定傅里叶型注意力的理论基础。 Nyström 近似 [97] 本质上承认注意力矩阵和积分核之间的相似性。 [96, 66, 59] 启发我们尝试不同的层归一化和重新缩放的对角占优初始化方案。 在我们的工作中反复使用位置编码来丰富潜在表示的做法可以追溯到 [2, 26]，最近，有助于 AlphaFold 2 [48] 的成功，因为如果 目标在坐标系和/或变换组中具有依赖性 ansatz，但难以明确量化。 其他关于调整注意机制以保存重要物理特性的研究在 [82, 31, 44] 中。</p>
+<h1 id="三，PDE的算子学习"><a href="#三，PDE的算子学习" class="headerlink" title="三，PDE的算子学习"></a>三，PDE的算子学习</h1>
     </div>
 
     
@@ -410,7 +410,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%EF%BC%8C%E4%BB%8B%E7%BB%8D"><span class="nav-text">一，介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E8%B4%A1%E7%8C%AE"><span class="nav-text">主要贡献</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%EF%BC%8C%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C"><span class="nav-text">二，相关工作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PDE%E7%9B%B8%E5%85%B3%E7%9A%84%E7%AE%97%E5%AD%90%E5%AD%A6%E4%B9%A0"><span class="nav-text">PDE相关的算子学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#attention%E6%9C%BA%E5%88%B6%E5%92%8C%E5%8F%98%E4%BD%93"><span class="nav-text">attention机制和变体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Transformer%E7%9A%84%E5%8F%98%E9%87%8F%E5%AD%A6%E4%B9%A0"><span class="nav-text">Transformer的变量学习</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%EF%BC%8CPDE%E7%9A%84%E7%AE%97%E5%AD%90%E5%AD%A6%E4%B9%A0"><span class="nav-text">三，PDE的算子学习</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%EF%BC%8C%E4%BB%8B%E7%BB%8D"><span class="nav-text">一，介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E8%B4%A1%E7%8C%AE"><span class="nav-text">主要贡献</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%EF%BC%8C%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C"><span class="nav-text">二，相关工作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PDE%E7%9B%B8%E5%85%B3%E7%9A%84%E7%AE%97%E5%AD%90%E5%AD%A6%E4%B9%A0"><span class="nav-text">PDE相关的算子学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#attention%E6%9C%BA%E5%88%B6%E5%92%8C%E5%8F%98%E4%BD%93"><span class="nav-text">attention机制和变体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transformer%E7%9A%84%E5%8F%98%E9%87%8F%E5%AD%A6%E4%B9%A0"><span class="nav-text">Transformer的变量学习</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%EF%BC%8CPDE%E7%9A%84%E7%AE%97%E5%AD%90%E5%AD%A6%E4%B9%A0"><span class="nav-text">三，PDE的算子学习</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
