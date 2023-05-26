@@ -287,18 +287,23 @@ k-\tau^i_j(k)\leq \Delta,\; k=0,1...
 <p>由于 $\gamma&gt;0$，根据上述定理，我们有 $\gamma&gt;L\sqrt{\Delta(\Delta+1)}$。 因此 $\gamma$ 的选择取决于 $\Delta$ 和 $L$ 的估计。我们的异步 BCD 可用于求解 LPOM，从而得到异步 LPOM，对于 async-LPOM，我们可以将 $\Delta$ 设置为 CPU 核心数。 假设 $\phi(x)$ 是 $\beta-Lipschitz$ 连续的（在（32）中定义），我们可以将 $L$ 设置为 $L=\beta max\{|W^2|^2_2,…|W^{n-1}|^2_2,|X^1|^2_2,…|X^{n-1}|^2_2 \} $。 $\gamma$ 的理论估计值非常大，在实践中，我们通过逐渐增加其值来选择 $\gamma$，直到 async-LPOM 收敛。 然而，async-LPOM 并没有完全利用问题 (19) 的属性，即每个 $X^i$ 仅与 $X^{i-1}$ 相关，并且 $X^i$ 和 $\{W^i\}^{n-1}_{i=1}$ 可以完全并行更新。 所以 async-LPOM 并没有我们预期的那么快。 这促使我们考虑开发同步并行 LPOM (sync-LPOM)，它可以更好地利用 LPOM 的特性。</p>
 <h2 id="5-2-同步并行-LPOM"><a href="#5-2-同步并行-LPOM" class="headerlink" title="5.2 同步并行 LPOM"></a>5.2 同步并行 LPOM</h2><p>我们首先分析算法 1 中的串行 LPOM。当 $\{X^i\}_{i=2}^n$ 固定时，每个 $W^i$ 的更新独立于其他 $W^j，j \neq i$（见（30））。 因此算法 1 中的步骤 c 可以完全并行化完成。 我们生成 $n-1$ 个线程，每个线程独立地求解每个 $W^ i$ 。 在 $\{W^i\}^{n-1}_{i=1} $ 固定的情况下，$X^i (i\in\{2,…n-1\})$ 的更新与 $X^{i-1}$ 和 $X^{i+1}$ 有关（参见 (26)），而 $X^n$ 的更新与 $X^{n-1}$ 有关 （见（29））。 所以我们只需要同步并行化步骤 a 和 b 。</p>
 <p>我们将 $X^i$ 的更新并行化如下，我们创建了 $n-1$ 个线程。 每个线程迭代方程（26）或方程(29) 来更新 $X^i$， 该步骤由每个线程独立且同时执行。 当所有线程完成该步骤时，我们重复该过程多次，直到达到最大时间。 然而，我们注意到更新相邻 $X^i$ 时的耦合（参见 (26) 和 (29)， 解耦块有助于并行算法的收敛，最大化并行度也是并行算法所追求的。 那么更新 $X^i$ 的奇偶交替方案是唯一可以同时具有最大并行度和最小耦合度的选择。 即，我们首先同步更新奇数子序列 $\{X^3,X^5,…\}$，然后使用更新的 $\{X^3,X^5,…\}$，我们同步更新偶数子序列 $\{X^2,X^4,…\}$。 此外，受 SGD 中使用的动量的启发，我们考虑了每个 $X^i$ 的先前值，导致更新后的 $X^i$ 序列的移动平均值，sync-LPOM 的整个算法在算法 3 中进行了总结。请注意，sync-LPOM 是 async-LPOM 的特例，其中允许更新块的顺序是非随机的。 所以定理 5 的结论也适用于 sync-LPOM。</p>
-<h1 id="六，实验"><a href="#六，实验" class="headerlink" title="六，实验"></a>六，实验</h1><p>在本节中，我们对所提出的 LPOM 和 sync-LPOM 进行了广泛的实验评估。 我们首先评估 LPOM 在图像分类任务上的性能。 我们还进行消融研究来分析 LPOM。 然后，我们研究了 sync-LPOM 在自动编码器训练任务上的计算效率和性能。<br>我们在自动编码器训练任务上测试 sync-LPOM 的原因如下。 首先，目前 LPOM 和 sync-LPOM 仅适用于全连接前馈神经网络。 其次，我们的主要目标是评估 sync-LPOM 的加速。 但是，如果存在具有主导计算的层，则无法加速 sync-LPOM。 比如784-10-10-10网络，X2的更新比X3和X4慢16倍。 串行 LPOM 和同步 LPOM 都将以更新 X2 为主。 因此同步 LPOM 不会比串行 LPOM 有加速。 因此，sync-LPOM 有利于等宽网络，这在分类网络中并不常见。 这促使我们选择自动编码器。 第三，深度自动编码器具有挑战性，因为它们必须在一层非常低维的约束下重建输入。 困难主要来自网络架构而不是使用的数据集。 在基准数据集上训练自动编码器被认为是评估前馈神经网络优化方法的标准问题 [18]，[32]。 出于上述原因，我们使用各种自动编码器架构和数据集测试 sync-LPOM。</p>
-<h2 id="6-1-LPOM结果"><a href="#6-1-LPOM结果" class="headerlink" title="6.1 LPOM结果"></a>6.1 LPOM结果</h2><p>我们通过与三种具有代表性的基于梯度的方法（SGD、Adam [10] 和 AMSGrad [11]）和三种基于非梯度的方法 [17]、[23]、[24] 进行比较来测试 LPOM。 其他基于非梯度的方法不训练用于分类任务的完全连接的前馈神经网络（例如，使用跳跃连接 [22]、训练自动编码器 [18] 和哈希学习 [21]）。 所以我们不跟他们比较。 为简单起见，我们使用 MSE 损失函数。 由于几种方法[23]，<br>[24]只给出了ReLU的求解方法，我们也使用了ReLU激活函数。 与 [23] 和 [24] 不同，我们不对权重 fW i gn 1 使用任何正则化，因为它 i1⁄41 通常无助于减少训练损失。 我们使用相同的输入和随机初始化运行 LPOM 和三种基于梯度的方法 [33]。 我们使用 MATLAB 实现 LPOM、SGD、Adam 和 AMSGrad。 对于 LPOM，我们在 (19) 中为所有网络设置 mi 1⁄4 2。 对于 SGD，学习率设置为最大可行值，并在总 epoch 的一半和四分之三处乘以 0.1。 对于 Adam 和 AMSGrad，我们仔细调整参数以达到最佳性能。 对于 [23] 和 [24]，我们使用作者提供的具有默认参数设置的源代码。 对于 [17]，我们阅读了论文图 1b 中的结果。</p>
-<h3 id="6-1-1-与基于梯度的方法比较"><a href="#6-1-1-与基于梯度的方法比较" class="headerlink" title="6.1.1 与基于梯度的方法比较"></a>6.1.1 与基于梯度的方法比较</h3><p>我们在 MNIST [34]、CIFAR-10 [35] 和 ImageNet [36] 数据集上进行实验。 MNIST 数据集有 60,000 个训练图像和 10,000 个测试图像，这些图像与来自 10 个类别的标签相关联。 我们使用 28 28 1⁄4 784 个原始像素作为输入，不使用任何预处理或数据增强。 对于所有比较的方法，在每个时期，整个训练样本都经过一次。 网络架构可能会影响性能。 由于过度参数化在训练 [37]、[38] 时极大地促进了基于梯度的方法，因此我们与过度参数化网络进行了比较。 在 [19] 之后，我们使用 784-2048-2048-2048-10 前馈网络。 我们以固定的批量大小 100 运行 100 个 epoch 的所有方法。训练和测试精度如图 1 和 2 所示。 1a 和 1b。 我们可以看到所有方法的最终训练准确率都大约等于 100%。 然而，LPOM 的测试精度与 Adam、AMSGrad 和 SGD 的测试精度相当或略好。 最终的测试准确率是：Adam 98.1%，AMSGrad 98.5%，SGD 98.5%，LPOM 98.6%。</p>
-<p>CIFAR-10 数据集有 50,000 个训练图像和 10,000 个测试彩色图像，与来自 10 个类别的标签相关联。 我们使用 32 32 31⁄43072 个原始像素作为输入。 与 [19] 中一样，我们使用 3072-4000-1000-4000-10 前馈网络。 我们通过分别减去训练数据集的红色、绿色和蓝色通道的均值来标准化每个彩色图像。 我们不使用任何数据扩充。 我们以固定的批量大小 100 运行 100 个 epoch 的所有方法。训练和测试精度如图 1 和 2 所示。 1c 和 1d。 我们可以看到只有 LPOM 的训练准确率大约等于 100%。 基于梯度的方法没有实现零训练损失。 这可能是因为使用的网络具有低维隐藏层，难以优化。 在比较测试精度时，我们可以看到 LPOM 能够匹配或击败其他方法。 最终的测试准确率是：Adam 53.5%，AMSGrad 54.7%，SGD 54.7%，LPOM 54.7%。 请注意，LPOM 获得了近乎完美的训练精度，但测试精度与其他训练精度低得多的方法相当。 我们要注意，这种情况不是过度拟合的问题。 首先，过度拟合用于评估可训练模型的性能而不是优化方法。 所以过拟合的定义不适用。 其次，如果一个模型达到了相当或更好的训练精度，但测试精度比其他模型差得多，我们可能会认为它过度拟合了训练数据集。 虽然 LPOM 训练的网络具有更好的训练精度，但其测试精度与其他方法训练的网络相当或略好。 所以过拟合现象不适用于这种情况。 第三，LPOM 是一种神经网络优化方法。 所以它的主要目标是拟合训练数据集。 测试准确性在很大程度上取决于训练期间使用的权重正则化的类型和数量，这是实践中的一个重要问题。 由于我们专注于优化，因此权重正则化不在我们的讨论范围之内。</p>
-<p>ImageNet 数据集包含来自 1,000 个类别的 1,281,167 张训练图像和 50,000 张验证图像。 ImageNet 数据集中的图像通常为 224 224 3 像素。 为了进行快速实验，我们改用 ImageNet32x32 数据集 [39]，该数据集可以从 ImageNet 项目的官方网站下载。6 ImageNet32x32 数据集保留了原始 ImageNet 数据集的复杂性，在自动化机器学习 (AutoML) 中被广泛采用 . 它是 ImageNet 数据集的下采样版本，大小为 32 32 3 像素。 它具有与 ImageNet 数据集相同数量的图像和类别。 我们将所有验证图像作为测试集。 我们对每个图像使用与 CIFAR-10 图像相同的预处理。 我们使用原始像素作为输入，不使用任何数据增强。 我们以固定批量大小 100 运行 100 个 epoch 的所有方法。我们使用 3072-1024-1024-1024-1000 前馈网络。 训练和测试精度如图 2 所示。我们可以看到 LPOM 达到了最好的训练和测试精度。 最终的训练精度为：Adam 0.102%、AMSGrad 0.611%、SGD 1.112% 和 LPOM 17.916%。 最终测试精度为：Adam 0.100%、AMSGrad 0.318%、SGD 0.596% 和 LPOM 2.064%。 与文献中报道的精度相比，这些精度非常低。 原因如下。 首先，我们使用全连接 NN 而不是 CNN。 其次，较低的图像分辨率会使分类任务变得更加困难。 第三，找到适合 ImageNet32x32 的全连接神经网络的最佳深度和隐藏层宽度需要付出很多努力，这不是我们论文的目标，我们在文献中没有找到这样的参考，所以我们只选择一个相对 简单的一个。 第四，我们不使用数据扩充来提高测试性能。 第五，我们没有对所有比较方法使用额外的学习技巧，例如权重正则化、BN 和动量。</p>
+<h1 id="六，实验"><a href="#六，实验" class="headerlink" title="六，实验"></a>六，实验</h1><p>在本节中，我们对所提出的 LPOM 和 sync-LPOM 进行了广泛的实验评估。 我们首先评估 LPOM 在图像分类任务上的性能，也进行了消融研究来分析 LPOM。 然后，我们研究了 sync-LPOM 在自动编码器训练任务上的计算效率和性能。</p>
+<p>我们在自动编码器训练任务上测试 sync-LPOM 的原因有如下几个：首先，目前 LPOM 和 sync-LPOM 仅适用于全连接前馈神经网络。 其次，我们的主要目标是评估 sync-LPOM 的加速。 但是，如果存在具有主导计算的层，则无法加速 sync-LPOM， 比如784-10-10-10网络，$X^2$ 的更新比 $X^3$ 和 $X^4$ 慢16倍，串行 LPOM 和同步 LPOM 都将以更新 $X^2$ 为主，因此同步 LPOM 不会比串行 LPOM 有加速。 因此，sync-LPOM 有利于等宽网络，这在分类网络中并不常见。 这促使我们选择自动编码器。 最后，深度自动编码器具有挑战性，因为它们必须在一层非常低维的约束下重建输入，困难主要来自网络架构而不是使用的数据集，在基准数据集上训练自动编码器被认为是评估前馈神经网络优化方法的标准问题 [18]，[32]。 出于上述原因，我们使用各种自动编码器架构和数据集测试 sync-LPOM。</p>
+<h2 id="6-1-LPOM结果"><a href="#6-1-LPOM结果" class="headerlink" title="6.1 LPOM结果"></a>6.1 LPOM结果</h2><p>我们通过与三种具有代表性的基于梯度的方法（SGD、Adam [10] 和 AMSGrad [11]）和三种基于非梯度的方法 [17]、[23]、[24] 进行比较来测试 LPOM。 其他基于非梯度的方法不训练用于分类任务的完全连接的前馈神经网络（例如，使用跳跃连接 [22]、训练自动编码器 [18] 和哈希学习 [21]）。 所以我们不跟他们比较。 为简单起见，我们使用 MSE 损失函数。 由于几种方法[23]，[24]只给出了ReLU的求解方法，我们也使用了ReLU激活函数。 与 [23] 和 [24] 不同，我们不对权重 $\{W^i \}^{n-1}_{i=1}$ 使用任何正则化，因为它通常无助于减少训练损失。 我们使用相同的输入和随机初始化运行 LPOM 和三种基于梯度的方法 [33]。 我们使用 MATLAB 实现 LPOM、SGD、Adam 和 AMSGrad。 对于 LPOM，我们在 (19) 中为所有网络设置 $\mu_i=2$。 对于 SGD，学习率设置为最大可行值，并在总 epoch 的一半和四分之三处乘以 $0.1$。 对于 Adam 和 AMSGrad，我们仔细调整参数以达到最佳性能。 对于 [23] 和 [24]，我们使用作者提供的具有默认参数设置的源代码。 对于 [17]，我们阅读了论文图 1b 中的结果。</p>
+<h3 id="6-1-1-与基于梯度的方法比较"><a href="#6-1-1-与基于梯度的方法比较" class="headerlink" title="6.1.1 与基于梯度的方法比较"></a>6.1.1 与基于梯度的方法比较</h3><p>我们在 MNIST [34]、CIFAR-10 [35] 和 ImageNet [36] 数据集上进行实验。 MNIST 数据集有 60,000 个训练图像和 10,000 个测试图像，这些图像与来自 10 个类别的标签相关联。 我们使用 $28\times 28=784$ 个原始像素作为输入，不使用任何预处理或数据增强。 对于所有比较的方法，在每个时期，整个训练样本都经过一次。 网络架构可能会影响性能。 由于过度参数化在训练 [37]、[38] 时极大地促进了基于梯度的方法，因此我们与过度参数化网络进行了比较。 在 [19] 之后，我们使用 784-2048-2048-2048-10 前馈网络。 我们以固定的批量大小 100 运行 100 个 epoch 的所有方法。训练和测试精度如图 1 和 2 所示。 1a 和 1b。 我们可以看到所有方法的最终训练准确率都大约等于 100%。 然而，LPOM 的测试精度与 Adam、AMSGrad 和 SGD 的测试精度相当或略好。 最终的测试准确率是：Adam $98.1%$，AMSGrad $98.5%$，SGD $98.5%$，LPOM $98.6%$。</p>
+<p>CIFAR-10 数据集有 50,000 个训练图像和 10,000 个测试彩色图像，与来自 10 个类别的标签相关联。 我们使用 32 32 31⁄43072 个原始像素作为输入。 与 [19] 中一样，我们使用 3072-4000-1000-4000-10 前馈网络。 我们通过分别减去训练数据集的红色、绿色和蓝色通道的均值来标准化每个彩色图像。 我们不使用任何数据扩充。 我们以固定的批量大小 100 运行 100 个 epoch 的所有方法。训练和测试精度如图 1 和 2 所示。 1c 和 1d。 我们可以看到只有 LPOM 的训练准确率大约等于 $100%$。 基于梯度的方法没有实现零训练损失。 这可能是因为使用的网络具有低维隐藏层，难以优化。 在比较测试精度时，我们可以看到 LPOM 能够匹配或击败其他方法。 最终的测试准确率是：Adam $53.5%$，AMSGrad $54.7%$，SGD $54.7%$，LPOM $54.7%$。 请注意，LPOM 获得了近乎完美的训练精度，但测试精度与其他训练精度低得多的方法相当。 我们要注意，这种情况不是过度拟合的问题。 首先，过度拟合用于评估可训练模型的性能而不是优化方法。 所以过拟合的定义不适用。 其次，如果一个模型达到了相当或更好的训练精度，但测试精度比其他模型差得多，我们可能会认为它过度拟合了训练数据集。 虽然 LPOM 训练的网络具有更好的训练精度，但其测试精度与其他方法训练的网络相当或略好。 所以过拟合现象不适用于这种情况。 第三，LPOM 是一种神经网络优化方法。 所以它的主要目标是拟合训练数据集。 测试准确性在很大程度上取决于训练期间使用的权重正则化的类型和数量，这是实践中的一个重要问题。 由于我们专注于优化，因此权重正则化不在我们的讨论范围之内。</p>
+<p>ImageNet 数据集包含来自 1,000 个类别的 1,281,167 张训练图像和 50,000 张验证图像。 ImageNet 数据集中的图像通常为 $224\times 224\times 3$ 像素。 为了进行快速实验，我们改用 ImageNet32x32 数据集 [39]，该数据集可以从 ImageNet 项目的官方网站下载。ImageNet32x32 数据集保留了原始 ImageNet 数据集的复杂性，在自动化机器学习 (AutoML) 中被广泛采用 . 它是 ImageNet 数据集的下采样版本，大小为 $32\times 32\times 3$ 像素。 它具有与 ImageNet 数据集相同数量的图像和类别。 我们将所有验证图像作为测试集。 我们对每个图像使用与 CIFAR-10 图像相同的预处理。 我们使用原始像素作为输入，不使用任何数据增强。 我们以固定批量大小 100 运行 100 个 epoch 的所有方法。我们使用 3072-1024-1024-1024-1000 前馈网络。 训练和测试精度如图 2 所示。我们可以看到 LPOM 达到了最好的训练和测试精度。 最终的训练精度为：Adam $0.102%$、AMSGrad $0.611%$、SGD $1.112%$ 和 LPOM $17.916%$。 最终测试精度为：Adam $0.100%$、AMSGrad $0.318%$、SGD $0.596%$ 和 LPOM $2.064%$。 与文献中报道的精度相比，这些精度非常低。 原因如下。 首先，我们使用全连接 NN 而不是 CNN。 其次，较低的图像分辨率会使分类任务变得更加困难。 第三，找到适合 ImageNet32x32 的全连接神经网络的最佳深度和隐藏层宽度需要付出很多努力，这不是我们论文的目标，我们在文献中没有找到这样的参考，所以我们只选择一个相对 简单的一个。 第四，我们不使用数据扩充来提高测试性能。 第五，我们没有对所有比较方法使用额外的学习技巧，例如权重正则化、BN 和动量。</p>
 <h3 id="6-1-2-与其他不基于梯度的方法比较"><a href="#6-1-2-与其他不基于梯度的方法比较" class="headerlink" title="6.1.2 与其他不基于梯度的方法比较"></a>6.1.2 与其他不基于梯度的方法比较</h3><p>我们首先在 MNIST 数据集上使用相同的架构与 [23] 和 [24] 进行比较。 与 [23] 中一样，我们使用固定批大小 100 运行 17 个 epoch 的所有方法。我们不使用任何预处理或数据扩充。 表 4 总结了三种方法的测试精度，其中最佳值以粗体显示。 由于 [24] 中的公式等同于 LPOM 的公式，我们可以看到 [24] 和具有 ReLU 激活函数的 LPOM 比 [23] 表现得更好。 这符合我们在第 3.2 节中的分析。 尽管使用等效公式，LPOM 仍然优于 [24]，这证明了我们求解方法的优越性。<br>按照 [17] 中的数据集和网络架构设置，我们在街景门牌号 (SVHN) 数据集 [40] 上测试 LPOM。 表 5 总结了 SGD、[17]、[23]、[24] 和 LPOM 的测试精度，其中最佳值以粗体显示。 我们可以看到 LPOM 实现了最佳性能。 这进一步证明了LPOM的优势。</p>
-<h3 id="6-1-3-LPOM-的消融研究"><a href="#6-1-3-LPOM-的消融研究" class="headerlink" title="6.1.3 LPOM 的消融研究"></a>6.1.3 LPOM 的消融研究</h3><p>我们对 LPOM 进行消融研究，以评估 (19) 中的惩罚参数 mi 和所用激活函数的影响。 我们使用 MSE 损失函数和 MNIST 数据集，而不使用任何预处理或数据扩充。 我们使用 784-400-200-100-50-10 前馈网络，这是 [23] 中最深的网络。 对于所有情况，我们使用相同的源代码和随机初始化 [33]。 对于每种情况，我们运行 LPOM 20 个周期，固定批大小为 100。</p>
-<p>我们使用表 3 中显示的所有激活函数测试 LPOM。我们分别为 leaky ReLU 和 ELU 激活函数设置 a1⁄40:01 和 a1⁄41。 对于 (19) 中的惩罚参数 mi，我们为每个激活函数设置 mi 1⁄4 m，其中 m 2 f2； 5; 10; 20； 50； 100克。 我们不调整不同 mi 的原因将在后面给出。 表 6 显示了具有各种 m 和激活函数的 LPOM 的最终训练和测试精度。 我们可以看到，具有每个激活函数的 LPOM 在相当大的 m 范围内保持稳定。 这进一步证实了LPOM的参数设置是非常容易的。 对于分类任务，当 m 为 50 时，具有 sigmoid、tanh、ReLU 或 leaky ReLU 激活函数的 LPOM 的性能优于其余两个函数。在图 3 中，我们将 LPOM 的行为与 mi 1⁄4 5 进行比较 不同的激活函数。 可以看出，具有 ReLU 或 leaky ReLU 激活函数的 LPOM 收敛得更快。<br>我们对 LPOM 的经验参数设置（即在 (19) 中设置 m 1⁄4 m）实际上具有理论依据。 顾等。 [24] 开发了一种可变缩放策略来证明我们对 LPOM 的参数设置在理论上保证了 ReLU 激活函数。 也就是说，理论上我们可以将（19）中的惩罚参数 mi 减少到 ReLU 的一个参数 m。 实际上，变量缩放策略仅适用于正齐次函数。 即，fð!xÞ 1⁄4 !fðxÞ 对于所有 ! ！ 0. 这样的函数可以写成</p>
+<h3 id="6-1-3-LPOM-的消融研究"><a href="#6-1-3-LPOM-的消融研究" class="headerlink" title="6.1.3 LPOM 的消融研究"></a>6.1.3 LPOM 的消融研究</h3><p>我们对 LPOM 进行消融研究，以评估 (19) 中的惩罚参数 $\mu_i$ 和所用激活函数的影响。 我们使用 MSE 损失函数和 MNIST 数据集，而不使用任何预处理或数据扩充。 我们使用 784-400-200-100-50-10 前馈网络，这是 [23] 中最深的网络。 对于所有情况，我们使用相同的源代码和随机初始化 [33]。 对于每种情况，我们运行 LPOM 20 个周期，固定批大小为 100。</p>
+<p>我们使用表 3 中显示的所有激活函数测试 LPOM。我们分别为 leaky ReLU 和 ELU 激活函数设置 $\alpha=0.01$ 和 $\alpha=1$。 对于 (19) 中的惩罚参数 $\mu_i$，我们为每个激活函数设置 $\mu_i=\mu$，其中 $\mu\in\{2, 5, 10, 20, 50, 100\}$。 我们不调整不同 $\mu_i$ 的原因将在后面给出。 表 6 显示了具有各种 $\mu$ 和激活函数的 LPOM 的最终训练和测试精度。 我们可以看到，具有每个激活函数的 LPOM 在相当大的 $\mu$ 范围内保持稳定。 这进一步证实了LPOM的参数设置是非常容易的。 对于分类任务，当 $\mu \leq 50$ 时，具有 sigmoid、tanh、ReLU 或 leaky ReLU 激活函数的 LPOM 的性能优于其余两个函数。在图 3 中，我们将 LPOM 的行为与 $\mu_i=5$ 进行比较 不同的激活函数。 可以看出，具有 ReLU 或 leaky ReLU 激活函数的 LPOM 收敛得更快。</p>
+<p>我们对 LPOM 的经验参数设置（即在 (19) 中设置 $\mu_i =\mu$）实际上具有理论依据。 顾等。 [24] 开发了一种可变缩放策略来证明我们对 LPOM 的参数设置在理论上保证了 ReLU 激活函数。 也就是说，理论上我们可以将（19）中的惩罚参数 $\mu_i$ 减少到 ReLU 的一个参数 $\mu$。 实际上，变量缩放策略仅适用于正齐次函数。 即，$\phi(\lambda x)=\lambda\phi(x) $ 对于所有 $\lambda\geq 0$. 这样的函数可以写成</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\tag{39}
-\end{align*}</script><p>其中 a &gt; 0 和 b ! 0. 我们在补充材料的附录 G 中提供证明，可在线获取。 (39) 中的形式包括线性、ReLU 和 leaky ReLU 激活函数。 我们在 (19) 中的经验设置 mi 1⁄4 m 尚未在理论上证明适用于所有可行的激活函数，例如 ELU、softplus、sigmoid 和 tanh。 然而，我们要注意，正齐次激活函数在实践中是最流行的。 ELU 和 softplus 激活函数是正齐次对应函数的平滑近似。 所以使用单一参数 m 也大致适用于 ELU 和 softplus。 至于 sigmoid 和 tanh 激活函数，我们可以从表 6 中看出，当在 (19) 中将 mi 设置为 1⁄4 m 时，它们也能很好地工作。 因此，我们认为在 LPOM 中使用单个惩罚参数应该足以满足大多数常用激活函数的需求。 最后，我们要强调的是，定理 3 为选择 mn 提供了理论参考。 例如，在使用MSE损失函数和tanh激活函数时，我们应该为LPOM设置mn &gt; 1。 总的来说，我们可以得出结论，LPOM 中惩罚参数的调整非常简单。</p>
+\phi(x)=\begin{cases} 
+\alpha x,\; & x\geq 0\\
+\beta x,\; & x<0
+\end{cases}\tag{39}
+\end{align*}</script><p>其中 $\alpha &gt; 0$ 和 $\beta \geq 0$. 我们在补充材料的附录 G 中提供证明，可在线获取。 (39) 中的形式包括线性、ReLU 和 leaky ReLU 激活函数。 我们在 (19) 中的经验设置 $\mu_i = \mu$ 尚未在理论上证明适用于所有可行的激活函数，例如 ELU、softplus、sigmoid 和 tanh。 然而，我们要注意，正齐次激活函数在实践中是最流行的。 ELU 和 softplus 激活函数是正齐次对应函数的平滑近似。 所以使用单一参数 $\mu$ 也大致适用于 ELU 和 softplus。 至于 sigmoid 和 tanh 激活函数，我们可以从表 6 中看出，当在 (19) 中将 $\mu_i=\mu$ 时，它们也能很好地工作。 因此，我们认为在 LPOM 中使用单个惩罚参数应该足以满足大多数常用激活函数的需求。 最后，我们要强调的是，定理 3 为选择 mn 提供了理论参考。 例如，在使用MSE损失函数和tanh激活函数时，我们应该为LPOM设置mn &gt; 1。 总的来说，我们可以得出结论，LPOM 中惩罚参数的调整非常简单。</p>
 <h2 id="6-2-同步-LPOM-的结果"><a href="#6-2-同步-LPOM-的结果" class="headerlink" title="6.2 同步 LPOM 的结果"></a>6.2 同步 LPOM 的结果</h2><p>我们在 C++ 中实现了串行 LPOM、sync-LPOM、SGD、Adam 和 AMSGrad。 没有对权重 fW i gn 1 使用正则化。 我们使用 MSE 损失函数和 ReLU 激活函数。 较小的训练或测试损失值表示更好的性能。 对于所有方法，我们使用相同的输入、随机初始化 [33] 和批量大小（此处为 100）。 对于 sync-LPOM，我们使用 POSIX 线程作为并行编程框架。 对于 LPOM 和 sync-LPOM，我们设置 mi 1⁄4 20。对于 SGD，学习率设置为最大可行值，并在总 epoch 的一半和四分之三处乘以 0.1。 对于 Adam 和 AMSGrad，我们调整参数以获得最佳性能。 所有实验均在一台 Intel(R) Core(TM) i7-8700 CPU 3.20 GHz 12 核计算机上进行。 与 [32] 一样，我们在三个灰度图像数据集上进行测试，总结在表 7 中。Curves 数据集由合成曲线组成，MNIST 数据集包含手写数字，Faces 数据集是增强的 Oli - vetti 人脸数据集。</p>
 <h3 id="6-2-1-CPU-的计算效率"><a href="#6-2-1-CPU-的计算效率" class="headerlink" title="6.2.1 CPU 的计算效率"></a>6.2.1 CPU 的计算效率</h3><p>所有方法的编码和解码时间都相等。 所以我们只比较训练中的时间成本。 我们在 MNIST 数据集上进行了三组实验。<br>为了编程方便，我们将每一层分配给一个 CPU 内核，这样可以减少不同层更新之间的干扰，从而可以更好地比较加速性能。 因此，对于 sync-LPOM，理想的核心数等于网络层数。 我们首先在各种等宽自动编码器（此处维度为 784）上测试具有理想 CPU 内核的 sync-LPOM 的加速。 层加速比定义为</p>
 <script type="math/tex; mode=display">
@@ -801,6 +806,28 @@ a_{i,j} = \frac{1}{2-y_i^\top y_j}(\sum^n_{k=1}\frac{1}{2-y_i^\top y_k})^{-1}
       </tags>
   </entry>
   <entry>
+    <title>A Mathematical Framework for Transformer Circuits</title>
+    <url>/2023/04/27/Transformer/A%20Mathematical%20Framework%20for%20Transformer%20Circuits/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><a href="https://transformer-circuits.pub/2021/framework/index.html">link</a></p>
+<p><strong>transformerd的数学框架？</strong><br><span id="more"></span></p>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Transformer语言模型在新兴产业中的使用越来越广泛，比如GPT-3，LaMDA，Codex，Meena，Gopher和其他类似模型。<br>然而，随着这些模型的扩展，它们的开放性和高容量为意想不到的甚至有害的行为创造了越来越大的范围。 即使在大型模型经过训练多年后，创建者和用户仍会定期发现他们以前没有意识到的模型功能（包括有问题的行为）。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">【GPT-3】</span><br><span class="line">Language models are few-shot learners  [PDF]</span><br><span class="line">T.B. Brown, B. Mann, N. Ryder, M. Subbiah, J. Kaplan, P. Dhariwal, A. Neelakantan, P. Shyam, G. Sastry, A. Askell, others.</span><br><span class="line">arXiv preprint arXiv:2005.14165. 2020.</span><br><span class="line">【LaMDA】</span><br><span class="line">LaMDA: our breakthrough conversation technology  [link]</span><br><span class="line">E. Collins, Z. Ghahramani. 2021.</span><br><span class="line">【Codex】</span><br><span class="line">Evaluating large language models trained on code</span><br><span class="line">M. Chen, J. Tworek, H. Jun, Q. Yuan, H.P.d.O. Pinto, J. Kaplan, H. Edwards, Y. Burda, N. Joseph, G. Brockman, others.</span><br><span class="line">arXiv preprint arXiv:2107.03374. 2021.</span><br><span class="line">【Meena】</span><br><span class="line">Towards a human-like open-domain chatbot</span><br><span class="line">D. Adiwardana, M. Luong, D.R. So, J. Hall, N. Fiedel, R. Thoppilan, Z. Yang, A. Kulshreshtha, G. Nemade, Y. Lu, others.</span><br><span class="line">arXiv preprint arXiv:2001.09977. 2020.</span><br><span class="line">【Gopher】</span><br><span class="line">Scaling Language Models: Methods, Analysis &amp; Insights from Training Gopher  [PDF]</span><br><span class="line">J.W. Rae, S. Borgeaud, T. Cai, K. Millican, J. Hoffmann, F. Song, J. Aslanides, S. Henderson, R. Ring, S. Young, E. Rutherford, T. Hennigan, J. Menick, A. Cassirer, R. Powell, G.v.d. Driessche, L.A. Hendricks, M. Rauh, P. Huang, A. Glaese, J. Welbl, S. Dathathri, S. Huang, J. Uesato, J. Mellor, I. Higgins, A. Creswell, N. McAleese, A. Wu, E. Elsen, S. Jayakumar, E. Buchatskaya, D. Budden, E. Sutherland, K. Simonyan, M. Paganini, L. Sifre, L. Martens, X.L. Li, A. Kuncoro, A. Nematzadeh, E. Gribovskaya, D. Donato, A. Lazaridou, A. Mensch, J. Lespiau, M. Tsimpoukelli, N. Grigorev, D. Fritz, T. Sottiaux, M. Pajarskas, T. Pohlen, Z. Gong, D. Toyama, C.d.M. d’Autume, Y. Li, T. Terzi, V. Mikulik, I. Babuschkin, A. Clark, D.d.L. Casas, A. Guy, C. Jones, J. Bradbury, M. Johnson, B. Hechtman, L. Weidinger, I. Gabriel, W. Isaac, E. Lockhart, S. Osindero, L. Rimell, C. Dyer, O. Vinyals, K. Ayoub, J. Stanway, L. Bennett, D. Hassabis, K. Kavukcuoglu, G. Irving.</span><br><span class="line">Preprint. 2021.</span><br></pre></td></tr></table></figure>
+<p>解决这些问题的一种途径是寻求可解释性，试图对Transformer模型的详细计算进行逆向工程，类似于程序员将复杂的二进制文件反编译为人类可读的源代码。 如果这是可能的，它可能会提供一种更系统的方法来解释当前的安全问题、识别新的问题，甚至可能预测尚未构建的强大的未来模型的安全问题。 之前的一个项目，Distill Circuits, 曾尝试对视觉模型进行逆向工程，但到目前为止还没有类似的Tranformer或语言模型项目。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Thread: Circuits</span><br><span class="line">N. Cammarata, S. Carter, G. Goh, C. Olah, M. Petrov, L. Schubert, C. Voss, B. Egan, S.K. Lim.</span><br><span class="line">Distill. 2020.</span><br><span class="line">DOI: 10.23915/distill.00024</span><br></pre></td></tr></table></figure>
+<p>在本文中，我们尝试采取原始、初级的步骤来对Transformer模型进行逆向工程，因为现代语言模型令人难以置信的复杂性和规模，我们发现从最简单的模型开始并从那里开始工作是最有成效的。 我们的目标是发现简单的算法模式、主题或框架，这些模式、主题或框架随后可以应用于更大、更复杂的模型。 具体来说，在本文中，我们将研究只有两层或更少层且只有注意力块的Transformer——这与像 GPT-3 这样的大型现代Transformer形成对比，GPT-3有 96 层，且注意力块与 MLP 块交替出现。</p>
+<p>我们发现，通过以一种新的但在数学上等效的方式将Transformer的操作概念化，我们能够理解这些小模型，并对它们的内部运作方式获得重要的理解。 特别值得注意的是，我们发现我们称之为“感应头”的特定注意力头可以解释这些小模型中的上下文学习，并且这些头只在至少具有两个注意力层的模型中出现。 我们还介绍了对特定数据进行操作的一些示例。</p>
+<p>在第一篇论文中，我们并未尝试将我们的见解应用于更大的模型，但在即将发表的一篇论文中，我们将证明我们理解Transformer的数学框架和感应头的概念仍然至少部分相关，对于更大、更真实的模型——尽管我们距离能够完全逆向工程这些模型还有很长的路要走。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><h3 id="REVERSE-ENGINEERING-RESULTS"><a href="#REVERSE-ENGINEERING-RESULTS" class="headerlink" title="REVERSE ENGINEERING RESULTS"></a>REVERSE ENGINEERING RESULTS</h3><p>为了挑战Tranformer的逆向工程，我们先在其他算法和仅有注意力的模型上进行了尝试，有以下结论：</p>
+<h3 id="CONCEPTUAL-TAKE-AWAYS"><a href="#CONCEPTUAL-TAKE-AWAYS" class="headerlink" title="CONCEPTUAL TAKE-AWAYS"></a>CONCEPTUAL TAKE-AWAYS</h3><h2 id="Transformer回顾"><a href="#Transformer回顾" class="headerlink" title="Transformer回顾"></a>Transformer回顾</h2>]]></content>
+      <categories>
+        <category>Transformer</category>
+      </categories>
+      <tags>
+        <tag>transformer</tag>
+        <tag>math</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Choose a Transformer-Fourier or Galerkin</title>
     <url>/2023/04/27/Transformer/Choose%20a%20Transformer-Fourier%20or%20Galerkin/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><a href="https://arxiv.org/pdf/2105.14995.pdf">paper link</a></p>
@@ -829,28 +856,6 @@ a_{i,j} = \frac{1}{2-y_i^\top y_j}(\sum^n_{k=1}\frac{1}{2-y_i^\top y_k})^{-1}
 <h3 id="attention机制和变体"><a href="#attention机制和变体" class="headerlink" title="attention机制和变体"></a>attention机制和变体</h3><p>除了 [88] 中开创性的缩放点积注意力之外，早期的 [7] 提出了一种基于附加内容的注意力，然而，由于多重非线性组合，梯度消失问题。 [25] 展示了在投影后移除 [7] 中的 softmax 归一化的第一个努力，然而，它在加性插值传播阶段之前仍然使用 Sigmoid 非线性，并且表现比它的 softmax 对应物差。 当前流行的将注意力线性化的方法利用特征映射的存在假设来近似 softmax 内核 [50、19、70]。 另一种类型的线性化利用矩阵乘积的低阶特性，使用各种方法，例如采样或投影 [73、11、79、92] 或快速多极分解 [65]。 [75] 中的猜想启发我们移除 softmax 整体。 [76] 首先提出了在没有 softmax 的情况下针对线性复杂度注意力的逆序列长度缩放归一化，但是，缩放归一化尚未在示例中得到广泛研究并且表现更差。</p>
 <h3 id="Transformer的变量学习"><a href="#Transformer的变量学习" class="headerlink" title="Transformer的变量学习"></a>Transformer的变量学习</h3><p>[84] 中的内核解释启发我们使用 Galerkin 投影重新表述注意力。 [95，定理 2] 给出了去除 softmax 归一化以制定傅里叶型注意力的理论基础。 Nyström 近似 [97] 本质上承认注意力矩阵和积分核之间的相似性。 [96, 66, 59] 启发我们尝试不同的层归一化和重新缩放的对角占优初始化方案。 在我们的工作中反复使用位置编码来丰富潜在表示的做法可以追溯到 [2, 26]，最近，有助于 AlphaFold 2 [48] 的成功，因为如果 目标在坐标系和/或变换组中具有依赖性 ansatz，但难以明确量化。 其他关于调整注意机制以保存重要物理特性的研究在 [82, 31, 44] 中。</p>
 <h2 id="三，PDE的算子学习"><a href="#三，PDE的算子学习" class="headerlink" title="三，PDE的算子学习"></a>三，PDE的算子学习</h2>]]></content>
-      <categories>
-        <category>Transformer</category>
-      </categories>
-      <tags>
-        <tag>transformer</tag>
-        <tag>math</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>A Mathematical Framework for Transformer Circuits</title>
-    <url>/2023/04/27/Transformer/A%20Mathematical%20Framework%20for%20Transformer%20Circuits/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><a href="https://transformer-circuits.pub/2021/framework/index.html">link</a></p>
-<p><strong>transformerd的数学框架？</strong><br><span id="more"></span></p>
-<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Transformer语言模型在新兴产业中的使用越来越广泛，比如GPT-3，LaMDA，Codex，Meena，Gopher和其他类似模型。<br>然而，随着这些模型的扩展，它们的开放性和高容量为意想不到的甚至有害的行为创造了越来越大的范围。 即使在大型模型经过训练多年后，创建者和用户仍会定期发现他们以前没有意识到的模型功能（包括有问题的行为）。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">【GPT-3】</span><br><span class="line">Language models are few-shot learners  [PDF]</span><br><span class="line">T.B. Brown, B. Mann, N. Ryder, M. Subbiah, J. Kaplan, P. Dhariwal, A. Neelakantan, P. Shyam, G. Sastry, A. Askell, others.</span><br><span class="line">arXiv preprint arXiv:2005.14165. 2020.</span><br><span class="line">【LaMDA】</span><br><span class="line">LaMDA: our breakthrough conversation technology  [link]</span><br><span class="line">E. Collins, Z. Ghahramani. 2021.</span><br><span class="line">【Codex】</span><br><span class="line">Evaluating large language models trained on code</span><br><span class="line">M. Chen, J. Tworek, H. Jun, Q. Yuan, H.P.d.O. Pinto, J. Kaplan, H. Edwards, Y. Burda, N. Joseph, G. Brockman, others.</span><br><span class="line">arXiv preprint arXiv:2107.03374. 2021.</span><br><span class="line">【Meena】</span><br><span class="line">Towards a human-like open-domain chatbot</span><br><span class="line">D. Adiwardana, M. Luong, D.R. So, J. Hall, N. Fiedel, R. Thoppilan, Z. Yang, A. Kulshreshtha, G. Nemade, Y. Lu, others.</span><br><span class="line">arXiv preprint arXiv:2001.09977. 2020.</span><br><span class="line">【Gopher】</span><br><span class="line">Scaling Language Models: Methods, Analysis &amp; Insights from Training Gopher  [PDF]</span><br><span class="line">J.W. Rae, S. Borgeaud, T. Cai, K. Millican, J. Hoffmann, F. Song, J. Aslanides, S. Henderson, R. Ring, S. Young, E. Rutherford, T. Hennigan, J. Menick, A. Cassirer, R. Powell, G.v.d. Driessche, L.A. Hendricks, M. Rauh, P. Huang, A. Glaese, J. Welbl, S. Dathathri, S. Huang, J. Uesato, J. Mellor, I. Higgins, A. Creswell, N. McAleese, A. Wu, E. Elsen, S. Jayakumar, E. Buchatskaya, D. Budden, E. Sutherland, K. Simonyan, M. Paganini, L. Sifre, L. Martens, X.L. Li, A. Kuncoro, A. Nematzadeh, E. Gribovskaya, D. Donato, A. Lazaridou, A. Mensch, J. Lespiau, M. Tsimpoukelli, N. Grigorev, D. Fritz, T. Sottiaux, M. Pajarskas, T. Pohlen, Z. Gong, D. Toyama, C.d.M. d’Autume, Y. Li, T. Terzi, V. Mikulik, I. Babuschkin, A. Clark, D.d.L. Casas, A. Guy, C. Jones, J. Bradbury, M. Johnson, B. Hechtman, L. Weidinger, I. Gabriel, W. Isaac, E. Lockhart, S. Osindero, L. Rimell, C. Dyer, O. Vinyals, K. Ayoub, J. Stanway, L. Bennett, D. Hassabis, K. Kavukcuoglu, G. Irving.</span><br><span class="line">Preprint. 2021.</span><br></pre></td></tr></table></figure>
-<p>解决这些问题的一种途径是寻求可解释性，试图对Transformer模型的详细计算进行逆向工程，类似于程序员将复杂的二进制文件反编译为人类可读的源代码。 如果这是可能的，它可能会提供一种更系统的方法来解释当前的安全问题、识别新的问题，甚至可能预测尚未构建的强大的未来模型的安全问题。 之前的一个项目，Distill Circuits, 曾尝试对视觉模型进行逆向工程，但到目前为止还没有类似的Tranformer或语言模型项目。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Thread: Circuits</span><br><span class="line">N. Cammarata, S. Carter, G. Goh, C. Olah, M. Petrov, L. Schubert, C. Voss, B. Egan, S.K. Lim.</span><br><span class="line">Distill. 2020.</span><br><span class="line">DOI: 10.23915/distill.00024</span><br></pre></td></tr></table></figure>
-<p>在本文中，我们尝试采取原始、初级的步骤来对Transformer模型进行逆向工程，因为现代语言模型令人难以置信的复杂性和规模，我们发现从最简单的模型开始并从那里开始工作是最有成效的。 我们的目标是发现简单的算法模式、主题或框架，这些模式、主题或框架随后可以应用于更大、更复杂的模型。 具体来说，在本文中，我们将研究只有两层或更少层且只有注意力块的Transformer——这与像 GPT-3 这样的大型现代Transformer形成对比，GPT-3有 96 层，且注意力块与 MLP 块交替出现。</p>
-<p>我们发现，通过以一种新的但在数学上等效的方式将Transformer的操作概念化，我们能够理解这些小模型，并对它们的内部运作方式获得重要的理解。 特别值得注意的是，我们发现我们称之为“感应头”的特定注意力头可以解释这些小模型中的上下文学习，并且这些头只在至少具有两个注意力层的模型中出现。 我们还介绍了对特定数据进行操作的一些示例。</p>
-<p>在第一篇论文中，我们并未尝试将我们的见解应用于更大的模型，但在即将发表的一篇论文中，我们将证明我们理解Transformer的数学框架和感应头的概念仍然至少部分相关，对于更大、更真实的模型——尽管我们距离能够完全逆向工程这些模型还有很长的路要走。</p>
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><h3 id="REVERSE-ENGINEERING-RESULTS"><a href="#REVERSE-ENGINEERING-RESULTS" class="headerlink" title="REVERSE ENGINEERING RESULTS"></a>REVERSE ENGINEERING RESULTS</h3><p>为了挑战Tranformer的逆向工程，我们先在其他算法和仅有注意力的模型上进行了尝试，有以下结论：</p>
-<h3 id="CONCEPTUAL-TAKE-AWAYS"><a href="#CONCEPTUAL-TAKE-AWAYS" class="headerlink" title="CONCEPTUAL TAKE-AWAYS"></a>CONCEPTUAL TAKE-AWAYS</h3><h2 id="Transformer回顾"><a href="#Transformer回顾" class="headerlink" title="Transformer回顾"></a>Transformer回顾</h2>]]></content>
       <categories>
         <category>Transformer</category>
       </categories>
@@ -4176,6 +4181,42 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </tags>
   </entry>
   <entry>
+    <title>边缘提取方法</title>
+    <url>/2022/05/19/cv_engineering/edge-extract/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Chen Mingming老师组的三个边缘提取的模型，还有部分数据集，效果不错~</p>
+<p><strong>用边缘特征做过一些图像应用哦</strong><br><span id="more"></span></p>
+<h2 id="1，边缘提取hed"><a href="#1，边缘提取hed" class="headerlink" title="1，边缘提取hed"></a>1，边缘提取hed</h2><p><a href="https://github.com/s9xie/hed">github link</a></p>
+<ul>
+<li>作者<br>南开大学程明明</li>
+<li>对应文章   <ul>
+<li>author = {“Xie, Saining and Tu, Zhuowen”},</li>
+<li>Title = {Holistically-Nested Edge Detection},</li>
+<li>Booktitle = “Proceedings of IEEE International Conference on Computer Vision”,</li>
+<li>Year = {2015},</li>
+</ul>
+</li>
+<li>结果<br>BSDS benchmark数据集：<br>ODS=.790 and OIS=.808<br>BSD500 数据集：<br>ODS F-score of .790<br>NYU Depth 数据集：<br>ODS F-score of .746<br>速度： (0.4s per image)</li>
+</ul>
+<h2 id="2，边缘提取rcf"><a href="#2，边缘提取rcf" class="headerlink" title="2，边缘提取rcf"></a>2，边缘提取rcf</h2><p><a href="https://github.com/meteorshowers/RCF-pytorch">pytorch版本：github</a><br><a href="https://github.com/yun-liu/rcf">caffe版本：github</a></p>
+<ul>
+<li>作者<br>南开大学程明明</li>
+<li>文章<br>title={Richer Convolutional Features for Edge Detection},<br>author={Liu, Yun and Cheng, Ming-Ming and Hu, Xiaowei and Bian, Jia-Wang and Zhang, Le and Bai, Xiang and Tang, Jinhui},<br>journal={IEEE Transactions on Pattern Analysis and Machine Intelligence},<br>year={2019}</li>
+<li>特性<br>Using VGG16 network；<br>BSDS500 benchmark 数据集：<br>ODS F-measure of 0.811， speed (8 FPS)<br>fast version of RCF 快速版本：<br>ODS F-measure of 0.806 with 30 FPS</li>
+</ul>
+<h2 id="3，边缘提取dfi"><a href="#3，边缘提取dfi" class="headerlink" title="3，边缘提取dfi"></a>3，边缘提取dfi</h2><p><a href="https://github.com/backseason/DFI">github link</a></p>
+<ul>
+<li>作者<br>南开大学程明明</li>
+<li>文章<br>title={Dynamic Feature Integration for Simultaneous Detection of Salient Object, Edge and Skeleton},<br>author={Jiang-Jiang Liu and Qibin Hou and Ming-Ming Cheng},<br>journal={IEEE Transactions on Image Processing},<br>year={2020}</li>
+</ul>
+]]></content>
+      <categories>
+        <category>cv engineering</category>
+      </categories>
+      <tags>
+        <tag>edge extract</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>hi3559a开发记录</title>
     <url>/2022/05/19/hardware/hi3559a-coding/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>hisi视觉模型开发，主要是检测任务，三个类别，本文包含项目开发的基本流程，包括模型训练，模型转化以及hisi官方提供的关于yolov3的源码及其调用分析。</p>
@@ -4231,42 +4272,6 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </categories>
       <tags>
         <tag>hi3559a cv model</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>边缘提取方法</title>
-    <url>/2022/05/19/cv_engineering/edge-extract/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Chen Mingming老师组的三个边缘提取的模型，还有部分数据集，效果不错~</p>
-<p><strong>用边缘特征做过一些图像应用哦</strong><br><span id="more"></span></p>
-<h2 id="1，边缘提取hed"><a href="#1，边缘提取hed" class="headerlink" title="1，边缘提取hed"></a>1，边缘提取hed</h2><p><a href="https://github.com/s9xie/hed">github link</a></p>
-<ul>
-<li>作者<br>南开大学程明明</li>
-<li>对应文章   <ul>
-<li>author = {“Xie, Saining and Tu, Zhuowen”},</li>
-<li>Title = {Holistically-Nested Edge Detection},</li>
-<li>Booktitle = “Proceedings of IEEE International Conference on Computer Vision”,</li>
-<li>Year = {2015},</li>
-</ul>
-</li>
-<li>结果<br>BSDS benchmark数据集：<br>ODS=.790 and OIS=.808<br>BSD500 数据集：<br>ODS F-score of .790<br>NYU Depth 数据集：<br>ODS F-score of .746<br>速度： (0.4s per image)</li>
-</ul>
-<h2 id="2，边缘提取rcf"><a href="#2，边缘提取rcf" class="headerlink" title="2，边缘提取rcf"></a>2，边缘提取rcf</h2><p><a href="https://github.com/meteorshowers/RCF-pytorch">pytorch版本：github</a><br><a href="https://github.com/yun-liu/rcf">caffe版本：github</a></p>
-<ul>
-<li>作者<br>南开大学程明明</li>
-<li>文章<br>title={Richer Convolutional Features for Edge Detection},<br>author={Liu, Yun and Cheng, Ming-Ming and Hu, Xiaowei and Bian, Jia-Wang and Zhang, Le and Bai, Xiang and Tang, Jinhui},<br>journal={IEEE Transactions on Pattern Analysis and Machine Intelligence},<br>year={2019}</li>
-<li>特性<br>Using VGG16 network；<br>BSDS500 benchmark 数据集：<br>ODS F-measure of 0.811， speed (8 FPS)<br>fast version of RCF 快速版本：<br>ODS F-measure of 0.806 with 30 FPS</li>
-</ul>
-<h2 id="3，边缘提取dfi"><a href="#3，边缘提取dfi" class="headerlink" title="3，边缘提取dfi"></a>3，边缘提取dfi</h2><p><a href="https://github.com/backseason/DFI">github link</a></p>
-<ul>
-<li>作者<br>南开大学程明明</li>
-<li>文章<br>title={Dynamic Feature Integration for Simultaneous Detection of Salient Object, Edge and Skeleton},<br>author={Jiang-Jiang Liu and Qibin Hou and Ming-Ming Cheng},<br>journal={IEEE Transactions on Image Processing},<br>year={2020}</li>
-</ul>
-]]></content>
-      <categories>
-        <category>cv engineering</category>
-      </categories>
-      <tags>
-        <tag>edge extract</tag>
       </tags>
   </entry>
   <entry>
@@ -4593,6 +4598,45 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </tags>
   </entry>
   <entry>
+    <title>rpn的原理和作用</title>
+    <url>/2022/05/16/detection/principle-and-effects-of-rpn/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>rpn原理和作用</p>
+<span id="more"></span>
+<h2 id="1，作用"><a href="#1，作用" class="headerlink" title="1，作用"></a>1，作用</h2><p>RPN专门用来提取候选框，一方面RPN耗时少，另一方面RPN可以很容易结合到Fast RCNN中，成为一个整体。</p>
+<h2 id="2，实现细节"><a href="#2，实现细节" class="headerlink" title="2，实现细节"></a>2，实现细节</h2><p>一个特征图（Faster RCNN的公共Feature Map）经过sliding window处理，得到256维特征，对每个特征向量做两次全连接操作，一个得到2个分数，一个得到4个坐标{然后通过两次全连接得到结果2k个分数和4k个坐标[k指的是由锚点产生的K个框(K anchor boxes)]}</p>
+<h2 id="3，anchor-box是怎么选取的？"><a href="#3，anchor-box是怎么选取的？" class="headerlink" title="3，anchor box是怎么选取的？"></a>3，anchor box是怎么选取的？</h2><p>滑窗的中心在原像素空间的映射点称为anchor，以此anchor为中心，生成k(paper中default k=9, 3 scales and 3 aspect ratios/不同尺寸和不同长宽比)个proposals。三个面积尺寸$(128^{2}，256^{2}，512^{2})$，然后在每个面积尺寸下，取三种不同的长宽比例（1:1,1:2,2:1）</p>
+<h2 id="4，为什么提出anchor-box？"><a href="#4，为什么提出anchor-box？" class="headerlink" title="4，为什么提出anchor box？"></a>4，为什么提出anchor box？</h2><p>主要有两个原因：一个窗口只能检测一个目标、无法解决多尺度问题。<br>目前anchor box尺寸的选择主要有三种方式：人为经验选取、k-means聚类、作为超参数进行学习<br>为什么使用不同尺寸和不同长宽比？ 为了得到更大的交并比(IOU)。</p>
+]]></content>
+      <categories>
+        <category>detection</category>
+      </categories>
+      <tags>
+        <tag>rpn</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>roi align</title>
+    <url>/2022/05/16/detection/roi-align/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>roi align产生的背景，原理和应用场景</p>
+<p><strong>主要对比roi pooling</strong><br><span id="more"></span></p>
+<h2 id="1，背景"><a href="#1，背景" class="headerlink" title="1，背景"></a>1，背景</h2><p>在mask rcnn中提出，是为了解决roi pooling的两次量化带来的位置精度损失问题。</p>
+<h2 id="2，思路"><a href="#2，思路" class="headerlink" title="2，思路"></a>2，思路</h2><p>取消量化操作，使用双线性内插的方法获得坐标为浮点数的像素点上的图像数值,从而将整个特征聚集过程转化为一个连续的操作。值得注意的是，在具体的算法操作上，ROI Align并不是简单地补充出候选区域边界上的坐标点，然后将这些坐标点进行池化，而是重新设计了一套比较优雅的流程，大致算法流程为：</p>
+<ul>
+<li>遍历每一个候选区域，保持浮点数边界不做量化。</li>
+<li>将候选区域分割成k x k个单元，每个单元的边界也不做量化。</li>
+<li>在每个单元中计算固定四个坐标位置，用双线性内插的方法计算出这四个位置的值，然后进行最大池化操作。</li>
+</ul>
+<h2 id="3，区别"><a href="#3，区别" class="headerlink" title="3，区别"></a>3，区别</h2><p>ROI Align舍去了近似像素取整数的量化方法，改用双线性插值的方法确定特征图坐标对应于原图中的像素位置.ROI Align很好地解决了ROI Pooling操作中两次量化造成的区域不匹配(mis-alignment)的问题。</p>
+<h2 id="4，应用场景"><a href="#4，应用场景" class="headerlink" title="4，应用场景"></a>4，应用场景</h2><p>对于检测图片中大目标物体时，两种方案的差别不大，而如果是图片中有较多小目标物体需要检测，则优先选择RoiAlign，更精准些。</p>
+]]></content>
+      <categories>
+        <category>detection</category>
+      </categories>
+      <tags>
+        <tag>roi align</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>roi pooling</title>
     <url>/2022/05/16/detection/roi-pooling/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>roi pooling的基本原理和应用</p>
@@ -4619,45 +4663,6 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </categories>
       <tags>
         <tag>roi pooling</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>roi align</title>
-    <url>/2022/05/16/detection/roi-align/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>roi align产生的背景，原理和应用场景</p>
-<p><strong>主要对比roi pooling</strong><br><span id="more"></span></p>
-<h2 id="1，背景"><a href="#1，背景" class="headerlink" title="1，背景"></a>1，背景</h2><p>在mask rcnn中提出，是为了解决roi pooling的两次量化带来的位置精度损失问题。</p>
-<h2 id="2，思路"><a href="#2，思路" class="headerlink" title="2，思路"></a>2，思路</h2><p>取消量化操作，使用双线性内插的方法获得坐标为浮点数的像素点上的图像数值,从而将整个特征聚集过程转化为一个连续的操作。值得注意的是，在具体的算法操作上，ROI Align并不是简单地补充出候选区域边界上的坐标点，然后将这些坐标点进行池化，而是重新设计了一套比较优雅的流程，大致算法流程为：</p>
-<ul>
-<li>遍历每一个候选区域，保持浮点数边界不做量化。</li>
-<li>将候选区域分割成k x k个单元，每个单元的边界也不做量化。</li>
-<li>在每个单元中计算固定四个坐标位置，用双线性内插的方法计算出这四个位置的值，然后进行最大池化操作。</li>
-</ul>
-<h2 id="3，区别"><a href="#3，区别" class="headerlink" title="3，区别"></a>3，区别</h2><p>ROI Align舍去了近似像素取整数的量化方法，改用双线性插值的方法确定特征图坐标对应于原图中的像素位置.ROI Align很好地解决了ROI Pooling操作中两次量化造成的区域不匹配(mis-alignment)的问题。</p>
-<h2 id="4，应用场景"><a href="#4，应用场景" class="headerlink" title="4，应用场景"></a>4，应用场景</h2><p>对于检测图片中大目标物体时，两种方案的差别不大，而如果是图片中有较多小目标物体需要检测，则优先选择RoiAlign，更精准些。</p>
-]]></content>
-      <categories>
-        <category>detection</category>
-      </categories>
-      <tags>
-        <tag>roi align</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>rpn的原理和作用</title>
-    <url>/2022/05/16/detection/principle-and-effects-of-rpn/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>rpn原理和作用</p>
-<span id="more"></span>
-<h2 id="1，作用"><a href="#1，作用" class="headerlink" title="1，作用"></a>1，作用</h2><p>RPN专门用来提取候选框，一方面RPN耗时少，另一方面RPN可以很容易结合到Fast RCNN中，成为一个整体。</p>
-<h2 id="2，实现细节"><a href="#2，实现细节" class="headerlink" title="2，实现细节"></a>2，实现细节</h2><p>一个特征图（Faster RCNN的公共Feature Map）经过sliding window处理，得到256维特征，对每个特征向量做两次全连接操作，一个得到2个分数，一个得到4个坐标{然后通过两次全连接得到结果2k个分数和4k个坐标[k指的是由锚点产生的K个框(K anchor boxes)]}</p>
-<h2 id="3，anchor-box是怎么选取的？"><a href="#3，anchor-box是怎么选取的？" class="headerlink" title="3，anchor box是怎么选取的？"></a>3，anchor box是怎么选取的？</h2><p>滑窗的中心在原像素空间的映射点称为anchor，以此anchor为中心，生成k(paper中default k=9, 3 scales and 3 aspect ratios/不同尺寸和不同长宽比)个proposals。三个面积尺寸$(128^{2}，256^{2}，512^{2})$，然后在每个面积尺寸下，取三种不同的长宽比例（1:1,1:2,2:1）</p>
-<h2 id="4，为什么提出anchor-box？"><a href="#4，为什么提出anchor-box？" class="headerlink" title="4，为什么提出anchor box？"></a>4，为什么提出anchor box？</h2><p>主要有两个原因：一个窗口只能检测一个目标、无法解决多尺度问题。<br>目前anchor box尺寸的选择主要有三种方式：人为经验选取、k-means聚类、作为超参数进行学习<br>为什么使用不同尺寸和不同长宽比？ 为了得到更大的交并比(IOU)。</p>
-]]></content>
-      <categories>
-        <category>detection</category>
-      </categories>
-      <tags>
-        <tag>rpn</tag>
       </tags>
   </entry>
   <entry>
