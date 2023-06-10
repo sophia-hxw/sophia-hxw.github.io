@@ -29,7 +29,7 @@
 <meta property="og:description" content="前言paper link 在算子学习的角度，将Transformer用在PDE的求解上">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-04-27T11:48:25.000Z">
-<meta property="article:modified_time" content="2023-05-26T07:23:19.828Z">
+<meta property="article:modified_time" content="2023-05-26T09:17:11.516Z">
 <meta property="article:author" content="xinwen">
 <meta property="article:tag" content="transformer">
 <meta property="article:tag" content="math">
@@ -133,7 +133,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">77</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">78</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -143,7 +143,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">84</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">85</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -231,7 +231,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-05-26 15:23:19" itemprop="dateModified" datetime="2023-05-26T15:23:19+08:00">2023-05-26</time>
+                <time title="修改时间：2023-05-26 17:17:11" itemprop="dateModified" datetime="2023-05-26T17:17:11+08:00">2023-05-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -263,14 +263,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.8k</span>
+              <span>3.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
+              <span>4 分钟</span>
             </span>
 
         </div>
@@ -307,7 +307,8 @@
 <h1 id="二，相关工作"><a href="#二，相关工作" class="headerlink" title="二，相关工作"></a>二，相关工作</h1><h2 id="PDE相关的算子学习"><a href="#PDE相关的算子学习" class="headerlink" title="PDE相关的算子学习"></a>PDE相关的算子学习</h2><p>在 [4, 5] 中，参数 PDE 的解算子的某些核形式是使用图神经网络来近似的。 另一个值得注意的并发方法是 DeepONet [60、61]。 [56] 通过利用多级网格结构进一步改进了内核方法。 [57] 提出了一种离散化不变的运算符学习器，以在某些基准问题中实现最先进的性能。 [90, 91] 提出了一种大致等同于附加注意力的 DeepONet，类似于 [7] 中的神经图灵机 (NMT)。 模型/降维与神经网络相结合是另一种流行的学习参数 PDE 解算子的方法 [10、64、55、24]。 深度卷积神经网络 (DCNN) 被广泛应用于学习具有固定离散化大小的解图 [1、9、40、36、35、100、86]。 最近，DCNN 已成功应用于各种反问题 [35, 47]，例如电阻抗层析成像 (EIT)。 据我们所知，对于一类具有随机界面几何形状的系数，还没有关于数据驱动方法的反界面系数识别的工作。</p>
 <h2 id="attention机制和变体"><a href="#attention机制和变体" class="headerlink" title="attention机制和变体"></a>attention机制和变体</h2><p>除了 [88] 中开创性的缩放点积注意力之外，早期的 [7] 提出了一种基于附加内容的注意力，然而，由于多重非线性组合，梯度消失问题。 [25] 展示了在投影后移除 [7] 中的 softmax 归一化的第一个努力，然而，它在加性插值传播阶段之前仍然使用 Sigmoid 非线性，并且表现比它的 softmax 对应物差。 当前流行的将注意力线性化的方法利用特征映射的存在假设来近似 softmax 内核 [50、19、70]。 另一种类型的线性化利用矩阵乘积的低阶特性，使用各种方法，例如采样或投影 [73、11、79、92] 或快速多极分解 [65]。 [75] 中的猜想启发我们移除 softmax 整体。 [76] 首先提出了在没有 softmax 的情况下针对线性复杂度注意力的逆序列长度缩放归一化，但是，缩放归一化尚未在示例中得到广泛研究并且表现更差。</p>
 <h2 id="Transformer的变量学习"><a href="#Transformer的变量学习" class="headerlink" title="Transformer的变量学习"></a>Transformer的变量学习</h2><p>[84] 中的内核解释启发我们使用 Galerkin 投影重新表述注意力。 [95，定理 2] 给出了去除 softmax 归一化以制定傅里叶型注意力的理论基础。 Nyström 近似 [97] 本质上承认注意力矩阵和积分核之间的相似性。 [96, 66, 59] 启发我们尝试不同的层归一化和重新缩放的对角占优初始化方案。 在我们的工作中反复使用位置编码来丰富潜在表示的做法可以追溯到 [2, 26]，最近，有助于 AlphaFold 2 [48] 的成功，因为如果 目标在坐标系和/或变换组中具有依赖性 ansatz，但难以明确量化。 其他关于调整注意机制以保存重要物理特性的研究在 [82, 31, 44] 中。</p>
-<h1 id="三，PDE的算子学习"><a href="#三，PDE的算子学习" class="headerlink" title="三，PDE的算子学习"></a>三，PDE的算子学习</h1>
+<h1 id="三，PDE的算子学习"><a href="#三，PDE的算子学习" class="headerlink" title="三，PDE的算子学习"></a>三，PDE的算子学习</h1><p>紧跟[56,57]中的步骤，我们考虑用一个数据驱动模型来近似密度算子 $T:\mathcal H_1\to \mathcal H_2$，模型定义在两个Hilbert空间之上，且对于空间的约束为 $\mathbf{\Omega}\subset\mathbb R^m$。</p>
+
     </div>
 
     
@@ -344,12 +345,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/04/25/math/seven_concepts_algorithms/" rel="prev" title="seven concepts in designing and analysising of algoritms">
-      <i class="fa fa-chevron-left"></i> seven concepts in designing and analysising of algoritms
+    <a href="/2023/04/27/Transformer/A%20Mathematical%20Framework%20for%20Transformer%20Circuits/" rel="prev" title="A Mathematical Framework for Transformer Circuits">
+      <i class="fa fa-chevron-left"></i> A Mathematical Framework for Transformer Circuits
     </a></div>
       <div class="post-nav-item">
-    <a href="/2023/04/27/Transformer/A%20Mathematical%20Framework%20for%20Transformer%20Circuits/" rel="next" title="A Mathematical Framework for Transformer Circuits">
-      A Mathematical Framework for Transformer Circuits <i class="fa fa-chevron-right"></i>
+    <a href="/2023/05/05/Transformer/Transformers%20from%20an%20Optimization%20perspective/" rel="next" title="Transformers from an Optimization Perspective">
+      Transformers from an Optimization Perspective <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -426,7 +427,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">84</span>
+          <span class="site-state-item-count">85</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -439,7 +440,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-count">78</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -494,13 +495,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">288k</span>
+    <span title="站点总字数">298k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">4:22</span>
+    <span title="站点阅读时长">4:31</span>
 </div>
 
         
