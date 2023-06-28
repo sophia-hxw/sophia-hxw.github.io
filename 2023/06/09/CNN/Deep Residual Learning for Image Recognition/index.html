@@ -29,7 +29,7 @@
 <meta property="og:description" content="前言残差连接，让深层神经网络能够正常训练而不至于陷入梯度消失困境的有力武器，Kaiming He的又一神作之一。 理解残差连接的由来和贡献，以及后续还有什么优化方向">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-06-09T06:56:23.000Z">
-<meta property="article:modified_time" content="2023-06-10T09:27:18.358Z">
+<meta property="article:modified_time" content="2023-06-10T09:33:48.992Z">
 <meta property="article:author" content="xinwen">
 <meta property="article:tag" content="Resnet">
 <meta name="twitter:card" content="summary">
@@ -132,7 +132,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">78</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">79</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -142,7 +142,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">85</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">86</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -230,7 +230,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-10 17:27:18" itemprop="dateModified" datetime="2023-06-10T17:27:18+08:00">2023-06-10</time>
+                <time title="修改时间：2023-06-10 17:33:48" itemprop="dateModified" datetime="2023-06-10T17:33:48+08:00">2023-06-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -296,8 +296,10 @@
 <p>本文在 ImageNet [36] 上进行了综合实验，以显示退化问题并评估本文的方法，结果表明：1）本文的极深残差网络很容易优化，但对应的“plain”网络（简单地堆叠层）在深度增加时表现出更高的训练误差； 2）本文的深度残差网络可以很容易地从大大增加的深度中获得精度增益，产生比以前的网络好得多的结果。</p>
 <p>在 CIFAR-10 集 [20] 上也显示了类似的现象，这表明本文的方法的优化困难和效果不仅仅适用于特定的数据集。 本文使用超过 100 层的模型在多个数据集上成功训练，并探索超过 1000 层的模型。</p>
 <p>在 ImageNet 分类数据集 [36] 上，本文通过极深的残差网络获得了出色的结果，本文的 152 层残差网络是 ImageNet 上有史以来最深的网络，同时其复杂性仍低于 VGG 网络 [41]。 本文的集成在 ImageNet 测试集上的 top-5 错误率为 3.57%，并在 ILSVRC 2015 分类竞赛中获得第一名。 极深的表示在其他识别任务上也具有出色的泛化性能，并带领本文在 ILSVRC &amp; COCO 2015 竞赛中进一步赢得了 ImageNet 检测、ImageNet 定位、COCO 检测和 COCO 分割方面的第一名。 这个有力的证据表明残差学习原则是通用的，本文期望它适用于其他视觉和非视觉问题。</p>
-<h1 id="二，相关工作"><a href="#二，相关工作" class="headerlink" title="二，相关工作"></a>二，相关工作</h1><h2 id="residual-representations"><a href="#residual-representations" class="headerlink" title="residual representations"></a>residual representations</h2><p>在图像识别中，VLAD [18] 是一种通过残差向量对字典进行编码的表示，Fisher Vector [30] 可以表示为 VLAD 的概率版本 [18]。 它们都是用于图像检索和分类的强大的浅层表示 [4, 48]。 对于矢量量化，编码残差矢量[17]被证明比编码原始矢量更有效。<br>在低级视觉和计算机图形学中，为了求解偏微分方程 (PDE)，广泛使用的多重网格方法 [3] 将系统重新表述为多个尺度的子问题，其中每个子问题负责残差解 在较粗和较细的尺度之间。 Multigrid 的替代方法是分层基础预处理 [45, 46]，它依赖于表示两个尺度之间的残差向量的变量。 已经表明 [3, 45, 46] 这些求解器比不知道解的剩余性质的标准求解器收敛得更快。 这些方法表明，良好的重新制定或预处理可以简化优化。</p>
-<h2 id="shortcut-connection"><a href="#shortcut-connection" class="headerlink" title="shortcut connection"></a>shortcut connection</h2><p>导致快捷连接 [2, 34, 49] 的实践和理论已经被研究了很长时间。 训练多层感知器 (MLP) 的早期实践是添加一个从网络输入连接到输出的线性层 [34、49]。 在 [44, 24] 中，一些中间层直接连接到辅助分类器以解决梯度消失/爆炸问题。 [39、38、31、47] 的论文提出了通过快捷连接实现居中层响应、梯度和传播误差的方法。 在 [44] 中，“初始”层由一个快捷分支和几个更深的分支组成。<br>与本文的工作同时进行的是，“高速公路网络”[42、43] 提供了具有门控功能的快捷连接 [15]。 这些门依赖于数据并具有参数，这与本文的无参数恒等式快捷方式形成对比。 当门控捷径“关闭”（接近零）时，高速公路网络中的层表示非残差函数。 相反，本文的公式总是学习残差函数； 本文的身份捷径永远不会关闭，所有信息总是通过，还有额外的剩余功能需要学习。 此外，高速公路网络并没有表现出随着深度的极大增加（例如，超过 100 层）而获得的准确性提升。</p>
+<h1 id="二，相关工作"><a href="#二，相关工作" class="headerlink" title="二，相关工作"></a>二，相关工作</h1><h2 id="residual-representations"><a href="#residual-representations" class="headerlink" title="residual representations"></a>residual representations</h2><p>在图像识别中，VLAD [18] 是一种通过残差向量对字典进行编码的表示，Fisher Vector [30] 可以表示为 VLAD 的概率版本 [18]，它们都是用于图像检索和分类的强大的浅层表示 [4, 48]。 对于矢量量化，编码残差矢量[17]被证明比编码原始矢量更有效。</p>
+<p>在低级视觉和计算机图形学中，为了求解偏微分方程 (PDE)，广泛使用的多重网格方法 [3] 将系统重新表述为多个尺度的子问题，其中每个子问题在较粗和较细的尺度之间负责残差解。 Multigrid 的替代方法是分层基础预处理 [45,46]，它依赖于表示两个尺度之间的残差向量的变量，已经表明 [3,45,46] 这些求解器比不知道解的剩余性质的标准求解器收敛得更快。 这些方法表明，良好的重新制定或预处理可以简化对应的优化问题。</p>
+<h2 id="shortcut-connection"><a href="#shortcut-connection" class="headerlink" title="shortcut connection"></a>shortcut connection</h2><p>导致快捷连接 [2,34,49] 的实践和理论已经被研究了很长时间，训练多层感知器 (MLP) 的早期实践是添加一个从网络输入连接到输出的线性层 [34、49]。 在 [44,24] 中，一些中间层直接连接到辅助分类器以解决梯度消失、爆炸问题。 [39、38、31、47] 等论文提出了通过快捷连接实现中间层响应、梯度和传播误差的方法，在 [44] 中，“初始”层由一个快捷分支和几个更深的分支组成。</p>
+<p>与本文的工作同时进行的是，“高速公路网络”[42、43] 提供了具有门控功能的快捷连接 [15]。 这些门依赖于数据并具有参数，这与本文的无参数恒等式快捷方式形成对比。 当门控捷径“关闭”（接近零）时，高速公路网络中的层表示非残差函数。 相反，本文的公式总是学习残差函数； 本文的身份捷径永远不会关闭，所有信息总是通过，还有额外的剩余功能需要学习。 此外，高速公路网络并没有表现出随着深度的极大增加（例如，超过 100 层）而获得的准确性提升。</p>
 <h1 id="三，深度残差学习"><a href="#三，深度残差学习" class="headerlink" title="三，深度残差学习"></a>三，深度残差学习</h1><h2 id="3-1-残差学习"><a href="#3-1-残差学习" class="headerlink" title="3.1 残差学习"></a>3.1 残差学习</h2><p>让本文将 H(x) 视为由几个堆叠层（不一定是整个网络）拟合的基础映射，其中 x 表示这些层中第一层的输入。 如果假设多个非线性层可以渐近逼近复杂函数2，那么就等价于假设它们可以渐近逼近残差函数，即 H(x) − x（假设输入和输出是 尺寸相同）。 因此，本文不是期望堆叠层近似 H(x)，而是明确地让这些层近似残差函数 F(x) := H(x) − x。 因此，原始函数变为 F(x)+x。 尽管这两种形式都应该能够渐近逼近所需的函数（如假设的那样），但学习的难易程度可能不同。<br>这种重新表述的动机是关于退化问题的违反直觉的现象（图 1，左）。 正如本文在介绍中所讨论的，如果可以将添加的层构造为恒等映射，则更深的模型的训练误差应该不大于其较浅的对应层。 退化问题表明求解器可能难以通过多个非线性层来近似恒等映射。 通过残差学习重构，如果恒等映射是最优的，求解器可以简单地将多个非线性层的权重推向零以接近恒等映射。<br>在实际情况下，恒等映射不太可能是最优的，但本文的重新表述可能有助于解决问题。 如果最优函数更接近恒等映射而不是零映射，求解器应该更容易找到参考恒等映射的扰动，而不是将函数作为新函数学习。 本文通过实验（图 7）表明，学习到的残差函数通常具有较小的响应，这表明恒等映射提供了合理的预处理。</p>
 <h2 id="3-2-快捷方式的身份映射（Identity-Mapping-by-Shortcuts）"><a href="#3-2-快捷方式的身份映射（Identity-Mapping-by-Shortcuts）" class="headerlink" title="3.2 快捷方式的身份映射（Identity Mapping by Shortcuts）"></a>3.2 快捷方式的身份映射（Identity Mapping by Shortcuts）</h2><p>本文对每几个堆叠层采用残差学习。 构建块如图 2 所示。正式地，在本文中，本文考虑将构建块定义为：</p>
 <script type="math/tex; mode=display">y=\mathcal F(x,\{W_i\})+x</script><p>这里 x 和 y 是所考虑层的输入和输出向量。 函数 F (x, {Wi }) 表示要学习的残差映射。 对于图 2 中具有两层的示例，F = W2σ(W1x)，其中 σ 表示 ReLU [29]，并且为了简化符号而省略了偏差。 操作 F + x 是通过快捷连接和逐元素加法执行的。 本文采用相加后的第二个非线性（即 σ(y)，见图 2）。<br>Eqn.(1) 中的快捷连接既不引入额外参数也不引入计算复杂度。 这不仅在实践中很有吸引力，而且在本文比较普通网络和残差网络时也很重要。 本文可以公平地比较同时具有相同数量的参数、深度、宽度和计算成本（除了可忽略的逐元素加法）的普通/残差网络。<br>在等式（1）中 x 和 F 的维数必须相等。 如果不是这种情况（例如，当更改输入/输出通道时），本文可以通过快捷连接执行线性投影 Ws 以匹配维度：<br>y = F (x, {Wi }) + Ws x。 (2)<br>本文也可以在等式（1）中使用方阵Ws。 但本文将通过实验表明恒等映射足以解决退化问题并且是经济的，因此 Ws 仅在匹配维度时使用。<br>残差函数F的形式是灵活的。 本文中的实验涉及具有两层或三层的函数 F（图 5），但更多层也是可能的。 但是如果 F 只有一个层，Eqn.(1) 类似于一个线性层：y = W1 x + x，本文没有观察到优势。<br>本文还注意到，尽管为简单起见，上述符号是关于全连接层的，但它们适用于卷积层。 函数 F(x,{Wi}) 可以表示多个卷积层。 逐个元素的加法是在两个特征图上逐个通道执行的。</p>
@@ -357,7 +359,10 @@
     <a href="/2023/05/17/other/Numerical_Methods_for_algorithmic_Systems_and_Neural_Networks/" rel="prev" title="Numerical Methods for algorithmic Systems and Neural Networks">
       <i class="fa fa-chevron-left"></i> Numerical Methods for algorithmic Systems and Neural Networks
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2023/06/28/3D_reconstruction/3d-reconstruction-survey/" rel="next" title="三维重建调研">
+      三维重建调研 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -433,7 +438,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">85</span>
+          <span class="site-state-item-count">86</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -446,7 +451,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">78</span>
+        <span class="site-state-item-count">79</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -501,13 +506,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">298k</span>
+    <span title="站点总字数">302k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">4:31</span>
+    <span title="站点阅读时长">4:34</span>
 </div>
 
         
