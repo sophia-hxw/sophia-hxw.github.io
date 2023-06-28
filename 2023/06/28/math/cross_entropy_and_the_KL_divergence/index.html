@@ -21,20 +21,20 @@
     var CONFIG = {"hostname":"github.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="摘要title: Multi-Level Pixel-Aligned Implicit Function for High-Resolution 3D Human Digitization essay link PIFuHD是PIFu原作者的最新工作，发表于CVPR2020(oral)，论文主要是基于单张RGB实现3D人体重建，效果非常惊艳~">
+  <meta name="description" content="前言KL散度和交叉熵都可以用来作为模型的loss函数，但二者的使用场景不一样。在这里引申一下模型loss的含义：“通过样本来计算模型分布与目标分布间的差异。”，这就是KL散度的作用。但有时候我们的目标分布会是常数，也就是这个分布是已知且不变的，例如分类任务，这个时候我们就会使用交叉熵来衡量模型的预测分布与实际分布之间的差异。 CNN模型中常用的交叉熵对比数学中的KL散度概念～ 调参的背后是无尽的数">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PIFuHD model">
-<meta property="og:url" content="https://github.com/sophia-hxw/sophia-hxw.github.io/2022/07/28/3D_reconstruction/PIFuHD/index.html">
+<meta property="og:title" content="交叉熵和KL散度">
+<meta property="og:url" content="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/06/28/math/cross_entropy_and_the_KL_divergence/index.html">
 <meta property="og:site_name" content="橦言无忌">
-<meta property="og:description" content="摘要title: Multi-Level Pixel-Aligned Implicit Function for High-Resolution 3D Human Digitization essay link PIFuHD是PIFu原作者的最新工作，发表于CVPR2020(oral)，论文主要是基于单张RGB实现3D人体重建，效果非常惊艳~">
+<meta property="og:description" content="前言KL散度和交叉熵都可以用来作为模型的loss函数，但二者的使用场景不一样。在这里引申一下模型loss的含义：“通过样本来计算模型分布与目标分布间的差异。”，这就是KL散度的作用。但有时候我们的目标分布会是常数，也就是这个分布是已知且不变的，例如分类任务，这个时候我们就会使用交叉熵来衡量模型的预测分布与实际分布之间的差异。 CNN模型中常用的交叉熵对比数学中的KL散度概念～ 调参的背后是无尽的数">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-07-27T16:46:12.000Z">
-<meta property="article:modified_time" content="2022-11-14T03:36:05.000Z">
+<meta property="article:published_time" content="2023-06-28T14:11:14.000Z">
+<meta property="article:modified_time" content="2023-06-28T14:13:23.212Z">
 <meta property="article:author" content="xinwen">
-<meta property="article:tag" content="PIFuHD">
+<meta property="article:tag" content="math">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://github.com/sophia-hxw/sophia-hxw.github.io/2022/07/28/3D_reconstruction/PIFuHD/">
+<link rel="canonical" href="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/06/28/math/cross_entropy_and_the_KL_divergence/">
 
 
 <script id="page-configurations">
@@ -47,7 +47,7 @@
   };
 </script>
 
-  <title>PIFuHD model | 橦言无忌</title>
+  <title>交叉熵和KL散度 | 橦言无忌</title>
   
 
 
@@ -199,7 +199,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://github.com/sophia-hxw/sophia-hxw.github.io/2022/07/28/3D_reconstruction/PIFuHD/">
+    <link itemprop="mainEntityOfPage" href="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/06/28/math/cross_entropy_and_the_KL_divergence/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/me.jpg">
@@ -212,7 +212,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          PIFuHD model
+          交叉熵和KL散度
         </h1>
 
         <div class="post-meta">
@@ -222,23 +222,17 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2022-07-28 00:46:12" itemprop="dateCreated datePublished" datetime="2022-07-28T00:46:12+08:00">2022-07-28</time>
+              <time title="创建时间：2023-06-28 22:11:14 / 修改时间：22:13:23" itemprop="dateCreated datePublished" datetime="2023-06-28T22:11:14+08:00">2023-06-28</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-11-14 11:36:05" itemprop="dateModified" datetime="2022-11-14T11:36:05+08:00">2022-11-14</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/3DReconstruction/" itemprop="url" rel="index"><span itemprop="name">3DReconstruction</span></a>
+                  <a href="/categories/math/" itemprop="url" rel="index"><span itemprop="name">math</span></a>
                 </span>
             </span>
 
@@ -251,8 +245,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2022/07/28/3D_reconstruction/PIFuHD/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/07/28/3D_reconstruction/PIFuHD/" itemprop="commentCount"></span>
+    <a title="valine" href="/2023/06/28/math/cross_entropy_and_the_KL_divergence/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/06/28/math/cross_entropy_and_the_KL_divergence/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -262,14 +256,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>170</span>
+              <span>2.3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -281,9 +275,37 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>title: Multi-Level Pixel-Aligned Implicit Function for High-Resolution 3D Human Digitization</p>
-<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2004.00452">essay link</a></p>
-<p><strong>PIFuHD是PIFu原作者的最新工作，发表于CVPR2020(oral)，论文主要是基于单张RGB实现3D人体重建，效果非常惊艳~</strong><br><span id="more"></span></p>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>KL散度和交叉熵都可以用来作为模型的loss函数，但二者的使用场景不一样。在这里引申一下模型loss的含义：“通过样本来计算模型分布与目标分布间的差异。”，这就是KL散度的作用。但有时候我们的目标分布会是常数，也就是这个分布是已知且不变的，例如分类任务，这个时候我们就会使用交叉熵来衡量模型的预测分布与实际分布之间的差异。</p>
+<p>CNN模型中常用的交叉熵对比数学中的KL散度概念～</p>
+<p><strong>调参的背后是无尽的数学理论啊～</strong><br><span id="more"></span></p>
+<h1 id="概率和惊喜度"><a href="#概率和惊喜度" class="headerlink" title="概率和惊喜度"></a>概率和惊喜度</h1><p>我们用 $p(x)$ 表示事件 $x$ 发生的概率。这里我们先不讨论概率的内涵, 只需要遵循直觉：$\frac{1}{p(x)}$ 可以衡量事件 $x$ 发生时会造成的惊喜（行文需要，请按照中性理解）程度：<br>概率越低的事件发生所造成的惊喜程度高；概率越高的事件发生所造成的惊喜程度低。</p>
+<p>但是概率倒数这一运算的性质不是很好，所以在不改变单调性的情况下，可以将惊喜度（surprisal）定义为：</p>
+<script type="math/tex; mode=display">\log\frac{1}{p(x)}=-\log p(x)</script><p>这样定义后产生了另外两个好处： </p>
+<ol>
+<li>确定性事件的惊喜度 = 0； </li>
+<li>如果有多个独立事件同时发生，他们产生的惊喜度可以直接相加。是的，一个事件发生概率的倒数再取对数就是惊喜。</li>
+</ol>
+<h1 id="信息熵"><a href="#信息熵" class="headerlink" title="信息熵"></a>信息熵</h1><p>信息熵，不过只是惊喜的期望</p>
+<p>惊喜度，在大部分文章里，都叫做信息量，但这个命名只是香农根据他研究对象的需要而做的，对于很多其它的场景，要生搬硬套就会变得非常不好理解了。 </p>
+<p>信息量 = 惊喜度，那么信息熵呢？看看公式不言自明：</p>
+<script type="math/tex; mode=display">H_p(X)=-\sum_xp(x)\log_b(p(x))</script><p>或是连续形式：</p>
+<script type="math/tex; mode=display">H_p(X)=\int p(x)\cdot\log\frac{1}{p(x)}dx</script><p>这不就是惊喜度的期望吗？</p>
+<p>换句话说，信息熵描述的是整个事件空间会产生的平均惊喜。</p>
+<p>什么情况下，平均惊喜最低呢？确定事件。以某个离散随机分布为例，整个分布在特定值  为 1，其它处均为 0，此时的信息熵/平均惊喜也为 0。<br>什么情况下产生的平均惊喜最高呢？自然是不确定越高平均惊喜越高。对于给定均值和方差的连续分布，正态分布（高斯分布）具有最大的信息熵（也就是平均惊喜）。所以再想想为什么大量生活中会看到的随机事件分布都服从正态分布呢？说明大自然有着创造最大惊喜的倾向，或者说，就是要让你猜不透。这也是理解热力学中的熵增定律的另一个角度。</p>
+<h1 id="交叉熵"><a href="#交叉熵" class="headerlink" title="交叉熵"></a>交叉熵</h1><p>交叉熵，交叉的是古典和贝叶斯学派。</p>
+<p>对于概率，比较经典的理解是看做是重复试验无限次后事件频率会逼近的值，<strong>是一个客观存在的值</strong>；但是贝叶斯学派提出了另一种理解方式：即将概率理解为<strong>我们主观上对事件发生的确信程度</strong>。</p>
+<p>针对同一个随机变量空间有两个分布，分别记作 $p_o$ 和 $p_s$；<br> $p_s(x)$ 是我们主观认为 $x$ 会发生的概率，下标 $s$ 代表 subjective；<br> $p_o(x)$ 是客观上 $x$ 会发生的概率，下标 $o$ 代表 objective。<br>这种情况下，客观上这个随机事件  会给我们造成惊喜的期望应该是：</p>
+<script type="math/tex; mode=display">H_{p_o,p_s}(X)=\int p_o(x)\log\frac{1}{p_s(x)}dx</script><p>这个量就是交叉熵</p>
+<p>再翻译一下，交叉熵是什么？可以理解为：我们带着某个主观认知去接触某个客观随机现象的时候，会产生的平均惊喜度。</p>
+<p>那什么时候交叉熵（也就是我们会获得的平均惊喜度）会大？<strong>就是当我们主观上认为一个事情发生的概率很低 $\frac{1}{p_s(x)}$ 很大)，但是客观上发生概率很高 ($p_o(x)$ 很大) 的时候，也就是主观认知和客观现实非常不匹配的时候</strong>。机器学习当中为啥用交叉熵来当作损失函数应该也就不言自明了。</p>
+<h1 id="KL散度"><a href="#KL散度" class="headerlink" title="KL散度"></a>KL散度</h1><p>KL 散度通常用来度量两个分布之间的差异。KL 散度全称叫kullback leibler 散度，也叫做相对熵（relative entropy）。在机器学习中常用到，譬如近似推断中，有变分推断和期望传播，都是通过 Minimize KL散度来实现推断实现逼近目标分布。除了KL散度还有 $\alpha$ 散度，$\aplha-\beta$ 散度。</p>
+<p>交叉熵可以衡量我们基于某种主观认识去感受客观世界时，会产生的平均惊喜。但是根据上面的分析，即使主观和客观完全匹配，这时交叉熵等于信息熵，只要事件仍然随机而非确定，就一定会给我们造成一定程度的惊喜。那我们要怎么度量主观认识和客观之间差异呢？可以用应该用以当前对“世界观”产生的惊喜期望和完全正确认识事件时产生的惊喜期望的差值来衡量，这个就是相对熵（常称作 KL-散度），通常写作：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+    D_{KL}(p_o||p_s)&=H_{p_o,p_s}(X)-H_{p_o}(X)\\
+    &=\int p_o(x)\log\frac{1}{p_s(x)}dx-\int p_o(x)\log\frac{1}{p_o(x)}dx \\
+    &=\int p_o(x)\log\frac{p_o(x)}{p_s(x)}dx
+\end{align*}</script><p>当我们的主观认知完全匹配客观现实的时候，KL-散度应该等于 0，其它任何时候都会大于 0。由于存在恒为正这一性质，KL-散度经常用于描述两个分布是否接近，也就是作为两个分布之间“距离”的度量；不过由于运算不满足交换律，所以又不能完全等同于“距离”来理解。<br>机器学习中通常用交叉熵作为损失函数的原因在与，客观分布并不随参数变化，所以即使是优化 KL-散度，对参数求导的时候也只有交叉熵的导数了。</p>
 
     </div>
 
@@ -299,7 +321,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://github.com/sophia-hxw/sophia-hxw.github.io/2022/07/28/3D_reconstruction/PIFuHD/" title="PIFuHD model">https://github.com/sophia-hxw/sophia-hxw.github.io/2022/07/28/3D_reconstruction/PIFuHD/</a>
+    <a href="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/06/28/math/cross_entropy_and_the_KL_divergence/" title="交叉熵和KL散度">https://github.com/sophia-hxw/sophia-hxw.github.io/2023/06/28/math/cross_entropy_and_the_KL_divergence/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -311,7 +333,7 @@
       <footer class="post-footer">
           
           <div class="post-tags">
-              <a href="/tags/PIFuHD/" rel="tag"><i class="fa fa-tag"></i> PIFuHD</a>
+              <a href="/tags/math/" rel="tag"><i class="fa fa-tag"></i> math</a>
           </div>
 
         
@@ -320,13 +342,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/07/26/other/xr-vr-ar/" rel="prev" title="XR, VR和AR的概念区别">
-      <i class="fa fa-chevron-left"></i> XR, VR和AR的概念区别
+    <a href="/2023/06/28/Transformer/A%20Survey%20of%20Transformers/" rel="prev" title="A Survey of Transformers">
+      <i class="fa fa-chevron-left"></i> A Survey of Transformers
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2022/08/01/ubuntuOS/hexo-next-theme/" rel="next" title="hexo上的next主题优化项">
-      hexo上的next主题优化项 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -386,7 +405,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-text">摘要</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E7%8E%87%E5%92%8C%E6%83%8A%E5%96%9C%E5%BA%A6"><span class="nav-text">概率和惊喜度</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E7%86%B5"><span class="nav-text">信息熵</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%A4%E5%8F%89%E7%86%B5"><span class="nav-text">交叉熵</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#KL%E6%95%A3%E5%BA%A6"><span class="nav-text">KL散度</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
