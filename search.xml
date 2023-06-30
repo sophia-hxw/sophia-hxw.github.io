@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>On Interpretability of Artificial Neural Networks A Survey</title>
+    <title>On Interpretability of Artificial Neural Networks-A Survey</title>
     <url>/2023/06/28/CNN/On_Interpretability_of_Artificial_Neural_Networks_A%20Survey/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>title: On Interpretability of Artificial Neural Networks A Survey</p>
 <p>链接: <a href="https://pan.baidu.com/s/1mmXJSe-n63EYjxNztRrCig">https://pan.baidu.com/s/1mmXJSe-n63EYjxNztRrCig</a><br>提取码: 8q5v<br>—来自百度网盘超级会员v6的分享</p>
-<p><strong>ANN 模型的解释调研～</strong><br><span id="more"></span></p>
+<p><strong>ANN 模型的解释综述文章～</strong><br><span id="more"></span></p>
 <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>由人工深度神经网络（DNN）实现的深度学习最近在处理文本、图像、视频、图形等的许多重要领域取得了巨大成功。 然而，DNN 的黑盒性质，成为了其在医疗诊断、治疗等关键应用中被广泛采用的主要障碍之一。 由于深度学习的巨大潜力，DNN 的可解释性最近引起了很多研究关注。 在本文中，我们提出了一种简单但全面的可解释性分类法，系统地回顾了神经网络可解释性的最新研究，描述了可解释性在医学中的应用，并讨论了未来的研究方向，例如与模糊逻辑和大脑科学相关的研究方向。</p>
 <h1 id="一，介绍"><a href="#一，介绍" class="headerlink" title="一，介绍"></a>一，介绍</h1><p>深度学习[71]已成为许多常见重要领域的主流方法，例如文本[40]、图像[181]、视频[132]和图形[88]。 然而，深度学习作为一种黑盒模型，虽然在实践中表现得很好，但很难解释其底层机制和行为。 人们经常会问这样的问题，深度学习如何做出这样的预测？为什么模型中某些特征比其他特征更受青睐？需要进行哪些更改来提高模型性能？不幸的是，目前能严谨回答这些问题的研究很有限。</p>
 <p>深度神经网络（DNN）的可解释性对于许多领域至关重要，尤其是医疗保健领域[67]、[68]、[173]，首先，模型稳健性是医疗应用中至关重要的问题。 最近的研究表明模型的可解释性和稳健性密切相关[131]，一方面，模型稳健性的提高促进了模型的可解释性。 例如，通过对抗性训练（一种用对抗性示例增强训练数据的训练方法）训练的深度模型，比没有对抗性示例训练的相同模型表现出更好的可解释性（具有更准确的显着图）[131]。 另一方面，当我们深入理解一个模型时，我们可以彻底检查它的弱点，因为可解释性可以帮助识别复杂模型的潜在漏洞，从而提高其准确性和可靠性。 此外，可解释性在深度学习技术的道德使用中发挥着重要作用[57]。 为了建立患者对深度学习的信任，需要可解释性来让深度学习系统负责[57]。 如果模型构建者可以解释为什么模型在某些条件下做出特定决策，用户就会知道这样的模型是否会导致不良事件。 然后就可以建立标准和协议来更好地使用深度学习系统。</p>
 <p>然而，缺乏可解释性已成为深度学习在关键任务应用中的主要障碍。 例如，欧盟于2016年提出规定，受算法影响的个人有权获得解释[61]。 尽管在深度学习的可解释性方面做出了巨大的努力，并且已经有了关于该主题的几篇综述，但我们认为仍然需要最新的综述，特别是考虑到该领域的快速发展。 Zhang和Zhu[201]的综述主要是视觉可解释性。 他们的综述中的代表性出版物，在我们综述中是特征分析、显着性和代理分类法。 Chakraborty 等人[28]采纳了Lipton [112]关于可解释性的意见，并相应地构建了他们的综述以提供深入的观点，但范围有限，例如只引用了49 篇参考文献。 杜等人的综述[43]也有类似的弱点，只涵盖了40篇论文，分为事后解释和临时解释，以及全局解释和局部解释。 他们的分类比较粗粒度，忽略了一些重要的出版物，例如关于文本解释、案例解释等的出版物。相比之下，我们的综述非常详细和全面，包括最新的研究结果。 [58]中的出版物将解释性分类为理解神经网络的工作流程、理解神经网络的表示和解释生成，我们涵盖了所有这些方面，并讨论了如何构建可解释神经网络原型的研究。 Guidotti 等人的综述[65] 以及 Adadi 和 Berrada [2] 涵盖了现有的黑盒机器学习模型，而不是专注于神经网络。 因此，他们的调查中缺少几篇解释神经网络的标志性论文，例如从数学和物理角度的解释。</p>
-<p>阿丽埃塔等人[10]对可解释的人工智能（XAI）进行了广泛的回顾，其中澄清了概念和分类法，并确定了挑战。 虽然该综述涵盖了 AI/ML 的一般可解释性，但我们的综述是针对 DNN 的，并提供了独特的视角和见解。 具体来说，我们的综述在以下意义上是新颖的：</p>
+<p>Arrieta等人[10]对可解释的人工智能（XAI）进行了广泛的回顾，其中澄清了概念和分类法，并确定了挑战。 虽然该综述涵盖了 AI/ML 的一般可解释性，但我们的综述是针对 DNN 的，并提供了独特的视角和见解。 具体来说，我们的综述在以下意义上是新颖的：</p>
 <ul>
 <li>1）我们分别讨论事后和临时可解释性，因为前者解释现有模型，而后者构建可解释的模型； </li>
 <li>2）我们的方向包括广泛研究的生成模型、总结深度学习理论进展、回顾先进的数学/物理方法以及可解释性在医学中的应用； </li>
@@ -5045,6 +5045,23 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </tags>
   </entry>
   <entry>
+    <title>rpn的原理和作用</title>
+    <url>/2022/05/16/detection/principle-and-effects-of-rpn/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>rpn原理和作用</p>
+<span id="more"></span>
+<h2 id="1，作用"><a href="#1，作用" class="headerlink" title="1，作用"></a>1，作用</h2><p>RPN专门用来提取候选框，一方面RPN耗时少，另一方面RPN可以很容易结合到Fast RCNN中，成为一个整体。</p>
+<h2 id="2，实现细节"><a href="#2，实现细节" class="headerlink" title="2，实现细节"></a>2，实现细节</h2><p>一个特征图（Faster RCNN的公共Feature Map）经过sliding window处理，得到256维特征，对每个特征向量做两次全连接操作，一个得到2个分数，一个得到4个坐标{然后通过两次全连接得到结果2k个分数和4k个坐标[k指的是由锚点产生的K个框(K anchor boxes)]}</p>
+<h2 id="3，anchor-box是怎么选取的？"><a href="#3，anchor-box是怎么选取的？" class="headerlink" title="3，anchor box是怎么选取的？"></a>3，anchor box是怎么选取的？</h2><p>滑窗的中心在原像素空间的映射点称为anchor，以此anchor为中心，生成k(paper中default k=9, 3 scales and 3 aspect ratios/不同尺寸和不同长宽比)个proposals。三个面积尺寸$(128^{2}，256^{2}，512^{2})$，然后在每个面积尺寸下，取三种不同的长宽比例（1:1,1:2,2:1）</p>
+<h2 id="4，为什么提出anchor-box？"><a href="#4，为什么提出anchor-box？" class="headerlink" title="4，为什么提出anchor box？"></a>4，为什么提出anchor box？</h2><p>主要有两个原因：一个窗口只能检测一个目标、无法解决多尺度问题。<br>目前anchor box尺寸的选择主要有三种方式：人为经验选取、k-means聚类、作为超参数进行学习<br>为什么使用不同尺寸和不同长宽比？ 为了得到更大的交并比(IOU)。</p>
+]]></content>
+      <categories>
+        <category>detection</category>
+      </categories>
+      <tags>
+        <tag>rpn</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>roi align</title>
     <url>/2022/05/16/detection/roi-align/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>roi align产生的背景，原理和应用场景</p>
@@ -5064,23 +5081,6 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </categories>
       <tags>
         <tag>roi align</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>rpn的原理和作用</title>
-    <url>/2022/05/16/detection/principle-and-effects-of-rpn/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>rpn原理和作用</p>
-<span id="more"></span>
-<h2 id="1，作用"><a href="#1，作用" class="headerlink" title="1，作用"></a>1，作用</h2><p>RPN专门用来提取候选框，一方面RPN耗时少，另一方面RPN可以很容易结合到Fast RCNN中，成为一个整体。</p>
-<h2 id="2，实现细节"><a href="#2，实现细节" class="headerlink" title="2，实现细节"></a>2，实现细节</h2><p>一个特征图（Faster RCNN的公共Feature Map）经过sliding window处理，得到256维特征，对每个特征向量做两次全连接操作，一个得到2个分数，一个得到4个坐标{然后通过两次全连接得到结果2k个分数和4k个坐标[k指的是由锚点产生的K个框(K anchor boxes)]}</p>
-<h2 id="3，anchor-box是怎么选取的？"><a href="#3，anchor-box是怎么选取的？" class="headerlink" title="3，anchor box是怎么选取的？"></a>3，anchor box是怎么选取的？</h2><p>滑窗的中心在原像素空间的映射点称为anchor，以此anchor为中心，生成k(paper中default k=9, 3 scales and 3 aspect ratios/不同尺寸和不同长宽比)个proposals。三个面积尺寸$(128^{2}，256^{2}，512^{2})$，然后在每个面积尺寸下，取三种不同的长宽比例（1:1,1:2,2:1）</p>
-<h2 id="4，为什么提出anchor-box？"><a href="#4，为什么提出anchor-box？" class="headerlink" title="4，为什么提出anchor box？"></a>4，为什么提出anchor box？</h2><p>主要有两个原因：一个窗口只能检测一个目标、无法解决多尺度问题。<br>目前anchor box尺寸的选择主要有三种方式：人为经验选取、k-means聚类、作为超参数进行学习<br>为什么使用不同尺寸和不同长宽比？ 为了得到更大的交并比(IOU)。</p>
-]]></content>
-      <categories>
-        <category>detection</category>
-      </categories>
-      <tags>
-        <tag>rpn</tag>
       </tags>
   </entry>
   <entry>
