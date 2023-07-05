@@ -29,7 +29,7 @@
 <meta property="og:description" content="前言title: On Interpretability of Artificial Neural Networks A Survey 链接: https:&#x2F;&#x2F;pan.baidu.com&#x2F;s&#x2F;1mmXJSe-n63EYjxNztRrCig提取码: 8q5v—来自百度网盘超级会员v6的分享 ANN 模型的解释综述文章～">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-06-28T14:22:22.000Z">
-<meta property="article:modified_time" content="2023-07-04T12:20:32.593Z">
+<meta property="article:modified_time" content="2023-07-05T00:48:37.800Z">
 <meta property="article:author" content="xinwen">
 <meta property="article:tag" content="interpretability">
 <meta name="twitter:card" content="summary">
@@ -230,7 +230,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-07-04 20:20:32" itemprop="dateModified" datetime="2023-07-04T20:20:32+08:00">2023-07-04</time>
+                <time title="修改时间：2023-07-05 08:48:37" itemprop="dateModified" datetime="2023-07-05T08:48:37+08:00">2023-07-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -308,9 +308,21 @@
 <p>算法透明度是为了理解模型的训练过程和动态，神经网络的目标函数的情况是高度非凸的。 深度模型没有唯一的解决方案这一事实损害了模型的透明度。 然而，有趣的是，当前基于随机梯度下降（SGD）的学习算法仍然高效且有效地执行。 如果我们能够理解学习算法为何起作用，深度学习的研究和应用将会加速。</p>
 <h2 id="B，为什么可解释性很难？"><a href="#B，为什么可解释性很难？" class="headerlink" title="B，为什么可解释性很难？"></a>B，为什么可解释性很难？</h2><p>在理解了可解释性的含义之后，一个自然的问题是，是什么阻碍了实践者研究可解释性？这个问题在[145]中从商业障碍和数据的自然特性方面得到了部分解决。 在这里，我们用关于人类局限性和算法复杂性的其他方面来补充他们的观点，我们认为可解释神经网络的障碍来自以下四个方面。</p>
 <h3 id="人为限制"><a href="#人为限制" class="headerlink" title="人为限制"></a>人为限制</h3><p>在许多应用中，专业知识对模型而言往往是不足的。 如今，深度学习已被广泛应用于解决复杂的问题，即使是专业人士也无法充分理解。 更糟糕的是，这些问题并不少见。 例如，在最近的一项研究[46]中，我们提出使用人工神经网络来预测伪随机事件。 具体来说，我们将 100000 个二进制连续数字输入到网络中，以预测序列中的第 100001 个数字。 在我们的预测中，高度复杂的隐藏关系被学会以 $3\sigma$ 的准确率击败纯粹的随机猜测。 此外，据推测，神经网络的高灵敏度和高效率可能有助于区分伪随机性和真实量子随机性之间的根本差异。 在这种情况下，神经网络的可解释性将会缺失也就不足为奇了，因为即使是最有才华的物理学家也对这个问题的本质知之甚少，更不用说完全理解神经网络的预测了。</p>
-<h3 id="商业壁垒"><a href="#商业壁垒" class="headerlink" title="商业壁垒"></a>商业壁垒</h3><p>在商业世界中，企业有强烈的动机隐藏其模型。 首先也是最重要的是，公司从黑盒模型中获利。 公司通过完全透明的模型获取资本的做法并不常见[145]。 其次，模型不透明有助于保护辛苦工作免遭逆向工程。 有效的黑匣子是理想的，因为被服务的客户可以获得满意的结果，而竞争对手无法轻易窃取他们的知识产权[145]。 第三，建立可解释模型的原型可能会在财务、计算和其他资源方面花费太多。 现有的开源高级模型可以轻松地为特定任务构建性能良好的算法。 然而，对结果模型的行为产生可靠且一致的理解需要付出更多的努力。<br>数据野性：一方面，虽然现在是大数据时代，但很多领域往往无法获取高质量的数据。 例如，在预测电网故障的项目中[145]，数据库涉及文本文档、追溯到1890年代的电力会计数据以及新沙井检查的数据。 高度异构和不一致的数据不仅阻碍了深度学习模型的准确性，而且阻碍了可解释性的构建。 另一方面，现实世界的数据具有高维度的特征，这抑制了推理。 例如，给定 MNIST 图像分类问题，输入图像的大小为 28 × 28 = 784。因此，解决此问题的深度学习模型必须学习 784 个变量到 10 个数字之一的有效映射。 如果我们考虑 ImageNet 数据集，输入变量的数量将达到 512×512×3 = 768 432。</p>
-<p>算法复杂性：深度学习是一种大规模、高度非线性的算法。 卷积、池化、非线性激活、捷径等都有助于神经网络的可变性。 深度模型的可训练参数数量可以达到数亿甚至更多。 尽管非线性不一定会导致不透明（例如，决策树模型不是线性的，但可以解释），但深度学习的一系列非线性操作确实阻止了我们理解其内部工作原理。 此外，递归性是另一个困难来源。 一个典型的例子是非线性递归导致的混沌行为。 众所周知，即使是简单的递归数学模型也可能导致棘手的动力学[107]。 在[174]中，证明即使在简单的神经网络中也存在诸如分叉之类的混沌行为。 在混沌系统中，初始输入的微小变化可能会导致巨大的结果差异，从而增加解释方法的复杂性。</p>
-<h2 id="C，怎么构建好的可解释性方法？"><a href="#C，怎么构建好的可解释性方法？" class="headerlink" title="C，怎么构建好的可解释性方法？"></a>C，怎么构建好的可解释性方法？</h2><p>第三个主要问题是评估所提出的解释方法质量的标准。 由于现有的评估方法还为时过早，我们提出了五个通用且明确的经验法则：1）准确性； 2）一致性； 3）完整性； 4）普遍性； 5）奖励。 与[42]中描述的方法相比，我们的经验法则是细粒度的，并且侧重于解释方法的特征：基于应用程序、基于人性化和基于功能。<br>准确度：准确度是指解释方法的准确程度。 仅限于定性描述还是定量分析？ 一般来说，定量解释方法比定性解释方法更可取。<br>一致性：一致性表明解释中不存在矛盾。 对于多个相似的样本，公平的解释应该产生一致的答案。 此外，解释方法应符合真实模型的预测。 例如，基于代理的方法是根据它们复制原始黄金模型的程度来评估的。<br>完整性：从数学上讲，神经网络是学习最适合数据的映射。 一个好的解释方法应该显示出支持最大数量的数据实例和数据类型的有效性。<br>通用性：随着深度学习的快速发展，深度学习的宝库得到了极大的丰富。 这种多样化的深度学习模型在广泛的应用中发挥着重要作用。 一个重要的问题是我们是否可以开发一种通用解释器来解释尽可能多的模型以节省劳动力和时间。 但是，由于模型之间的高度可变性，这在技术上具有挑战性。<br>奖励：加深对神经网络的理解有哪些收获？ 除了从业者和用户的信任之外，可解释性的成果还可以是对网络设计、训练等的深入了解。由于其黑盒性质，使用神经网络在很大程度上是一个试错过程，有时会产生相互矛盾的直觉。 对深度学习的透彻理解将有助于神经网络的研究和应用。<br>简而言之，我们在这篇综述中的贡献有三个：1）我们提出了一种用于神经网络可解释性的全面分类法，并用我们的见解描述了关键方法； 2）我们系统地说明了可解释性方法作为教育辅助工具，如图3、5、6、7、9、10、16和17所示；3）我们在神经网络和规则的融合方面阐明了可解释性研究的未来方向 系统、神经网络和脑科学之间的协同作用以及医学的可解释性。</p>
+<h3 id="商业壁垒"><a href="#商业壁垒" class="headerlink" title="商业壁垒"></a>商业壁垒</h3><p>在商业世界中，企业有强烈的动机隐藏其模型。 首先也是最重要的是，公司从黑盒模型中获利。 公司通过完全透明的模型获取资本的做法并不常见[145]。 其次，模型不透明有助于保护辛苦工作免遭逆向工程。 这样的黑匣子才是有效而理想的，因为被服务的客户可以获得满意的结果，而竞争对手无法轻易窃取他们的知识产权[145]。 第三，建立可解释模型的原型可能会在财务、计算和其他资源方面花费太多。 现有的开源高级模型可以轻松地为特定任务构建性能良好的算法。 然而，对结果模型的行为产生可靠且一致的理解需要付出更多的努力。</p>
+<h3 id="数据原生性"><a href="#数据原生性" class="headerlink" title="数据原生性"></a>数据原生性</h3><p>一方面，虽然现在是大数据时代，但很多领域往往无法获取高质量的数据。 例如，在预测电网故障的项目中[145]，数据库涉及文本文档、追溯到1890年代的电力会计数据以及新沙井检查的数据。 高度异构和不一致的数据不仅阻碍了深度学习模型的准确性，而且阻碍了可解释性的构建。 另一方面，现实世界的数据具有高维度的特征，这抑制了推理。 例如，给定 MNIST 图像分类问题，输入图像的大小为 28 × 28 = 784，因此，解决此问题的深度学习模型必须学习 784 个变量到 10 个数字之一的有效映射。 如果我们考虑 ImageNet 数据集，输入变量的数量将达到 512×512×3 = 768 432。</p>
+<h3 id="算法复杂性"><a href="#算法复杂性" class="headerlink" title="算法复杂性"></a>算法复杂性</h3><p>深度学习是一种大规模、高度非线性的算法。 卷积、池化、非线性激活、捷径等都有助于神经网络的可变性。 深度模型的可训练参数数量可以达到数亿甚至更多。 尽管非线性不一定会导致不透明（例如，决策树模型不是线性的，但可以解释），但深度学习的一系列非线性操作确实阻止了我们理解其内部工作原理。 此外，递归性是另一个困难来源。 一个典型的例子是非线性递归导致的混沌行为。 众所周知，即使是简单的递归数学模型也可能导致棘手的动力学[107]。 在[174]中，证明即使在简单的神经网络中也存在诸如分叉之类的混沌行为。 在混沌系统中，初始输入的微小变化可能会导致巨大的结果差异，从而增加解释方法的复杂性。</p>
+<h2 id="C，怎么构建好的可解释性方法？"><a href="#C，怎么构建好的可解释性方法？" class="headerlink" title="C，怎么构建好的可解释性方法？"></a>C，怎么构建好的可解释性方法？</h2><p>第三个主要问题是评估所提出的解释方法质量的标准。 由于现有的评估方法还为时过早，我们提出了五个通用且明确的经验法则：</p>
+<ul>
+<li>1）准确性； </li>
+<li>2）一致性； </li>
+<li>3）完整性； </li>
+<li>4）普遍性； </li>
+<li>5）奖励。 </li>
+</ul>
+<p>与[42]中描述的方法相比，我们的经验法则是细粒度的，并且侧重于解释方法的特征：基于应用程序、基于人性化和基于功能。</p>
+<h3 id="准确度"><a href="#准确度" class="headerlink" title="准确度"></a>准确度</h3><p>准确度是指解释方法的准确程度。 仅限于定性描述还是定量分析？ 一般来说，定量解释方法比定性解释方法更可取。</p>
+<h3 id="一致性"><a href="#一致性" class="headerlink" title="一致性"></a>一致性</h3><p>一致性表明解释中不存在矛盾。 对于多个相似的样本，公平的解释应该产生一致的答案。 此外，解释方法应符合真实模型的预测。 例如，基于代理的方法是根据它们复制原始黄金模型的程度来评估的。</p>
+<p>完整性：从数学上讲，神经网络是学习最适合数据的映射。 一个好的解释方法应该显示出支持最大数量的数据实例和数据类型的有效性。<br>通用性：随着深度学习的快速发展，深度学习的宝库得到了极大的丰富。 这种多样化的深度学习模型在广泛的应用中发挥着重要作用。 一个重要的问题是我们是否可以开发一种通用解释器来解释尽可能多的模型以节省劳动力和时间。 但是，由于模型之间的高度可变性，这在技术上具有挑战性。<br>奖励：加深对神经网络的理解有哪些收获？ 除了从业者和用户的信任之外，可解释性的成果还可以是对网络设计、训练等的深入了解。由于其黑盒性质，使用神经网络在很大程度上是一个试错过程，有时会产生相互矛盾的直觉。 对深度学习的透彻理解将有助于神经网络的研究和应用。<br>简而言之，我们在这篇综述中的贡献有三个：1）我们提出了一种用于神经网络可解释性的全面分类法，并用我们的见解描述了关键方法； 2）我们系统地说明了可解释性方法作为教育辅助工具，如图3、5、6、7、9、10、16和17所示；3）我们在神经网络和规则的融合方面阐明了可解释性研究的未来方向 系统、神经网络和脑科学之间的协同作用以及医学的可解释性。</p>
 <h1 id="解释方法综述"><a href="#解释方法综述" class="headerlink" title="解释方法综述"></a>解释方法综述</h1>
     </div>
 
@@ -410,7 +422,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%EF%BC%8C%E4%BB%8B%E7%BB%8D"><span class="nav-text">一，介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A%EF%BC%8C%E4%BB%80%E4%B9%88%E6%98%AF%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7%EF%BC%9F"><span class="nav-text">A，什么是可解释性？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7%E5%BE%88%E9%9A%BE%EF%BC%9F"><span class="nav-text">B，为什么可解释性很难？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%BA%E4%B8%BA%E9%99%90%E5%88%B6"><span class="nav-text">人为限制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%95%86%E4%B8%9A%E5%A3%81%E5%9E%92"><span class="nav-text">商业壁垒</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C%EF%BC%8C%E6%80%8E%E4%B9%88%E6%9E%84%E5%BB%BA%E5%A5%BD%E7%9A%84%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7%E6%96%B9%E6%B3%95%EF%BC%9F"><span class="nav-text">C，怎么构建好的可解释性方法？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%A3%E9%87%8A%E6%96%B9%E6%B3%95%E7%BB%BC%E8%BF%B0"><span class="nav-text">解释方法综述</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%EF%BC%8C%E4%BB%8B%E7%BB%8D"><span class="nav-text">一，介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A%EF%BC%8C%E4%BB%80%E4%B9%88%E6%98%AF%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7%EF%BC%9F"><span class="nav-text">A，什么是可解释性？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7%E5%BE%88%E9%9A%BE%EF%BC%9F"><span class="nav-text">B，为什么可解释性很难？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%BA%E4%B8%BA%E9%99%90%E5%88%B6"><span class="nav-text">人为限制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%95%86%E4%B8%9A%E5%A3%81%E5%9E%92"><span class="nav-text">商业壁垒</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%8E%9F%E7%94%9F%E6%80%A7"><span class="nav-text">数据原生性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%A4%8D%E6%9D%82%E6%80%A7"><span class="nav-text">算法复杂性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C%EF%BC%8C%E6%80%8E%E4%B9%88%E6%9E%84%E5%BB%BA%E5%A5%BD%E7%9A%84%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7%E6%96%B9%E6%B3%95%EF%BC%9F"><span class="nav-text">C，怎么构建好的可解释性方法？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%86%E7%A1%AE%E5%BA%A6"><span class="nav-text">准确度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E8%87%B4%E6%80%A7"><span class="nav-text">一致性</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%A3%E9%87%8A%E6%96%B9%E6%B3%95%E7%BB%BC%E8%BF%B0"><span class="nav-text">解释方法综述</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
