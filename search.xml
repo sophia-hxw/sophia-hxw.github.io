@@ -44,8 +44,16 @@
 <p>与[42]中描述的方法相比，我们的经验法则是细粒度的，并且侧重于解释方法的特征：基于应用程序、基于人性化和基于功能。</p>
 <h3 id="准确度"><a href="#准确度" class="headerlink" title="准确度"></a>准确度</h3><p>准确度是指解释方法的准确程度。 仅限于定性描述还是定量分析？ 一般来说，定量解释方法比定性解释方法更可取。</p>
 <h3 id="一致性"><a href="#一致性" class="headerlink" title="一致性"></a>一致性</h3><p>一致性表明解释中不存在矛盾。 对于多个相似的样本，公平的解释应该产生一致的答案。 此外，解释方法应符合真实模型的预测。 例如，基于代理的方法是根据它们复制原始黄金模型的程度来评估的。</p>
-<p>完整性：从数学上讲，神经网络是学习最适合数据的映射。 一个好的解释方法应该显示出支持最大数量的数据实例和数据类型的有效性。<br>通用性：随着深度学习的快速发展，深度学习的宝库得到了极大的丰富。 这种多样化的深度学习模型在广泛的应用中发挥着重要作用。 一个重要的问题是我们是否可以开发一种通用解释器来解释尽可能多的模型以节省劳动力和时间。 但是，由于模型之间的高度可变性，这在技术上具有挑战性。<br>奖励：加深对神经网络的理解有哪些收获？ 除了从业者和用户的信任之外，可解释性的成果还可以是对网络设计、训练等的深入了解。由于其黑盒性质，使用神经网络在很大程度上是一个试错过程，有时会产生相互矛盾的直觉。 对深度学习的透彻理解将有助于神经网络的研究和应用。<br>简而言之，我们在这篇综述中的贡献有三个：1）我们提出了一种用于神经网络可解释性的全面分类法，并用我们的见解描述了关键方法； 2）我们系统地说明了可解释性方法作为教育辅助工具，如图3、5、6、7、9、10、16和17所示；3）我们在神经网络和规则的融合方面阐明了可解释性研究的未来方向 系统、神经网络和脑科学之间的协同作用以及医学的可解释性。</p>
-<h1 id="解释方法综述"><a href="#解释方法综述" class="headerlink" title="解释方法综述"></a>解释方法综述</h1>]]></content>
+<h3 id="完整性"><a href="#完整性" class="headerlink" title="完整性"></a>完整性</h3><p>从数学上讲，神经网络是学习最适合数据的映射。 一个好的解释方法应该显示出支持最大数量的数据实例和数据类型的有效性。</p>
+<h3 id="通用性"><a href="#通用性" class="headerlink" title="通用性"></a>通用性</h3><p>随着深度学习的快速发展，深度学习的宝库得到了极大的丰富。 这种多样化的深度学习模型在广泛的应用中发挥着重要作用。 一个重要的问题是我们是否可以开发一种通用解释器来解释尽可能多的模型以节省劳动力和时间。 但是，由于模型之间的高度可变性，这在技术上具有挑战性。</p>
+<h3 id="奖励"><a href="#奖励" class="headerlink" title="奖励"></a>奖励</h3><p>加深对神经网络的理解有哪些收获？ 除了从业者和用户的信任之外，可解释性的成果还可以是对网络设计、训练等的深入了解。由于其黑盒性质，使用神经网络在很大程度上是一个试错过程，有时会产生相互矛盾的直觉。 对深度学习的透彻理解将有助于神经网络的研究和应用。</p>
+<p>简而言之，我们在这篇综述中的贡献有三个：</p>
+<ul>
+<li>1）我们提出了一种用于神经网络可解释性的全面分类法，并用我们的见解描述了关键方法； </li>
+<li>2）我们系统地说明了可解释性方法作为教育辅助工具，如图3、5、6、7、9、10、16和17所示；</li>
+<li>3）我们在神经网络和规则的融合方面阐明了可解释性研究的未来方向，系统、神经网络和脑科学之间的协同作用以及医学的可解释性。</li>
+</ul>
+<h1 id="二，解释方法综述"><a href="#二，解释方法综述" class="headerlink" title="二，解释方法综述"></a>二，解释方法综述</h1>]]></content>
       <categories>
         <category>CNN</category>
       </categories>
@@ -4886,6 +4894,22 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </tags>
   </entry>
   <entry>
+    <title>hi3559a and nfs</title>
+    <url>/2022/05/19/hardware/hi3559a-nfs/</url>
+    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在进行板子调试的时候，用串口传输文件会比较繁琐，尤其是文件小而多时，所以此处采用了nfs服务，将PC机上的一个文件夹挂载到板子上共享存储服务。</p>
+<p><strong>可以使劲、快速的板砖啦…啦啦啦啦…</strong><br><span id="more"></span></p>
+<h2 id="1，PC上的安装和配置"><a href="#1，PC上的安装和配置" class="headerlink" title="1，PC上的安装和配置"></a>1，PC上的安装和配置</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 安装</span><br><span class="line">sudo apt-get install nfs-kernel-server</span><br><span class="line"># 共享文件夹</span><br><span class="line">sudo mkdir /home/demo/hi3559a_share</span><br><span class="line"># 配置文件，打开```/etc/exports```文件，在最后加上：</span><br><span class="line">/home/demo/hi3559a_share *(rw,sync,no_subtree_check)</span><br></pre></td></tr></table></figure>
+<p><strong>NOTE:参数说明找百度哦</strong><br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 重启服务，上面的配置完成之后，重启服务：</span><br><span class="line">sudo /etc/init.d/rpcbind restart//重启 rpcbind</span><br><span class="line">sudo /etc/init.d/nfs-kernel-server restart //重启 NFS</span><br></pre></td></tr></table></figure></p>
+<h2 id="2，开发板上的安装和配置"><a href="#2，开发板上的安装和配置" class="headerlink" title="2，开发板上的安装和配置"></a>2，开发板上的安装和配置</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 安装客户端</span><br><span class="line">sudo apt-get install nfs-common</span><br><span class="line"># 挂载文件夹</span><br><span class="line">mkdirs -p /home/hihope/hi3559av100</span><br><span class="line">chmod 777 /home/hihope/hi3559av100</span><br></pre></td></tr></table></figure>
+<h2 id="3，常用命令"><a href="#3，常用命令" class="headerlink" title="3，常用命令"></a>3，常用命令</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 挂载命令</span><br><span class="line">sudo mount -t nfs -o nolock,nfsvers=3,vers=3 192.168.86.105:/home/demo/hi3559a_share /home/hihope/hi3559av100</span><br><span class="line"># 卸载命令</span><br><span class="line">umount /home/hihope/hi3559av100</span><br><span class="line">df	//查看挂载信息</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>hardware</category>
+      </categories>
+      <tags>
+        <tag>hi3559a nfs</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>hi3559a，windows和vmware&amp;ubuntu的开发环境配置</title>
     <url>/2022/05/19/hardware/hi3559a-windows-vmware-software/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><h3 id="桥接模式"><a href="#桥接模式" class="headerlink" title="桥接模式"></a>桥接模式</h3><p>原理就找大佬们理解，也就不多说了。<br>我的理解是，PC和板子用网线连接，PC和虚拟机是逻辑连接，需要保证pc, ubuntu（vmware中的）和板子在同一个网段中。</p>
@@ -4944,22 +4968,6 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </categories>
       <tags>
         <tag>Hi3559a win10 vmware</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hi3559a and nfs</title>
-    <url>/2022/05/19/hardware/hi3559a-nfs/</url>
-    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在进行板子调试的时候，用串口传输文件会比较繁琐，尤其是文件小而多时，所以此处采用了nfs服务，将PC机上的一个文件夹挂载到板子上共享存储服务。</p>
-<p><strong>可以使劲、快速的板砖啦…啦啦啦啦…</strong><br><span id="more"></span></p>
-<h2 id="1，PC上的安装和配置"><a href="#1，PC上的安装和配置" class="headerlink" title="1，PC上的安装和配置"></a>1，PC上的安装和配置</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 安装</span><br><span class="line">sudo apt-get install nfs-kernel-server</span><br><span class="line"># 共享文件夹</span><br><span class="line">sudo mkdir /home/demo/hi3559a_share</span><br><span class="line"># 配置文件，打开```/etc/exports```文件，在最后加上：</span><br><span class="line">/home/demo/hi3559a_share *(rw,sync,no_subtree_check)</span><br></pre></td></tr></table></figure>
-<p><strong>NOTE:参数说明找百度哦</strong><br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 重启服务，上面的配置完成之后，重启服务：</span><br><span class="line">sudo /etc/init.d/rpcbind restart//重启 rpcbind</span><br><span class="line">sudo /etc/init.d/nfs-kernel-server restart //重启 NFS</span><br></pre></td></tr></table></figure></p>
-<h2 id="2，开发板上的安装和配置"><a href="#2，开发板上的安装和配置" class="headerlink" title="2，开发板上的安装和配置"></a>2，开发板上的安装和配置</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 安装客户端</span><br><span class="line">sudo apt-get install nfs-common</span><br><span class="line"># 挂载文件夹</span><br><span class="line">mkdirs -p /home/hihope/hi3559av100</span><br><span class="line">chmod 777 /home/hihope/hi3559av100</span><br></pre></td></tr></table></figure>
-<h2 id="3，常用命令"><a href="#3，常用命令" class="headerlink" title="3，常用命令"></a>3，常用命令</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 挂载命令</span><br><span class="line">sudo mount -t nfs -o nolock,nfsvers=3,vers=3 192.168.86.105:/home/demo/hi3559a_share /home/hihope/hi3559av100</span><br><span class="line"># 卸载命令</span><br><span class="line">umount /home/hihope/hi3559av100</span><br><span class="line">df	//查看挂载信息</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>hardware</category>
-      </categories>
-      <tags>
-        <tag>hi3559a nfs</tag>
       </tags>
   </entry>
   <entry>
@@ -5062,23 +5070,6 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </tags>
   </entry>
   <entry>
-    <title>rpn的原理和作用</title>
-    <url>/2022/05/16/detection/principle-and-effects-of-rpn/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>rpn原理和作用</p>
-<span id="more"></span>
-<h2 id="1，作用"><a href="#1，作用" class="headerlink" title="1，作用"></a>1，作用</h2><p>RPN专门用来提取候选框，一方面RPN耗时少，另一方面RPN可以很容易结合到Fast RCNN中，成为一个整体。</p>
-<h2 id="2，实现细节"><a href="#2，实现细节" class="headerlink" title="2，实现细节"></a>2，实现细节</h2><p>一个特征图（Faster RCNN的公共Feature Map）经过sliding window处理，得到256维特征，对每个特征向量做两次全连接操作，一个得到2个分数，一个得到4个坐标{然后通过两次全连接得到结果2k个分数和4k个坐标[k指的是由锚点产生的K个框(K anchor boxes)]}</p>
-<h2 id="3，anchor-box是怎么选取的？"><a href="#3，anchor-box是怎么选取的？" class="headerlink" title="3，anchor box是怎么选取的？"></a>3，anchor box是怎么选取的？</h2><p>滑窗的中心在原像素空间的映射点称为anchor，以此anchor为中心，生成k(paper中default k=9, 3 scales and 3 aspect ratios/不同尺寸和不同长宽比)个proposals。三个面积尺寸$(128^{2}，256^{2}，512^{2})$，然后在每个面积尺寸下，取三种不同的长宽比例（1:1,1:2,2:1）</p>
-<h2 id="4，为什么提出anchor-box？"><a href="#4，为什么提出anchor-box？" class="headerlink" title="4，为什么提出anchor box？"></a>4，为什么提出anchor box？</h2><p>主要有两个原因：一个窗口只能检测一个目标、无法解决多尺度问题。<br>目前anchor box尺寸的选择主要有三种方式：人为经验选取、k-means聚类、作为超参数进行学习<br>为什么使用不同尺寸和不同长宽比？ 为了得到更大的交并比(IOU)。</p>
-]]></content>
-      <categories>
-        <category>detection</category>
-      </categories>
-      <tags>
-        <tag>rpn</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>roi align</title>
     <url>/2022/05/16/detection/roi-align/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>roi align产生的背景，原理和应用场景</p>
@@ -5127,6 +5118,23 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </categories>
       <tags>
         <tag>roi pooling</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>rpn的原理和作用</title>
+    <url>/2022/05/16/detection/principle-and-effects-of-rpn/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>rpn原理和作用</p>
+<span id="more"></span>
+<h2 id="1，作用"><a href="#1，作用" class="headerlink" title="1，作用"></a>1，作用</h2><p>RPN专门用来提取候选框，一方面RPN耗时少，另一方面RPN可以很容易结合到Fast RCNN中，成为一个整体。</p>
+<h2 id="2，实现细节"><a href="#2，实现细节" class="headerlink" title="2，实现细节"></a>2，实现细节</h2><p>一个特征图（Faster RCNN的公共Feature Map）经过sliding window处理，得到256维特征，对每个特征向量做两次全连接操作，一个得到2个分数，一个得到4个坐标{然后通过两次全连接得到结果2k个分数和4k个坐标[k指的是由锚点产生的K个框(K anchor boxes)]}</p>
+<h2 id="3，anchor-box是怎么选取的？"><a href="#3，anchor-box是怎么选取的？" class="headerlink" title="3，anchor box是怎么选取的？"></a>3，anchor box是怎么选取的？</h2><p>滑窗的中心在原像素空间的映射点称为anchor，以此anchor为中心，生成k(paper中default k=9, 3 scales and 3 aspect ratios/不同尺寸和不同长宽比)个proposals。三个面积尺寸$(128^{2}，256^{2}，512^{2})$，然后在每个面积尺寸下，取三种不同的长宽比例（1:1,1:2,2:1）</p>
+<h2 id="4，为什么提出anchor-box？"><a href="#4，为什么提出anchor-box？" class="headerlink" title="4，为什么提出anchor box？"></a>4，为什么提出anchor box？</h2><p>主要有两个原因：一个窗口只能检测一个目标、无法解决多尺度问题。<br>目前anchor box尺寸的选择主要有三种方式：人为经验选取、k-means聚类、作为超参数进行学习<br>为什么使用不同尺寸和不同长宽比？ 为了得到更大的交并比(IOU)。</p>
+]]></content>
+      <categories>
+        <category>detection</category>
+      </categories>
+      <tags>
+        <tag>rpn</tag>
       </tags>
   </entry>
   <entry>

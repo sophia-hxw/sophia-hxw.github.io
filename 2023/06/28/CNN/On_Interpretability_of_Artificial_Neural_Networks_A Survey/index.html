@@ -29,7 +29,7 @@
 <meta property="og:description" content="前言title: On Interpretability of Artificial Neural Networks A Survey 链接: https:&#x2F;&#x2F;pan.baidu.com&#x2F;s&#x2F;1mmXJSe-n63EYjxNztRrCig提取码: 8q5v—来自百度网盘超级会员v6的分享 ANN 模型的解释综述文章～">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-06-28T14:22:22.000Z">
-<meta property="article:modified_time" content="2023-07-05T00:48:37.800Z">
+<meta property="article:modified_time" content="2023-07-05T03:28:52.265Z">
 <meta property="article:author" content="xinwen">
 <meta property="article:tag" content="interpretability">
 <meta name="twitter:card" content="summary">
@@ -230,7 +230,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-07-05 08:48:37" itemprop="dateModified" datetime="2023-07-05T08:48:37+08:00">2023-07-05</time>
+                <time title="修改时间：2023-07-05 11:28:52" itemprop="dateModified" datetime="2023-07-05T11:28:52+08:00">2023-07-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -322,8 +322,16 @@
 <p>与[42]中描述的方法相比，我们的经验法则是细粒度的，并且侧重于解释方法的特征：基于应用程序、基于人性化和基于功能。</p>
 <h3 id="准确度"><a href="#准确度" class="headerlink" title="准确度"></a>准确度</h3><p>准确度是指解释方法的准确程度。 仅限于定性描述还是定量分析？ 一般来说，定量解释方法比定性解释方法更可取。</p>
 <h3 id="一致性"><a href="#一致性" class="headerlink" title="一致性"></a>一致性</h3><p>一致性表明解释中不存在矛盾。 对于多个相似的样本，公平的解释应该产生一致的答案。 此外，解释方法应符合真实模型的预测。 例如，基于代理的方法是根据它们复制原始黄金模型的程度来评估的。</p>
-<p>完整性：从数学上讲，神经网络是学习最适合数据的映射。 一个好的解释方法应该显示出支持最大数量的数据实例和数据类型的有效性。<br>通用性：随着深度学习的快速发展，深度学习的宝库得到了极大的丰富。 这种多样化的深度学习模型在广泛的应用中发挥着重要作用。 一个重要的问题是我们是否可以开发一种通用解释器来解释尽可能多的模型以节省劳动力和时间。 但是，由于模型之间的高度可变性，这在技术上具有挑战性。<br>奖励：加深对神经网络的理解有哪些收获？ 除了从业者和用户的信任之外，可解释性的成果还可以是对网络设计、训练等的深入了解。由于其黑盒性质，使用神经网络在很大程度上是一个试错过程，有时会产生相互矛盾的直觉。 对深度学习的透彻理解将有助于神经网络的研究和应用。<br>简而言之，我们在这篇综述中的贡献有三个：1）我们提出了一种用于神经网络可解释性的全面分类法，并用我们的见解描述了关键方法； 2）我们系统地说明了可解释性方法作为教育辅助工具，如图3、5、6、7、9、10、16和17所示；3）我们在神经网络和规则的融合方面阐明了可解释性研究的未来方向 系统、神经网络和脑科学之间的协同作用以及医学的可解释性。</p>
-<h1 id="解释方法综述"><a href="#解释方法综述" class="headerlink" title="解释方法综述"></a>解释方法综述</h1>
+<h3 id="完整性"><a href="#完整性" class="headerlink" title="完整性"></a>完整性</h3><p>从数学上讲，神经网络是学习最适合数据的映射。 一个好的解释方法应该显示出支持最大数量的数据实例和数据类型的有效性。</p>
+<h3 id="通用性"><a href="#通用性" class="headerlink" title="通用性"></a>通用性</h3><p>随着深度学习的快速发展，深度学习的宝库得到了极大的丰富。 这种多样化的深度学习模型在广泛的应用中发挥着重要作用。 一个重要的问题是我们是否可以开发一种通用解释器来解释尽可能多的模型以节省劳动力和时间。 但是，由于模型之间的高度可变性，这在技术上具有挑战性。</p>
+<h3 id="奖励"><a href="#奖励" class="headerlink" title="奖励"></a>奖励</h3><p>加深对神经网络的理解有哪些收获？ 除了从业者和用户的信任之外，可解释性的成果还可以是对网络设计、训练等的深入了解。由于其黑盒性质，使用神经网络在很大程度上是一个试错过程，有时会产生相互矛盾的直觉。 对深度学习的透彻理解将有助于神经网络的研究和应用。</p>
+<p>简而言之，我们在这篇综述中的贡献有三个：</p>
+<ul>
+<li>1）我们提出了一种用于神经网络可解释性的全面分类法，并用我们的见解描述了关键方法； </li>
+<li>2）我们系统地说明了可解释性方法作为教育辅助工具，如图3、5、6、7、9、10、16和17所示；</li>
+<li>3）我们在神经网络和规则的融合方面阐明了可解释性研究的未来方向，系统、神经网络和脑科学之间的协同作用以及医学的可解释性。</li>
+</ul>
+<h1 id="二，解释方法综述"><a href="#二，解释方法综述" class="headerlink" title="二，解释方法综述"></a>二，解释方法综述</h1>
     </div>
 
     
@@ -422,7 +430,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%EF%BC%8C%E4%BB%8B%E7%BB%8D"><span class="nav-text">一，介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A%EF%BC%8C%E4%BB%80%E4%B9%88%E6%98%AF%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7%EF%BC%9F"><span class="nav-text">A，什么是可解释性？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7%E5%BE%88%E9%9A%BE%EF%BC%9F"><span class="nav-text">B，为什么可解释性很难？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%BA%E4%B8%BA%E9%99%90%E5%88%B6"><span class="nav-text">人为限制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%95%86%E4%B8%9A%E5%A3%81%E5%9E%92"><span class="nav-text">商业壁垒</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%8E%9F%E7%94%9F%E6%80%A7"><span class="nav-text">数据原生性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%A4%8D%E6%9D%82%E6%80%A7"><span class="nav-text">算法复杂性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C%EF%BC%8C%E6%80%8E%E4%B9%88%E6%9E%84%E5%BB%BA%E5%A5%BD%E7%9A%84%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7%E6%96%B9%E6%B3%95%EF%BC%9F"><span class="nav-text">C，怎么构建好的可解释性方法？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%86%E7%A1%AE%E5%BA%A6"><span class="nav-text">准确度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E8%87%B4%E6%80%A7"><span class="nav-text">一致性</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%A3%E9%87%8A%E6%96%B9%E6%B3%95%E7%BB%BC%E8%BF%B0"><span class="nav-text">解释方法综述</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%EF%BC%8C%E4%BB%8B%E7%BB%8D"><span class="nav-text">一，介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A%EF%BC%8C%E4%BB%80%E4%B9%88%E6%98%AF%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7%EF%BC%9F"><span class="nav-text">A，什么是可解释性？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7%E5%BE%88%E9%9A%BE%EF%BC%9F"><span class="nav-text">B，为什么可解释性很难？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%BA%E4%B8%BA%E9%99%90%E5%88%B6"><span class="nav-text">人为限制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%95%86%E4%B8%9A%E5%A3%81%E5%9E%92"><span class="nav-text">商业壁垒</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%8E%9F%E7%94%9F%E6%80%A7"><span class="nav-text">数据原生性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%A4%8D%E6%9D%82%E6%80%A7"><span class="nav-text">算法复杂性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C%EF%BC%8C%E6%80%8E%E4%B9%88%E6%9E%84%E5%BB%BA%E5%A5%BD%E7%9A%84%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7%E6%96%B9%E6%B3%95%EF%BC%9F"><span class="nav-text">C，怎么构建好的可解释性方法？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%86%E7%A1%AE%E5%BA%A6"><span class="nav-text">准确度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E8%87%B4%E6%80%A7"><span class="nav-text">一致性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4%E6%80%A7"><span class="nav-text">完整性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E7%94%A8%E6%80%A7"><span class="nav-text">通用性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A5%96%E5%8A%B1"><span class="nav-text">奖励</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%EF%BC%8C%E8%A7%A3%E9%87%8A%E6%96%B9%E6%B3%95%E7%BB%BC%E8%BF%B0"><span class="nav-text">二，解释方法综述</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
