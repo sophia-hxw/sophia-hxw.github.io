@@ -29,7 +29,7 @@
 <meta property="og:description" content="前言title: On Interpretability of Artificial Neural Networks A Survey 链接: https:&#x2F;&#x2F;pan.baidu.com&#x2F;s&#x2F;1mmXJSe-n63EYjxNztRrCig提取码: 8q5v—来自百度网盘超级会员v6的分享 ANN 模型的解释综述文章～">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-06-28T14:22:22.000Z">
-<meta property="article:modified_time" content="2023-07-05T03:28:52.265Z">
+<meta property="article:modified_time" content="2023-07-05T03:43:35.332Z">
 <meta property="article:author" content="xinwen">
 <meta property="article:tag" content="interpretability">
 <meta name="twitter:card" content="summary">
@@ -230,7 +230,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-07-05 11:28:52" itemprop="dateModified" datetime="2023-07-05T11:28:52+08:00">2023-07-05</time>
+                <time title="修改时间：2023-07-05 11:43:35" itemprop="dateModified" datetime="2023-07-05T11:43:35+08:00">2023-07-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -262,14 +262,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>5k</span>
+              <span>13k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
+              <span>12 分钟</span>
             </span>
 
         </div>
@@ -331,7 +331,35 @@
 <li>2）我们系统地说明了可解释性方法作为教育辅助工具，如图3、5、6、7、9、10、16和17所示；</li>
 <li>3）我们在神经网络和规则的融合方面阐明了可解释性研究的未来方向，系统、神经网络和脑科学之间的协同作用以及医学的可解释性。</li>
 </ul>
-<h1 id="二，解释方法综述"><a href="#二，解释方法综述" class="headerlink" title="二，解释方法综述"></a>二，解释方法综述</h1>
+<h1 id="二，解释方法综述"><a href="#二，解释方法综述" class="headerlink" title="二，解释方法综述"></a>二，解释方法综述</h1><p>在本节中，我们首先介绍我们的分类法，然后回顾分类法每个类别下的可解释性结果。 我们于2020年9月22日在Web of Science中输入搜索词“深度学习可解释性”、“神经网络可解释性”、“可解释神经网络”和“可解释深度学习”，时间范围为2000年至2019年 图1绘制了相对于年份的文章数量，它清楚地显示了该领域的指数趋势。 通过这项调查，我们的动机是涵盖尽可能多的重要论文。 因此，我们并不将自己限制在 Web of Science 内。 我们还使用 Google Scholar、PubMed、IEEE Xplore 等搜索相关文章。</p>
+<h2 id="A，分类定义"><a href="#A，分类定义" class="headerlink" title="A，分类定义"></a>A，分类定义</h2><p>如图 2 所示，我们的分类法基于我们调查的论文和现有的分类法。 我们首先将调查的论文分为事后可解释性分析和即席可解释建模。 事后可解释性分析解释现有模型，可以进一步分为特征分析、模型检查、显着性、代理、高级数学/物理分析、案例解释和文本解释。 即席可解释建模构建可解释模型，可以进一步分类为可解释表示和模型更新。 在我们提出的分类法中，高级数学/物理分析类是新颖的，但不幸的是在之前的评论中缺失了。 我们认为这门课相当重要，因为数学/物理的结合对于为深度学习奠定坚实的基础至关重要。 下面，我们澄清分类学的定义及其说明。 我们想强调的是，一种方法可能属于不同的类别，具体取决于人们如何看待它。</p>
+<p>事后可解释性分析：事后可解释性是在充分学习模型后进行的。 事后方法的一个主要优点是不需要牺牲可解释性和预测性能，因为预测和解释是两个独立的过程，互不干扰。 然而，事后解释通常并不完全忠实于原始模型。 如果与原始模型相比，解释是 100% 准确的，那么它就成为原始模型。 因此，任何此类解释方法或多或少都是不准确的。 更糟糕的是我们常常不知道其中的细微差别[145]。 这样的细微差别使得从业者很难对一种解释方法有充分的信任，因为解释方法的正确性得不到保证。<br>特征分析技术的重点是比较、分析和可视化神经元和层的特征。 通过特征分析，识别敏感特征和处理它们的方法，从而在一定程度上解释模型的基本原理。<br>特征分析技术可以应用于任何神经网络，并提供有关网络学习哪些特征的定性见解。 然而，这些技术缺乏深入、严格和统一的理解，因此不能用于修正模型以获得更高的可解释性。<br>模型检验方法利用外部算法深入研究神经网络，系统地提取神经网络内部工作机制的重要结构和参数信息。</p>
+<p>此类方法比特征分析中的方法在技术上更可靠，因为统计等分析工具直接参与性能分析。 因此，通过模型检查方法获得的信息更值得信赖和有价值。 在一项示例性研究[183]中，寻找重要的数据路由路径被用作理解模型的一种方式。 通过这样的数据路由路径，模型可以被忠实地压缩为紧凑的模型。 换句话说，可解释性提高了模型压缩的可信度。<br>显着性方法识别输入数据的哪些属性与模型的预测或潜在表示最相关。 在这一类别中，涉及人工检查来确定显着性图是否合理。 显着性图很有用，即，如果北极熊总是出现在与雪或冰一起出现的图片中，则模型可能误用了雪或冰的信息来检测北极熊，而不是利用北极熊的真实特征进行检测 。 通过显着图，可以发现并避免这个问题。<br>显着性方法在可解释性研究中很流行，然而，广泛的随机测试表明，一些显着性方法可能独立于模型和数据[3]； 即，某些方法提供的显着性图与边缘检测器产生的结果高度相似。 这是有问题的，因为这意味着这些显着性方法无法找到解释模型预测的输入的真实属性。 因此，在这些情况下应开发与模型相关和数据相关的显着性方法。<br>代理方法构建一个更简单、更可解释的代理，它非常类似于经过训练的大型复杂黑盒模型。 代理方法可以是局部空间中的局部方法，也可以是整个解决方案空间中的全局方法。 示例性代理模型包括决策树、规则系统等。 代理方法的弱点是构建代理模型需要额外的成本。</p>
+<p>先进的数学/物理分析方法将神经网络置于理论数学/物理框架中，通过先进的数学/物理工具来理解神经网络的机制。 本课程涵盖深度学习的理论进展，包括非凸优化、表征能力和泛化能力。<br>本课程的一个问题是，为了建立合理的解释，有时会做出不切实际的假设来促进理论分析，这可能会损害解释的实际有效性。<br>案例解释方法遵循基于案例的推理[90]。 人们喜欢例子。 人们可能不会被产品的无聊统计数字所吸引，但在聆听其他用户使用此类产品的体验时可能会感到惊讶。 这一理念赢得了许多从业者的心，并激发了基于案例的深度学习解释。 案例解释方法提供了抓住模型本质的代表性示例。<br>本课程中的方法很有趣且鼓舞人心。 然而，这种做法更像是健全性检查而不是一般解释，因为从选定的查询案例中无法理解有关神经网络内部工作的太多信息。</p>
+<p>文本解释方法在图像语言联合任务中生成文本描述，有利于理解模型的行为。 此类还可以包含生成用于解释的符号的方法。<br>此类中的方法在图像语言联合任务中特别有用，例如从 X 射线照片生成诊断报告。 然而，文本解释并不是任何深度学习模型的通用技术，因为它只有在模型中存在语言模块时才能起作用。<br>临时可解释建模：临时可解释建模消除了事后可解释性分析中或多或少存在的偏差。 尽管人们普遍认为可解释性和模型可表达性之间存在权衡[123]，但仍然有可能找到一个既强大又可解释的模型。 一个值得注意的例子是[30]中报告的工作，其中可解释的两层加性风险模型赢得了 FICO 认可竞赛的第一名。<br>可解释的表示方法采用正则化技术来引导神经网络的优化朝着更可解释的表示方向发展。 可分解性、稀疏性和单调性等属性可以增强可解释性。 因此，正则化特征成为允许更多可解释模型的一种方式。 相应地，出于可解释性的目的，损失函数必须包含正则化项，这限制了原始模型执行其完整的学习任务。<br>模型革新方法通过设计更多可解释的机器并将其部署到网络中来寻求可解释性。 这些机器包括具有专门设计的激活功能的神经元、具有特殊功能的插入层、模块化架构等等。 未来的方向是使用越来越多的可解释组件，这些组件可以同时为不同的任务实现类似的最先进的性能。</p>
+<h2 id="B，事后可解释性分析"><a href="#B，事后可解释性分析" class="headerlink" title="B，事后可解释性分析"></a>B，事后可解释性分析</h2><p>特征分析：基于反转的方法[41]、[117]、[163]、[200]通过将特征图反转为合成图像来破解神经网络的表示。 例如，Mahendran 和 Vedaldi [117] 假设输入图像 x0 的神经网络 0 的表示被建模为 0 = (x0)，其中 是神经网络映射，通常不可逆。 然后，反演问题被公式化为找到一个图像x*，其神经网络表示最匹配0； 即 arg min x ∥ (x) − 0 ∥2 + λR(x)，其中 R(x) 是表示有关输入图像的先验知识的正则化项。 目标是通过比较倒置图像和原始图像之间的差异来揭示丢失的信息。 Dosovitskiy 和 Brox [41] 直接训练一个新网络，以感兴趣模型生成的特征作为输入，图像作为标签，将中间层的特征反转为图像。 研究发现，即使从更深层次的特征中，仍然可以重建轮廓和颜色。 Zeiler 和 Fergus [200] 设计了一个由反池化、校正、反卷积操作组成的反卷积网络，与原始卷积网络配对，以便无需训练即可反转特征。 在反卷积网络中，通过使用最大值的位置来实现反池化层； 通过将负值设置为0来实现校正； 反卷积层使用转置卷积滤波器。<br>激活最大化方法[45]、[128]、[129]、[168]致力于合成图像，最大化感兴趣的神经网络或神经元的输出。 由此产生的图像被称为“深度梦”，因为它们可以被视为神经网络或神经元的梦境图像。<br>在[16]、[85]、[108]、[196]和[210]中，有人指出可以从每个神经元中提取有关深度模型的信息。 约辛斯基等人。 [196]直接检查了每层神经元针对不同图像或视频的激活值。 他们发现不同输入的实时激活值变化有助于理解模型的工作原理。 李等人。 [108]对比不同初始化生成的特征，以研究神经网络在随机初始化时是否学习相似的表示。 感受野（RF）是神经元与输入体积连接的空间范围[111]。 为了研究神经元给定输入的 RF 大小和形状，Zhou 等人。 [210]提出了一种网络剖析方法，首先选择感兴趣神经元的高激活值的K张图像，并为每张K图像构建5000张遮挡图像，然后将它们输入神经网络来观察感兴趣神经元激活值的变化 给定的单位。 较大的差异表明存在重要补丁。 最后，对差异较大的被遮挡图像进行居中和平均以生成 RF。 这种网络剖析方法已扩展到生成网络[17]。 此外，鲍等人。 [16]将给定层的低分辨率激活图放大到与输入相同的大小，将图阈值化为二元激活图，然后计算二元激活图和地面实况之间的重叠区域 二进制分割图作为可解释性度量。 卡帕蒂等人。 [85] 将 LSTM [73] 中的门定义为左饱和或右饱和，具体取决于其激活值小于 0.1 或大于 0.9。 在这方面，经常处于饱和状态的神经元很有趣，因为这意味着这些神经元可以长期记住它们的值。 张等人。 [202]剖析了网络中的特征关系，前提是每层中滤波器的特征图可以由较早层中的部分模式激活。 他们逐层挖掘零件模式，从每一层的特征图中发现零件模式的激活峰值，并构建一个解释图来描述层次特征的关系，每个节点代表一个零件模式，相邻层之间的边代表一个 共激活关系。</p>
+<p>模型检验：经验影响函数是衡量估计量对样本的依赖性[99]。 Koh和Liang[89]应用影响函数的概念来解决以下问题：给定一个样本的预测，数据集中的其他样本对该预测有正面影响还是负面影响？ 该分析还可以帮助识别数据中存在的错误注释标签和异常值。 如图 3 所示，给定一个类似 LeNet-5 的网络，通过影响函数可以识别给定图像的两个有害图像。<br>班萨尔等人。 [12]，Lakkaraju 等人。 [97]和张等人。 [203]致力于检测神经网络中的故障或偏差。 例如，班萨尔等人。 [12] 开发了一种与模型无关的算法来识别神经网络可能无法提供任何预测的实例。 在这种情况下，模型会发出“不要相信这些预测”之类的警告作为警报。 具体来说，他们用二进制属性集合注释所有失败的图像，并将这些图像聚集在属性空间中。 因此，每个集群都指示一种故障模式。 为了有效地识别数据集中那些具有高预测分数的错误标记实例，Lakkaraju 等人。 [97]引入了两个基本推测：第一个是错误标记高置信度的实例是由于系统偏差而不是随机扰动，而第二个是每个失败的示例都具有足够的代表性和信息性。 然后，他们将图像聚类成几个组，并设计了一种多臂老虎机搜索策略，将每个组作为一个老虎机，计划在每个步骤中应该查询和采样哪个组。 为了发现代表性偏差，Zhang 等人。 [203]根据人类的常识（火热与冰冷）利用属性之间的地面实况关系来检查神经网络挖掘的属性关系是否很好地符合地面实况。</p>
+<p>王等人。 [183]通过识别关键数据路由揭开了网络的神秘面纱。 具体来说，将门控制二元向量 λk ∈ {0, 1}nk （其中 nk 是第 k 层中的神经元数量）乘以第 k 层的输出，并制定了寻找控制门值的问题 当搜索 λ1, . 。 。 , λK 由公式</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+
+\end{align*}</script><p>其中fθ是由θ参数化的神经网络表示的映射，fθ(x;λ1,…,λK)是控制门λ1,…时的映射。 。 。 、 λK 被强制执行，d(·,·) 是距离度量，γ 是控制损失和正则化之间权衡的常数，∥·∥1 是 l1 范数，使得 λk 是稀疏的。 学习到的控制门可以暴露模型的重要数据处理路径。 金等人。 [86]开发了概念激活向量（CAV），它可以定量测量概念 C 对于模型任何层的敏感性。 首先，训练二元线性分类器 h 来区分由两组样本刺激的层激活：{fl(x) : x ∈ PC} 和 {fl(x) : x ∈/ PC}，其中 fl(x ) 是第 l 层的层激活，PC 表示体现概念 C 的数据。然后，CAV 被定义为线性分类器超平面的法向单位向量 vlC，该超平面分离具有和不具有定义的样本 概念。 最后，vlC 用于计算第 l 层中概念 C 作为方向导数的敏感性</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+
+\end{align*}</script><p>其中 hl,k 表示输出类 k 的训练二元线性分类器的 logits。 你等人。 [195]将神经网络映射为关系图，然后通过大量实验（将图转录为网络并在数据集上实现网络）研究神经网络的图结构及其预测性能之间的关系。 他们发现网络的预测性能与两个图形度量相关：1）聚类系数和2）平均路径长度。</p>
+<p>显着性：有很多方法可以获取显着性图。 部分依赖图（PDP）和个体条件期望（ICE）[53]、[59]、[74]是与模型无关的统计工具，用于可视化责任变量和预测变量之间的依赖性。 为了计算 PDP，假设有 p 个输入维度，并令 S,C ⊆ {1,2,…,p} 为两个互补集，其中 S 是要修复的集合，C 是要修复的集合 改变。 然后，xS 的 PDP 定义为 fS =PDP，ICE 的定义很简单。 xS 处的 ICE 曲线是通过固定 xC 并改变 xS 获得的。 图 4 显示了一个简单的示例，说明如何分别计算 PDP 和 ICE。<br>一种简单的方法是研究删除一个特征后预测的变化，也称为留一归因[4]、[83]、[105]、[143]、[211]。 例如，卡达尔等人。 [83]利用这个想法定义了一个省略分数：1 − cosine(h(S), h(S\i))，其中 cosine(·,·) 是余弦距离，h 是句子的表示 ，S是完整的句子，S\i是没有第i个单词的句子，并分析每个单词的重要性。 阿德勒等人。 [4]建议衡量相关输入的间接影响。 例如，在房屋贷款决策系统中，种族不应该成为决策的因素。 然而，仅仅去除种族因素并不足以排除种族的影响，因为一些剩余因素，例如“邮政编码”，与种族高度相关。<br>此外，合作博弈论中的沙普利值被用于[6]、[27]、[39]、[113]和[115]中。 在数学上，集合函数 f^ 相对于特征 i 的 Shapley 值定义为</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+
+\end{align*}</script><p>层，并且集合函数 f^ 将每个子集 S ⊆ P 映射到一个实数。 此外，通过用零值替换输入中不在 S 中的特征，可以将 Shapley 值的定义扭曲为神经网络函数 f。 为了减少组合爆炸带来的令人望而却步的计算成本，Ancona 等人。 [6]提出了一种新颖的 Shapley 值多项式时间近似，它基本上计算随机联盟的期望，而不是枚举每个联盟。 图 5 显示了如何为在加州住房数据集上训练的全连接层网络计算 Shapley 值的简单示例，其中包括八个属性，例如作为输入的房屋年龄和房间号以及作为标签的房价 。</p>
+<p>研究人员并没有删除一个或多个特征，而是采用了梯度。 西蒙扬等人。 [156]，斯米尔科夫等人。 [160]，Sundararajan 等人。 [167]和Singla等人。 [159]利用梯度的思想来探测输入的显着性。 西蒙扬等人。 [156]计算了类别分数相对于图像像素的一阶泰勒展开，通过该一阶系数生成类别的显着性图。 斯米尔科夫等人。 [160]证明梯度作为显着图显示了属性和标签之间的相关性，但是，通常梯度相当嘈杂。 为了消除噪声，他们提出了 SmoothGrad，将噪声多次添加到输入图像中并对结果进行平均。<br>N M(n)(x + N(0, σ 2)), n=1 c<br>c 类，N(0, σ 2)<br>是以 σ 为标准方差的高斯噪声。 基本上，M (x) 是显着图的平滑版本。 孙达拉拉詹等人。 [167]为显着性方法设定了两个基本要求：1）（敏感性）如果输入和基线之间只有一个特征不同，输入和基线的输出不同，那么这个特征应该被赋予非零值 归因; 2）（实现不变性）两个功能等效的网络中相同特征的属性应该是相同的。 注意到早期基于梯度的显着性方法不满足</p>
+<p>其中 F(·) 是神经网络映射，x = (x1, x2, …, xN ) 是输入，x′ = (x′ ,x′ ,…,x′ ) 是基线 sat -12N 表示 (∂/∂x)F(x)|x=x′ = 0。实际中，积分可以转化为离散求和 [(xi − xi′)/M] × Mm=1 [∂F (x′ + (m/M)(x − x′))/∂xi]，其中 M 是积分近似的步数。 辛格拉等人。 [159]提出使用泰勒展开的二阶近似来生成显着图，以考虑特征依赖性。<br>巴赫等人。 [11]提出了分层相关性传播（LRP），通过假设模型表示 f(x) 可以表示为像素相关性 Rlp 之和，来计算一个属性与预测的相关性，其中 x 是输入图像，l 是 层的索引，p是x的像素的索引。 因此，f(x) = p RLp，其中 L 是最后一层，RL = [(w xL−1 )/( w xL−1 )]f (x)，其中 w ppppppp 是层的像素 p 之间的权重 第 (L − 1) 层和最后一层。 给定前馈神经网络，输入的像素相关性得分 R1p 是通过向后计算 Rlp =[z /( ′ z ′ )]Rl+1 得出的，其中 z = xl w(l,l+1)，其中 j pj p pj j pj p pjw(l,l+1) 是第 l 层的像素 p 和第 (l + 1) 层的像素 pj j 之间的权重。 此外，阿拉斯等人。 [9] 将 LRP 扩展到循环神经网络（RNN）以进行情感分析。 蒙塔冯等人。 [125]采用深度泰勒分解的整个一阶项来产生显着图，而不仅仅是梯度。 假设 x 是模型 f(x) 精心选择的函数根：f(x) = 0，因为 f(x) 可以分解为 f(x) = f(x)+([∂f/ ∂x]|x=x)T · (x−x)+ε = 0+ i(∂f/∂xi)|x=x(xi−xˆi)+ε，其中 ε 是高阶项， 像素 i 的像素相关性表示为 Ri = [∂f /∂xi]|x=x(xi − xˆi)。 Shrikumar 等人受到这样一个事实的启发：即使神经元没有被激发，它仍然有可能揭示有用的信息。 [155]提出 DeepLIFT 来计算每个神经元的激活与其参考之间的差异，其中参考是当网络提供参考输入时该神经元的激活，然后将差异反向传播到图像空间层 像LRP一样层。 辛格等人。 [158]引入了上下文分解，其层传播公式为 βi = Wβi−1 + [|Wβi−1|/(|Wβi−1| + |Wγi−1|)] · b 且 γi = Wγi−1 + [| Wγi−1|/(|Wβi−1| + |Wγi−1|)]·b，其中W是第i层和第(i−1)层之间的权重矩阵，b是偏置向量。 限制条件为gi(x)=βi(x)+γi(x)，其中gi(x)是第i层的输出。 βi(x) 被认为是输入的上下文贡献，γi(x) 意味着输入对 gi(x) 的贡献不包含在 βi(x) 中。</p>
+<p>图 6 展示了使用类似 LeNet-5 的网络对原始梯度、SmoothGrad、IntegratedGrad 和 Deep Taylor 方法的评估。 其中，IntegratedGrad 和 Deep Taylor 方法在五位数上表现出色。<br>用于量化深度模型的输入和潜在表示之间的关联的互信息度量也可以类似地起到显着性的作用[63]、[148]、[193]。 此外，还有其他方法来获取显着性图。 罗斯等人。 [144]定义了一个新的损失项<br>i (Ai(∂/∂xi) Kk=1 log(yˆk))2 用于训练，其中 i 是像素的索引，Ai 是要优化的二进制掩码，yˆk 是标签的第 k 位，K 是班级数量。 这种损失是为了惩罚梯度的锐度，以获得更清晰的解释边界。 Fong 和 Vedaldi [52] 探索学习要删除的最小区域，即找到最优的 m*</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+m^\ast = \mathop{argmin}
+\end{align*}</script>
     </div>
 
     
@@ -430,7 +458,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%EF%BC%8C%E4%BB%8B%E7%BB%8D"><span class="nav-text">一，介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A%EF%BC%8C%E4%BB%80%E4%B9%88%E6%98%AF%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7%EF%BC%9F"><span class="nav-text">A，什么是可解释性？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7%E5%BE%88%E9%9A%BE%EF%BC%9F"><span class="nav-text">B，为什么可解释性很难？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%BA%E4%B8%BA%E9%99%90%E5%88%B6"><span class="nav-text">人为限制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%95%86%E4%B8%9A%E5%A3%81%E5%9E%92"><span class="nav-text">商业壁垒</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%8E%9F%E7%94%9F%E6%80%A7"><span class="nav-text">数据原生性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%A4%8D%E6%9D%82%E6%80%A7"><span class="nav-text">算法复杂性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C%EF%BC%8C%E6%80%8E%E4%B9%88%E6%9E%84%E5%BB%BA%E5%A5%BD%E7%9A%84%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7%E6%96%B9%E6%B3%95%EF%BC%9F"><span class="nav-text">C，怎么构建好的可解释性方法？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%86%E7%A1%AE%E5%BA%A6"><span class="nav-text">准确度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E8%87%B4%E6%80%A7"><span class="nav-text">一致性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4%E6%80%A7"><span class="nav-text">完整性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E7%94%A8%E6%80%A7"><span class="nav-text">通用性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A5%96%E5%8A%B1"><span class="nav-text">奖励</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%EF%BC%8C%E8%A7%A3%E9%87%8A%E6%96%B9%E6%B3%95%E7%BB%BC%E8%BF%B0"><span class="nav-text">二，解释方法综述</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%EF%BC%8C%E4%BB%8B%E7%BB%8D"><span class="nav-text">一，介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A%EF%BC%8C%E4%BB%80%E4%B9%88%E6%98%AF%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7%EF%BC%9F"><span class="nav-text">A，什么是可解释性？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7%E5%BE%88%E9%9A%BE%EF%BC%9F"><span class="nav-text">B，为什么可解释性很难？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%BA%E4%B8%BA%E9%99%90%E5%88%B6"><span class="nav-text">人为限制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%95%86%E4%B8%9A%E5%A3%81%E5%9E%92"><span class="nav-text">商业壁垒</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%8E%9F%E7%94%9F%E6%80%A7"><span class="nav-text">数据原生性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%A4%8D%E6%9D%82%E6%80%A7"><span class="nav-text">算法复杂性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C%EF%BC%8C%E6%80%8E%E4%B9%88%E6%9E%84%E5%BB%BA%E5%A5%BD%E7%9A%84%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7%E6%96%B9%E6%B3%95%EF%BC%9F"><span class="nav-text">C，怎么构建好的可解释性方法？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%86%E7%A1%AE%E5%BA%A6"><span class="nav-text">准确度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E8%87%B4%E6%80%A7"><span class="nav-text">一致性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4%E6%80%A7"><span class="nav-text">完整性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E7%94%A8%E6%80%A7"><span class="nav-text">通用性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A5%96%E5%8A%B1"><span class="nav-text">奖励</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%EF%BC%8C%E8%A7%A3%E9%87%8A%E6%96%B9%E6%B3%95%E7%BB%BC%E8%BF%B0"><span class="nav-text">二，解释方法综述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A%EF%BC%8C%E5%88%86%E7%B1%BB%E5%AE%9A%E4%B9%89"><span class="nav-text">A，分类定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B%EF%BC%8C%E4%BA%8B%E5%90%8E%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7%E5%88%86%E6%9E%90"><span class="nav-text">B，事后可解释性分析</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -514,13 +542,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">343k</span>
+    <span title="站点总字数">351k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:12</span>
+    <span title="站点阅读时长">5:19</span>
 </div>
 
         
