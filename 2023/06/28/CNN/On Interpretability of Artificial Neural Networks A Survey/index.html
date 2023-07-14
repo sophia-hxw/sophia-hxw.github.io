@@ -24,17 +24,17 @@
   <meta name="description" content="前言title: On Interpretability of Artificial Neural Networks A Survey 链接: https:&#x2F;&#x2F;pan.baidu.com&#x2F;s&#x2F;1mmXJSe-n63EYjxNztRrCig提取码: 8q5v—来自百度网盘超级会员v6的分享 ANN 模型的解释综述文章～">
 <meta property="og:type" content="article">
 <meta property="og:title" content="On Interpretability of Artificial Neural Networks-A Survey">
-<meta property="og:url" content="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/06/28/CNN/On_Interpretability_of_Artificial_Neural_Networks_A%20Survey/index.html">
+<meta property="og:url" content="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/06/28/CNN/On%20Interpretability%20of%20Artificial%20Neural%20Networks%20A%20Survey/index.html">
 <meta property="og:site_name" content="橦言无忌">
 <meta property="og:description" content="前言title: On Interpretability of Artificial Neural Networks A Survey 链接: https:&#x2F;&#x2F;pan.baidu.com&#x2F;s&#x2F;1mmXJSe-n63EYjxNztRrCig提取码: 8q5v—来自百度网盘超级会员v6的分享 ANN 模型的解释综述文章～">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-06-28T14:22:22.000Z">
-<meta property="article:modified_time" content="2023-07-10T09:35:34.299Z">
+<meta property="article:modified_time" content="2023-07-14T01:34:18.829Z">
 <meta property="article:author" content="xinwen">
 <meta property="article:tag" content="interpretability">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/06/28/CNN/On_Interpretability_of_Artificial_Neural_Networks_A%20Survey/">
+<link rel="canonical" href="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/06/28/CNN/On%20Interpretability%20of%20Artificial%20Neural%20Networks%20A%20Survey/">
 
 
 <script id="page-configurations">
@@ -199,7 +199,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/06/28/CNN/On_Interpretability_of_Artificial_Neural_Networks_A%20Survey/">
+    <link itemprop="mainEntityOfPage" href="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/06/28/CNN/On%20Interpretability%20of%20Artificial%20Neural%20Networks%20A%20Survey/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/me.jpg">
@@ -230,7 +230,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-07-10 17:35:34" itemprop="dateModified" datetime="2023-07-10T17:35:34+08:00">2023-07-10</time>
+                <time title="修改时间：2023-07-14 09:34:18" itemprop="dateModified" datetime="2023-07-14T09:34:18+08:00">2023-07-14</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -251,8 +251,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2023/06/28/CNN/On_Interpretability_of_Artificial_Neural_Networks_A%20Survey/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/06/28/CNN/On_Interpretability_of_Artificial_Neural_Networks_A%20Survey/" itemprop="commentCount"></span>
+    <a title="valine" href="/2023/06/28/CNN/On%20Interpretability%20of%20Artificial%20Neural%20Networks%20A%20Survey/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/06/28/CNN/On%20Interpretability%20of%20Artificial%20Neural%20Networks%20A%20Survey/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -262,14 +262,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>13k</span>
+              <span>14k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>12 分钟</span>
+              <span>13 分钟</span>
             </span>
 
         </div>
@@ -349,20 +349,22 @@
 <p>在[16]、[85]、[108]、[196]和[210]中，有人指出可以从每个神经元中提取有关深度模型的信息。 Yosinski等[196]直接检查了每层神经元针对不同图像或视频的激活值。 他们发现不同输入的实时激活值变化有助于理解模型的工作原理。 Li等[108]对比不同初始化生成的特征，以研究神经网络在随机初始化时是否学习相似的表示。 感受野（RF）是神经元与输入体积连接的空间范围[111]，为了研究神经元给定输入的 RF 大小和形状，Zhou 等[210]提出了一种网络剖析方法，首先选择感兴趣神经元的高激活值的K张图像，并为每张图像构建5000张遮挡图像，然后将它们的给定单位输入神经网络来观察感兴趣神经元激活值的变化，较大的差异表明存在重要补丁。 最后，对差异较大的被遮挡图像进行居中和平均以生成 RF，这种网络剖析方法已扩展到生成网络[17]。 此外，Bao等[16]将给定层的低分辨率激活图放大到与输入相同的大小，将图阈值化为二元激活图，然后计算二元激活图和真值之间的重叠区域的二进制分割图作为可解释性度量。 Karpathy等[85] 将 LSTM [73] 中的门定义为左饱和或右饱和，具体取决于其激活值小于 0.1 或大于 0.9。 在这方面，经常处于饱和状态的神经元很有趣，因为这意味着这些神经元可以长期记住它们的值。 Zhang等[202]剖析了网络中的特征关系，前提是每层中滤波器的特征图可以由较早层中的部分模式激活。 他们逐层挖掘零件模式，从每一层的特征图中发现零件模式的激活峰值，并构建一个解释图来描述层次特征的关系，每个节点代表一个零件模式，相邻层之间的边代表一个共激活关系。</p>
 <h3 id="模型检验"><a href="#模型检验" class="headerlink" title="模型检验"></a>模型检验</h3><p>经验影响函数是衡量估计量对样本的依赖性[99]。 Koh和Liang[89]应用影响函数的概念来解决以下问题：给定一个样本的预测，数据集中的其他样本对该预测有正面影响还是负面影响？ 该分析还可以帮助识别数据中存在的错误注释标签和异常值。 如图 3 所示，给定一个类似 LeNet-5 的网络，通过影响函数可以识别给定图像的两个有害图像。</p>
 <p>Bansal[12]，Lakkaraju[97]和张等[203]致力于检测神经网络中的故障或偏差。 例如，Bansal[12] 开发了一种与模型无关的算法来识别神经网络可能无法提供任何预测的实例。 在这种情况下，模型会发出“不要相信这些预测”之类的警告作为警报。 具体来说，他们用二进制属性集合标记所有失败的图像，并将这些图像聚集在属性空间中。 因此，每个集群都指示一种故障模式。 为了有效地识别数据集中那些具有高预测分数的错误标记实例，Lakkaraju 等[97]引入了两个基本推测：第一个是错误标记高置信度的实例是由于系统偏差而不是随机扰动，而第二个是每个失败的示例都具有足够的代表性和信息性。 然后，他们将图像聚类成几个组，并设计了一种多分支搜索策略，将每个组作为一个分支，计划在每个步骤中应该查询和采样哪个组。 为了发现代表性偏差，Zhang 等[203]根据人类的常识（火热与冰冷）利用属性之间的真值关系来检查神经网络挖掘的属性关系是否很好地符合真值。</p>
-<p>Wang等[183]通过识别关键数据路由揭开了网络的神秘面纱。 具体来说，将门控制二元向量 $\lambda_k \in \{0, 1\}^{n_k}$ （其中 nk 是第 k 层中的神经元数量）乘以第 k 层的输出，并制定了寻找控制门值的问题 当搜索 λ1, . 。 。 , λK 由公式</p>
+<p>Wang等[183]通过识别关键数据路由揭开了网络的神秘面纱。 具体来说，将门控制二元向量 $\lambda_k \in \{0, 1\}^{n_k}$ （其中 $n_k$ 是第 $k$ 层中的神经元数量）乘以第 $k$ 层的输出，并制定了寻找控制门值的问题为：搜索 $\lambda_1, \cdots,\lambda_k$ 满足下面公式公式</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-
-\end{align*}</script><p>其中fθ是由θ参数化的神经网络表示的映射，fθ(x;λ1,…,λK)是控制门λ1,…时的映射。 。 。 、 λK 被强制执行，d(·,·) 是距离度量，γ 是控制损失和正则化之间权衡的常数，∥·∥1 是 l1 范数，使得 λk 是稀疏的。 学习到的控制门可以暴露模型的重要数据处理路径。 金等人。 [86]开发了概念激活向量（CAV），它可以定量测量概念 C 对于模型任何层的敏感性。 首先，训练二元线性分类器 h 来区分由两组样本刺激的层激活：{fl(x) : x ∈ PC} 和 {fl(x) : x ∈/ PC}，其中 fl(x ) 是第 l 层的层激活，PC 表示体现概念 C 的数据。然后，CAV 被定义为线性分类器超平面的法向单位向量 vlC，该超平面分离具有和不具有定义的样本 概念。 最后，vlC 用于计算第 l 层中概念 C 作为方向导数的敏感性</p>
+\mathop{argmin}_{\lambda_1, \cdots,\lambda_k}d(f_{\theta}(x),f_{\theta}(x;\lambda_1, \cdots,\lambda_k))+\gamma\sum_k\|\lambda_k\|_1
+\end{align*}</script><p>其中 $f_\theta$ 是由 $\theta$ 参数化的神经网络表示的映射，$f_\theta (x;\lambda_1,…,\lambda_k)$ 是控制门 $\lambda_1,…\lambda_k$ 固定时的映射。$d(·,·)$ 是距离度量，$\gamma$ 是控制损失和正则化之间权衡的常数，$|\cdot|_1$ 是 $l_1$ 范数，使得 $\lambda_k$ 是稀疏的，学习到的控制门可以暴露模型的重要数据处理路径。 Kim[86]开发了概念激活向量（CAV），它可以定量测量概念 $C$ 对于模型任何层的敏感性。 首先，训练二元线性分类器 $h$ 来区分由两组样本刺激的层激活：$\{f_l(x) : x \in P_C\}$ 和 $\{f_l(x) : x \notin P_C\}$，其中 $f_l(x)$ 是第 $l$ 层的层激活，$P_C$ 表示体现概念 $C$ 的数据。然后，CAV 被定义为线性分类器超平面的法向单位向量 $v^l_C$，该超平面分离具有/不具有定义的样本。 最后，$v^l_C$ 用于计算第 $l$ 层中概念 $C$ 作为方向导数的敏感性</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-
-\end{align*}</script><p>其中 hl,k 表示输出类 k 的训练二元线性分类器的 logits。 你等人。 [195]将神经网络映射为关系图，然后通过大量实验（将图转录为网络并在数据集上实现网络）研究神经网络的图结构及其预测性能之间的关系。 他们发现网络的预测性能与两个图形度量相关：1）聚类系数和2）平均路径长度。</p>
-<p>显着性：有很多方法可以获取显着性图。 部分依赖图（PDP）和个体条件期望（ICE）[53]、[59]、[74]是与模型无关的统计工具，用于可视化责任变量和预测变量之间的依赖性。 为了计算 PDP，假设有 p 个输入维度，并令 S,C ⊆ {1,2,…,p} 为两个互补集，其中 S 是要修复的集合，C 是要修复的集合 改变。 然后，xS 的 PDP 定义为 fS =PDP，ICE 的定义很简单。 xS 处的 ICE 曲线是通过固定 xC 并改变 xS 获得的。 图 4 显示了一个简单的示例，说明如何分别计算 PDP 和 ICE。<br>一种简单的方法是研究删除一个特征后预测的变化，也称为留一归因[4]、[83]、[105]、[143]、[211]。 例如，卡达尔等人。 [83]利用这个想法定义了一个省略分数：1 − cosine(h(S), h(S\i))，其中 cosine(·,·) 是余弦距离，h 是句子的表示 ，S是完整的句子，S\i是没有第i个单词的句子，并分析每个单词的重要性。 阿德勒等人。 [4]建议衡量相关输入的间接影响。 例如，在房屋贷款决策系统中，种族不应该成为决策的因素。 然而，仅仅去除种族因素并不足以排除种族的影响，因为一些剩余因素，例如“邮政编码”，与种族高度相关。<br>此外，合作博弈论中的沙普利值被用于[6]、[27]、[39]、[113]和[115]中。 在数学上，集合函数 f^ 相对于特征 i 的 Shapley 值定义为</p>
+S_{C,k,l}=\lim_{\epsilon\rightarrow 0}\frac{h_{l,k}(f_l(x)+\epsilon v^l_C)-(h_{l,k}f_l(x))}{\epsilon}=\nabla h_{l,k}(f_l(x))v^l_C
+\end{align*}</script><p>其中 $h_{l,k}$ 表示输出类 $k$ 的训练二元线性分类器的 logits。 You等[195]将神经网络映射为关系图，然后通过大量实验（将图转录为网络并在数据集上实现网络）研究神经网络的图结构及其预测性能之间的关系。 他们发现网络的预测性能与两个图形度量相关：1）聚类系数，2）平均路径长度。</p>
+<h3 id="显著性"><a href="#显著性" class="headerlink" title="显著性"></a>显著性</h3><p>有很多方法可以获取显著性图。 部分依赖图（PDP）和个体条件期望（ICE）[53]、[59]、[74]是与模型无关的统计工具，用于可视化因变量和预测变量之间的依赖性。 为了计算 PDP，假设输入维度为 $p$，并令 $S,C \subseteq {1,2,…,p}$ 为两个互补集，其中 $S$ 是固定的集合，$C$ 是可变的集合。 然后，$x_S$ 的 PDP 定义为 $f_S =\int f(x_S,x_C)dx_C$，其中 $f$ 是模型。ICE 的定义很简单，$x_S$ 处的 ICE 曲线是通过固定 $x_C$ 并改变 $x_S$ 获得的。 图 4 显示了一个简单的示例，说明如何分别计算 PDP 和 ICE。</p>
+<p>一种简单的方法是研究删除一个特征后预测的变化，也称为留一归因[4]、[83]、[105]、[143]、[211]。 例如，Kádár[83]利用这个想法定义了一个消去分数：$1−\mathop{cosine}(h(S), h(S_{\setminus i}))$，其中 $\mathop{cosine}(\cdot,\cdot)$ 是余弦距离，$h$ 是句子的表示 ，$S$ 是完整的句子，$S_{\setminus i}$ 是没有第 $i$ 个单词的句子，并分析每个单词的重要性。 Adler[4]建议衡量相关输入的间接影响，例如，在房屋贷款决策系统中，种族不应该成为决策的因素。 然而，仅仅去除种族因素并不足以排除种族的影响，因为一些剩余因素，例如“邮政编码”，与种族高度相关。</p>
+<p>此外，合作博弈论中的Shapley值被用于[6]、[27]、[39]、[113]和[115]中，在数学上，集合函数 $\hat f$ 相对于特征 $i$ 的 Shapley 值定义为</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-
-\end{align*}</script><p>层，并且集合函数 f^ 将每个子集 S ⊆ P 映射到一个实数。 此外，通过用零值替换输入中不在 S 中的特征，可以将 Shapley 值的定义扭曲为神经网络函数 f。 为了减少组合爆炸带来的令人望而却步的计算成本，Ancona 等人。 [6]提出了一种新颖的 Shapley 值多项式时间近似，它基本上计算随机联盟的期望，而不是枚举每个联盟。 图 5 显示了如何为在加州住房数据集上训练的全连接层网络计算 Shapley 值的简单示例，其中包括八个属性，例如作为输入的房屋年龄和房间号以及作为标签的房价 。</p>
+\mathop{Shapley}_i(\hat f)=\sum_{S\subseteq P\setminus \{i\}}\frac{(N-|S|-1)!|S|!}{N!}\bigg(\hat f (S\cup\{i\}-\hat f(S) )\bigg)
+\end{align*}</script><p>其中，$|\cdot|$ 是集合的大小，$P$ 是 $N$ 个层的总层集合，并且集合函数 $\hat f$ 将每个子集 $S \subseteq P$ 映射到一个实数。 此外，通过用零值替换输入中不在 S 中的特征，可以将 Shapley 值的定义扭曲为神经网络函数 f。 为了减少组合爆炸带来的令人望而却步的计算成本，Ancona 等人。 [6]提出了一种新颖的 Shapley 值多项式时间近似，它基本上计算随机联盟的期望，而不是枚举每个联盟。 图 5 显示了如何为在加州住房数据集上训练的全连接层网络计算 Shapley 值的简单示例，其中包括八个属性，例如作为输入的房屋年龄和房间号以及作为标签的房价 。</p>
 <p>研究人员并没有删除一个或多个特征，而是采用了梯度。 西蒙扬等人。 [156]，斯米尔科夫等人。 [160]，Sundararajan 等人。 [167]和Singla等人。 [159]利用梯度的思想来探测输入的显着性。 西蒙扬等人。 [156]计算了类别分数相对于图像像素的一阶泰勒展开，通过该一阶系数生成类别的显着性图。 斯米尔科夫等人。 [160]证明梯度作为显着图显示了属性和标签之间的相关性，但是，通常梯度相当嘈杂。 为了消除噪声，他们提出了 SmoothGrad，将噪声多次添加到输入图像中并对结果进行平均。<br>N M(n)(x + N(0, σ 2)), n=1 c<br>c 类，N(0, σ 2)<br>是以 σ 为标准方差的高斯噪声。 基本上，M (x) 是显着图的平滑版本。 孙达拉拉詹等人。 [167]为显着性方法设定了两个基本要求：1）（敏感性）如果输入和基线之间只有一个特征不同，输入和基线的输出不同，那么这个特征应该被赋予非零值 归因; 2）（实现不变性）两个功能等效的网络中相同特征的属性应该是相同的。 注意到早期基于梯度的显着性方法不满足</p>
 <p>其中 F(·) 是神经网络映射，x = (x1, x2, …, xN ) 是输入，x′ = (x′ ,x′ ,…,x′ ) 是基线 sat -12N 表示 (∂/∂x)F(x)|x=x′ = 0。实际中，积分可以转化为离散求和 [(xi − xi′)/M] × Mm=1 [∂F (x′ + (m/M)(x − x′))/∂xi]，其中 M 是积分近似的步数。 辛格拉等人。 [159]提出使用泰勒展开的二阶近似来生成显着图，以考虑特征依赖性。<br>巴赫等人。 [11]提出了分层相关性传播（LRP），通过假设模型表示 f(x) 可以表示为像素相关性 Rlp 之和，来计算一个属性与预测的相关性，其中 x 是输入图像，l 是 层的索引，p是x的像素的索引。 因此，f(x) = p RLp，其中 L 是最后一层，RL = [(w xL−1 )/( w xL−1 )]f (x)，其中 w ppppppp 是层的像素 p 之间的权重 第 (L − 1) 层和最后一层。 给定前馈神经网络，输入的像素相关性得分 R1p 是通过向后计算 Rlp =[z /( ′ z ′ )]Rl+1 得出的，其中 z = xl w(l,l+1)，其中 j pj p pj j pj p pjw(l,l+1) 是第 l 层的像素 p 和第 (l + 1) 层的像素 pj j 之间的权重。 此外，阿拉斯等人。 [9] 将 LRP 扩展到循环神经网络（RNN）以进行情感分析。 蒙塔冯等人。 [125]采用深度泰勒分解的整个一阶项来产生显着图，而不仅仅是梯度。 假设 x 是模型 f(x) 精心选择的函数根：f(x) = 0，因为 f(x) 可以分解为 f(x) = f(x)+([∂f/ ∂x]|x=x)T · (x−x)+ε = 0+ i(∂f/∂xi)|x=x(xi−xˆi)+ε，其中 ε 是高阶项， 像素 i 的像素相关性表示为 Ri = [∂f /∂xi]|x=x(xi − xˆi)。 Shrikumar 等人受到这样一个事实的启发：即使神经元没有被激发，它仍然有可能揭示有用的信息。 [155]提出 DeepLIFT 来计算每个神经元的激活与其参考之间的差异，其中参考是当网络提供参考输入时该神经元的激活，然后将差异反向传播到图像空间层 像LRP一样层。 辛格等人。 [158]引入了上下文分解，其层传播公式为 βi = Wβi−1 + [|Wβi−1|/(|Wβi−1| + |Wγi−1|)] · b 且 γi = Wγi−1 + [| Wγi−1|/(|Wβi−1| + |Wγi−1|)]·b，其中W是第i层和第(i−1)层之间的权重矩阵，b是偏置向量。 限制条件为gi(x)=βi(x)+γi(x)，其中gi(x)是第i层的输出。 βi(x) 被认为是输入的上下文贡献，γi(x) 意味着输入对 gi(x) 的贡献不包含在 βi(x) 中。</p>
 <p>图 6 展示了使用类似 LeNet-5 的网络对原始梯度、SmoothGrad、IntegratedGrad 和 Deep Taylor 方法的评估。 其中，IntegratedGrad 和 Deep Taylor 方法在五位数上表现出色。<br>用于量化深度模型的输入和潜在表示之间的关联的互信息度量也可以类似地起到显着性的作用[63]、[148]、[193]。 此外，还有其他方法来获取显着性图。 罗斯等人。 [144]定义了一个新的损失项<br>i (Ai(∂/∂xi) Kk=1 log(yˆk))2 用于训练，其中 i 是像素的索引，Ai 是要优化的二进制掩码，yˆk 是标签的第 k 位，K 是班级数量。 这种损失是为了惩罚梯度的锐度，以获得更清晰的解释边界。 Fong 和 Vedaldi [52] 探索学习要删除的最小区域，即找到最优的 m*</p>
@@ -384,7 +386,7 @@ m^\ast = \mathop{argmin}
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/06/28/CNN/On_Interpretability_of_Artificial_Neural_Networks_A%20Survey/" title="On Interpretability of Artificial Neural Networks-A Survey">https://github.com/sophia-hxw/sophia-hxw.github.io/2023/06/28/CNN/On_Interpretability_of_Artificial_Neural_Networks_A Survey/</a>
+    <a href="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/06/28/CNN/On%20Interpretability%20of%20Artificial%20Neural%20Networks%20A%20Survey/" title="On Interpretability of Artificial Neural Networks-A Survey">https://github.com/sophia-hxw/sophia-hxw.github.io/2023/06/28/CNN/On Interpretability of Artificial Neural Networks A Survey/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -471,7 +473,7 @@ m^\ast = \mathop{argmin}
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%EF%BC%8C%E4%BB%8B%E7%BB%8D"><span class="nav-text">一，介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A%EF%BC%8C%E4%BB%80%E4%B9%88%E6%98%AF%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7%EF%BC%9F"><span class="nav-text">A，什么是可解释性？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7%E5%BE%88%E9%9A%BE%EF%BC%9F"><span class="nav-text">B，为什么可解释性很难？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%BA%E4%B8%BA%E9%99%90%E5%88%B6"><span class="nav-text">人为限制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%95%86%E4%B8%9A%E5%A3%81%E5%9E%92"><span class="nav-text">商业壁垒</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%8E%9F%E7%94%9F%E6%80%A7"><span class="nav-text">数据原生性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%A4%8D%E6%9D%82%E6%80%A7"><span class="nav-text">算法复杂性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C%EF%BC%8C%E6%80%8E%E4%B9%88%E6%9E%84%E5%BB%BA%E5%A5%BD%E7%9A%84%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7%E6%96%B9%E6%B3%95%EF%BC%9F"><span class="nav-text">C，怎么构建好的可解释性方法？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%86%E7%A1%AE%E5%BA%A6"><span class="nav-text">准确度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E8%87%B4%E6%80%A7"><span class="nav-text">一致性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4%E6%80%A7"><span class="nav-text">完整性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E7%94%A8%E6%80%A7"><span class="nav-text">通用性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A5%96%E5%8A%B1"><span class="nav-text">奖励</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%EF%BC%8C%E8%A7%A3%E9%87%8A%E6%96%B9%E6%B3%95%E7%BB%BC%E8%BF%B0"><span class="nav-text">二，解释方法综述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A%EF%BC%8C%E5%88%86%E7%B1%BB%E5%AE%9A%E4%B9%89"><span class="nav-text">A，分类定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E5%90%8E%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7%E5%88%86%E6%9E%90"><span class="nav-text">事后可解释性分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%B3%E5%B8%AD%E5%8F%AF%E8%A7%A3%E9%87%8A%E5%BB%BA%E6%A8%A1"><span class="nav-text">即席可解释建模</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B%EF%BC%8C%E4%BA%8B%E5%90%8E%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7%E5%88%86%E6%9E%90"><span class="nav-text">B，事后可解释性分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E5%BE%81%E5%88%86%E6%9E%90"><span class="nav-text">特征分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E6%A3%80%E9%AA%8C"><span class="nav-text">模型检验</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%EF%BC%8C%E4%BB%8B%E7%BB%8D"><span class="nav-text">一，介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A%EF%BC%8C%E4%BB%80%E4%B9%88%E6%98%AF%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7%EF%BC%9F"><span class="nav-text">A，什么是可解释性？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7%E5%BE%88%E9%9A%BE%EF%BC%9F"><span class="nav-text">B，为什么可解释性很难？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%BA%E4%B8%BA%E9%99%90%E5%88%B6"><span class="nav-text">人为限制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%95%86%E4%B8%9A%E5%A3%81%E5%9E%92"><span class="nav-text">商业壁垒</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%8E%9F%E7%94%9F%E6%80%A7"><span class="nav-text">数据原生性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%A4%8D%E6%9D%82%E6%80%A7"><span class="nav-text">算法复杂性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C%EF%BC%8C%E6%80%8E%E4%B9%88%E6%9E%84%E5%BB%BA%E5%A5%BD%E7%9A%84%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7%E6%96%B9%E6%B3%95%EF%BC%9F"><span class="nav-text">C，怎么构建好的可解释性方法？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%86%E7%A1%AE%E5%BA%A6"><span class="nav-text">准确度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E8%87%B4%E6%80%A7"><span class="nav-text">一致性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4%E6%80%A7"><span class="nav-text">完整性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E7%94%A8%E6%80%A7"><span class="nav-text">通用性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A5%96%E5%8A%B1"><span class="nav-text">奖励</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%EF%BC%8C%E8%A7%A3%E9%87%8A%E6%96%B9%E6%B3%95%E7%BB%BC%E8%BF%B0"><span class="nav-text">二，解释方法综述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A%EF%BC%8C%E5%88%86%E7%B1%BB%E5%AE%9A%E4%B9%89"><span class="nav-text">A，分类定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E5%90%8E%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7%E5%88%86%E6%9E%90"><span class="nav-text">事后可解释性分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%B3%E5%B8%AD%E5%8F%AF%E8%A7%A3%E9%87%8A%E5%BB%BA%E6%A8%A1"><span class="nav-text">即席可解释建模</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B%EF%BC%8C%E4%BA%8B%E5%90%8E%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7%E5%88%86%E6%9E%90"><span class="nav-text">B，事后可解释性分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E5%BE%81%E5%88%86%E6%9E%90"><span class="nav-text">特征分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E6%A3%80%E9%AA%8C"><span class="nav-text">模型检验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%98%BE%E8%91%97%E6%80%A7"><span class="nav-text">显著性</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -555,13 +557,13 @@ m^\ast = \mathop{argmin}
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">353k</span>
+    <span title="站点总字数">354k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:21</span>
+    <span title="站点阅读时长">5:22</span>
 </div>
 
         
