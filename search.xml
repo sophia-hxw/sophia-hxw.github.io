@@ -23,7 +23,8 @@
 <h3 id="2-1-2-多尺度技术"><a href="#2-1-2-多尺度技术" class="headerlink" title="2.1.2 多尺度技术"></a>2.1.2 多尺度技术</h3><p>人们总是希望在时空较粗糙的网格上数值求解多物理问题，以最大限度地减少计算成本。 因此，人们开发了不同的放大[86,87]、缩小[88]和交叉尺度[89]方法来确定在广泛的长度/时间尺度上非线性问题的精确数值解。 一种可行的选择是使用粗网格，它可以可靠地描述长波长动力学并解释未解决的小尺度物理问题。 另一方面，推导粗略表示的数学模型（例如边界条件）相对困难。 巴西奈等[87]提出了一种 PgNN 模型，用于基于已知基础方程的实际解来学习最佳 PDE 近似。 人工神经网络输出空间导数，然后对其进行优化，以便最好地满足低分辨率网格上的方程。 与典型的离散化方法（例如有限差分）相比，推荐的 ANN 方法在以粗糙 4 到 8 倍的分辨率对非线性方程组进行积分时要精确得多 [87]。 然而，这种方法的主要挑战是系统地导出这些自适应解的离散算子。 马杜等[86]开发了一个 PgNN，称为 STENCIL-NET，用于学习非线性 PDE 的特定于分辨率的局部离散化。 通过将规则笛卡尔网格上的空间和时间自适应参数池与离散时间积分知识相结合，STENCIL-NET 可以实现任意非线性 PDE 算子的数值稳定离散化。 STENCIL-NET 模型还可用于在比训练数据集更广泛的时空尺度上确定 PDE 求解方案。 在他们的论文中，作者使用 STENCIL-NET 对粗时空网格上的混沌 PDE 解进行长期预测，以检验他们的假设。 将 STENCIL-NET 模型与基线数值技术（例如，完全矢量化的 WENO [90]）进行比较，在保持相同精度的情况下，粗网格上的预测速度在 GPU 上快了 25 到 150 倍，在 CPU 上快了 2 到 14 倍[86]。</p>
 <p>表 1 报告了近期利用 PgNN 加速科学计算预处理部分工作的非详尽列表。 这些研究共同得出的结论是，PgNN 可以成功集成，以在网格生成、网格评估和交叉缩放方面实现相当大的加速因子，这对于使用科学计算技术探索的许多复杂问题至关重要。 下一小节讨论 PgNN 合并到建模组件中的潜力，从而产生更高的加速因子或更高的精度。</p>
 <h2 id="2-2-建模与后处理"><a href="#2-2-建模与后处理" class="headerlink" title="2.2 建模与后处理"></a>2.2 建模与后处理</h2><h3 id="2-2-1-应用到流体力学"><a href="#2-2-1-应用到流体力学" class="headerlink" title="2.2.1 应用到流体力学"></a>2.2.1 应用到流体力学</h3><p>PgNN 受到了流体力学界的广泛关注。 Lee 和 Chen [94] 关于使用 ANN 估计流体特性的研究是最早将 PgNN 应用到流体力学的研究之一。 从那时起，PgNN 在流体力学中的应用已扩展到广泛的应用领域，例如层流和湍流、非牛顿流体流动、空气动力学等，特别是加速了传统的计算流体动力学（CFD） 求解器。</p>
-<p>对于不可压缩层流模拟，求解纳维-斯托克斯方程的数值过程被认为是主要瓶颈。 为了缓解这个问题，PgNN 已被用作解析过程的一部分。 例如，杨等人。 [95]提出了一种使用人工神经网络的新型数据驱动投影方法，以避免基于网格的流体模拟中投影步骤的迭代计算。 所提出的数据驱动投影方法的效率是显着的，特别是在大规模流体流动模拟中。 汤普森等人。 [96] 使用 CNN 来预测流体流动无粘性欧拉方程的数值解。 提出了一种结合多帧信息的无监督训练来提高长期稳定性。 与常用的雅可比方法 [97] 获得的速度场相比，CNN 模型产生了非常稳定的无散速度场，并且精度更高。 陈等人。 [98]后来开发了一种基于 U-net 的架构，这是 CNN 模型的一种特殊情况，用于预测层流中任意 2D 形状周围的速度和压力场图。 CNN 模型使用由使用 B ezier 曲线构建的随机形状组成的数据集进行训练，然后使用 CFD 求解器求解纳维-斯托克斯方程。 CNN 模型的预测效率也使用临时误差函数对不可见的形状进行了评估，具体来说，这些预测的 MSE 水平与测试子集上获得的水平处于同一数量级，即在 1.0 之间 压力和速度分别为 × 10−5 和 5.0 × 10−5。<br>从层流流态转向湍流流态，PgNN 已广泛用于湍流闭合模型的制定 [99]。 凌等人。 [100]使用前馈 MLP 和专门的神经网络来预测雷诺平均纳维斯托克斯 (RANS) 和大涡模拟 (LES) 湍流问题。 他们的专门神经网络使用高阶乘法层嵌入伽利略不变性[101]。 该模型的性能与 MLP 和地面真实模拟的性能进行了比较。 他们得出的结论是，专门的神经网络可以在不变张量的基础上预测各向异性张量，从而产生比 MLP 更准确的预测。 毛利克等人。 [102] 提出了 Kraichnan 湍流亚网格建模的闭合框架 [103]。 为了确定动态闭合强度，所提出的框架使用了隐式映射，其输入为网格解析变量和涡流粘度。 使用从高保真直接数值模拟 (DNS) 获得的极度二次采样数据来训练 ANN，可以生成最佳地图。 人们发现，人工神经网络模型成功地将动态动能耗散融入衰减湍流问题，从而能够准确捕获相干结构和惯性范围保真度。 后来，Kim 和 Lee [104] 使用简单线性回归、SLinear、多元线性回归、MLinear 和 CNN，利用其他壁面信息（包括流向）来预测湍流传热（即壁面法线热通量，qw） 壁面剪应力、展向壁面剪应力或流向涡度以及压力波动，通过渠道流的 DNS 获得（见图 3（a））。 使用自适应矩估计（ADAM）[105, 106]对构建的网络进行训练，并执行网格搜索方法[107, 108]来优化CNN的深度和宽度。 他们的发现表明，PgNN 模型对输入分辨率不太敏感，表明其在湍流模拟中作为良好热通量模型的潜力。 优素福等人。 [109]还提出了一种基于PgNN生成湍流流入条件的有效方法，该PgNN是由多尺度卷积自动编码器与子像素卷积层（MSCSP-AE）[110, 111]和长短期记忆相结合形成的 LSTM）[112, 113]模型。 研究发现所提出的模型能够处理湍流场的空间映射。</p>
+<p>对于不可压缩层流模拟，求解Navier-Stokes方程的数值过程被认为是主要瓶颈。 为了缓解这个问题，PgNN 已被用作解析过程的一部分。 例如，杨等[95]提出了一种使用人工神经网络的新型数据驱动投影方法，以避免基于网格的流体模拟中投影步骤的迭代计算，所提出的数据驱动投影方法的效率是显着的，特别是在大规模流体流动模拟中。 汤普森等[96] 使用 CNN 来预测流体流动无粘性欧拉方程的数值解，提出了一种结合多帧信息的无监督训练来提高长期稳定性。 与常用的雅可比方法 [97] 获得的速度场相比，CNN 模型产生了非常稳定的无散度速度场，并且精度更高。 陈等[98]后来开发了一种基于 U-net 的架构，这是 CNN 模型的一种特殊情况，用于预测层流中任意 2D 形状周围的速度和压力场图，CNN 模型使用由 Bezier 曲线构建的随机形状组成的数据集进行训练，然后使用 CFD 求解器求解Navier-Stokes方程。 CNN 模型的预测效率也使用临时误差函数对不可见的形状进行了评估，具体来说，这些预测的 MSE 水平与测试子集上获得的水平处于同一数量级，即压力和速度分别在数量级 $1.0\times 10^{-5}$ 和 $5.0\times 10^{-5}$ 之间。</p>
+<p>从层流流态转向湍流流态，PgNN 已广泛用于湍流闭合模型的制定 [99]。 凌等人。 [100]使用前馈 MLP 和专门的神经网络来预测雷诺平均纳维斯托克斯 (RANS) 和大涡模拟 (LES) 湍流问题。 他们的专门神经网络使用高阶乘法层嵌入伽利略不变性[101]。 该模型的性能与 MLP 和地面真实模拟的性能进行了比较。 他们得出的结论是，专门的神经网络可以在不变张量的基础上预测各向异性张量，从而产生比 MLP 更准确的预测。 毛利克等人。 [102] 提出了 Kraichnan 湍流亚网格建模的闭合框架 [103]。 为了确定动态闭合强度，所提出的框架使用了隐式映射，其输入为网格解析变量和涡流粘度。 使用从高保真直接数值模拟 (DNS) 获得的极度二次采样数据来训练 ANN，可以生成最佳地图。 人们发现，人工神经网络模型成功地将动态动能耗散融入衰减湍流问题，从而能够准确捕获相干结构和惯性范围保真度。 后来，Kim 和 Lee [104] 使用简单线性回归、SLinear、多元线性回归、MLinear 和 CNN，利用其他壁面信息（包括流向）来预测湍流传热（即壁面法线热通量，qw） 壁面剪应力、展向壁面剪应力或流向涡度以及压力波动，通过渠道流的 DNS 获得（见图 3（a））。 使用自适应矩估计（ADAM）[105, 106]对构建的网络进行训练，并执行网格搜索方法[107, 108]来优化CNN的深度和宽度。 他们的发现表明，PgNN 模型对输入分辨率不太敏感，表明其在湍流模拟中作为良好热通量模型的潜力。 优素福等人。 [109]还提出了一种基于PgNN生成湍流流入条件的有效方法，该PgNN是由多尺度卷积自动编码器与子像素卷积层（MSCSP-AE）[110, 111]和长短期记忆相结合形成的 LSTM）[112, 113]模型。 研究发现所提出的模型能够处理湍流场的空间映射。</p>
 <p>PgNN 也已应用于空气动力学领域。 Kou和Zhang[114]提出了一篇关于典型数据驱动方法的综述论文，包括系统识别、特征提取和数据融合，这些方法已用于模拟非定常空气动力学。 这些数据驱动方法的有效性通过气动弹性的几个基准案例进行了描述。 王等人。 [115]描述了ANN在燃烧室旋流流场建模中的应用（见图3（b））。 来自粒子图像测速 (PIV) 的旋流流场数据用于训练 ANN 模型。 经过训练的 PgNN 模型已成功进行测试，可以预测未知入口条件下的旋流流场。 乔杜里等人。 [116] 研究了将 ANN 模型与基于投影 (PB) 的模型简化技术相结合的功效 [117, 118]，为计算成本高昂的高保真物理模型（特别是复杂的高超音速湍流）开发 ANN 替代模型。 替代模型用于对自由流条件和 SST（剪切应力传递）湍流模型的参数进行贝叶斯估计。 然后使用激波隧道数据将替代模型嵌入到高保真（雷诺平均纳维-斯托克斯）流动模拟器中。 西迪基等人。 [119]为俯仰翼开发了一种非线性数据驱动模型，包括时滞神经网络（TDNN）。 俯仰角被视为模型的输入，而升力系数被视为输出。 结果表明，经过训练的模型能够比线性和半经验模型更准确地捕获非线性气动力，特别是在较高的偏移角下。 王等人。 [120]还提出了一种基于多任务学习人工神经网络的多保真度降阶模型，以有效预测结冰翼型的非定常气动性能。 结果表明，与单保真度和单任务建模方法相比，所提出的模型具有更高的准确性和更好的泛化能力。<br>复杂流体流动的模拟，特别是使用表现出粘弹性和非线性流变行为的流体，是 PgNN 应用的另一个主题 [122, 123]。 这些流体的动力学通常受非线性本构方程控制，导致刚性数值问题 [124, 125]。 法罗吉等人。 [22]开发了一个 PgNN 模型来预测球形颗粒在粘弹性流体中平移的阻力系数（见图 3（c））。 PgNN 考虑了一种堆叠技术（即集成随机福雷斯特 [126]、极限梯度提升 [127] 和 ANN 模型）来消化输入（考虑 Oldroyd-B 和 Giesekus 流体的雷诺数、Weissenberg 数、粘度比和迁移率因子） ）并根据个体学习器的预测和 ANN 元回归器输出阻力预测。 该模型的准确性已成功根据 DNS 生成的盲数据集进行了检查。 列侬等人。 [128]还开发了一种张量基神经网络（TBNN），允许流变学家构建可学习的本构模型，该模型包含基本的物理信息，同时对特定实验方案或流动运动学的细节保持不可知。 TBNN 模型在实质上客观的张量本构框架中结合了通用逼近器，该框架在构建时遵循连续介质力学所需的物理约束，例如框架不变性和张量对称性。 由于嵌入了 TBNN，开发的流变通用微分方程可以快速学习简单但准确且高度通用的模型来描述所提供的训练数据，从而可以快速发现本构方程。</p>
 <p>最后，PgNN 还被广泛用于提高 CFD 求解器的精度和速度。 Stevens 和 Colonius [121] 开发了一种深度学习模型（加权本质上非振荡神经网络，WENO-NN）来增强有限体积方法，用于离散化具有不连续解的偏微分方程，例如湍流-冲击波相互作用（见图 1）。 .3(d))。 科奇科夫等人。 [18] 使用混合离散化，将 CNN 和数值求解器的子组件相结合，以高精度将微分算子插值到粗网格上。 该模型的训练是在标准数值方法中进行的，用于将基础偏微分方程作为可微分程序求解，并且该方法允许对整个算法进行基于端对端梯度的优化。 该方法可学习对流通量和残差项的精确局部算子，并与以 8 至 10 倍精细分辨率运行的高级数值解算器的精度相匹配，同时执行计算速度提高 40 至 80 倍。 蔡等人。 [129]实现了最小二乘ReLU神经网络（LSNN）来解决具有不连续解的线性平流反应问题。 他们表明，所提出的方法在 DOF（自由度）数量方面优于基于网格的数值方法。 哈伯等人。 [130]建议使用自动编码器 CNN 来降低与纳维-斯托克斯方程耦合的标量传输方程的分辨率成本。 Lara 和 Ferrer [131] 提出使用神经网络加速高阶不连续伽辽金方法。 检查了 1D Burgers 方程的各种网格、多项式阶数和粘度值的方法和界限。 列表等人。 [132] 使用 CNN 训练湍流模型，以改善模拟时不可压缩纳维-斯托克斯方程的欠解析、低分辨率解。 所开发的方法在空间和时间维度上的分辨率始终优于模拟，分辨率提高了两倍。 对于混合层情况，混合模型平均类似于三倍参考模拟的性能，这相当于时间层加速 7.0 倍，空间混合层加速 3.7 倍。<br>表 2 报告了利用 PgNN 模拟流体流动问题的近期研究的非详尽列表。 这些研究共同得出的结论是，PgNN 可以成功地与 CFD 求解器集成，或用作独立的代理模型，为流体力学的科学计算开发准确且更快的建模组件。 下一节将讨论 PgNN 在计算固体力学中的潜在应用。</p>
 <h3 id="2-2-2-应用到固体力学"><a href="#2-2-2-应用到固体力学" class="headerlink" title="2.2.2 应用到固体力学"></a>2.2.2 应用到固体力学</h3><p>物理引导神经网络（PgNN）也被计算固体力学界广泛采用。 安徒生等人的研究。 [35] 使用 ANN 进行焊接建模是最早将 PgNN 应用到固体力学的研究之一。 此后，PgNN 的应用已扩展到广泛的问题，例如结构分析、拓扑优化、逆向材料设计和建模、健康状况评估等，特别是加速了传统的正向和逆向建模方法在 计算力学。<br>在结构分析领域，Tadesse 等人。 [137]提出了一种用于预测具有柔性剪力连接器的组合桥的中跨偏转的人工神经网络。 人工神经网络在六座不同的桥上进行了测试，产生的最大均方根误差 (RMSE) 为 3.79%，在实践中可以忽略不计。 作者还开发了基于 ANN 的闭式解决方案，用于快速预测日常设计中的变形。 顾内伊斯等人。 [138]利用人工神经网络开发了钢梁抗弯超强系数的新公式。 他们考虑了 141 个具有不同横截面类型的实验数据样本来训练模型。 结果显示，训练和测试准确率相当，达到 99%，这表明 ANN 模型提供了估计梁的超强强度的可靠工具。 洪等人。 [139]利用人工神经网络来预测非线性、非弹性钢桁架的极限载荷系数。 他们考虑使用平面 39 杆钢桁架来证明所提出的 ANN 的效率。 他们使用构件的横截面作为输入，将荷载系数作为输出。 基于 ANN 的模型在预测非线性非弹性钢桁架的极限荷载系数方面具有很高的准确性，平均损失小于 0.02。 陈等人。 [140]还使用ANN来解决弹塑性半球形金属壳与刚性冲击器之间碰撞的三维（3D）逆问题。 目标是根据壳体的永久塑性变形来预测碰撞的位置、速度和持续时间。 对于静态和动态加载，ANN 模型可以高精度预测位置、速度和碰撞持续时间。 侯赛因普尔等人。 [141]使用 PgNN 来评估承受横向扭曲屈曲的城堡形钢梁的屈曲能力。 如图 4（a）所示，基于 ANN 的模型比众所周知的设计规范（例如 AS4100 [142]、AISC [143] 和 EC3 [144]）提供了更高的精度，用于建模和预测极限力矩能力 。</p>
@@ -5102,6 +5103,22 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </tags>
   </entry>
   <entry>
+    <title>hi3559a and nfs</title>
+    <url>/2022/05/19/hardware/hi3559a-nfs/</url>
+    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在进行板子调试的时候，用串口传输文件会比较繁琐，尤其是文件小而多时，所以此处采用了nfs服务，将PC机上的一个文件夹挂载到板子上共享存储服务。</p>
+<p><strong>可以使劲、快速的板砖啦…啦啦啦啦…</strong><br><span id="more"></span></p>
+<h2 id="1，PC上的安装和配置"><a href="#1，PC上的安装和配置" class="headerlink" title="1，PC上的安装和配置"></a>1，PC上的安装和配置</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 安装</span><br><span class="line">sudo apt-get install nfs-kernel-server</span><br><span class="line"># 共享文件夹</span><br><span class="line">sudo mkdir /home/demo/hi3559a_share</span><br><span class="line"># 配置文件，打开```/etc/exports```文件，在最后加上：</span><br><span class="line">/home/demo/hi3559a_share *(rw,sync,no_subtree_check)</span><br></pre></td></tr></table></figure>
+<p><strong>NOTE:参数说明找百度哦</strong><br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 重启服务，上面的配置完成之后，重启服务：</span><br><span class="line">sudo /etc/init.d/rpcbind restart//重启 rpcbind</span><br><span class="line">sudo /etc/init.d/nfs-kernel-server restart //重启 NFS</span><br></pre></td></tr></table></figure></p>
+<h2 id="2，开发板上的安装和配置"><a href="#2，开发板上的安装和配置" class="headerlink" title="2，开发板上的安装和配置"></a>2，开发板上的安装和配置</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 安装客户端</span><br><span class="line">sudo apt-get install nfs-common</span><br><span class="line"># 挂载文件夹</span><br><span class="line">mkdirs -p /home/hihope/hi3559av100</span><br><span class="line">chmod 777 /home/hihope/hi3559av100</span><br></pre></td></tr></table></figure>
+<h2 id="3，常用命令"><a href="#3，常用命令" class="headerlink" title="3，常用命令"></a>3，常用命令</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 挂载命令</span><br><span class="line">sudo mount -t nfs -o nolock,nfsvers=3,vers=3 192.168.86.105:/home/demo/hi3559a_share /home/hihope/hi3559av100</span><br><span class="line"># 卸载命令</span><br><span class="line">umount /home/hihope/hi3559av100</span><br><span class="line">df	//查看挂载信息</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>hardware</category>
+      </categories>
+      <tags>
+        <tag>hi3559a nfs</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>hi3559a，windows和vmware&amp;ubuntu的开发环境配置</title>
     <url>/2022/05/19/hardware/hi3559a-windows-vmware-software/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><h3 id="桥接模式"><a href="#桥接模式" class="headerlink" title="桥接模式"></a>桥接模式</h3><p>原理就找大佬们理解，也就不多说了。<br>我的理解是，PC和板子用网线连接，PC和虚拟机是逻辑连接，需要保证pc, ubuntu（vmware中的）和板子在同一个网段中。</p>
@@ -5160,22 +5177,6 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </categories>
       <tags>
         <tag>Hi3559a win10 vmware</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hi3559a and nfs</title>
-    <url>/2022/05/19/hardware/hi3559a-nfs/</url>
-    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在进行板子调试的时候，用串口传输文件会比较繁琐，尤其是文件小而多时，所以此处采用了nfs服务，将PC机上的一个文件夹挂载到板子上共享存储服务。</p>
-<p><strong>可以使劲、快速的板砖啦…啦啦啦啦…</strong><br><span id="more"></span></p>
-<h2 id="1，PC上的安装和配置"><a href="#1，PC上的安装和配置" class="headerlink" title="1，PC上的安装和配置"></a>1，PC上的安装和配置</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 安装</span><br><span class="line">sudo apt-get install nfs-kernel-server</span><br><span class="line"># 共享文件夹</span><br><span class="line">sudo mkdir /home/demo/hi3559a_share</span><br><span class="line"># 配置文件，打开```/etc/exports```文件，在最后加上：</span><br><span class="line">/home/demo/hi3559a_share *(rw,sync,no_subtree_check)</span><br></pre></td></tr></table></figure>
-<p><strong>NOTE:参数说明找百度哦</strong><br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 重启服务，上面的配置完成之后，重启服务：</span><br><span class="line">sudo /etc/init.d/rpcbind restart//重启 rpcbind</span><br><span class="line">sudo /etc/init.d/nfs-kernel-server restart //重启 NFS</span><br></pre></td></tr></table></figure></p>
-<h2 id="2，开发板上的安装和配置"><a href="#2，开发板上的安装和配置" class="headerlink" title="2，开发板上的安装和配置"></a>2，开发板上的安装和配置</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 安装客户端</span><br><span class="line">sudo apt-get install nfs-common</span><br><span class="line"># 挂载文件夹</span><br><span class="line">mkdirs -p /home/hihope/hi3559av100</span><br><span class="line">chmod 777 /home/hihope/hi3559av100</span><br></pre></td></tr></table></figure>
-<h2 id="3，常用命令"><a href="#3，常用命令" class="headerlink" title="3，常用命令"></a>3，常用命令</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 挂载命令</span><br><span class="line">sudo mount -t nfs -o nolock,nfsvers=3,vers=3 192.168.86.105:/home/demo/hi3559a_share /home/hihope/hi3559av100</span><br><span class="line"># 卸载命令</span><br><span class="line">umount /home/hihope/hi3559av100</span><br><span class="line">df	//查看挂载信息</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>hardware</category>
-      </categories>
-      <tags>
-        <tag>hi3559a nfs</tag>
       </tags>
   </entry>
   <entry>
@@ -5278,6 +5279,28 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </tags>
   </entry>
   <entry>
+    <title>roi align</title>
+    <url>/2022/05/16/detection/roi-align/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>roi align产生的背景，原理和应用场景</p>
+<p><strong>主要对比roi pooling</strong><br><span id="more"></span></p>
+<h2 id="1，背景"><a href="#1，背景" class="headerlink" title="1，背景"></a>1，背景</h2><p>在mask rcnn中提出，是为了解决roi pooling的两次量化带来的位置精度损失问题。</p>
+<h2 id="2，思路"><a href="#2，思路" class="headerlink" title="2，思路"></a>2，思路</h2><p>取消量化操作，使用双线性内插的方法获得坐标为浮点数的像素点上的图像数值,从而将整个特征聚集过程转化为一个连续的操作。值得注意的是，在具体的算法操作上，ROI Align并不是简单地补充出候选区域边界上的坐标点，然后将这些坐标点进行池化，而是重新设计了一套比较优雅的流程，大致算法流程为：</p>
+<ul>
+<li>遍历每一个候选区域，保持浮点数边界不做量化。</li>
+<li>将候选区域分割成k x k个单元，每个单元的边界也不做量化。</li>
+<li>在每个单元中计算固定四个坐标位置，用双线性内插的方法计算出这四个位置的值，然后进行最大池化操作。</li>
+</ul>
+<h2 id="3，区别"><a href="#3，区别" class="headerlink" title="3，区别"></a>3，区别</h2><p>ROI Align舍去了近似像素取整数的量化方法，改用双线性插值的方法确定特征图坐标对应于原图中的像素位置.ROI Align很好地解决了ROI Pooling操作中两次量化造成的区域不匹配(mis-alignment)的问题。</p>
+<h2 id="4，应用场景"><a href="#4，应用场景" class="headerlink" title="4，应用场景"></a>4，应用场景</h2><p>对于检测图片中大目标物体时，两种方案的差别不大，而如果是图片中有较多小目标物体需要检测，则优先选择RoiAlign，更精准些。</p>
+]]></content>
+      <categories>
+        <category>detection</category>
+      </categories>
+      <tags>
+        <tag>roi align</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>rpn的原理和作用</title>
     <url>/2022/05/16/detection/principle-and-effects-of-rpn/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>rpn原理和作用</p>
@@ -5321,28 +5344,6 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </categories>
       <tags>
         <tag>roi pooling</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>roi align</title>
-    <url>/2022/05/16/detection/roi-align/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>roi align产生的背景，原理和应用场景</p>
-<p><strong>主要对比roi pooling</strong><br><span id="more"></span></p>
-<h2 id="1，背景"><a href="#1，背景" class="headerlink" title="1，背景"></a>1，背景</h2><p>在mask rcnn中提出，是为了解决roi pooling的两次量化带来的位置精度损失问题。</p>
-<h2 id="2，思路"><a href="#2，思路" class="headerlink" title="2，思路"></a>2，思路</h2><p>取消量化操作，使用双线性内插的方法获得坐标为浮点数的像素点上的图像数值,从而将整个特征聚集过程转化为一个连续的操作。值得注意的是，在具体的算法操作上，ROI Align并不是简单地补充出候选区域边界上的坐标点，然后将这些坐标点进行池化，而是重新设计了一套比较优雅的流程，大致算法流程为：</p>
-<ul>
-<li>遍历每一个候选区域，保持浮点数边界不做量化。</li>
-<li>将候选区域分割成k x k个单元，每个单元的边界也不做量化。</li>
-<li>在每个单元中计算固定四个坐标位置，用双线性内插的方法计算出这四个位置的值，然后进行最大池化操作。</li>
-</ul>
-<h2 id="3，区别"><a href="#3，区别" class="headerlink" title="3，区别"></a>3，区别</h2><p>ROI Align舍去了近似像素取整数的量化方法，改用双线性插值的方法确定特征图坐标对应于原图中的像素位置.ROI Align很好地解决了ROI Pooling操作中两次量化造成的区域不匹配(mis-alignment)的问题。</p>
-<h2 id="4，应用场景"><a href="#4，应用场景" class="headerlink" title="4，应用场景"></a>4，应用场景</h2><p>对于检测图片中大目标物体时，两种方案的差别不大，而如果是图片中有较多小目标物体需要检测，则优先选择RoiAlign，更精准些。</p>
-]]></content>
-      <categories>
-        <category>detection</category>
-      </categories>
-      <tags>
-        <tag>roi align</tag>
       </tags>
   </entry>
   <entry>
@@ -5688,6 +5689,38 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </tags>
   </entry>
   <entry>
+    <title>hexo的主要搭建过程</title>
+    <url>/2022/05/10/ubuntuOS/hexo-main/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这个基本就是简单的搭建示例，对前端小白很友好，也够简单整洁，是喜欢的风格没跑了~</p>
+<p><strong>安心码文了~</strong><br><span id="more"></span></p>
+<h2 id="1，安装hexo"><a href="#1，安装hexo" class="headerlink" title="1，安装hexo"></a>1，安装hexo</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 使用 npm 一键安装 Hexo 博客程序</span><br><span class="line">npm install -g hexo-cli</span><br><span class="line">hexo init      # 初始化</span><br><span class="line">npm install    # 安装组件</span><br><span class="line">hexo g   # 生成页面</span><br><span class="line">hexo s   # 启动预览</span><br></pre></td></tr></table></figure>
+<p>访问 <a href="http://localhost:4000，出现">http://localhost:4000，出现</a> Hexo 默认页面，本地博客安装成功！</p>
+<h2 id="2，连接github"><a href="#2，连接github" class="headerlink" title="2，连接github"></a>2，连接github</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git config --global user.name &quot;xinwen&quot;</span><br><span class="line">git config --global user.email &quot;hxinwen1218@sina.com&quot;</span><br><span class="line">ssh-keygen -t rsa -C &quot;hxinwen1218@sina.com&quot;    # 之后一路回车，大概率会在/root/.ssh中生成公钥和私钥</span><br></pre></td></tr></table></figure>
+<p>登录github，进入Settings-&gt;SSH and GPG keys-&gt;New SSH key，title随意起，将刚才的公钥(id_rsa.pub)复制进去即可。</p>
+<h2 id="3，新建github-Pages仓库"><a href="#3，新建github-Pages仓库" class="headerlink" title="3，新建github Pages仓库"></a>3，新建github Pages仓库</h2><p>新建仓库，注意Repository name，请务必为：用户名.github.io</p>
+<p>博客地址：<a href="https://用户名.github.io">https://用户名.github.io</a></p>
+<h2 id="4，部署hexo到Github-Pages"><a href="#4，部署hexo到Github-Pages" class="headerlink" title="4，部署hexo到Github Pages"></a>4，部署hexo到Github Pages</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 安装 hexo-deployer-git</span><br><span class="line">npm install hexo-deployer-git --save</span><br><span class="line"></span><br><span class="line"># 然后，修改 _config.yml 文件</span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repository: git@github.com:用户名/用户名.github.io.git</span><br><span class="line">  branch: main</span><br></pre></td></tr></table></figure>
+<p>然后，运行<code>hexo d</code>即可部署到Github Pages.</p>
+<h2 id="5，hexo其他信息"><a href="#5，hexo其他信息" class="headerlink" title="5，hexo其他信息"></a>5，hexo其他信息</h2><h3 id="5-1-hexo常用命令"><a href="#5-1-hexo常用命令" class="headerlink" title="5.1 hexo常用命令"></a>5.1 hexo常用命令</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new &quot;postName&quot; #新建文章</span><br><span class="line">hexo new page &quot;pageName&quot; #新建页面</span><br><span class="line">hexo generate #生成静态页面至public目录</span><br><span class="line">hexo server #开启预览访问端口（默认端口4000，&#x27;ctrl + c&#x27;关闭server）</span><br><span class="line">hexo deploy #部署到GitHub</span><br><span class="line">hexo help  # 查看帮助</span><br><span class="line">hexo version  #查看Hexo的版本</span><br></pre></td></tr></table></figure>
+<h3 id="5-2-hexo命令缩写"><a href="#5-2-hexo命令缩写" class="headerlink" title="5.2 hexo命令缩写"></a>5.2 hexo命令缩写</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo n == hexo new</span><br><span class="line">hexo g == hexo generate</span><br><span class="line">hexo s == hexo server</span><br><span class="line">hexo d == hexo deploy</span><br></pre></td></tr></table></figure>
+<h3 id="5-3-hexo组合命令"><a href="#5-3-hexo组合命令" class="headerlink" title="5.3 hexo组合命令"></a>5.3 hexo组合命令</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo s -g #生成并本地预览</span><br><span class="line">hexo d -g #生成并上传</span><br></pre></td></tr></table></figure>
+<h2 id="6，hexo博客文件夹"><a href="#6，hexo博客文件夹" class="headerlink" title="6，hexo博客文件夹"></a>6，hexo博客文件夹</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line">_config.yml         #网站的配置信息</span><br><span class="line">package.json        #应用程序的信息</span><br><span class="line">scaffolds           #模板文件夹</span><br><span class="line">source              #存放用户资源，markdown文档</span><br><span class="line">  _drafts</span><br><span class="line">  _posts</span><br><span class="line">themes              #主题文件夹</span><br><span class="line">public              #网站文件</span><br></pre></td></tr></table></figure>
+<h2 id="7-参考文章"><a href="#7-参考文章" class="headerlink" title="7 参考文章"></a>7 参考文章</h2><ul>
+<li><a href="https://zhuanlan.zhihu.com/p/60578464#:~:text=%E4%BD%BF%E7%94%A8%20Hexo%2BGitHub%20%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%85%8D%E8%B4%B9%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B%EF%BC%88%E5%B0%8F%E7%99%BD%E5%90%91%EF%BC%89%201%20%E5%87%86%E5%A4%87%202%20%E8%BF%9E%E6%8E%A5%20Github....,Hexo%20%E5%88%B0%20GitHub%20Pages%206%20%E7%BB%91%E5%AE%9A%E5%9F%9F%E5%90%8D%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89....%207%20%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8">使用 Hexo+GitHub 搭建个人免费博客教程</a>    </li>
+<li><a href="https://blog.csdn.net/qq_40540975/article/details/124489981">使用Hexo+github搭建个人博客</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/265077468">hexo博客中添加图片</a></li>
+<li><a href="https://blog.csdn.net/tuckEnough/article/details/107383201">next主题美化</a></li>
+<li><a href="https://github.com/theme-next/hexo-theme-next">next主题github</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>ubuntuOS</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Legacy and UEFI mode on computers</title>
     <url>/2022/05/10/hardware/UEFI-and-Legacy-mode-of-PC/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>模式问题在安装系统时遇到比较多，老点的机器大多是MBR模式，以前用的光盘，优盘和恢复系统基本问题都不大。现在新的机器越来越多UEFI的模式了，所以装机时会有些需要注意的点，当然还有二者的混合模式，总而言之，这里只是简单的区别，想彻底了解的朋友还是自行查看更多资料哦~</p>
@@ -5726,38 +5759,6 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       <tags>
         <tag>legacy and uefi</tag>
         <tag>PC bios</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hexo的主要搭建过程</title>
-    <url>/2022/05/10/ubuntuOS/hexo-main/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这个基本就是简单的搭建示例，对前端小白很友好，也够简单整洁，是喜欢的风格没跑了~</p>
-<p><strong>安心码文了~</strong><br><span id="more"></span></p>
-<h2 id="1，安装hexo"><a href="#1，安装hexo" class="headerlink" title="1，安装hexo"></a>1，安装hexo</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 使用 npm 一键安装 Hexo 博客程序</span><br><span class="line">npm install -g hexo-cli</span><br><span class="line">hexo init      # 初始化</span><br><span class="line">npm install    # 安装组件</span><br><span class="line">hexo g   # 生成页面</span><br><span class="line">hexo s   # 启动预览</span><br></pre></td></tr></table></figure>
-<p>访问 <a href="http://localhost:4000，出现">http://localhost:4000，出现</a> Hexo 默认页面，本地博客安装成功！</p>
-<h2 id="2，连接github"><a href="#2，连接github" class="headerlink" title="2，连接github"></a>2，连接github</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git config --global user.name &quot;xinwen&quot;</span><br><span class="line">git config --global user.email &quot;hxinwen1218@sina.com&quot;</span><br><span class="line">ssh-keygen -t rsa -C &quot;hxinwen1218@sina.com&quot;    # 之后一路回车，大概率会在/root/.ssh中生成公钥和私钥</span><br></pre></td></tr></table></figure>
-<p>登录github，进入Settings-&gt;SSH and GPG keys-&gt;New SSH key，title随意起，将刚才的公钥(id_rsa.pub)复制进去即可。</p>
-<h2 id="3，新建github-Pages仓库"><a href="#3，新建github-Pages仓库" class="headerlink" title="3，新建github Pages仓库"></a>3，新建github Pages仓库</h2><p>新建仓库，注意Repository name，请务必为：用户名.github.io</p>
-<p>博客地址：<a href="https://用户名.github.io">https://用户名.github.io</a></p>
-<h2 id="4，部署hexo到Github-Pages"><a href="#4，部署hexo到Github-Pages" class="headerlink" title="4，部署hexo到Github Pages"></a>4，部署hexo到Github Pages</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 安装 hexo-deployer-git</span><br><span class="line">npm install hexo-deployer-git --save</span><br><span class="line"></span><br><span class="line"># 然后，修改 _config.yml 文件</span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repository: git@github.com:用户名/用户名.github.io.git</span><br><span class="line">  branch: main</span><br></pre></td></tr></table></figure>
-<p>然后，运行<code>hexo d</code>即可部署到Github Pages.</p>
-<h2 id="5，hexo其他信息"><a href="#5，hexo其他信息" class="headerlink" title="5，hexo其他信息"></a>5，hexo其他信息</h2><h3 id="5-1-hexo常用命令"><a href="#5-1-hexo常用命令" class="headerlink" title="5.1 hexo常用命令"></a>5.1 hexo常用命令</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new &quot;postName&quot; #新建文章</span><br><span class="line">hexo new page &quot;pageName&quot; #新建页面</span><br><span class="line">hexo generate #生成静态页面至public目录</span><br><span class="line">hexo server #开启预览访问端口（默认端口4000，&#x27;ctrl + c&#x27;关闭server）</span><br><span class="line">hexo deploy #部署到GitHub</span><br><span class="line">hexo help  # 查看帮助</span><br><span class="line">hexo version  #查看Hexo的版本</span><br></pre></td></tr></table></figure>
-<h3 id="5-2-hexo命令缩写"><a href="#5-2-hexo命令缩写" class="headerlink" title="5.2 hexo命令缩写"></a>5.2 hexo命令缩写</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo n == hexo new</span><br><span class="line">hexo g == hexo generate</span><br><span class="line">hexo s == hexo server</span><br><span class="line">hexo d == hexo deploy</span><br></pre></td></tr></table></figure>
-<h3 id="5-3-hexo组合命令"><a href="#5-3-hexo组合命令" class="headerlink" title="5.3 hexo组合命令"></a>5.3 hexo组合命令</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo s -g #生成并本地预览</span><br><span class="line">hexo d -g #生成并上传</span><br></pre></td></tr></table></figure>
-<h2 id="6，hexo博客文件夹"><a href="#6，hexo博客文件夹" class="headerlink" title="6，hexo博客文件夹"></a>6，hexo博客文件夹</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line">_config.yml         #网站的配置信息</span><br><span class="line">package.json        #应用程序的信息</span><br><span class="line">scaffolds           #模板文件夹</span><br><span class="line">source              #存放用户资源，markdown文档</span><br><span class="line">  _drafts</span><br><span class="line">  _posts</span><br><span class="line">themes              #主题文件夹</span><br><span class="line">public              #网站文件</span><br></pre></td></tr></table></figure>
-<h2 id="7-参考文章"><a href="#7-参考文章" class="headerlink" title="7 参考文章"></a>7 参考文章</h2><ul>
-<li><a href="https://zhuanlan.zhihu.com/p/60578464#:~:text=%E4%BD%BF%E7%94%A8%20Hexo%2BGitHub%20%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%85%8D%E8%B4%B9%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B%EF%BC%88%E5%B0%8F%E7%99%BD%E5%90%91%EF%BC%89%201%20%E5%87%86%E5%A4%87%202%20%E8%BF%9E%E6%8E%A5%20Github....,Hexo%20%E5%88%B0%20GitHub%20Pages%206%20%E7%BB%91%E5%AE%9A%E5%9F%9F%E5%90%8D%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89....%207%20%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8">使用 Hexo+GitHub 搭建个人免费博客教程</a>    </li>
-<li><a href="https://blog.csdn.net/qq_40540975/article/details/124489981">使用Hexo+github搭建个人博客</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/265077468">hexo博客中添加图片</a></li>
-<li><a href="https://blog.csdn.net/tuckEnough/article/details/107383201">next主题美化</a></li>
-<li><a href="https://github.com/theme-next/hexo-theme-next">next主题github</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>ubuntuOS</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
       </tags>
   </entry>
   <entry>
