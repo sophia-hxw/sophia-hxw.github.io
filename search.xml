@@ -40,7 +40,12 @@
 </ul>
 <p>例如，Liang等[163]开发了一种 ANN 模型，以基于有限元的主动脉几何形状作为输入，直接输出主动脉壁应力分布，绕过 FEM 计算。 FEM 计算的应力与 PgNN 模型估计的应力之间的差异实际上可以忽略不计，而 PgNN 模型只需要 FEM 计算时间的一小部分即可产生输出。 Mozaffar等[164]通过学习研究材料可塑性时发生的可逆、不可逆和历史相关现象，成功地将基于 RNN 的替代模型用于材料建模。 Mianroodi等[2] 使用基于 CNN 的求解器来预测具有高度非线性材料响应和机械对比特征的异质固体中的局部应力，与 FEM 等常见求解器相比，基于 CNN 的求解器为弹塑性材料提供了 8300 倍的加速因子。 Im等[5] 提出了一个 PgNN 框架，通过将 LSTM 网络与适当的正交分解 (POD) 方法集成来构建高维弹塑性 FEM 模型的代理模型 [165,166]，提出的 POD-LSTM 代理模型可以仅根据提供的训练数据集快速、精确且可靠地预测弹塑性结构。 Long 等[167]首次使用CNN来估计平面裂纹的应力强度因子，与 FEM 相比，所提出的基于 CNN 的轻量级裂纹评估方法的主要优点是它可以安装在无人机器上，以实时自动监测裂纹的严重程度。</p>
 <p>表 3 报告了近期在固体力学和材料设计问题中利用 PgNN 的研究的非详尽列表。 这些研究共同得出的结论是，PgNN 可以成功地与传统求解器（例如 FEM 求解器）集成，或用作独立的代理模型，为固体力学中的科学计算开发准确且更快的建模组件。 尽管如此，PgNN 也有其自身的局限性和缺点，可能会影响不同条件下的解决方案，如下一节所述。</p>
-<h2 id="2-3-PGNN的局限"><a href="#2-3-PGNN的局限" class="headerlink" title="2.3 PGNN的局限"></a>2.3 PGNN的局限</h2><p>尽管基于 PgNN 的模型显示出对加速输入输出相互依赖的非线性现象建模的巨大潜力，但它们仍存在一些关键的限制和缺点，而且当训练数据集稀疏时，其中一些限制变得更加明显。<br>• PgNN 的主要局限性源于其训练过程仅基于统计数据 [58]。 尽管训练数据集本质上受到物理学的限制（例如，通过直接数值模拟、闭合定律和去噪实验开发），PgNN 仍根据统计变化的相关性生成模型。 因此，输出（预测）自然是与物理无关的 [38, 176]，并且可能违反基础物理 [6]。<br>• PgNN 的另一个重要限制源于训练数据集通常稀疏的事实，尤其是在本文讨论的科学领域。 当训练数据稀疏并且不覆盖整个潜在理化属性范围时，基于 PgNN 的模型无法在训练范围之外的条件下进行盲测[43]，即它们不提供以下方面的外推能力： 时空变量和/或其他物理属性。<br>• PgNN 的预测可能会受到严重影响，即使对于稀疏训练数据集范围内的输入也是如此 [22]。 在物理化学属性范围极其广泛（例如，从蠕动流到湍流的雷诺数范围）的复杂和非线性问题中，插值能力的缺乏更为明显。<br>• PgNN 可能无法完全满足生成训练数据集所使用的初始条件和边界条件[38]。 每个问题的边界条件和计算域都不同，这使得数据生成和训练过程的成本极高。 此外，科学计算研究的很大一部分涉及逆问题，其中通过与这些属性仅间接相关的测量或计算来估计未知的感兴趣的物理化学属性[177,178,10,13]。 例如，在地下水流建模中，我们利用浸入含水层中的流体压力测量来估计含水层的几何形状和/或材料特征[179]。 这些要求使开发在任何条件下都具有预测能力的简单神经网络的过程变得更加复杂。<br>• 基于PgNN 的模型在构造上不是分辨率不变的[180]，因此它们不能在较低分辨率上进行训练并直接在较高分辨率上进行推断。 这个缺点是由于 PgNN 仅被设计用于学习单个实例（即输入-输出）的物理现象的解决方案。<br>• 通过训练过程，基于PgNN 的网络可以学习整个数据集的输入输出相互依赖性。 这样的过程可能会将不同输入和输出对之间的函数依赖性的微小变化视为噪声，并产生平均解决方案。 因此，虽然这些模型对于整个数据集来说是最优的，但在个别情况下它们可能会产生次优的结果。<br>• 当训练数据集多样化时，即当不同输入和输出对之间的相互依赖性截然不同时，PgNN 模型可能很难学习底层过程。 尽管可以通过增加模型大小来缓解这个问题，但需要更多数据来训练这样的网络，这使得训练成本高昂，并且在某些情况下不切实际。</p>
+<h2 id="2-3-PGNN的局限"><a href="#2-3-PGNN的局限" class="headerlink" title="2.3 PGNN的局限"></a>2.3 PGNN的局限</h2><p>尽管基于 PgNN 的模型显示出对加速输入输出相互依赖的非线性现象建模的巨大潜力，但它们仍存在一些关键的限制和缺点，而且当训练数据集稀疏时，其中一些限制变得更加明显。</p>
+<ul>
+<li>PgNN 的主要局限性源于其训练过程仅基于统计数据 [58]。 尽管训练数据集本质上受到物理学的限制（例如，通过直接数值模拟、闭合定律和去噪实验开发），PgNN 仍根据统计变化的相关性生成模型。 因此，输出（预测）自然是与物理无关的 [38,176]，并且可能违反基础物理 [6]。</li>
+<li>PgNN 的另一个重要限制源于训练数据集通常稀疏的事实，尤其是在本文讨论的科学领域。 当训练数据稀疏并且不覆盖整个潜在理化属性范围时，基于 PgNN 的模型无法在训练范围之外的条件下进行盲测[43]，即它们不提供以下方面的外推能力： 时空变量和/或其他物理属性。</li>
+<li>PgNN 的预测可能会受到严重影响，即使对于稀疏训练数据集范围内的输入也是如此 [22]。 在物理化学属性范围极其广泛（例如，从蠕动流到湍流的Reynolds范围）的复杂和非线性问题中，插值能力的缺乏更为明显。<br>• PgNN 可能无法完全满足生成训练数据集所使用的初始条件和边界条件[38]。 每个问题的边界条件和计算域都不同，这使得数据生成和训练过程的成本极高。 此外，科学计算研究的很大一部分涉及逆问题，其中通过与这些属性仅间接相关的测量或计算来估计未知的感兴趣的物理化学属性[177,178,10,13]。 例如，在地下水流建模中，我们利用浸入含水层中的流体压力测量来估计含水层的几何形状和/或材料特征[179]。 这些要求使开发在任何条件下都具有预测能力的简单神经网络的过程变得更加复杂。<br>• 基于PgNN 的模型在构造上不是分辨率不变的[180]，因此它们不能在较低分辨率上进行训练并直接在较高分辨率上进行推断。 这个缺点是由于 PgNN 仅被设计用于学习单个实例（即输入-输出）的物理现象的解决方案。<br>• 通过训练过程，基于PgNN 的网络可以学习整个数据集的输入输出相互依赖性。 这样的过程可能会将不同输入和输出对之间的函数依赖性的微小变化视为噪声，并产生平均解决方案。 因此，虽然这些模型对于整个数据集来说是最优的，但在个别情况下它们可能会产生次优的结果。<br>• 当训练数据集多样化时，即当不同输入和输出对之间的相互依赖性截然不同时，PgNN 模型可能很难学习底层过程。 尽管可以通过增加模型大小来缓解这个问题，但需要更多数据来训练这样的网络，这使得训练成本高昂，并且在某些情况下不切实际。</li>
+</ul>
 <p>解决 PgNN 某些局限性的一种方法是生成更多训练数据。 然而，由于数据采集成本高昂，这并不总是可行的解决方案。 或者，PgNN 可以在没有任何先验假设的情况下通过控制物理定律来进一步约束，从而减少对大型数据集的需求。 后者是一个看似合理的解决方案，因为在大多数情况下，可以使用显式 ODE、PDE 和/或闭包定律来完整和部分地描述物理现象。 这种方法导致了基于物理的神经网络的发展 [38, 44]，下一节将对此进行描述和回顾。</p>
 <h1 id="三，PINN"><a href="#三，PINN" class="headerlink" title="三，PINN"></a>三，PINN</h1><p>在科学计算中，物理现象通常使用强大的数学形式来描述，其中包括控制微分方程以及初始条件和边界条件。 在域内的每个点，强形式指定解决方案必须满足的约束。 控制方程通常是线性或非线性偏微分方程和/或常微分方程。 众所周知，一些偏微分方程求解起来非常具有挑战性，例如，解释各种流体流动的纳维-斯托克斯方程[10]、描述固体中大变形的 F ̈oppl–von K ́arm ́方程 [181, 181] 其他重要的 PDE 示例包括热方程 [182]、波动方程 [183]、Burgers 方程 [184]、Laplace 方程 [185]、Poisson 方程 [186] 等。 可以在逻辑上利用这些丰富的经过充分测试的知识来进一步约束 PgNN，同时对可用数据点（如果有）进行训练 [38]。 为此，无网格物理信息神经网络（PiNN）得到了发展[38, 44]，并迅速扩展[187, 188]，并广泛部署在各种科学和应用领域[189, 190, 191, 192、193、194]。 读者可参考 Karniadakis 等人。 [6] 和蔡等人。 [10] 对 PiNN 功能的基础回顾。 本节简要回顾了 PiNN 的核心架构及其在计算流体和固体力学中的最先进应用，并讨论了一些主要局限性。<br>图 5 展示了普通 PiNN 架构的示意图。在 PiNN 中，底层物理原理被纳入神经网络架构之外，以在训练时约束模型，从而确保输出遵循已知的物理定律。 模拟此过程的最常见方法是通过弱施加惩罚损失来惩罚不遵循物理约束的网络。 如图 5 所示，以时空特征（即 x 和 t）作为输入参数、以 PDE 解元素作为输出参数（即 u）的神经网络可用于模拟任何 PDE。</p>
 <p>然后，网络的输出被输入到下一层，即自动分化层。 在这种情况下，通过对输入参数（x 和 t）的输出求微分来生成多个偏导数。 为了优化 PDE 解决方案，这些偏导数用于生成损失函数中所需的项。 PiNN 中的损失函数是由标记数据 (LData)、控制偏微分方程 (LPDE)、应用初始条件 (LIC) 和应用边界条件 (LBC) 造成的损失的组合 [10]。 LBC 确保 PiNN 的解决方案满足指定的边界约束，而 LData 确保 PiNN 遵循训练数据集（即历史数据，如果有）中的趋势。 此外，PDE 的结构通过 LPDE 在 PiNN 中强制执行，LPDE 指定 PDE 解成立的搭配点 [38]。 由于初始条件、边界条件、数据和 PDE 造成的损失的权重可以分别指定为 wi、wb、wd 和 wp。 下一步是检查给定迭代的损失是否在可接受的容差 ε 内。 如果不是，则通过误差反向传播来更新网络的可学习参数（θ）和未知的偏微分方程参数（λ）。 对于给定的迭代次数，重复整个循环，直到 PiNN 模型产生损失函数小于 ε 的可学习参数。 请注意，与 PgNN 相比，PiNN 的训练更加复杂，因为 PiNN 由复杂的非凸和多目标损失函数组成，可能会导致优化过程中的不稳定[38,6,10]。</p>
@@ -5113,22 +5118,6 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </tags>
   </entry>
   <entry>
-    <title>hi3559a and nfs</title>
-    <url>/2022/05/19/hardware/hi3559a-nfs/</url>
-    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在进行板子调试的时候，用串口传输文件会比较繁琐，尤其是文件小而多时，所以此处采用了nfs服务，将PC机上的一个文件夹挂载到板子上共享存储服务。</p>
-<p><strong>可以使劲、快速的板砖啦…啦啦啦啦…</strong><br><span id="more"></span></p>
-<h2 id="1，PC上的安装和配置"><a href="#1，PC上的安装和配置" class="headerlink" title="1，PC上的安装和配置"></a>1，PC上的安装和配置</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 安装</span><br><span class="line">sudo apt-get install nfs-kernel-server</span><br><span class="line"># 共享文件夹</span><br><span class="line">sudo mkdir /home/demo/hi3559a_share</span><br><span class="line"># 配置文件，打开```/etc/exports```文件，在最后加上：</span><br><span class="line">/home/demo/hi3559a_share *(rw,sync,no_subtree_check)</span><br></pre></td></tr></table></figure>
-<p><strong>NOTE:参数说明找百度哦</strong><br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 重启服务，上面的配置完成之后，重启服务：</span><br><span class="line">sudo /etc/init.d/rpcbind restart//重启 rpcbind</span><br><span class="line">sudo /etc/init.d/nfs-kernel-server restart //重启 NFS</span><br></pre></td></tr></table></figure></p>
-<h2 id="2，开发板上的安装和配置"><a href="#2，开发板上的安装和配置" class="headerlink" title="2，开发板上的安装和配置"></a>2，开发板上的安装和配置</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 安装客户端</span><br><span class="line">sudo apt-get install nfs-common</span><br><span class="line"># 挂载文件夹</span><br><span class="line">mkdirs -p /home/hihope/hi3559av100</span><br><span class="line">chmod 777 /home/hihope/hi3559av100</span><br></pre></td></tr></table></figure>
-<h2 id="3，常用命令"><a href="#3，常用命令" class="headerlink" title="3，常用命令"></a>3，常用命令</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 挂载命令</span><br><span class="line">sudo mount -t nfs -o nolock,nfsvers=3,vers=3 192.168.86.105:/home/demo/hi3559a_share /home/hihope/hi3559av100</span><br><span class="line"># 卸载命令</span><br><span class="line">umount /home/hihope/hi3559av100</span><br><span class="line">df	//查看挂载信息</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>hardware</category>
-      </categories>
-      <tags>
-        <tag>hi3559a nfs</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>hi3559a，windows和vmware&amp;ubuntu的开发环境配置</title>
     <url>/2022/05/19/hardware/hi3559a-windows-vmware-software/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><h3 id="桥接模式"><a href="#桥接模式" class="headerlink" title="桥接模式"></a>桥接模式</h3><p>原理就找大佬们理解，也就不多说了。<br>我的理解是，PC和板子用网线连接，PC和虚拟机是逻辑连接，需要保证pc, ubuntu（vmware中的）和板子在同一个网段中。</p>
@@ -5187,6 +5176,22 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </categories>
       <tags>
         <tag>Hi3559a win10 vmware</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hi3559a and nfs</title>
+    <url>/2022/05/19/hardware/hi3559a-nfs/</url>
+    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在进行板子调试的时候，用串口传输文件会比较繁琐，尤其是文件小而多时，所以此处采用了nfs服务，将PC机上的一个文件夹挂载到板子上共享存储服务。</p>
+<p><strong>可以使劲、快速的板砖啦…啦啦啦啦…</strong><br><span id="more"></span></p>
+<h2 id="1，PC上的安装和配置"><a href="#1，PC上的安装和配置" class="headerlink" title="1，PC上的安装和配置"></a>1，PC上的安装和配置</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 安装</span><br><span class="line">sudo apt-get install nfs-kernel-server</span><br><span class="line"># 共享文件夹</span><br><span class="line">sudo mkdir /home/demo/hi3559a_share</span><br><span class="line"># 配置文件，打开```/etc/exports```文件，在最后加上：</span><br><span class="line">/home/demo/hi3559a_share *(rw,sync,no_subtree_check)</span><br></pre></td></tr></table></figure>
+<p><strong>NOTE:参数说明找百度哦</strong><br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 重启服务，上面的配置完成之后，重启服务：</span><br><span class="line">sudo /etc/init.d/rpcbind restart//重启 rpcbind</span><br><span class="line">sudo /etc/init.d/nfs-kernel-server restart //重启 NFS</span><br></pre></td></tr></table></figure></p>
+<h2 id="2，开发板上的安装和配置"><a href="#2，开发板上的安装和配置" class="headerlink" title="2，开发板上的安装和配置"></a>2，开发板上的安装和配置</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 安装客户端</span><br><span class="line">sudo apt-get install nfs-common</span><br><span class="line"># 挂载文件夹</span><br><span class="line">mkdirs -p /home/hihope/hi3559av100</span><br><span class="line">chmod 777 /home/hihope/hi3559av100</span><br></pre></td></tr></table></figure>
+<h2 id="3，常用命令"><a href="#3，常用命令" class="headerlink" title="3，常用命令"></a>3，常用命令</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 挂载命令</span><br><span class="line">sudo mount -t nfs -o nolock,nfsvers=3,vers=3 192.168.86.105:/home/demo/hi3559a_share /home/hihope/hi3559av100</span><br><span class="line"># 卸载命令</span><br><span class="line">umount /home/hihope/hi3559av100</span><br><span class="line">df	//查看挂载信息</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>hardware</category>
+      </categories>
+      <tags>
+        <tag>hi3559a nfs</tag>
       </tags>
   </entry>
   <entry>
@@ -5306,28 +5311,6 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </tags>
   </entry>
   <entry>
-    <title>roi align</title>
-    <url>/2022/05/16/detection/roi-align/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>roi align产生的背景，原理和应用场景</p>
-<p><strong>主要对比roi pooling</strong><br><span id="more"></span></p>
-<h2 id="1，背景"><a href="#1，背景" class="headerlink" title="1，背景"></a>1，背景</h2><p>在mask rcnn中提出，是为了解决roi pooling的两次量化带来的位置精度损失问题。</p>
-<h2 id="2，思路"><a href="#2，思路" class="headerlink" title="2，思路"></a>2，思路</h2><p>取消量化操作，使用双线性内插的方法获得坐标为浮点数的像素点上的图像数值,从而将整个特征聚集过程转化为一个连续的操作。值得注意的是，在具体的算法操作上，ROI Align并不是简单地补充出候选区域边界上的坐标点，然后将这些坐标点进行池化，而是重新设计了一套比较优雅的流程，大致算法流程为：</p>
-<ul>
-<li>遍历每一个候选区域，保持浮点数边界不做量化。</li>
-<li>将候选区域分割成k x k个单元，每个单元的边界也不做量化。</li>
-<li>在每个单元中计算固定四个坐标位置，用双线性内插的方法计算出这四个位置的值，然后进行最大池化操作。</li>
-</ul>
-<h2 id="3，区别"><a href="#3，区别" class="headerlink" title="3，区别"></a>3，区别</h2><p>ROI Align舍去了近似像素取整数的量化方法，改用双线性插值的方法确定特征图坐标对应于原图中的像素位置.ROI Align很好地解决了ROI Pooling操作中两次量化造成的区域不匹配(mis-alignment)的问题。</p>
-<h2 id="4，应用场景"><a href="#4，应用场景" class="headerlink" title="4，应用场景"></a>4，应用场景</h2><p>对于检测图片中大目标物体时，两种方案的差别不大，而如果是图片中有较多小目标物体需要检测，则优先选择RoiAlign，更精准些。</p>
-]]></content>
-      <categories>
-        <category>detection</category>
-      </categories>
-      <tags>
-        <tag>roi align</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>roi pooling</title>
     <url>/2022/05/16/detection/roi-pooling/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>roi pooling的基本原理和应用</p>
@@ -5354,6 +5337,28 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </categories>
       <tags>
         <tag>roi pooling</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>roi align</title>
+    <url>/2022/05/16/detection/roi-align/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>roi align产生的背景，原理和应用场景</p>
+<p><strong>主要对比roi pooling</strong><br><span id="more"></span></p>
+<h2 id="1，背景"><a href="#1，背景" class="headerlink" title="1，背景"></a>1，背景</h2><p>在mask rcnn中提出，是为了解决roi pooling的两次量化带来的位置精度损失问题。</p>
+<h2 id="2，思路"><a href="#2，思路" class="headerlink" title="2，思路"></a>2，思路</h2><p>取消量化操作，使用双线性内插的方法获得坐标为浮点数的像素点上的图像数值,从而将整个特征聚集过程转化为一个连续的操作。值得注意的是，在具体的算法操作上，ROI Align并不是简单地补充出候选区域边界上的坐标点，然后将这些坐标点进行池化，而是重新设计了一套比较优雅的流程，大致算法流程为：</p>
+<ul>
+<li>遍历每一个候选区域，保持浮点数边界不做量化。</li>
+<li>将候选区域分割成k x k个单元，每个单元的边界也不做量化。</li>
+<li>在每个单元中计算固定四个坐标位置，用双线性内插的方法计算出这四个位置的值，然后进行最大池化操作。</li>
+</ul>
+<h2 id="3，区别"><a href="#3，区别" class="headerlink" title="3，区别"></a>3，区别</h2><p>ROI Align舍去了近似像素取整数的量化方法，改用双线性插值的方法确定特征图坐标对应于原图中的像素位置.ROI Align很好地解决了ROI Pooling操作中两次量化造成的区域不匹配(mis-alignment)的问题。</p>
+<h2 id="4，应用场景"><a href="#4，应用场景" class="headerlink" title="4，应用场景"></a>4，应用场景</h2><p>对于检测图片中大目标物体时，两种方案的差别不大，而如果是图片中有较多小目标物体需要检测，则优先选择RoiAlign，更精准些。</p>
+]]></content>
+      <categories>
+        <category>detection</category>
+      </categories>
+      <tags>
+        <tag>roi align</tag>
       </tags>
   </entry>
   <entry>
