@@ -62,7 +62,8 @@
 <p>Zhang等[205]还开发了一个PiNN框架，用于由 Navier-Stokes 方程控制的流过圆柱体的不可压缩流体，PiNN 学习模拟输出（即速度和压力）与基础几何形状、边界、初始条件和固有流体特性之间的关系。 他们证明，通过包含傅立叶特征[206]（例如频率和相位偏移参数），可以在时域和设计空间上增强泛化性能。 Cheng 和 Zhang [207] 开发了 Res-PiNN（即 Resnet 模块和 PiNN），用于模拟由 Burgers 和 Navier-Stokes 方程控制的空腔流动和经过圆柱体的流动。 他们的结果表明，Res-PiNN 比传统的 PgNN 和 vanilla PiNN 算法具有更好的预测能力。 Lou等[208]还证明了 PiNN 在解决逆多尺度流问题方面的潜力，他们用 PiNN 在以 Boltzmann-Bhatnagar-Gross-Krook (BGK) 碰撞模型为代表的连续介质和稀有场区域中进行逆向建模。 结果表明，PiNN-BGK 是一种统一的方法（即，它可以用于正向和逆向建模），易于实现，并且可以有效解决不适定逆问题[208]。</p>
 <p>Wessels 等[209]采用PiNN开发了一种更新的拉格朗日方法，用于求解受无粘性欧拉方程约束的不可压缩自由表面流，即所谓的神经粒子方法（NPM），该方法不需要任何特定的算法处理，而这通常是准确求解不可压缩性约束所必需的。 在他们的工作中，证明 NPM 能够准确计算满足不可压缩条件的压力场，同时避免离散化过程的拓扑约束[209]，此外，PiNN 还被用来模拟复杂的非牛顿流体流动，涉及能够表征流体流变行为的非线性本构偏微分方程[210]。</p>
 <p>Haghighat等[211]训练了一个 PiNN 模型来求解多孔介质中耦合多相流和变形控制方程的无量纲形式。 Almajid 和 Abu-Al-Saud [212] 将 PiNN 的预测与 PgNN（即传统的人工神经网络）的预测进行了比较，以解决充水多孔介质的瓦斯抽采问题，研究表明，PgNN 在某些条件下（即，当观测数据包含早期和晚期饱和状态时）表现良好，而 PiNN 模型即使在观测数据仅包含早期饱和状态时（需要外推）也表现稳健。 Depina等[213]应用PiNN来模拟由Richards PDE和van Genuchten本构模型控制的非饱和地下水流问题[214]，他们证明，PiNN 可以有效地估计 van Genuchten 模型参数，并以相对准确的 Richards 方程解的近似值来求解反问题。</p>
-<p>流体力学中使用的 PiNN 模型的其他一些变体包括： nn-PiNN，其中 PiNN 用于结合非牛顿流体的质量和动量守恒来求解本构模型 [210]； ViscoelasticNet，其中 PiNN 用于应力发现和粘弹性流动模型选择[215]，例如 Oldroyd-B [124]、Giesekus 和 Linear PTT [216]； RhINN 是一种基于流变学的神经网络，用于求解一系列流动协议的触变弹粘塑性复杂流体的本构方程[189]； CAN-PiNN，这是一个耦合自动数值微分框架，结合了数值微分（ND）和自动微分（AD）的优点，可实现稳健且高效的 PiNN 训练[217]； ModalPiNN，它是 PiNN 与强制截断傅立叶分解 [218] 的组合，用于周期性流重建 [219]； GAPiNN，这是一种几何感知 PiNN，由变分自动编码器、PiNN 和边界约束网络组成，适用于具有不规则几何形状的实际应用，无需参数化 [220]； Spline-PiNN，它是 PiNN 和基于 CNN 的 Hermite 样条内核的组合，用于在没有任何预先计算的训练数据的情况下训练 PiNN，并提供快速、连续的解决方案，可推广到看不见的领域 [221]； cPiNN，这是一种保守的物理信息神经网络，由多个通过子域接口通量连续性进行通信的 PiNN 组成，用于求解守恒定律 [187]； SA-PiNN，这是一种自适应 PiNN，用于解决迫使 PiNN 准确拟合刚性偏微分方程解中的顽固点所需的自适应程序 [50]； XPiNN，它是一个扩展的 PiNN，用于增强 PiNN 的表示和并行化能力，并泛化到与 cPINN 相关的任何类型的偏微分方程 [188]。<br>表 4 报告了利用 PiNN 模拟流体流动问题的近期研究的非详尽列表。 此外，表 5 报告了近期研究的非详尽列表，这些研究开发了 PiNN 架构的其他变体，以提高流体流动问题的整体预测精度和计算成本。</p>
+<p>流体力学中使用的 PiNN 模型的其他一些变体包括： nn-PiNN，其中 PiNN 用于结合非牛顿流体的质量和动量守恒来求解本构模型 [210]； ViscoelasticNet，其中 PiNN 用于应力发现和粘弹性流动模型选择[215]，例如 Oldroyd-B [124]、Giesekus 和 Linear PTT [216]； RhINN 是一种基于流变学的神经网络，用于求解一系列流动协议的触变弹粘塑性复杂流体的本构方程[189]； CAN-PiNN，这是一个耦合自动数值微分框架，结合了数值微分（ND）和自动微分（AD）的优点，可实现稳健且高效的 PiNN 训练[217]； ModalPiNN，它是 PiNN 与强制截断傅立叶分解 [218] 的组合，用于周期性流重建 [219]； GAPiNN，这是一种几何感知 PiNN，由变分自动编码器、PiNN 和边界约束网络组成，适用于具有不规则几何形状的实际应用，无需参数化 [220]； Spline-PiNN，它是 PiNN 和基于 CNN 的 Hermite 样条内核的组合，用于在没有任何预先计算的训练数据的情况下训练 PiNN，并提供快速、连续的解决方案，可推广到看不见的领域 [221]； cPiNN，这是一种保守的物理信息神经网络，由多个通过子域接口通量连续性进行通信的 PiNN 组成，用于求解守恒定律 [187]； SA-PiNN，这是一种自适应 PiNN，用于解决迫使 PiNN 准确拟合刚性偏微分方程解中的顽固点所需的自适应程序 [50]； XPiNN，它是一个扩展的 PiNN，用于增强 PiNN 的表示和并行化能力，并泛化到与 cPINN 相关的任何类型的偏微分方程 [188]。</p>
+<p>表 4 报告了利用 PiNN 模拟流体流动问题的近期研究的非详尽列表。 此外，表 5 报告了近期研究的非详尽列表，这些研究开发了 PiNN 架构的其他变体，以提高流体流动问题的整体预测精度和计算成本。</p>
 <h2 id="3-2-应用到固体力学"><a href="#3-2-应用到固体力学" class="headerlink" title="3.2 应用到固体力学"></a>3.2 应用到固体力学</h2><p>PiNN 在计算固体力学中的应用也是一个活跃的研究领域。 Haghighat 等人的研究。 [234]关于使用 PiNN 进行线弹性建模是固体力学界最早引入 PiNN 的论文之一。 从那时起，该框架已扩展到其他固体力学问题（例如线性和非线性弹塑性等）。<br>舒克拉等人。 [235]使用 PiNN 对多晶镍的微观结构特性进行代理建模。 在他们的研究中，除了采用 PiNN 模型之外，他们还应用了自适应激活函数来加速数值建模的收敛。 由此产生的基于 PiNN 的替代模型展示了无损材料评估的可行策略。 亨克斯等人。 [236] 使用 PiNN 对具有急剧相变的材料中的不均匀性引起的非线性应力和位移场进行了建模。 为了克服 PiNN 在这个问题中的收敛问题，他们使用了自适应训练方法和域分解 [209]。 根据他们的结果，域分解方法能够正确解析源自真实世界 μCT 扫描图像的异质微观结构中的非线性应力、位移和能量 [236]。 张和顾[237]基于最小能量标准训练了具有损失函数的PiNN模型来研究数字材料。 与监督式深度学习方法（即 PgNN）相比，在一维拉伸、一维弯曲和二维拉伸问题上测试的模型表现出相同的性能。 通过为雅可比矩阵添加铰链损失，PiNN 方法能够正确近似对数应变并纠正任何错误的变形梯度。<br>拉奥等人。 [238]提出了一种具有混合变量（位移和应力分量）输出的 PiNN 架构，用于在没有标记数据的情况下处理弹性动力学问题。 与纯基于位移的 PiNN 模型相比，该方法可以提高网络的准确性和可训练性。 图 7 将 FEM 生成的地面实况应力场与混合变量 PiNN 针对弹性动力学问题估计的应力场进行了比较 [238]。 可以看出，混合变量 PiNN 可以准确估计应力分量。 拉奥等人。 [238]还提出了 PiNN 的复合方案，以硬方式强制执行初始和边界条件，而不是采用软初始和边界条件强制执行的传统（普通）PiNN。 该模型针对一系列动力学问题（例如，循环单轴拉伸和弹性波传播下的缺陷板）进行了测试，并减少了 PiNN 遇到的边界附近的误差。<br>Fang和Zhan[239]提出了PiNN模型来设计各种实际应用中使用的电磁超材料，例如隐身、旋转器、集中器等。他们研究了PiNN对高波数麦克斯韦方程[240]的推理问题。 频域并改进激活函数来克服高波数问题。 所提出的PiNN不仅恢复了连续函数，还恢复了分段函数，这是对PiNN在实际问题中应用的新贡献。 张等人。 [241]利用 PiNN 来识别弹性成像中的非均质材料，以应用于软组织。 使用了两个 PiNN，一个用于前向问题的近似解，另一个用于近似未知材料参数的场。 结果表明，使用 PiNN 可以准确地恢复机械性能的未知分布。 阿布埃达等人。 [242]采用 PiNN 来模拟 3D 超弹性问题。 他们提出了一种增强型 PiNN 架构，由强形式的残差和势能组成 [243]，产生了几个有助于定义要最小化的总损失函数的损失项。 增强型 PiNN 的性能优于传统（普通）PiNN 和深能量方法，特别是当存在高解梯度区域时。</p>
 <p>哈吉加特等人。 [13] 测试了 PiNN 的不同变体来处理固体力学中的逆问题和代理建模。 他们在研究中没有采用单个神经网络，而是实现了具有多个神经网络的 PiNN。 他们将该框架部署在线性弹静力和非线性弹塑性问题上，并表明改进的 PiNN 模型提供了更可靠的物理参数表示。 此外，他们研究了 PiNN 中的迁移学习领域，发现使用迁移学习时训练阶段收敛得更快。 袁等人。 [244]提出了一种辅助PiNN模型（称为A-PiNN）来解决非线性积分微分方程（IDE）的反问题。</p>
 <p>A-PiNN 通过在控制方程中建立辅助输出变量来表示积分，并用辅助输出的自动微分代替积分算子，从而规避了积分离散化的限制。 因此，A-PiNN 及其多输出神经网络的构造使其确定主输出和辅助输出以逼近控制方程中的变量和积分。 A-PiNN 用于解决非线性 IDE 的逆问题，包括 Volterra 方程 [245]。 正如他们的研究结果所证明的那样，即使使用噪声数据，也可以令人满意地确定未知参数。<br>用于计算固体力学的 PiNN 的其他一些变体包括： PhySRNet，它是一种基于 PiNN 的超分辨率框架，用于从低分辨率对应项重建高分辨率输出场，而不需要高分辨率标记数据 [246]； PDDO-PiNN，它是近场动力学微分算子（PDDO）[247]和PiNN的组合，以克服PiNN在锐梯度下性能下降的问题[248]； PiELM，它是 PiNN 和极限学习机（ELM）[249]的组合，用于解决线性弹性的直接问题[250]； DPiNN，这是一种分布式 PiNN，利用分段神经网络表示来表示基础领域，而不是 FEM 中常用的分段多项式表示[51]； PiNN-FEM，它是基于 PiNN 和 FE 的混合公式，用于异构域中的计算力学 [251]。<br>表 6 报告了在计算固体力学中利用 PiNN 的近期研究的非详尽列表。 此外，表 7 报告了近期研究的非详尽列表，这些研究开发了 PiNN 架构的其他变体，以提高固体力学建模中的整体预测精度和计算成本。</p>
@@ -1512,28 +1513,6 @@ a_{i,j} = \frac{1}{2-y_i^\top y_j}(\sum^n_{k=1}\frac{1}{2-y_i^\top y_k})^{-1}
       </tags>
   </entry>
   <entry>
-    <title>A Mathematical Framework for Transformer Circuits</title>
-    <url>/2023/04/27/Transformer/A%20Mathematical%20Framework%20for%20Transformer%20Circuits/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><a href="https://transformer-circuits.pub/2021/framework/index.html">link</a></p>
-<p><strong>transformerd的数学框架？</strong><br><span id="more"></span></p>
-<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Transformer语言模型在新兴产业中的使用越来越广泛，比如GPT-3，LaMDA，Codex，Meena，Gopher和其他类似模型。<br>然而，随着这些模型的扩展，它们的开放性和高容量为意想不到的甚至有害的行为创造了越来越大的范围。 即使在大型模型经过训练多年后，创建者和用户仍会定期发现他们以前没有意识到的模型功能（包括有问题的行为）。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">【GPT-3】</span><br><span class="line">Language models are few-shot learners  [PDF]</span><br><span class="line">T.B. Brown, B. Mann, N. Ryder, M. Subbiah, J. Kaplan, P. Dhariwal, A. Neelakantan, P. Shyam, G. Sastry, A. Askell, others.</span><br><span class="line">arXiv preprint arXiv:2005.14165. 2020.</span><br><span class="line">【LaMDA】</span><br><span class="line">LaMDA: our breakthrough conversation technology  [link]</span><br><span class="line">E. Collins, Z. Ghahramani. 2021.</span><br><span class="line">【Codex】</span><br><span class="line">Evaluating large language models trained on code</span><br><span class="line">M. Chen, J. Tworek, H. Jun, Q. Yuan, H.P.d.O. Pinto, J. Kaplan, H. Edwards, Y. Burda, N. Joseph, G. Brockman, others.</span><br><span class="line">arXiv preprint arXiv:2107.03374. 2021.</span><br><span class="line">【Meena】</span><br><span class="line">Towards a human-like open-domain chatbot</span><br><span class="line">D. Adiwardana, M. Luong, D.R. So, J. Hall, N. Fiedel, R. Thoppilan, Z. Yang, A. Kulshreshtha, G. Nemade, Y. Lu, others.</span><br><span class="line">arXiv preprint arXiv:2001.09977. 2020.</span><br><span class="line">【Gopher】</span><br><span class="line">Scaling Language Models: Methods, Analysis &amp; Insights from Training Gopher  [PDF]</span><br><span class="line">J.W. Rae, S. Borgeaud, T. Cai, K. Millican, J. Hoffmann, F. Song, J. Aslanides, S. Henderson, R. Ring, S. Young, E. Rutherford, T. Hennigan, J. Menick, A. Cassirer, R. Powell, G.v.d. Driessche, L.A. Hendricks, M. Rauh, P. Huang, A. Glaese, J. Welbl, S. Dathathri, S. Huang, J. Uesato, J. Mellor, I. Higgins, A. Creswell, N. McAleese, A. Wu, E. Elsen, S. Jayakumar, E. Buchatskaya, D. Budden, E. Sutherland, K. Simonyan, M. Paganini, L. Sifre, L. Martens, X.L. Li, A. Kuncoro, A. Nematzadeh, E. Gribovskaya, D. Donato, A. Lazaridou, A. Mensch, J. Lespiau, M. Tsimpoukelli, N. Grigorev, D. Fritz, T. Sottiaux, M. Pajarskas, T. Pohlen, Z. Gong, D. Toyama, C.d.M. d’Autume, Y. Li, T. Terzi, V. Mikulik, I. Babuschkin, A. Clark, D.d.L. Casas, A. Guy, C. Jones, J. Bradbury, M. Johnson, B. Hechtman, L. Weidinger, I. Gabriel, W. Isaac, E. Lockhart, S. Osindero, L. Rimell, C. Dyer, O. Vinyals, K. Ayoub, J. Stanway, L. Bennett, D. Hassabis, K. Kavukcuoglu, G. Irving.</span><br><span class="line">Preprint. 2021.</span><br></pre></td></tr></table></figure>
-<p>解决这些问题的一种途径是寻求可解释性，试图对Transformer模型的详细计算进行逆向工程，类似于程序员将复杂的二进制文件反编译为人类可读的源代码。 如果这是可能的，它可能会提供一种更系统的方法来解释当前的安全问题、识别新的问题，甚至可能预测尚未构建的强大的未来模型的安全问题。 之前的一个项目，Distill Circuits, 曾尝试对视觉模型进行逆向工程，但到目前为止还没有类似的Tranformer或语言模型项目。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Thread: Circuits</span><br><span class="line">N. Cammarata, S. Carter, G. Goh, C. Olah, M. Petrov, L. Schubert, C. Voss, B. Egan, S.K. Lim.</span><br><span class="line">Distill. 2020.</span><br><span class="line">DOI: 10.23915/distill.00024</span><br></pre></td></tr></table></figure>
-<p>在本文中，我们尝试采取原始、初级的步骤来对Transformer模型进行逆向工程，因为现代语言模型令人难以置信的复杂性和规模，我们发现从最简单的模型开始并从那里开始工作是最有成效的。 我们的目标是发现简单的算法模式、主题或框架，这些模式、主题或框架随后可以应用于更大、更复杂的模型。 具体来说，在本文中，我们将研究只有两层或更少层且只有注意力块的Transformer——这与像 GPT-3 这样的大型现代Transformer形成对比，GPT-3有 96 层，且注意力块与 MLP 块交替出现。</p>
-<p>我们发现，通过以一种新的但在数学上等效的方式将Transformer的操作概念化，我们能够理解这些小模型，并对它们的内部运作方式获得重要的理解。 特别值得注意的是，我们发现我们称之为“感应头”的特定注意力头可以解释这些小模型中的上下文学习，并且这些头只在至少具有两个注意力层的模型中出现。 我们还介绍了对特定数据进行操作的一些示例。</p>
-<p>在第一篇论文中，我们并未尝试将我们的见解应用于更大的模型，但在即将发表的一篇论文中，我们将证明我们理解Transformer的数学框架和感应头的概念仍然至少部分相关，对于更大、更真实的模型——尽管我们距离能够完全逆向工程这些模型还有很长的路要走。</p>
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><h3 id="REVERSE-ENGINEERING-RESULTS"><a href="#REVERSE-ENGINEERING-RESULTS" class="headerlink" title="REVERSE ENGINEERING RESULTS"></a>REVERSE ENGINEERING RESULTS</h3><p>为了挑战Tranformer的逆向工程，我们先在其他算法和仅有注意力的模型上进行了尝试，有以下结论：</p>
-<h3 id="CONCEPTUAL-TAKE-AWAYS"><a href="#CONCEPTUAL-TAKE-AWAYS" class="headerlink" title="CONCEPTUAL TAKE-AWAYS"></a>CONCEPTUAL TAKE-AWAYS</h3><h2 id="Transformer回顾"><a href="#Transformer回顾" class="headerlink" title="Transformer回顾"></a>Transformer回顾</h2>]]></content>
-      <categories>
-        <category>Transformer</category>
-      </categories>
-      <tags>
-        <tag>transformer</tag>
-        <tag>math</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Choose a Transformer-Fourier or Galerkin</title>
     <url>/2023/04/27/Transformer/Choose%20a%20Transformer-Fourier%20or%20Galerkin/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><a href="https://arxiv.org/pdf/2105.14995.pdf">paper link</a></p>
@@ -1563,6 +1542,28 @@ a_{i,j} = \frac{1}{2-y_i^\top y_j}(\sum^n_{k=1}\frac{1}{2-y_i^\top y_k})^{-1}
 <h2 id="Transformer的变量学习"><a href="#Transformer的变量学习" class="headerlink" title="Transformer的变量学习"></a>Transformer的变量学习</h2><p>[84] 中的内核解释启发我们使用 Galerkin 投影重新表述注意力。 [95，定理 2] 给出了去除 softmax 归一化以制定傅里叶型注意力的理论基础。 Nyström 近似 [97] 本质上承认注意力矩阵和积分核之间的相似性。 [96, 66, 59] 启发我们尝试不同的层归一化和重新缩放的对角占优初始化方案。 在我们的工作中反复使用位置编码来丰富潜在表示的做法可以追溯到 [2, 26]，最近，有助于 AlphaFold 2 [48] 的成功，因为如果 目标在坐标系和/或变换组中具有依赖性 ansatz，但难以明确量化。 其他关于调整注意机制以保存重要物理特性的研究在 [82, 31, 44] 中。</p>
 <h1 id="三，PDE的算子学习"><a href="#三，PDE的算子学习" class="headerlink" title="三，PDE的算子学习"></a>三，PDE的算子学习</h1><p>紧跟[56,57]中的步骤，我们考虑用一个数据驱动模型来近似密度算子 $T:\mathcal H_1\to \mathcal H_2$，模型定义在两个Hilbert空间之上，且对于空间的约束为 $\mathbf{\Omega}\subset\mathbb R^m$。</p>
 ]]></content>
+      <categories>
+        <category>Transformer</category>
+      </categories>
+      <tags>
+        <tag>transformer</tag>
+        <tag>math</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>A Mathematical Framework for Transformer Circuits</title>
+    <url>/2023/04/27/Transformer/A%20Mathematical%20Framework%20for%20Transformer%20Circuits/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><a href="https://transformer-circuits.pub/2021/framework/index.html">link</a></p>
+<p><strong>transformerd的数学框架？</strong><br><span id="more"></span></p>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Transformer语言模型在新兴产业中的使用越来越广泛，比如GPT-3，LaMDA，Codex，Meena，Gopher和其他类似模型。<br>然而，随着这些模型的扩展，它们的开放性和高容量为意想不到的甚至有害的行为创造了越来越大的范围。 即使在大型模型经过训练多年后，创建者和用户仍会定期发现他们以前没有意识到的模型功能（包括有问题的行为）。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">【GPT-3】</span><br><span class="line">Language models are few-shot learners  [PDF]</span><br><span class="line">T.B. Brown, B. Mann, N. Ryder, M. Subbiah, J. Kaplan, P. Dhariwal, A. Neelakantan, P. Shyam, G. Sastry, A. Askell, others.</span><br><span class="line">arXiv preprint arXiv:2005.14165. 2020.</span><br><span class="line">【LaMDA】</span><br><span class="line">LaMDA: our breakthrough conversation technology  [link]</span><br><span class="line">E. Collins, Z. Ghahramani. 2021.</span><br><span class="line">【Codex】</span><br><span class="line">Evaluating large language models trained on code</span><br><span class="line">M. Chen, J. Tworek, H. Jun, Q. Yuan, H.P.d.O. Pinto, J. Kaplan, H. Edwards, Y. Burda, N. Joseph, G. Brockman, others.</span><br><span class="line">arXiv preprint arXiv:2107.03374. 2021.</span><br><span class="line">【Meena】</span><br><span class="line">Towards a human-like open-domain chatbot</span><br><span class="line">D. Adiwardana, M. Luong, D.R. So, J. Hall, N. Fiedel, R. Thoppilan, Z. Yang, A. Kulshreshtha, G. Nemade, Y. Lu, others.</span><br><span class="line">arXiv preprint arXiv:2001.09977. 2020.</span><br><span class="line">【Gopher】</span><br><span class="line">Scaling Language Models: Methods, Analysis &amp; Insights from Training Gopher  [PDF]</span><br><span class="line">J.W. Rae, S. Borgeaud, T. Cai, K. Millican, J. Hoffmann, F. Song, J. Aslanides, S. Henderson, R. Ring, S. Young, E. Rutherford, T. Hennigan, J. Menick, A. Cassirer, R. Powell, G.v.d. Driessche, L.A. Hendricks, M. Rauh, P. Huang, A. Glaese, J. Welbl, S. Dathathri, S. Huang, J. Uesato, J. Mellor, I. Higgins, A. Creswell, N. McAleese, A. Wu, E. Elsen, S. Jayakumar, E. Buchatskaya, D. Budden, E. Sutherland, K. Simonyan, M. Paganini, L. Sifre, L. Martens, X.L. Li, A. Kuncoro, A. Nematzadeh, E. Gribovskaya, D. Donato, A. Lazaridou, A. Mensch, J. Lespiau, M. Tsimpoukelli, N. Grigorev, D. Fritz, T. Sottiaux, M. Pajarskas, T. Pohlen, Z. Gong, D. Toyama, C.d.M. d’Autume, Y. Li, T. Terzi, V. Mikulik, I. Babuschkin, A. Clark, D.d.L. Casas, A. Guy, C. Jones, J. Bradbury, M. Johnson, B. Hechtman, L. Weidinger, I. Gabriel, W. Isaac, E. Lockhart, S. Osindero, L. Rimell, C. Dyer, O. Vinyals, K. Ayoub, J. Stanway, L. Bennett, D. Hassabis, K. Kavukcuoglu, G. Irving.</span><br><span class="line">Preprint. 2021.</span><br></pre></td></tr></table></figure>
+<p>解决这些问题的一种途径是寻求可解释性，试图对Transformer模型的详细计算进行逆向工程，类似于程序员将复杂的二进制文件反编译为人类可读的源代码。 如果这是可能的，它可能会提供一种更系统的方法来解释当前的安全问题、识别新的问题，甚至可能预测尚未构建的强大的未来模型的安全问题。 之前的一个项目，Distill Circuits, 曾尝试对视觉模型进行逆向工程，但到目前为止还没有类似的Tranformer或语言模型项目。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Thread: Circuits</span><br><span class="line">N. Cammarata, S. Carter, G. Goh, C. Olah, M. Petrov, L. Schubert, C. Voss, B. Egan, S.K. Lim.</span><br><span class="line">Distill. 2020.</span><br><span class="line">DOI: 10.23915/distill.00024</span><br></pre></td></tr></table></figure>
+<p>在本文中，我们尝试采取原始、初级的步骤来对Transformer模型进行逆向工程，因为现代语言模型令人难以置信的复杂性和规模，我们发现从最简单的模型开始并从那里开始工作是最有成效的。 我们的目标是发现简单的算法模式、主题或框架，这些模式、主题或框架随后可以应用于更大、更复杂的模型。 具体来说，在本文中，我们将研究只有两层或更少层且只有注意力块的Transformer——这与像 GPT-3 这样的大型现代Transformer形成对比，GPT-3有 96 层，且注意力块与 MLP 块交替出现。</p>
+<p>我们发现，通过以一种新的但在数学上等效的方式将Transformer的操作概念化，我们能够理解这些小模型，并对它们的内部运作方式获得重要的理解。 特别值得注意的是，我们发现我们称之为“感应头”的特定注意力头可以解释这些小模型中的上下文学习，并且这些头只在至少具有两个注意力层的模型中出现。 我们还介绍了对特定数据进行操作的一些示例。</p>
+<p>在第一篇论文中，我们并未尝试将我们的见解应用于更大的模型，但在即将发表的一篇论文中，我们将证明我们理解Transformer的数学框架和感应头的概念仍然至少部分相关，对于更大、更真实的模型——尽管我们距离能够完全逆向工程这些模型还有很长的路要走。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><h3 id="REVERSE-ENGINEERING-RESULTS"><a href="#REVERSE-ENGINEERING-RESULTS" class="headerlink" title="REVERSE ENGINEERING RESULTS"></a>REVERSE ENGINEERING RESULTS</h3><p>为了挑战Tranformer的逆向工程，我们先在其他算法和仅有注意力的模型上进行了尝试，有以下结论：</p>
+<h3 id="CONCEPTUAL-TAKE-AWAYS"><a href="#CONCEPTUAL-TAKE-AWAYS" class="headerlink" title="CONCEPTUAL TAKE-AWAYS"></a>CONCEPTUAL TAKE-AWAYS</h3><h2 id="Transformer回顾"><a href="#Transformer回顾" class="headerlink" title="Transformer回顾"></a>Transformer回顾</h2>]]></content>
       <categories>
         <category>Transformer</category>
       </categories>
@@ -5322,6 +5323,28 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </tags>
   </entry>
   <entry>
+    <title>roi align</title>
+    <url>/2022/05/16/detection/roi-align/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>roi align产生的背景，原理和应用场景</p>
+<p><strong>主要对比roi pooling</strong><br><span id="more"></span></p>
+<h2 id="1，背景"><a href="#1，背景" class="headerlink" title="1，背景"></a>1，背景</h2><p>在mask rcnn中提出，是为了解决roi pooling的两次量化带来的位置精度损失问题。</p>
+<h2 id="2，思路"><a href="#2，思路" class="headerlink" title="2，思路"></a>2，思路</h2><p>取消量化操作，使用双线性内插的方法获得坐标为浮点数的像素点上的图像数值,从而将整个特征聚集过程转化为一个连续的操作。值得注意的是，在具体的算法操作上，ROI Align并不是简单地补充出候选区域边界上的坐标点，然后将这些坐标点进行池化，而是重新设计了一套比较优雅的流程，大致算法流程为：</p>
+<ul>
+<li>遍历每一个候选区域，保持浮点数边界不做量化。</li>
+<li>将候选区域分割成k x k个单元，每个单元的边界也不做量化。</li>
+<li>在每个单元中计算固定四个坐标位置，用双线性内插的方法计算出这四个位置的值，然后进行最大池化操作。</li>
+</ul>
+<h2 id="3，区别"><a href="#3，区别" class="headerlink" title="3，区别"></a>3，区别</h2><p>ROI Align舍去了近似像素取整数的量化方法，改用双线性插值的方法确定特征图坐标对应于原图中的像素位置.ROI Align很好地解决了ROI Pooling操作中两次量化造成的区域不匹配(mis-alignment)的问题。</p>
+<h2 id="4，应用场景"><a href="#4，应用场景" class="headerlink" title="4，应用场景"></a>4，应用场景</h2><p>对于检测图片中大目标物体时，两种方案的差别不大，而如果是图片中有较多小目标物体需要检测，则优先选择RoiAlign，更精准些。</p>
+]]></content>
+      <categories>
+        <category>detection</category>
+      </categories>
+      <tags>
+        <tag>roi align</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>roi pooling</title>
     <url>/2022/05/16/detection/roi-pooling/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>roi pooling的基本原理和应用</p>
@@ -5348,28 +5371,6 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </categories>
       <tags>
         <tag>roi pooling</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>roi align</title>
-    <url>/2022/05/16/detection/roi-align/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>roi align产生的背景，原理和应用场景</p>
-<p><strong>主要对比roi pooling</strong><br><span id="more"></span></p>
-<h2 id="1，背景"><a href="#1，背景" class="headerlink" title="1，背景"></a>1，背景</h2><p>在mask rcnn中提出，是为了解决roi pooling的两次量化带来的位置精度损失问题。</p>
-<h2 id="2，思路"><a href="#2，思路" class="headerlink" title="2，思路"></a>2，思路</h2><p>取消量化操作，使用双线性内插的方法获得坐标为浮点数的像素点上的图像数值,从而将整个特征聚集过程转化为一个连续的操作。值得注意的是，在具体的算法操作上，ROI Align并不是简单地补充出候选区域边界上的坐标点，然后将这些坐标点进行池化，而是重新设计了一套比较优雅的流程，大致算法流程为：</p>
-<ul>
-<li>遍历每一个候选区域，保持浮点数边界不做量化。</li>
-<li>将候选区域分割成k x k个单元，每个单元的边界也不做量化。</li>
-<li>在每个单元中计算固定四个坐标位置，用双线性内插的方法计算出这四个位置的值，然后进行最大池化操作。</li>
-</ul>
-<h2 id="3，区别"><a href="#3，区别" class="headerlink" title="3，区别"></a>3，区别</h2><p>ROI Align舍去了近似像素取整数的量化方法，改用双线性插值的方法确定特征图坐标对应于原图中的像素位置.ROI Align很好地解决了ROI Pooling操作中两次量化造成的区域不匹配(mis-alignment)的问题。</p>
-<h2 id="4，应用场景"><a href="#4，应用场景" class="headerlink" title="4，应用场景"></a>4，应用场景</h2><p>对于检测图片中大目标物体时，两种方案的差别不大，而如果是图片中有较多小目标物体需要检测，则优先选择RoiAlign，更精准些。</p>
-]]></content>
-      <categories>
-        <category>detection</category>
-      </categories>
-      <tags>
-        <tag>roi align</tag>
       </tags>
   </entry>
   <entry>
