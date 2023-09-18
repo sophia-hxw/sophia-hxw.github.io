@@ -85,9 +85,17 @@
 <h2 id="4-1-PERCNN"><a href="#4-1-PERCNN" class="headerlink" title="4.1 PERCNN"></a>4.1 PERCNN</h2><p>Rao等[40]引入了 PerRCNN 模型，它将控制非线性系统的先验知识硬编码到神经网络中， 图 8 所示的 PeRCNN 架构有助于以数据驱动的方式进行学习，同时对已知的物理知识进行强制编码， 该模型超出了 PgNN 和 PiNN 对于不存在显式偏微分方程公式且可用测量数据非常有限的现象的能力（例如，地球或气候系统建模 [52]），所提出的物理编码机制与基于惩罚的物理知情学习有本质上的不同，确保网络严格遵守给定的物理，他们没有使用非线性激活函数，而是提出了一种新颖的逐元素乘积运算来实现模型的非线性。 数值实验表明，与一些最先进的数据驱动建模模型相比，由此产生的物理编码学习范式对数据噪声、稀缺性和泛化性具有显着的鲁棒性。</p>
 <p>如图 8 所示，PeRCNN 由以下部分组成： 输入层，由低分辨率噪声初始状态测量 $X=[X_1, X_2, X_3, …, X_n]$ 构成； 一个全卷积网络，作为初始状态生成器（ISG），它将低分辨率初始状态缩小、上采样为全分辨率初始状态，称为修改后的 $X_0$，用作进一步循环计算的输入。 为了进行循环计算，采用了一种非常规的卷积块，称为 $\pi$ [40]。 在 PeRCNN 的核心 $\pi$ 块中，修改后的 $X_0$ 经过多个并行卷积层，然后通过逐元素乘积层融合其特征图，此外，在乘积运算之后附加 1×1 卷积层[281]，以将多个通道聚合成所需通道数的输出。 假设1×1卷积层的输出逼近非线性函数，可以将其乘以时间间隔 $\delta t$，得到动力系统在时间 $t_k$ 的残差，即 $\delta U_k$。 最终，最后一层通过逐元素加法生成预测  $Y^′ =[Y_1^′,Y_2^′,Y_3^′,…,Y_n^′]$，这些操作如图 8 所示。</p>
 <p>PeRCNN 架构在 2D Burgers 和 3D Gray-Scott 反应扩散方程的两个数据集上进行了测试 [40]。 在这两种情况下，PeRCNN 与卷积 LSTM [282]、深度残差网络 [283] 和深度隐藏物理模型 [176] 在准确性（均方根误差，RMSE）、数据噪声/稀缺性、 和泛化性进行了比较。 2D Burgers 数据集的比较如图 9(a) 所示，摘自[40]。 PerRCNN 的累积 RMSE 在训练区域中以较大值开始（由于数据中存在 10% 高斯噪声），并随着评估额外的时间步长而减小。 PerRCNN 的累积 RMSE 在外推阶段略有增加（作为模型泛化的衡量标准），但在长期外推方面明显超过所有其他算法。 Rao等[273]还使用PeRCNN从稀缺和噪声数据中发现时空偏微分方程，并证明了其与基线模型相比的有效性和优越性。</p>
-<p>Ren等[284]提出了一种结合PeRCNN和PiNN的混合算法来解决PgNN和PiNN在低维时空参数化方面遇到的局限性。 在由此产生的物理信息卷积循环网络（称为 PhyCRNet）中，提出了一种编码器-解码器卷积 LSTM 网络，用于低维空间特征提取和时间演化学习。 在 PhyCRNet 中，损失函数被指定为聚合离散 PDE 残差。 边界条件通过指定的填充硬编码在网络中，初始条件定义为网络的第一个输入状态变量。 使用明确模拟时间推进的自回归和残差连接来增强网络。 该方法确保泛化到各种初始和边界条件场景，并在网络训练中产生适定的优化问题。 使用 PhyCRNet，还可以同时在网络中强制执行已知的守恒定律（例如，可以通过应用流函数作为流体动力学网络中的解变量来强制质量守恒）[284]。 任等人。 [284] 使用几种非线性偏微分方程与最先进的基线算法（例如 PiNN 和自回归密集编码器-解码器模型 [269]）相比，评估和验证了 PhyCRNet 的性能。 PhyCRNet 和 PiNN 求解 Burgers 方程的比较如图 9(b) [284] 所示。 Ren 等人获得的结果。 [284]清楚地证明了 PhyCRNet 方法在解决方案准确性、外推性和普遍性方面的优越性。</p>
-<h2 id="4-2-NeuralODE"><a href="#4-2-NeuralODE" class="headerlink" title="4.2 NeuralODE"></a>4.2 NeuralODE</h2><p>神经常微分方程 (NeuralODE) 方法是 PeNN 模型的另一个系列，其中通过使用可微函数参数化隐藏状态导数，将神经网络的隐藏状态从离散序列转换为连续非线性函数 [53] 。 然后使用传统的微分方程求解器计算网络的输出。 在训练期间，误差通过网络以及 ODE 求解器反向传播，而无需访问其内部运算。 这种架构是可行的，因为数值线性代数是科学计算和深度学习的共同底层基础设施，并通过自动微分（AD）[285]进行桥接。 由于微分方程和神经网络都是可微的，因此可以使用标准优化和误差反向传播技术来在训练期间优化网络的权重。 NeuralODE 中的模型不是直接从训练数据中学习非线性变换，而是学习非线性变换的结构。 因此，由于神经网络优化方程是可微的，物理微分方程可以直接编码到层中，而不是添加更多层（例如更深的网络）。 这导致了一个更浅的网络模仿无限深的模型，可以以任何所需的精度连续推断，同时减少内存和计算成本[286]）。<br>这些连续深度模型提供了 PiNN 和 PgNN 所缺乏的功能，例如（i）减少监督学习的参数数量，（ii）作为深度函数的恒定内存成本，以及（iii）连续时间 仅举几例[53]，即系列学习（即使用以任意时间间隔获取的数据集进行训练）。 然而，误差反向传播可能会在训练这种连续深度网络时造成技术困难。 陈等人。 [53] 使用伴随灵敏度方法 [287] 计算梯度，同时将 ODE 求解器视为黑匣子。 他们证明，这种方法使用最少的内存，可以直接控制数值误差，而且最重要的是，可以随问题规模线性扩展。</p>
-<p>马等人。 [288]比较了离散和连续伴随敏感性分析的性能。 他们指出，对于参数大约少于 100 个的问题，通过 AD 实现的正向模式离散局部灵敏度分析比反向模式和连续正向和/或伴随灵敏度分析更有效。 然而，就可扩展性而言，他们表明连续伴随方法比离散伴随方法和前向方法更有效。<br>为了促进 NeuralODE 的实际应用，已经实现了几个计算库。 波利等人。 [289] 实现了 TorchDyn 库来训练 NeuralODE 模型，并且与常规的即插即用深度学习原语一样易于访问。 英尼斯等人。 [8] 和 Rackauckas 等人。 [286]在 Julia 编码生态系统中开发了 GPU 加速的 Zygote 和 DiffEqFlux 库，将可微分编程和通用微分方程求解器功能结合在一起。 例如，他们将常微分运动方程作为变换函数编码到神经网络中，以模拟投石机的逆动力学[8]。 如图10所示，具有经典层的网络以目标位置和风速作为输入，估计弹丸击中目标的重量和角度。 这些输出被输入 ODE 求解器来计算所达到的距离。 该模型将预测值与目标位置进行比较，并将误差反向传播到整个链，以调整网络的权重。 该 PeNN 模型在个人计算机上解决投石机逆动力学问题的速度比该逆问题的经典优化算法快 100 倍。 一旦经过训练，这个网络就可以用来瞄准任何盲目标，而不仅仅是它所训练的目标； 因此，该模型既是加速的又是预测的。</p>
+<p>Ren等[284]提出了一种结合PeRCNN和PiNN的混合算法来解决PgNN和PiNN在低维时空参数化方面遇到的局限性，在由此产生的物理信息卷积循环网络（称为 PhyCRNet）中，提出了一种编码器-解码器卷积 LSTM 网络，用于低维空间特征提取和时间演化学习。 在 PhyCRNet 中，损失函数被指定为聚合离散 PDE 残差，边界条件通过指定的 padding 硬编码在网络中，初始条件定义为网络的第一个输入状态变量，使用明确模拟时间推进的自回归和残差连接来增强网络，该方法确保泛化到各种初始和边界条件场景，并在网络训练中产生适定的优化问题。 使用 PhyCRNet，还可以同时在网络中强制执行已知的守恒定律（例如，可以通过应用流函数作为流体动力学网络中的解变量来强制质量守恒）[284]。 Ren等[284] 使用几种非线性偏微分方程与最先进的基线算法（例如 PiNN 和自回归密集编码器-解码器模型 [269]）相比，评估和验证了 PhyCRNet 的性能，PhyCRNet 和 PiNN 求解 Burgers 方程的比较如图 9(b) [284] 所示，Ren 等获得的结果清楚地证明了 PhyCRNet 方法在解决方案准确性、外推性和普遍性方面的优越性。</p>
+<h2 id="4-2-NeuralODE"><a href="#4-2-NeuralODE" class="headerlink" title="4.2 NeuralODE"></a>4.2 NeuralODE</h2><p>神经常微分方程 (NeuralODE) 方法是 PeNN 模型的另一个系列，其中通过使用可微函数参数化隐藏状态导数，将神经网络的隐藏状态从离散序列转换为连续非线性函数 [53]，然后使用传统的微分方程求解器计算网络的输出，在训练期间，误差通过网络以及 ODE 求解器反向传播，而无需访问其内部运算，这种架构是可行的，因为数值线性代数是科学计算和深度学习的共同底层基础设施，并通过自动微分（AD）[285]进行桥接。 由于微分方程和神经网络都是可微的，因此可以使用标准优化和误差反向传播技术来在训练期间优化网络的权重。 NeuralODE 中的模型不是直接从训练数据中学习非线性变换，而是学习非线性变换的结构，因此，由于神经网络优化方程是可微的，物理微分方程可以直接编码到层中，而不是添加更多层（例如更深的网络），这导致了一个更浅的网络模仿无限深的模型，可以以任何所需的精度连续推断，同时减少内存和计算成本[286]。</p>
+<p>这些连续深度模型提供了 PiNN 和 PgNN 所缺乏的功能，例如：</p>
+<ul>
+<li>（i）减少监督学习的参数数量</li>
+<li>（ii）作为深度函数的内存成本一定</li>
+<li>（iii）连续时间学习（即使用以任意时间间隔获取的数据集进行训练）。</li>
+</ul>
+<p>然而，误差反向传播可能会在训练这种连续深度网络时造成技术困难。 Chen等[53] 使用伴随灵敏度方法 [287] 计算梯度，同时将 ODE 求解器视为黑匣子，他们证明，这种方法使用最少的内存，可以直接控制数值误差，而且最重要的是，可以随问题规模线性扩展。</p>
+<p>Ma等[288]比较了离散和连续伴随敏感性分析的性能，他们指出，对于参数大约少于 100 个的问题，通过 AD 实现的正向模式离散局部灵敏度分析比反向模式和连续正向和/或伴随灵敏度分析更有效。 然而，就可扩展性而言，他们表明连续伴随方法比离散伴随方法和前向方法更有效。</p>
+<p>为了促进 NeuralODE 的实际应用，已经实现了几个计算库。 波利等人。 [289] 实现了 TorchDyn 库来训练 NeuralODE 模型，并且与常规的即插即用深度学习原语一样易于访问。 英尼斯等人。 [8] 和 Rackauckas 等人。 [286]在 Julia 编码生态系统中开发了 GPU 加速的 Zygote 和 DiffEqFlux 库，将可微分编程和通用微分方程求解器功能结合在一起。 例如，他们将常微分运动方程作为变换函数编码到神经网络中，以模拟投石机的逆动力学[8]。 如图10所示，具有经典层的网络以目标位置和风速作为输入，估计弹丸击中目标的重量和角度。 这些输出被输入 ODE 求解器来计算所达到的距离。 该模型将预测值与目标位置进行比较，并将误差反向传播到整个链，以调整网络的权重。 该 PeNN 模型在个人计算机上解决投石机逆动力学问题的速度比该逆问题的经典优化算法快 100 倍。 一旦经过训练，这个网络就可以用来瞄准任何盲目标，而不仅仅是它所训练的目标； 因此，该模型既是加速的又是预测的。</p>
 <p>NeuralODE 还与 PiNN 模型集成，称为 PiNODE，以便在训练期间使用已知的控制物理进一步约束网络。 这种架构由一个神经网络组成，其隐藏状态由 ODE 参数化，其损失函数类似于 PiNN 的损失函数（见图 5）。 损失函数基于数据和控制 ODE 的强形式对算法进行惩罚，并通过应用伴随灵敏度方法 [288] 反向传播误差，以更新架构中的可学习参数。 可以部署 PiNODE 来克服高偏差（由于在科学建模中使用第一原理）和高方差（由于在科学建模中使用纯数据驱动模型）问题。 换句话说，使用 PiNODE，可以在可用的情况下集成 ODE 方面的先验物理知识，在不可用的情况下使用函数逼近（例如神经网络）。 赖等人。 [290]使用PiNODE对结构动力学领域的控制方程进行建模（例如，具有三次非线性的4自由度动力系统的自由振动）。 他们表明，PiNODE 为结构健康监测（例如损坏检测）问题提供了一个适应性强的框架。 罗尔等人。 [291] 使用推车上的倒立摆正向模型测试了 PiNODE，并表明该方法可以学习具有很大不确定性的现实物理系统中的非保守力。<br>神经微分方程的应用也已扩展到学习偏微分方程描述系统的动力学。 杜尔尼等人。 [292]通过使用多层卷积神经网络将线法（通过 ODE 系统表示任意复杂的 PDE）和 NeuralODE 相结合，提出了 NeuralPDE。 他们在由平流扩散方程、Burgers 方程、波浪传播方程、气候建模等生成的几个时空数据集上测试了 NeuralPDE。他们发现 NeuralPDE 与其他基于深度学习的方法（例如 ResNet [293]）相比具有竞争力。 NeuralPDE 的局限性是由直线法的局限性决定的，例如，它不能用于求解椭圆二阶 PDE。 表 9 报告了利用 PeNN 模拟不同科学问题的领先研究的非详尽列表。</p>
 <h2 id="4-3-局限性"><a href="#4-3-局限性" class="headerlink" title="4.3 局限性"></a>4.3 局限性</h2><p>尽管许多 PeNN 模型取得了进步，并且在复杂物理系统建模方面取得了成功，但这些新架构也面临着一些挑战。 其中最重要的一点就是培训。 基于 PeNN 的模型利用连续深度网络的发展来促进持续学习，这使得 PeNN 比 PgNN 和 PiNN 更难训练。 考虑到这一点，PgNN 和 PiNN 面临的大部分限制（例如收敛速度、稳定性、可扩展性、样本大小和问题依赖性）也同样面临着 PeNN。 此外，PeNN 通常具有复杂的架构，其实现并不像 PiNN 或 PgNN 那么简单。 尽管 PeNN 的实现复杂性，但它们在有限维设置中的高效算法、提供可转移解决方案的能力、对数据稀缺的鲁棒性以及与 PgNN 和 PiNN 相比的通用性，使它们具有显着加速的巨大潜力。 传统科学计算在计算流体和固体力学中的应用。</p>
 <h1 id="五，NO"><a href="#五，NO" class="headerlink" title="五，NO"></a>五，NO</h1><p>迄今为止讨论的大多数科学深度学习方法，例如 PgNN、PiNN 和 PeNN，通常旨在映射单个实例的物理现象的解（例如，使用特定时空域和边界条件来求解偏微分方程） PiNN），因此必须重新训练或进一步训练（例如，迁移学习[294]）以映射不同时刻下的解决方案。 缓解这个问题的另一种方法是使用神经算子来学习函数空间之间的非线性映射[39,295,296]。 因此，神经算子形成了另一种模拟范式，它使用先进的架构来学习底层线性和非线性连续算子。 这些模型与 PgNN 类似，使用标记的输入输出数据集对强制解决问题的物理原理，但与 PgNN 以及 PiNN 和 PeNN 相比，提供增强的泛化性、可解释性、连续学习和计算效率 [180,53,43]。<br>这种新范式使用基于神经网络的网格不变、无限维算子，不需要事先了解偏微分方程。 神经算子仅仅使用数据来学习感兴趣问题的分辨率不变的解决方案[43]。 换句话说，神经算子可以在一种时空分辨率上进行训练，并在任何其他分辨率上成功推断[296]。 这种分辨率不变的特征是利用神经算子通过在函数空间中参数化模型来学习连续函数而不是离散向量这一事实来实现的[43, 296]。 请注意，PgNN 和 PiNN（例如使用 MLP）也可以保证较小的泛化误差，但这只能通过足够大的网络来实现。 神经算子的一个显着特征是它们对于需要实时推理的应用的鲁棒性[57]。 最近提出了三种主要的神经算子，即（i）深度算子网络（DeepONets）[56]，（ii）傅里叶神经算子（FNO）[180]和（iii）图神经算子（GNO）[296, 297 ]。 Goswami 等人最近的评论。 [57]广泛比较了这些神经算子。 在本节中，我们将简要回顾 DeepONets 和 FNO 作为应用于计算流体和固体力学的两个重要神经算子。</p>
@@ -4903,42 +4911,6 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </tags>
   </entry>
   <entry>
-    <title>边缘提取方法</title>
-    <url>/2022/05/19/cv_engineering/edge-extract/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Chen Mingming老师组的三个边缘提取的模型，还有部分数据集，效果不错~</p>
-<p><strong>用边缘特征做过一些图像应用哦</strong><br><span id="more"></span></p>
-<h2 id="1，边缘提取hed"><a href="#1，边缘提取hed" class="headerlink" title="1，边缘提取hed"></a>1，边缘提取hed</h2><p><a href="https://github.com/s9xie/hed">github link</a></p>
-<ul>
-<li>作者<br>南开大学程明明</li>
-<li>对应文章   <ul>
-<li>author = {“Xie, Saining and Tu, Zhuowen”},</li>
-<li>Title = {Holistically-Nested Edge Detection},</li>
-<li>Booktitle = “Proceedings of IEEE International Conference on Computer Vision”,</li>
-<li>Year = {2015},</li>
-</ul>
-</li>
-<li>结果<br>BSDS benchmark数据集：<br>ODS=.790 and OIS=.808<br>BSD500 数据集：<br>ODS F-score of .790<br>NYU Depth 数据集：<br>ODS F-score of .746<br>速度： (0.4s per image)</li>
-</ul>
-<h2 id="2，边缘提取rcf"><a href="#2，边缘提取rcf" class="headerlink" title="2，边缘提取rcf"></a>2，边缘提取rcf</h2><p><a href="https://github.com/meteorshowers/RCF-pytorch">pytorch版本：github</a><br><a href="https://github.com/yun-liu/rcf">caffe版本：github</a></p>
-<ul>
-<li>作者<br>南开大学程明明</li>
-<li>文章<br>title={Richer Convolutional Features for Edge Detection},<br>author={Liu, Yun and Cheng, Ming-Ming and Hu, Xiaowei and Bian, Jia-Wang and Zhang, Le and Bai, Xiang and Tang, Jinhui},<br>journal={IEEE Transactions on Pattern Analysis and Machine Intelligence},<br>year={2019}</li>
-<li>特性<br>Using VGG16 network；<br>BSDS500 benchmark 数据集：<br>ODS F-measure of 0.811， speed (8 FPS)<br>fast version of RCF 快速版本：<br>ODS F-measure of 0.806 with 30 FPS</li>
-</ul>
-<h2 id="3，边缘提取dfi"><a href="#3，边缘提取dfi" class="headerlink" title="3，边缘提取dfi"></a>3，边缘提取dfi</h2><p><a href="https://github.com/backseason/DFI">github link</a></p>
-<ul>
-<li>作者<br>南开大学程明明</li>
-<li>文章<br>title={Dynamic Feature Integration for Simultaneous Detection of Salient Object, Edge and Skeleton},<br>author={Jiang-Jiang Liu and Qibin Hou and Ming-Ming Cheng},<br>journal={IEEE Transactions on Image Processing},<br>year={2020}</li>
-</ul>
-]]></content>
-      <categories>
-        <category>cv engineering</category>
-      </categories>
-      <tags>
-        <tag>edge extract</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>hi3559a开发记录</title>
     <url>/2022/05/19/hardware/hi3559a-coding/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>hisi视觉模型开发，主要是检测任务，三个类别，本文包含项目开发的基本流程，包括模型训练，模型转化以及hisi官方提供的关于yolov3的源码及其调用分析。</p>
@@ -4994,6 +4966,42 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </categories>
       <tags>
         <tag>hi3559a cv model</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>边缘提取方法</title>
+    <url>/2022/05/19/cv_engineering/edge-extract/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Chen Mingming老师组的三个边缘提取的模型，还有部分数据集，效果不错~</p>
+<p><strong>用边缘特征做过一些图像应用哦</strong><br><span id="more"></span></p>
+<h2 id="1，边缘提取hed"><a href="#1，边缘提取hed" class="headerlink" title="1，边缘提取hed"></a>1，边缘提取hed</h2><p><a href="https://github.com/s9xie/hed">github link</a></p>
+<ul>
+<li>作者<br>南开大学程明明</li>
+<li>对应文章   <ul>
+<li>author = {“Xie, Saining and Tu, Zhuowen”},</li>
+<li>Title = {Holistically-Nested Edge Detection},</li>
+<li>Booktitle = “Proceedings of IEEE International Conference on Computer Vision”,</li>
+<li>Year = {2015},</li>
+</ul>
+</li>
+<li>结果<br>BSDS benchmark数据集：<br>ODS=.790 and OIS=.808<br>BSD500 数据集：<br>ODS F-score of .790<br>NYU Depth 数据集：<br>ODS F-score of .746<br>速度： (0.4s per image)</li>
+</ul>
+<h2 id="2，边缘提取rcf"><a href="#2，边缘提取rcf" class="headerlink" title="2，边缘提取rcf"></a>2，边缘提取rcf</h2><p><a href="https://github.com/meteorshowers/RCF-pytorch">pytorch版本：github</a><br><a href="https://github.com/yun-liu/rcf">caffe版本：github</a></p>
+<ul>
+<li>作者<br>南开大学程明明</li>
+<li>文章<br>title={Richer Convolutional Features for Edge Detection},<br>author={Liu, Yun and Cheng, Ming-Ming and Hu, Xiaowei and Bian, Jia-Wang and Zhang, Le and Bai, Xiang and Tang, Jinhui},<br>journal={IEEE Transactions on Pattern Analysis and Machine Intelligence},<br>year={2019}</li>
+<li>特性<br>Using VGG16 network；<br>BSDS500 benchmark 数据集：<br>ODS F-measure of 0.811， speed (8 FPS)<br>fast version of RCF 快速版本：<br>ODS F-measure of 0.806 with 30 FPS</li>
+</ul>
+<h2 id="3，边缘提取dfi"><a href="#3，边缘提取dfi" class="headerlink" title="3，边缘提取dfi"></a>3，边缘提取dfi</h2><p><a href="https://github.com/backseason/DFI">github link</a></p>
+<ul>
+<li>作者<br>南开大学程明明</li>
+<li>文章<br>title={Dynamic Feature Integration for Simultaneous Detection of Salient Object, Edge and Skeleton},<br>author={Jiang-Jiang Liu and Qibin Hou and Ming-Ming Cheng},<br>journal={IEEE Transactions on Image Processing},<br>year={2020}</li>
+</ul>
+]]></content>
+      <categories>
+        <category>cv engineering</category>
+      </categories>
+      <tags>
+        <tag>edge extract</tag>
       </tags>
   </entry>
   <entry>
@@ -5320,35 +5328,6 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </tags>
   </entry>
   <entry>
-    <title>roi pooling</title>
-    <url>/2022/05/16/detection/roi-pooling/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>roi pooling的基本原理和应用</p>
-<p><strong>加油，夯实基础~</strong><br><span id="more"></span></p>
-<h2 id="1，基本原理"><a href="#1，基本原理" class="headerlink" title="1，基本原理"></a>1，基本原理</h2><p>RoI Pooling的过程就是将一个个大小不同的box矩形框，都映射成大小固定$(w * h)$的矩形框，最大的好处就在于极大地提高了处理速度。</p>
-<p><img src="roi_pooling.gif" alt="obj_detec"> </p>
-<h2 id="2，实现"><a href="#2，实现" class="headerlink" title="2，实现"></a>2，实现</h2><ul>
-<li>1，根据输入image，将ROI映射到feature map对应位置</li>
-<li>2，将映射后的区域划分为相同大小的sections（数量与输出的维度相同）；</li>
-<li>3，对每个sections进行max pooling操作；</li>
-</ul>
-<p>怎么做的映射?<br>映射规则比较简单，就是把各个坐标除以“输入图片与feature map的大小的比值”。</p>
-<h2 id="3，优点"><a href="#3，优点" class="headerlink" title="3，优点"></a>3，优点</h2><ul>
-<li>1.允许我们对CNN中的feature map进行reuse</li>
-<li>2.可以显著加速training和testing速度；</li>
-<li>3.允许end-to-end的形式训练目标检测系统。</li>
-</ul>
-<h2 id="4，缺点"><a href="#4，缺点" class="headerlink" title="4，缺点"></a>4，缺点</h2><p>由于 RoIPooling 采用的是最近邻插值（即INTER_NEAREST） ，在resize时，对于缩放后坐标不能刚好为整数的情况，采用了粗暴的舍去小数，相当于选取离目标点最近的点，损失一定的空间精度。</p>
-<p>在这个过程中会有两次量化操作。对于一个region proposal，首先从原图经过全卷积网络到特征图，得到的候选框位置可能存在浮点数，进行取整操作从而出现第一次量化；其次，在ROI Pooling求取每个小网格的位置时也同样存在浮点数取整的情况。这两次量化的结果都使得候选框的位置会出现偏差，在论文里，作者把它总结为“不匹配问题（misalignment）。</p>
-<p>经过上述两次量化，此时的候选框已经和最开始回归出来的位置有一定的偏差，这个偏差会影响检测或者分割的准确度</p>
-]]></content>
-      <categories>
-        <category>detection</category>
-      </categories>
-      <tags>
-        <tag>roi pooling</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>rpn的原理和作用</title>
     <url>/2022/05/16/detection/principle-and-effects-of-rpn/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>rpn原理和作用</p>
@@ -5385,6 +5364,35 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </categories>
       <tags>
         <tag>roi align</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>roi pooling</title>
+    <url>/2022/05/16/detection/roi-pooling/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>roi pooling的基本原理和应用</p>
+<p><strong>加油，夯实基础~</strong><br><span id="more"></span></p>
+<h2 id="1，基本原理"><a href="#1，基本原理" class="headerlink" title="1，基本原理"></a>1，基本原理</h2><p>RoI Pooling的过程就是将一个个大小不同的box矩形框，都映射成大小固定$(w * h)$的矩形框，最大的好处就在于极大地提高了处理速度。</p>
+<p><img src="roi_pooling.gif" alt="obj_detec"> </p>
+<h2 id="2，实现"><a href="#2，实现" class="headerlink" title="2，实现"></a>2，实现</h2><ul>
+<li>1，根据输入image，将ROI映射到feature map对应位置</li>
+<li>2，将映射后的区域划分为相同大小的sections（数量与输出的维度相同）；</li>
+<li>3，对每个sections进行max pooling操作；</li>
+</ul>
+<p>怎么做的映射?<br>映射规则比较简单，就是把各个坐标除以“输入图片与feature map的大小的比值”。</p>
+<h2 id="3，优点"><a href="#3，优点" class="headerlink" title="3，优点"></a>3，优点</h2><ul>
+<li>1.允许我们对CNN中的feature map进行reuse</li>
+<li>2.可以显著加速training和testing速度；</li>
+<li>3.允许end-to-end的形式训练目标检测系统。</li>
+</ul>
+<h2 id="4，缺点"><a href="#4，缺点" class="headerlink" title="4，缺点"></a>4，缺点</h2><p>由于 RoIPooling 采用的是最近邻插值（即INTER_NEAREST） ，在resize时，对于缩放后坐标不能刚好为整数的情况，采用了粗暴的舍去小数，相当于选取离目标点最近的点，损失一定的空间精度。</p>
+<p>在这个过程中会有两次量化操作。对于一个region proposal，首先从原图经过全卷积网络到特征图，得到的候选框位置可能存在浮点数，进行取整操作从而出现第一次量化；其次，在ROI Pooling求取每个小网格的位置时也同样存在浮点数取整的情况。这两次量化的结果都使得候选框的位置会出现偏差，在论文里，作者把它总结为“不匹配问题（misalignment）。</p>
+<p>经过上述两次量化，此时的候选框已经和最开始回归出来的位置有一定的偏差，这个偏差会影响检测或者分割的准确度</p>
+]]></content>
+      <categories>
+        <category>detection</category>
+      </categories>
+      <tags>
+        <tag>roi pooling</tag>
       </tags>
   </entry>
   <entry>
