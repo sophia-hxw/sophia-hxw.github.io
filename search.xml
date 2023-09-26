@@ -126,8 +126,8 @@
 </ul>
 <p>傅里叶层被设计为离散化不变的，因为它们从任意离散化的函数中学习。 事实上，积分算子应用于卷积并表示为傅立叶域中的线性变换，从而允许 FNO 学习无限维空间上的映射。 在第三阶段，使用另一个神经网络 $M$ 将傅里叶层的结果投影回目标维度，最终输出所需的输出 $Y^’$[180]。 与其他深度学习方法不同，无论输入和输出分辨率如何，FNO 模型的误差都是一致的（例如，在 PgNN 方法中，误差随着分辨率的增加而增加）。</p>
 <p>Li等[180]在三个不同的测试用例上使用了 FNO，包括 1D Burgers 方程、2D Darcy 流方程和 2D Navier-Stokes 方程。 对于每个测试用例，FNO 都与最先进的模型进行了比较，特别是，对于 Burgers 和 Darcy 的测试用例，用于比较的方法是传统的 ANN（即 PgNN）、减少偏差方法 [303]、全卷积网络 [304]、作为神经网络中编码器的主成分分析 [295]、图神经算子[296]和低秩分解神经算子（即非堆叠 DeepONet [39]）。 在所有测试案例中，FNO 产生的相对误差最低。 1D Burgers 和 2D Darcy 方程的模型误差比较如图 14 所示，改编自[180]。</p>
-<p>如前所述，FNO 模型可以在特定分辨率上进行训练并在不同分辨率上进行测试。 Li等[180]通过在 2D 测试用例的 Navier-Stokes 方程上训练 FNO 证明了这一主张，分辨率为 64×64×20 $(n_x,n_y,n_t)$ 代表空间 $(x, y)$ 和时间分辨率，并且 然后以256×256×80的分辨率对其进行评估，如图15（a）所示，与其他模型相比，FNO 是唯一能够在空间和时间上执行分辨率缩减的技术 [180]。 FNO 还可以实现比传统数值 PDE 求解器高几个数量级的加速因子。 然而，由于输入数据的维数很大，这会显着增加网络权重的数量，因此它们仅用于 2D 或小型 3D 问题。 考虑到这个问题，Grady 等人。 [305]提出了基于域分解的FNO并行版本来解决这个限制。 利用这一扩展，他们能够在大规模建模中使用 FNO，例如，模拟地下非均质储层中二氧化碳羽流的瞬态演化，作为碳捕获和封存 (CCS) 技术的一部分 [306]，见图 1。 15(b)。 网络的输入（与 Li 等人[180]提出的结构类似）被设计为一个张量，其中包含每个 3D 空间位置的渗透率和地形场，使用 60×60×64 (nx ,ny,nz）分辨率，输出为60×60×64×nt。 对于 nt = 30 s 的时间分辨率，他们发现并行 FNO 模型比传统多孔介质求解器快 271 倍（甚至不利用 GPU），同时实现了相当的精度。 文等人。 [307]还提出了U-FNO，FNO的扩展，用于模拟多孔介质中的多相流，特别是通过非均质介质的CO2-水多相流，具有广泛的储层条件、注入配置、流速和多相流特性。 他们将 U-FNO 与 FNO 和 CNN（即 PgNN）进行了比较，结果表明 U-FNO 架构为高度非均质地质构造中的气体饱和度和压力积聚预测提供了最佳性能。 他们还表明，U-FNO 架构提高了原始 FNO 的训练精度，但自然无法实现多个离散化训练和测试的灵活性。</p>
-<p>你等人。 [308]提出了一种隐式傅里叶神经算子（IFNO）来模拟材料由于其异质性和缺陷而产生的复杂响应，而无需使用传统的本构模型。 IFNO 模型捕获特征空间中的远程依赖性，并且随着网络变得更深，它变成一个定点方程，产生隐式神经算子（例如，它可以模拟位移/损伤场）。 你等人。 [308]使用一系列测试用例（例如超弹性、各向异性和脆性材料）证明了 IFNO 的性能。 图 16 描绘了 IFNO 和 FNO 对于玻璃陶瓷裂纹瞬态扩展的比较 [308]。 正如所证明的，在预测位移场方面，IFNO 优于 FNO（在精度方面）和传统本构模型（在计算成本方面）。<br>FNO 模型还与 PiNN 混合，创建了所谓的物理信息神经算子 (PiNO) [43]。 PiNO 框架是操作学习（即 FNO）和功能优化（即 PiNN）框架的组合，可提高 PiNN 和 FNO 模型的收敛速度和准确性。 建议这种集成来解决 PiNN 中的挑战（例如，泛化和优化，特别是对于多尺度动力系统）和 FNO 中的挑战（例如，需要昂贵且不切实际的大型训练数据集）[43]。 李等人。 [43]在几个基准问题（例如，Kolmogorov flow、lid-cavity flow等）上部署了 PiNO 模型，以表明 PiNO 可以优于 PiNN 和 FNO 模型，同时保持 FNO 相对于其他求解器的卓越加速因子。</p>
+<p>如前所述，FNO 模型可以在特定分辨率上进行训练并在不同分辨率上进行测试。 Li等[180]通过在 2D 测试用例的 Navier-Stokes 方程上训练 FNO 证明了这一主张，分辨率为 $64\times 64\times 20 (n_x,n_y,n_t)$ 代表空间 $(x, y)$ 和时间分辨率，并且 然后以 $256\times 256\times 80$ 的分辨率对其进行评估，如图15（a）所示，与其他模型相比，FNO 是唯一能够在空间和时间上执行分辨率缩减的技术 [180]。 FNO 还可以实现比传统数值 PDE 求解器高几个数量级的加速因子，然而，由于输入数据的维数很大，这会显著增加网络权重的数量，因此它们仅用于 2D 或小型 3D 问题。 考虑到这个问题，Grady 等[305]提出了基于域分解的FNO并行版本来解决这个限制，利用这一扩展，他们能够在大规模建模中使用 FNO，例如，模拟地下非均质储层中二氧化碳羽流的瞬态演化，作为碳捕获和封存 (CCS) 技术的一部分 [306]，见图15(b)。 网络的输入（与 Li 等人[180]提出的结构类似）被设计为一个张量，其中包含每个 3D 空间位置的渗透率和地形场，使用 $60\times 60\times 64 (n_x ,n_y, n_z)$ 分辨率，输出为 $60\times 60\times 64\times n_t$。 对于 $n_t = 30 s$ 的时间分辨率，他们发现并行 FNO 模型比传统多孔介质求解器快 271 倍（甚至不利用 GPU），同时实现了相当的精度。 Wen等[307]还提出了U-FNO，FNO的扩展，用于模拟多孔介质中的多相流，特别是通过非均质介质的CO2-水多相流，具有广泛的储层条件、注入配置、流速和多相流特性。 他们将 U-FNO 与 FNO 和 CNN（即 PgNN）进行了比较，结果表明 U-FNO 架构为高度非均质地质构造中的气体饱和度和压力积聚预测提供了最佳性能。 他们还表明，U-FNO 架构提高了原始 FNO 的训练精度，但自然无法实现多个离散化训练和测试的灵活性。</p>
+<p>You等[308]提出了一种隐式傅里叶神经算子（IFNO）来模拟材料由于其异质性和缺陷而产生的复杂响应，而无需使用传统的本构模型。 IFNO 模型捕获特征空间中的远程依赖性，并且随着网络变得更深，它变成一个定点方程，产生隐式神经算子（例如，它可以模拟位移/损伤场）。 You等[308]使用一系列测试用例（例如超弹性、各向异性和脆性材料）证明了 IFNO 的性能。 图 16 描绘了 IFNO 和 FNO 对于玻璃陶瓷裂纹瞬态扩展的比较 [308]。 正如所证明的，在预测位移场方面，IFNO 优于 FNO（在精度方面）和传统本构模型（在计算成本方面）。<br>FNO 模型还与 PiNN 混合，创建了所谓的物理信息神经算子 (PiNO) [43]。 PiNO 框架是操作学习（即 FNO）和功能优化（即 PiNN）框架的组合，可提高 PiNN 和 FNO 模型的收敛速度和准确性。 建议这种集成来解决 PiNN 中的挑战（例如，泛化和优化，特别是对于多尺度动力系统）和 FNO 中的挑战（例如，需要昂贵且不切实际的大型训练数据集）[43]。 李等人。 [43]在几个基准问题（例如，Kolmogorov flow、lid-cavity flow等）上部署了 PiNO 模型，以表明 PiNO 可以优于 PiNN 和 FNO 模型，同时保持 FNO 相对于其他求解器的卓越加速因子。</p>
 <h2 id="5-3-局限性"><a href="#5-3-局限性" class="headerlink" title="5.3 局限性"></a>5.3 局限性</h2><p>DeepONet [39]和FNO [180]作为迄今为止最常见的两种神经算子，具有一些共同点，但也存在显着差异。 DeepONet 架构受到 Chen 和 Chen [298] 的通用逼近定理的启发，而 FNO 是在傅立叶空间中参数化积分核的基础上建立的架构。 然而，连续形式的 FNO 可以被视为具有特定的主干网络（用三角基础表示）和分支网络架构的 DeepONet [309]。 与 DeepONet 不同，FNO 通过等间距网格中的逐点评估来离散化输入函数和输出函数。 因此，网络训练后，FNO只能预测与输入函数相同网格中的解，而DeepONet可以在任意位置进行预测。 FNO 还需要全场观测数据进行训练，而 DeepONet 则更灵活，但 POD-DeepONet [310] 除外，它需要全场观测数据来计算适当的正交分解（POD）模式 [310] 。 DeepONet、FNO 及其各种变体仍然面临一些局限性，特别是在应用于大型多物理问题时，需要进一步研究。</p>
 <p>• 神经算子纯粹是数据驱动的，需要相对较大的训练数据集，因此当应用于数据获取复杂和/或昂贵的问题时，它们面临着限制[310]。 对于底层物理完全已知并且可以集成到损失函数中的问题，与 PiNN 的集成可以在一定程度上解决这个问题[301]。 此外，在实际应用中，仅根据损失函数中的控制方程来训练 NO 可能会产生不准确的预测； 相反，建议采用混合物理数据训练[301]。<br>• DeepONet 和 FNO 通常仅限于基本几何和/或结构化数据（例如 2D 或小型 3D 问题），因为它们的输入数据维度很大，这会显着增加网络权重的数量）[310]。 随着可训练参数数量的增加，它们也容易出现过度拟合，从而使训练过程变得更加困难[311]。 IFNO 在一定程度上解决了这一挑战[308]。 在 IFNO 中，解算子首先被表述为隐式定义的映射，然后建模为不动点。 后者旨在克服深层情况下网络训练的挑战，而前者最大限度地减少可训练参数的数量和内存成本。 尽管如此，由于神经网络架构的大小有限，对于大型数据集，NO（例如 DeepONet）误差相对于训练数据大小的收敛变得代数化； 它希望是指数的[310]。<br>• FNO 对于不连续函数可能不可靠，因为它依赖于傅立叶变换。 DeepONet 在一定程度上缓解了这一问题，因为它对于具有不连续性的函数（例如可压缩欧拉方程）表现良好[310]。<br>尽管存在这些限制，神经算子仍然是各种实时推理应用中的领先算法，包括自主系统、设计问题中的代理和不确定性量化[57]。</p>
 <h1 id="六，总结和未来研究方向"><a href="#六，总结和未来研究方向" class="headerlink" title="六，总结和未来研究方向"></a>六，总结和未来研究方向</h1><p>相当多的研究主题共同支持科学计算和深度学习方法相结合的功效。 特别是，这种组合提高了高维问题的正向和逆向建模效率，这些问题的成本过高、包含噪声数据、需要复杂的网格，并且由非线性、不适定微分方程控制。 不断增强的计算机能力将通过允许使用更深层次的神经网络并考虑更高维度的相互依赖性和设计空间，继续进一步提供这种组合。</p>
@@ -382,6 +382,21 @@ m^\ast = \mathop{argmin}
       </tags>
   </entry>
   <entry>
+    <title>A Survey of Transformers</title>
+    <url>/2023/06/28/Transformer/A%20Survey%20of%20Transformers/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Transformer模型的发展综述～</p>
+<p>论文百度云链接: <a href="https://pan.baidu.com/s/1fwGSq4SysfLSOzSPKRQzjg">https://pan.baidu.com/s/1fwGSq4SysfLSOzSPKRQzjg</a><br>提取码: r2ii<br>—来自百度网盘超级会员v6的分享</p>
+<p><strong>继续加油读文章</strong><br><span id="more"></span></p>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>Transformers 在自然语言处理、计算机视觉、音频处理等许多人工智能领域取得了巨大的成功。 因此，自然会引起学术界和工业界研究人员的极大兴趣。 到目前为止，已经提出了各种各样的 Transformer 变体（又名 X-formers），但是，仍然缺乏对这些 Transformer 变体的系统和全面的文献综述。 在本次调查中，我们对各种 X-formers 进行了全面审查。 我们首先简要介绍 vanilla Transformer，然后提出一个新的 X-formers 分类法。 接下来，我们从架构修改、预训练、应用三个角度介绍各种X-former。 最后，我们概述了未来研究的一些潜在方向。</p>
+<h1 id=""><a href="#" class="headerlink" title=" "></a> </h1>]]></content>
+      <categories>
+        <category>Transformer</category>
+      </categories>
+      <tags>
+        <tag>transformer</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>A Survey on Vision Transformer</title>
     <url>/2023/06/28/Transformer/A%20Survey%20on%20Vision%20Transformer/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>title: A Survey on Vision Transformer</p>
@@ -524,21 +539,6 @@ where head_i=\mathrm{Attention}(\mathbf Q_i,\mathbf K_i,\mathbf V_i)
 <p>出现了各种类型的神经网络，例如 CNN、RNN 和 Transformer。在CV领域，CNNs曾经是主流选择，但是现在Transformer开始流行了。 CNN 可以捕获归纳偏差，例如翻译等方差和局部性，而 ViT 使用大规模训练来超越归纳偏差。根据目前可用的证据，CNN 在小型数据集上表现良好，而 Transformer 在大型数据集上表现更好。未来的问题是使用 CNN 还是 Transformer。</p>
 <p>通过使用大型数据集进行训练，Transformer 可以在 NLP 和 CV 基准测试上实现最先进的性能，神经网络可能需要大数据而不是归纳偏差。最后，我们留给大家一个问题：Transformer 是否可以通过非常简单的计算范式（例如，仅使用全连接层）和海量数据训练来获得令人满意的结果？</p>
 ]]></content>
-      <categories>
-        <category>Transformer</category>
-      </categories>
-      <tags>
-        <tag>transformer</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>A Survey of Transformers</title>
-    <url>/2023/06/28/Transformer/A%20Survey%20of%20Transformers/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Transformer模型的发展综述～</p>
-<p>论文百度云链接: <a href="https://pan.baidu.com/s/1fwGSq4SysfLSOzSPKRQzjg">https://pan.baidu.com/s/1fwGSq4SysfLSOzSPKRQzjg</a><br>提取码: r2ii<br>—来自百度网盘超级会员v6的分享</p>
-<p><strong>继续加油读文章</strong><br><span id="more"></span></p>
-<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>Transformers 在自然语言处理、计算机视觉、音频处理等许多人工智能领域取得了巨大的成功。 因此，自然会引起学术界和工业界研究人员的极大兴趣。 到目前为止，已经提出了各种各样的 Transformer 变体（又名 X-formers），但是，仍然缺乏对这些 Transformer 变体的系统和全面的文献综述。 在本次调查中，我们对各种 X-formers 进行了全面审查。 我们首先简要介绍 vanilla Transformer，然后提出一个新的 X-formers 分类法。 接下来，我们从架构修改、预训练、应用三个角度介绍各种X-former。 最后，我们概述了未来研究的一些潜在方向。</p>
-<h1 id=""><a href="#" class="headerlink" title=" "></a> </h1>]]></content>
       <categories>
         <category>Transformer</category>
       </categories>
@@ -5348,6 +5348,28 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </tags>
   </entry>
   <entry>
+    <title>roi align</title>
+    <url>/2022/05/16/detection/roi-align/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>roi align产生的背景，原理和应用场景</p>
+<p><strong>主要对比roi pooling</strong><br><span id="more"></span></p>
+<h2 id="1，背景"><a href="#1，背景" class="headerlink" title="1，背景"></a>1，背景</h2><p>在mask rcnn中提出，是为了解决roi pooling的两次量化带来的位置精度损失问题。</p>
+<h2 id="2，思路"><a href="#2，思路" class="headerlink" title="2，思路"></a>2，思路</h2><p>取消量化操作，使用双线性内插的方法获得坐标为浮点数的像素点上的图像数值,从而将整个特征聚集过程转化为一个连续的操作。值得注意的是，在具体的算法操作上，ROI Align并不是简单地补充出候选区域边界上的坐标点，然后将这些坐标点进行池化，而是重新设计了一套比较优雅的流程，大致算法流程为：</p>
+<ul>
+<li>遍历每一个候选区域，保持浮点数边界不做量化。</li>
+<li>将候选区域分割成k x k个单元，每个单元的边界也不做量化。</li>
+<li>在每个单元中计算固定四个坐标位置，用双线性内插的方法计算出这四个位置的值，然后进行最大池化操作。</li>
+</ul>
+<h2 id="3，区别"><a href="#3，区别" class="headerlink" title="3，区别"></a>3，区别</h2><p>ROI Align舍去了近似像素取整数的量化方法，改用双线性插值的方法确定特征图坐标对应于原图中的像素位置.ROI Align很好地解决了ROI Pooling操作中两次量化造成的区域不匹配(mis-alignment)的问题。</p>
+<h2 id="4，应用场景"><a href="#4，应用场景" class="headerlink" title="4，应用场景"></a>4，应用场景</h2><p>对于检测图片中大目标物体时，两种方案的差别不大，而如果是图片中有较多小目标物体需要检测，则优先选择RoiAlign，更精准些。</p>
+]]></content>
+      <categories>
+        <category>detection</category>
+      </categories>
+      <tags>
+        <tag>roi align</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>rpn的原理和作用</title>
     <url>/2022/05/16/detection/principle-and-effects-of-rpn/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>rpn原理和作用</p>
@@ -5391,28 +5413,6 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </categories>
       <tags>
         <tag>roi pooling</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>roi align</title>
-    <url>/2022/05/16/detection/roi-align/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>roi align产生的背景，原理和应用场景</p>
-<p><strong>主要对比roi pooling</strong><br><span id="more"></span></p>
-<h2 id="1，背景"><a href="#1，背景" class="headerlink" title="1，背景"></a>1，背景</h2><p>在mask rcnn中提出，是为了解决roi pooling的两次量化带来的位置精度损失问题。</p>
-<h2 id="2，思路"><a href="#2，思路" class="headerlink" title="2，思路"></a>2，思路</h2><p>取消量化操作，使用双线性内插的方法获得坐标为浮点数的像素点上的图像数值,从而将整个特征聚集过程转化为一个连续的操作。值得注意的是，在具体的算法操作上，ROI Align并不是简单地补充出候选区域边界上的坐标点，然后将这些坐标点进行池化，而是重新设计了一套比较优雅的流程，大致算法流程为：</p>
-<ul>
-<li>遍历每一个候选区域，保持浮点数边界不做量化。</li>
-<li>将候选区域分割成k x k个单元，每个单元的边界也不做量化。</li>
-<li>在每个单元中计算固定四个坐标位置，用双线性内插的方法计算出这四个位置的值，然后进行最大池化操作。</li>
-</ul>
-<h2 id="3，区别"><a href="#3，区别" class="headerlink" title="3，区别"></a>3，区别</h2><p>ROI Align舍去了近似像素取整数的量化方法，改用双线性插值的方法确定特征图坐标对应于原图中的像素位置.ROI Align很好地解决了ROI Pooling操作中两次量化造成的区域不匹配(mis-alignment)的问题。</p>
-<h2 id="4，应用场景"><a href="#4，应用场景" class="headerlink" title="4，应用场景"></a>4，应用场景</h2><p>对于检测图片中大目标物体时，两种方案的差别不大，而如果是图片中有较多小目标物体需要检测，则优先选择RoiAlign，更精准些。</p>
-]]></content>
-      <categories>
-        <category>detection</category>
-      </categories>
-      <tags>
-        <tag>roi align</tag>
       </tags>
   </entry>
   <entry>
