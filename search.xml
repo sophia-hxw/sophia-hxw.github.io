@@ -403,21 +403,6 @@ m^\ast = \mathop{argmin}
       </tags>
   </entry>
   <entry>
-    <title>A Survey of Transformers</title>
-    <url>/2023/06/28/Transformer/A%20Survey%20of%20Transformers/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Transformer模型的发展综述～</p>
-<p>论文百度云链接: <a href="https://pan.baidu.com/s/1fwGSq4SysfLSOzSPKRQzjg">https://pan.baidu.com/s/1fwGSq4SysfLSOzSPKRQzjg</a><br>提取码: r2ii<br>—来自百度网盘超级会员v6的分享</p>
-<p><strong>继续加油读文章</strong><br><span id="more"></span></p>
-<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>Transformers 在自然语言处理、计算机视觉、音频处理等许多人工智能领域取得了巨大的成功。 因此，自然会引起学术界和工业界研究人员的极大兴趣。 到目前为止，已经提出了各种各样的 Transformer 变体（又名 X-formers），但是，仍然缺乏对这些 Transformer 变体的系统和全面的文献综述。 在本次调查中，我们对各种 X-formers 进行了全面审查。 我们首先简要介绍 vanilla Transformer，然后提出一个新的 X-formers 分类法。 接下来，我们从架构修改、预训练、应用三个角度介绍各种X-former。 最后，我们概述了未来研究的一些潜在方向。</p>
-<h1 id=""><a href="#" class="headerlink" title=" "></a> </h1>]]></content>
-      <categories>
-        <category>Transformer</category>
-      </categories>
-      <tags>
-        <tag>transformer</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>A Survey on Vision Transformer</title>
     <url>/2023/06/28/Transformer/A%20Survey%20on%20Vision%20Transformer/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>title: A Survey on Vision Transformer</p>
@@ -560,6 +545,21 @@ where head_i=\mathrm{Attention}(\mathbf Q_i,\mathbf K_i,\mathbf V_i)
 <p>出现了各种类型的神经网络，例如 CNN、RNN 和 Transformer。在CV领域，CNNs曾经是主流选择，但是现在Transformer开始流行了。 CNN 可以捕获归纳偏差，例如翻译等方差和局部性，而 ViT 使用大规模训练来超越归纳偏差。根据目前可用的证据，CNN 在小型数据集上表现良好，而 Transformer 在大型数据集上表现更好。未来的问题是使用 CNN 还是 Transformer。</p>
 <p>通过使用大型数据集进行训练，Transformer 可以在 NLP 和 CV 基准测试上实现最先进的性能，神经网络可能需要大数据而不是归纳偏差。最后，我们留给大家一个问题：Transformer 是否可以通过非常简单的计算范式（例如，仅使用全连接层）和海量数据训练来获得令人满意的结果？</p>
 ]]></content>
+      <categories>
+        <category>Transformer</category>
+      </categories>
+      <tags>
+        <tag>transformer</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>A Survey of Transformers</title>
+    <url>/2023/06/28/Transformer/A%20Survey%20of%20Transformers/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Transformer模型的发展综述～</p>
+<p>论文百度云链接: <a href="https://pan.baidu.com/s/1fwGSq4SysfLSOzSPKRQzjg">https://pan.baidu.com/s/1fwGSq4SysfLSOzSPKRQzjg</a><br>提取码: r2ii<br>—来自百度网盘超级会员v6的分享</p>
+<p><strong>继续加油读文章</strong><br><span id="more"></span></p>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>Transformers 在自然语言处理、计算机视觉、音频处理等许多人工智能领域取得了巨大的成功。 因此，自然会引起学术界和工业界研究人员的极大兴趣。 到目前为止，已经提出了各种各样的 Transformer 变体（又名 X-formers），但是，仍然缺乏对这些 Transformer 变体的系统和全面的文献综述。 在本次调查中，我们对各种 X-formers 进行了全面审查。 我们首先简要介绍 vanilla Transformer，然后提出一个新的 X-formers 分类法。 接下来，我们从架构修改、预训练、应用三个角度介绍各种X-former。 最后，我们概述了未来研究的一些潜在方向。</p>
+<h1 id=""><a href="#" class="headerlink" title=" "></a> </h1>]]></content>
       <categories>
         <category>Transformer</category>
       </categories>
@@ -1909,6 +1909,54 @@ f^{'}(x)=
 <h3 id="6，什么是神经元“死亡”？"><a href="#6，什么是神经元“死亡”？" class="headerlink" title="6，什么是神经元“死亡”？"></a>6，什么是神经元“死亡”？</h3><p>Relu的输入值为负的时候，输出始终为0，其一阶导数也始终为0，这样会导致神经元不能更新参数，也就是神经元不学习了，这种现象叫做“Dead Neuron”。</p>
 <h3 id="7，如何解决ReLU神经元“死亡”的问题？"><a href="#7，如何解决ReLU神经元“死亡”的问题？" class="headerlink" title="7，如何解决ReLU神经元“死亡”的问题？"></a>7，如何解决ReLU神经元“死亡”的问题？</h3><p>①采用Leaky ReLU等激活函数 ②设置较小的学习率进行训练 ③使用momentum优化算法动态调整学习率</p>
 ]]></content>
+      <categories>
+        <category>CNN</category>
+      </categories>
+      <tags>
+        <tag>activation</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>General activate functions</title>
+    <url>/2023/03/23/CNN/cnn_relate/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>cnn的常见问题，持续加更中～</p>
+<p><strong>加油~</strong><br><span id="more"></span></p>
+<h1 id="Chapter-1"><a href="#Chapter-1" class="headerlink" title="Chapter-1"></a>Chapter-1</h1><h2 id="问题1：Softmax-Cross-Entropy反向求导"><a href="#问题1：Softmax-Cross-Entropy反向求导" class="headerlink" title="问题1：Softmax+Cross Entropy反向求导"></a>问题1：Softmax+Cross Entropy反向求导</h2><h2 id="问题2：BatchNorm层的详细解读-具体可以参考之后出版的百面深度学习2333"><a href="#问题2：BatchNorm层的详细解读-具体可以参考之后出版的百面深度学习2333" class="headerlink" title="问题2：BatchNorm层的详细解读(具体可以参考之后出版的百面深度学习2333)"></a>问题2：BatchNorm层的详细解读(具体可以参考之后出版的百面深度学习2333)</h2><ul>
+<li><img src="151566545899_.pic.jpg" alt="BatchNorm"></li>
+<li>作用：<ul>
+<li>使得每层的输入/输出分布更加稳定，避免参数更新和网络层次变深大幅度影响数据分布。从而使模型训练更稳定。</li>
+</ul>
+</li>
+<li><p>参数 β 和 γ的作用</p>
+<ul>
+<li>保留网络各层在训练过程中的学习成果</li>
+<li>保证激活单元的非线性表达能力 </li>
+<li>使批归一化模块具有复原初始输出分布能力。</li>
+</ul>
+</li>
+<li><p>BN放在激活层之前还是之后 </p>
+</li>
+<li>各种不同的Norm<img src="171566546190_.pic_hd.jpg" alt="各种不同的Norm"></li>
+<li><a href="https://zhuanlan.zhihu.com/p/33173246">阅读材料</a></li>
+</ul>
+<h2 id="问题3：Conv-BN加速策略"><a href="#问题3：Conv-BN加速策略" class="headerlink" title="问题3：Conv+BN加速策略"></a>问题3：Conv+BN加速策略</h2><p>在inference阶段，可以将BN层的参数合并在之前的Linear或Conv层中，加速推断时间（因为二者都是线性变换）。<br><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">w = module.weight.data</span><br><span class="line">b = module.bias.data      <span class="comment"># conv的bias可以用全0代替</span></span><br><span class="line">ws = [<span class="number">1</span>] * <span class="built_in">len</span>(w.size())</span><br><span class="line">ws[<span class="number">0</span>] = w.size()[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">invstd = bn_module.running_var.clone().add_(bn_module.eps).pow_(-<span class="number">0.5</span>)</span><br><span class="line">w.mul_(invstd.view(*ws).expand_as(w))</span><br><span class="line">b.add_(-bn_module.running_mean).mul_(invstd)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> bn_module.affine:</span><br><span class="line">    w.mul_(bn_module.weight.data.view(*ws).expand_as(w))</span><br><span class="line">    b.mul_(bn_module.weight.data).add_(bn_module.bias.data)</span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+<h2 id="问题4：常见的模型加速方法"><a href="#问题4：常见的模型加速方法" class="headerlink" title="问题4：常见的模型加速方法"></a>问题4：常见的模型加速方法</h2><h2 id="问题5：目标检测里如何有效解决常见的前景少背景多的问题"><a href="#问题5：目标检测里如何有效解决常见的前景少背景多的问题" class="headerlink" title="问题5：目标检测里如何有效解决常见的前景少背景多的问题"></a>问题5：目标检测里如何有效解决常见的前景少背景多的问题</h2><ul>
+<li>采用Focal Loss或OHEM进行负样本挖掘，加大Hard Example损失权重</li>
+<li>训练时只利用Ground Truth周边的Prior Boxes进行训练，忽略其他背景区域，只考虑困难背景区域</li>
+</ul>
+<h2 id="问题6：目标检测里有什么情况是SSD、YOLOv3、Faster-R-CNN等所不能解决的，假设网络拟合能力无限强"><a href="#问题6：目标检测里有什么情况是SSD、YOLOv3、Faster-R-CNN等所不能解决的，假设网络拟合能力无限强" class="headerlink" title="问题6：目标检测里有什么情况是SSD、YOLOv3、Faster R-CNN等所不能解决的，假设网络拟合能力无限强"></a>问题6：目标检测里有什么情况是SSD、YOLOv3、Faster R-CNN等所不能解决的，假设网络拟合能力无限强</h2><h2 id="问题7：分类和检索两个问题可以怎么理解"><a href="#问题7：分类和检索两个问题可以怎么理解" class="headerlink" title="问题7：分类和检索两个问题可以怎么理解"></a>问题7：分类和检索两个问题可以怎么理解</h2><h2 id="问题8：ROIPool和ROIAlign的区别，以及ROIAlign的简单实现（不考虑并行，cpu串行即可）"><a href="#问题8：ROIPool和ROIAlign的区别，以及ROIAlign的简单实现（不考虑并行，cpu串行即可）" class="headerlink" title="问题8：ROIPool和ROIAlign的区别，以及ROIAlign的简单实现（不考虑并行，cpu串行即可）"></a>问题8：ROIPool和ROIAlign的区别，以及ROIAlign的简单实现（不考虑并行，cpu串行即可）</h2><ul>
+<li>ROIPool存在两次量化误差，首先是将候选框边界量化为整数点坐标值，其次是将量化后的边界区域平均分割成 k x k 个单元，对每一个单元的边界进行量化。ROIAlign通过双线性插值避免了量化操作，保存了原始ROI的空间分布，有效避免了误差的产生；对于检测图片中大目标物体时，两种方案的差别不大，而如果是图片中有较多小目标物体需要检测，则优先选择ROIAlign，更精准一些</li>
+</ul>
+<h2 id="问题9：深度神经网络常见的参数初始化方式，如果全部初始化为0，会出现什么情况"><a href="#问题9：深度神经网络常见的参数初始化方式，如果全部初始化为0，会出现什么情况" class="headerlink" title="问题9：深度神经网络常见的参数初始化方式，如果全部初始化为0，会出现什么情况"></a>问题9：深度神经网络常见的参数初始化方式，如果全部初始化为0，会出现什么情况</h2><h2 id="问题10：多卡并行的时候怎么实现参数共享，通信梯度是指平均梯度，还是最大梯度，还是梯度总和"><a href="#问题10：多卡并行的时候怎么实现参数共享，通信梯度是指平均梯度，还是最大梯度，还是梯度总和" class="headerlink" title="问题10：多卡并行的时候怎么实现参数共享，通信梯度是指平均梯度，还是最大梯度，还是梯度总和"></a>问题10：多卡并行的时候怎么实现参数共享，通信梯度是指平均梯度，还是最大梯度，还是梯度总和</h2><h2 id="问题11：介绍常见的梯度下降优化方法"><a href="#问题11：介绍常见的梯度下降优化方法" class="headerlink" title="问题11：介绍常见的梯度下降优化方法"></a>问题11：介绍常见的梯度下降优化方法</h2><h2 id="问题12-神经网络（卷积-全连接）反向传播公式推导"><a href="#问题12-神经网络（卷积-全连接）反向传播公式推导" class="headerlink" title="问题12: 神经网络（卷积/全连接）反向传播公式推导"></a>问题12: 神经网络（卷积/全连接）反向传播公式推导</h2><h2 id="问题13-Focal-Loss解决了什么问题，如何解决的，与OHEM有什么不同"><a href="#问题13-Focal-Loss解决了什么问题，如何解决的，与OHEM有什么不同" class="headerlink" title="问题13: Focal Loss解决了什么问题，如何解决的，与OHEM有什么不同"></a>问题13: Focal Loss解决了什么问题，如何解决的，与OHEM有什么不同</h2><h2 id="问题14-斜着的矩形框如何求iou-两个多边形的框如何求iou"><a href="#问题14-斜着的矩形框如何求iou-两个多边形的框如何求iou" class="headerlink" title="问题14: 斜着的矩形框如何求iou, 两个多边形的框如何求iou"></a>问题14: 斜着的矩形框如何求iou, 两个多边形的框如何求iou</h2><p>首先要求解两个多边形的面积，方法见该<a href="https://www.shuxuele.com/geometry/area-irregular-polygons.html">链接</a></p>
+<p>关键在于如何求出交集的面积</p>
+<p><strong>思路一</strong></p>
+<p>蒙特卡洛 + 采样，近似求解交集的面积，但是中间涉及判断点在不在多边形内，<a href="https://www.jianshu.com/p/ba03c600a557">判断点是否在多边形内</a></p>
+<p><strong>思路二</strong></p>
+<p>适合于两个凸多边形（非凸没想到好的思路），凸多边形可以看做是半平面的交集，因此两个凸多边形的交集，可以看作是（m+n）个半平面的交集（假设两个凸多边形分别有m个顶点和n个顶点），求出来半平面的交集（仍旧是一个凸多边形）之后，求解该多边形的面积即可。<a href="https://www.cnblogs.com/Harry-bh/p/9998850.html">求解半平面交集</a></p>
+<h2 id="问题15-Detection你觉的还有哪些可做的点"><a href="#问题15-Detection你觉的还有哪些可做的点" class="headerlink" title="问题15: Detection你觉的还有哪些可做的点"></a>问题15: Detection你觉的还有哪些可做的点</h2><h2 id="问题16-卷积底层如何实现的"><a href="#问题16-卷积底层如何实现的" class="headerlink" title="问题16: 卷积底层如何实现的"></a>问题16: 卷积底层如何实现的</h2><h2 id="问题17-mini-Batch-SGD相对于GD有什么优点"><a href="#问题17-mini-Batch-SGD相对于GD有什么优点" class="headerlink" title="问题17: mini-Batch SGD相对于GD有什么优点"></a>问题17: mini-Batch SGD相对于GD有什么优点</h2><h2 id="问题18-DCN比普通卷积多了多少计算量"><a href="#问题18-DCN比普通卷积多了多少计算量" class="headerlink" title="问题18: DCN比普通卷积多了多少计算量"></a>问题18: DCN比普通卷积多了多少计算量</h2><h2 id="问题19-SyncBN如何实现的"><a href="#问题19-SyncBN如何实现的" class="headerlink" title="问题19: SyncBN如何实现的"></a>问题19: SyncBN如何实现的</h2><h2 id="问题20：当需要添加背景类时，怎样处理比较合理"><a href="#问题20：当需要添加背景类时，怎样处理比较合理" class="headerlink" title="问题20：当需要添加背景类时，怎样处理比较合理"></a>问题20：当需要添加背景类时，怎样处理比较合理</h2><h2 id="问题21：给出语义分割评估指标mIOU的计算公式和实现"><a href="#问题21：给出语义分割评估指标mIOU的计算公式和实现" class="headerlink" title="问题21：给出语义分割评估指标mIOU的计算公式和实现"></a>问题21：给出语义分割评估指标mIOU的计算公式和实现</h2><h2 id="问题22：人体姿态估计主流的两个做法是啥？简单介绍下"><a href="#问题22：人体姿态估计主流的两个做法是啥？简单介绍下" class="headerlink" title="问题22：人体姿态估计主流的两个做法是啥？简单介绍下"></a>问题22：人体姿态估计主流的两个做法是啥？简单介绍下</h2><h2 id="问题23：介绍带孔卷积以及其优势与劣势"><a href="#问题23：介绍带孔卷积以及其优势与劣势" class="headerlink" title="问题23：介绍带孔卷积以及其优势与劣势"></a>问题23：介绍带孔卷积以及其优势与劣势</h2><h2 id="问题24：Non-local模块与Self-attention的之间的关系与区别"><a href="#问题24：Non-local模块与Self-attention的之间的关系与区别" class="headerlink" title="问题24：Non-local模块与Self-attention的之间的关系与区别"></a>问题24：Non-local模块与Self-attention的之间的关系与区别</h2><h2 id="问题25：PyTorch和TensorFlow的运行原理"><a href="#问题25：PyTorch和TensorFlow的运行原理" class="headerlink" title="问题25：PyTorch和TensorFlow的运行原理"></a>问题25：PyTorch和TensorFlow的运行原理</h2><h2 id="问题26：卷积的实现原理以及如何快速高效实现局部weight-sharing的卷积操作方式"><a href="#问题26：卷积的实现原理以及如何快速高效实现局部weight-sharing的卷积操作方式" class="headerlink" title="问题26：卷积的实现原理以及如何快速高效实现局部weight sharing的卷积操作方式"></a>问题26：卷积的实现原理以及如何快速高效实现局部weight sharing的卷积操作方式</h2><h2 id="问题27：详解几种优化算法"><a href="#问题27：详解几种优化算法" class="headerlink" title="问题27：详解几种优化算法"></a>问题27：详解几种优化算法</h2><h2 id="问题28：BN在training和inference的时候有什么区别"><a href="#问题28：BN在training和inference的时候有什么区别" class="headerlink" title="问题28：BN在training和inference的时候有什么区别"></a>问题28：BN在training和inference的时候有什么区别</h2><ul>
+<li>在训练时，我们可以计算出batch的均值和方差，迭代训练过程中，均值和方差一直在发生变化。但是在推理时，均值和方差是固定的，对于均值来说直接计算所有batch u值的平均值，对于标准偏差采用每个batch σB的无偏估计。</li>
+</ul>
+<h2 id="问题29：基于anchor匹配的目标检测和基于RNN集合匹配的目标检测有何区别，基于RNN集合匹配的损失定义有何缺陷"><a href="#问题29：基于anchor匹配的目标检测和基于RNN集合匹配的目标检测有何区别，基于RNN集合匹配的损失定义有何缺陷" class="headerlink" title="问题29：基于anchor匹配的目标检测和基于RNN集合匹配的目标检测有何区别，基于RNN集合匹配的损失定义有何缺陷"></a>问题29：基于anchor匹配的目标检测和基于RNN集合匹配的目标检测有何区别，基于RNN集合匹配的损失定义有何缺陷</h2><h2 id="问题30：CycleGAN的生成效果为啥一般都是位置不变纹理变化，为啥不能产生不同位置的生成效果"><a href="#问题30：CycleGAN的生成效果为啥一般都是位置不变纹理变化，为啥不能产生不同位置的生成效果" class="headerlink" title="问题30：CycleGAN的生成效果为啥一般都是位置不变纹理变化，为啥不能产生不同位置的生成效果"></a>问题30：CycleGAN的生成效果为啥一般都是位置不变纹理变化，为啥不能产生不同位置的生成效果</h2><h2 id="问题31：L2-regularization和Weight-decay"><a href="#问题31：L2-regularization和Weight-decay" class="headerlink" title="问题31：L2 regularization和Weight decay"></a>问题31：L2 regularization和Weight decay</h2><h2 id="问题32：深度学习中的batch的大小对学习效果有何影响？"><a href="#问题32：深度学习中的batch的大小对学习效果有何影响？" class="headerlink" title="问题32：深度学习中的batch的大小对学习效果有何影响？"></a>问题32：深度学习中的batch的大小对学习效果有何影响？</h2>]]></content>
       <categories>
         <category>CNN</category>
       </categories>
@@ -3633,26 +3681,6 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </tags>
   </entry>
   <entry>
-    <title>BlockChain Example</title>
-    <url>/2022/07/24/leshine/exam1/</url>
-    <content><![CDATA[<h1 id="Turtleneck-dress"><a href="#Turtleneck-dress" class="headerlink" title="Turtleneck dress"></a>Turtleneck dress</h1><span id="more"></span>
-<p><img src="show.jpg" alt="img"></p>
-<h2 id="Designer"><a href="#Designer" class="headerlink" title="Designer"></a>Designer</h2><p><a href="https://leshinee.com/collections/jade-abbot">Jade Abbot</a></p>
-<h2 id="Patterning"><a href="#Patterning" class="headerlink" title="Patterning"></a>Patterning</h2><p>Zhao Chuan<br>2022.05.20</p>
-<h2 id="Sample-Garment"><a href="#Sample-Garment" class="headerlink" title="Sample Garment"></a>Sample Garment</h2><p>Li Jun<br>2022.05.23</p>
-<h2 id="Major-Fabric-Origin"><a href="#Major-Fabric-Origin" class="headerlink" title="Major Fabric Origin"></a>Major Fabric Origin</h2><p>Hangzhou, China</p>
-<h2 id="Manufacturer"><a href="#Manufacturer" class="headerlink" title="Manufacturer"></a>Manufacturer</h2><p>Guangzhou Chaoyang Garment<br>2022.06.01</p>
-<h2 id="Quality-Control"><a href="#Quality-Control" class="headerlink" title="Quality Control"></a>Quality Control</h2><p>Shanghai Quality Inspection Center<br>2022.06.03</p>
-<h2 id="Warehouse"><a href="#Warehouse" class="headerlink" title="Warehouse"></a>Warehouse</h2><p>London center. UK<br>2022.06.05</p>
-]]></content>
-      <categories>
-        <category>leshine</category>
-      </categories>
-      <tags>
-        <tag>blockchain</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>cs229之独立成分分析（note11）</title>
     <url>/2022/07/22/cs229/note11/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>cs229讲义 斯坦福大学的CS229课程是学习机器学习的必备之课，之前是由吴恩达主讲的课程，后来由于不明原因课程被斯坦福大学下架。</p>
@@ -5369,35 +5397,6 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </tags>
   </entry>
   <entry>
-    <title>roi pooling</title>
-    <url>/2022/05/16/detection/roi-pooling/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>roi pooling的基本原理和应用</p>
-<p><strong>加油，夯实基础~</strong><br><span id="more"></span></p>
-<h2 id="1，基本原理"><a href="#1，基本原理" class="headerlink" title="1，基本原理"></a>1，基本原理</h2><p>RoI Pooling的过程就是将一个个大小不同的box矩形框，都映射成大小固定$(w * h)$的矩形框，最大的好处就在于极大地提高了处理速度。</p>
-<p><img src="roi_pooling.gif" alt="obj_detec"> </p>
-<h2 id="2，实现"><a href="#2，实现" class="headerlink" title="2，实现"></a>2，实现</h2><ul>
-<li>1，根据输入image，将ROI映射到feature map对应位置</li>
-<li>2，将映射后的区域划分为相同大小的sections（数量与输出的维度相同）；</li>
-<li>3，对每个sections进行max pooling操作；</li>
-</ul>
-<p>怎么做的映射?<br>映射规则比较简单，就是把各个坐标除以“输入图片与feature map的大小的比值”。</p>
-<h2 id="3，优点"><a href="#3，优点" class="headerlink" title="3，优点"></a>3，优点</h2><ul>
-<li>1.允许我们对CNN中的feature map进行reuse</li>
-<li>2.可以显著加速training和testing速度；</li>
-<li>3.允许end-to-end的形式训练目标检测系统。</li>
-</ul>
-<h2 id="4，缺点"><a href="#4，缺点" class="headerlink" title="4，缺点"></a>4，缺点</h2><p>由于 RoIPooling 采用的是最近邻插值（即INTER_NEAREST） ，在resize时，对于缩放后坐标不能刚好为整数的情况，采用了粗暴的舍去小数，相当于选取离目标点最近的点，损失一定的空间精度。</p>
-<p>在这个过程中会有两次量化操作。对于一个region proposal，首先从原图经过全卷积网络到特征图，得到的候选框位置可能存在浮点数，进行取整操作从而出现第一次量化；其次，在ROI Pooling求取每个小网格的位置时也同样存在浮点数取整的情况。这两次量化的结果都使得候选框的位置会出现偏差，在论文里，作者把它总结为“不匹配问题（misalignment）。</p>
-<p>经过上述两次量化，此时的候选框已经和最开始回归出来的位置有一定的偏差，这个偏差会影响检测或者分割的准确度</p>
-]]></content>
-      <categories>
-        <category>detection</category>
-      </categories>
-      <tags>
-        <tag>roi pooling</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>rpn的原理和作用</title>
     <url>/2022/05/16/detection/principle-and-effects-of-rpn/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>rpn原理和作用</p>
@@ -5434,6 +5433,35 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </categories>
       <tags>
         <tag>roi align</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>roi pooling</title>
+    <url>/2022/05/16/detection/roi-pooling/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>roi pooling的基本原理和应用</p>
+<p><strong>加油，夯实基础~</strong><br><span id="more"></span></p>
+<h2 id="1，基本原理"><a href="#1，基本原理" class="headerlink" title="1，基本原理"></a>1，基本原理</h2><p>RoI Pooling的过程就是将一个个大小不同的box矩形框，都映射成大小固定$(w * h)$的矩形框，最大的好处就在于极大地提高了处理速度。</p>
+<p><img src="roi_pooling.gif" alt="obj_detec"> </p>
+<h2 id="2，实现"><a href="#2，实现" class="headerlink" title="2，实现"></a>2，实现</h2><ul>
+<li>1，根据输入image，将ROI映射到feature map对应位置</li>
+<li>2，将映射后的区域划分为相同大小的sections（数量与输出的维度相同）；</li>
+<li>3，对每个sections进行max pooling操作；</li>
+</ul>
+<p>怎么做的映射?<br>映射规则比较简单，就是把各个坐标除以“输入图片与feature map的大小的比值”。</p>
+<h2 id="3，优点"><a href="#3，优点" class="headerlink" title="3，优点"></a>3，优点</h2><ul>
+<li>1.允许我们对CNN中的feature map进行reuse</li>
+<li>2.可以显著加速training和testing速度；</li>
+<li>3.允许end-to-end的形式训练目标检测系统。</li>
+</ul>
+<h2 id="4，缺点"><a href="#4，缺点" class="headerlink" title="4，缺点"></a>4，缺点</h2><p>由于 RoIPooling 采用的是最近邻插值（即INTER_NEAREST） ，在resize时，对于缩放后坐标不能刚好为整数的情况，采用了粗暴的舍去小数，相当于选取离目标点最近的点，损失一定的空间精度。</p>
+<p>在这个过程中会有两次量化操作。对于一个region proposal，首先从原图经过全卷积网络到特征图，得到的候选框位置可能存在浮点数，进行取整操作从而出现第一次量化；其次，在ROI Pooling求取每个小网格的位置时也同样存在浮点数取整的情况。这两次量化的结果都使得候选框的位置会出现偏差，在论文里，作者把它总结为“不匹配问题（misalignment）。</p>
+<p>经过上述两次量化，此时的候选框已经和最开始回归出来的位置有一定的偏差，这个偏差会影响检测或者分割的准确度</p>
+]]></content>
+      <categories>
+        <category>detection</category>
+      </categories>
+      <tags>
+        <tag>roi pooling</tag>
       </tags>
   </entry>
   <entry>
