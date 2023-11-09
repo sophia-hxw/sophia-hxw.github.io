@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>WenLan-Bridging Vision and Language by Large-Scale Multi-Modal Pre-Training</title>
+    <url>/2023/11/07/Multimodal/WenLan:%20Bridging%20Vision%20and%20Language%20by%20Large-Scale%20Multi-Modal%20Pre-Training/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><strong>针对的几个挑战性问题</strong></p>
+<ul>
+<li>无效的图文之间的强关联假设</li>
+<li>预训练的效率低下</li>
+<li>模型部署困难</li>
+</ul>
+<p><strong>解决问题</strong><br>提出了BriVL的双塔模型 + 借鉴MoCo的策略 + 一个给予队列的字典 + InfoNCE Loss</p>
+<p><strong>模型适用场景</strong><br>图像检索文本、文本检索图像、图像标注、图像零样本分类、作为其他下游多模态任务的输入特征等。</p>
+<p><a href="https://arxiv.org/abs/2103.06561">paper link</a><br><a href="https://openi.pcl.ac.cn/BAAI/WuDao-Model/src/branch/master/BriVL/BriVL-code-inference">code</a></p>
+<p><strong>BriVL，首个中文通用图文多模态大规模预训练模型</strong><br><span id="more"></span></p>
+<h1 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h1><ul>
+<li>BriVL使用对比学习算法将图像和文本映射到了同一特征空间，可用于弥补图像特征和文本特征之间存在的隔阂。</li>
+<li>基于视觉-语言弱相关的假设，除了能理解对图像的描述性文本外，也可以捕捉图像和文本之间存在的抽象联系。</li>
+<li>图像编码器和文本编码器可分别独立运行，有利于实际生产环境中的部署。</li>
+</ul>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>近年来，人们对多模态预训练模型进行了深入探索，以桥接视觉和语言。 然而，它们中的大多数通过假设文本和图像模态之间存在强语义相关性，明确地建模图像文本对之间的跨模态交互。 由于这种强有力的假设在现实场景中通常是无效的，因此我们选择对大规模多模态预训练的跨模态相关性进行隐式建模，这是我们领导的中国项目“wenlan”的重点 团队。 具体来说，利用图像-文本对的弱相关性假设，我们在跨模态对比学习框架内提出了一种称为 BriVL 的两塔预训练模型。 与OpenAI CLIP采用简单的对比学习方法不同，我们通过将最新方法MoCo适应跨模态场景，设计了更先进的算法。 通过构建一个基于队列的大型字典，我们的 BriVL 可以在有限的 GPU 资源中合并更多的负样本。 我们进一步构建了一个名为 RUC-CAS-WenLan 的大型中文多源图像文本数据集，用于预训练 BriVL 模型。 大量实验表明，预训练的 BriVL 模型在各种下游任务上均优于 UNITER 和 OpenAI CLIP。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>本文提出了中国第一个大规模多模态预训练模型 BriVL。 我们的 BriVL 模型的第一个版本有 10 亿个参数，在包含 3000 万个图像文本对的 RUC-CAS-WenLan 数据集上进行了预训练。 作为该项目的一部分，RUC-CAS-文澜是我们自己构建的用于多模态预训练的大型中文多源图文数据集。 值得注意的是，我们的 BriVL 模型在 RUC-CAS-WenLan 测试集和 AIC-ICC 验证集上显着优于 UNITER 和 OpenAI CLIP。 通过预先训练的 BriVL 模型，我们还开发了两个 Web 应用程序，称为 MatchSoul 和 Soul-Music。 在不久的将来，我们的 BriVL 模型将扩大到 100 亿个参数，并用 5 亿个图像文本对进行预训练。 此外，我们还将利用文本到图像生成借口任务进行多模态预训练。</p>
+]]></content>
+      <categories>
+        <category>Multimodal</category>
+      </categories>
+      <tags>
+        <tag>multi_modal</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>resources of machine learning</title>
     <url>/2023/10/31/other/machine_learning_sources/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一些机器学习的各种资源，书籍和视频都有，随时更新～</p>
@@ -911,6 +939,21 @@ m^\ast = \mathop{argmin}
       </tags>
   </entry>
   <entry>
+    <title>A Survey of Transformers</title>
+    <url>/2023/06/28/Transformer/A%20Survey%20of%20Transformers/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Transformer模型的发展综述～</p>
+<p>论文百度云链接: <a href="https://pan.baidu.com/s/1fwGSq4SysfLSOzSPKRQzjg">https://pan.baidu.com/s/1fwGSq4SysfLSOzSPKRQzjg</a><br>提取码: r2ii<br>—来自百度网盘超级会员v6的分享</p>
+<p><strong>继续加油读文章</strong><br><span id="more"></span></p>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>Transformers 在自然语言处理、计算机视觉、音频处理等许多人工智能领域取得了巨大的成功。 因此，自然会引起学术界和工业界研究人员的极大兴趣。 到目前为止，已经提出了各种各样的 Transformer 变体（又名 X-formers），但是，仍然缺乏对这些 Transformer 变体的系统和全面的文献综述。 在本次调查中，我们对各种 X-formers 进行了全面审查。 我们首先简要介绍 vanilla Transformer，然后提出一个新的 X-formers 分类法。 接下来，我们从架构修改、预训练、应用三个角度介绍各种X-former。 最后，我们概述了未来研究的一些潜在方向。</p>
+<h1 id=""><a href="#" class="headerlink" title=" "></a> </h1>]]></content>
+      <categories>
+        <category>Transformer</category>
+      </categories>
+      <tags>
+        <tag>transformer</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>A Survey on Vision Transformer</title>
     <url>/2023/06/28/Transformer/A%20Survey%20on%20Vision%20Transformer/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>title: A Survey on Vision Transformer</p>
@@ -1053,21 +1096,6 @@ where head_i=\mathrm{Attention}(\mathbf Q_i,\mathbf K_i,\mathbf V_i)
 <p>出现了各种类型的神经网络，例如 CNN、RNN 和 Transformer。在CV领域，CNNs曾经是主流选择，但是现在Transformer开始流行了。 CNN 可以捕获归纳偏差，例如翻译等方差和局部性，而 ViT 使用大规模训练来超越归纳偏差。根据目前可用的证据，CNN 在小型数据集上表现良好，而 Transformer 在大型数据集上表现更好。未来的问题是使用 CNN 还是 Transformer。</p>
 <p>通过使用大型数据集进行训练，Transformer 可以在 NLP 和 CV 基准测试上实现最先进的性能，神经网络可能需要大数据而不是归纳偏差。最后，我们留给大家一个问题：Transformer 是否可以通过非常简单的计算范式（例如，仅使用全连接层）和海量数据训练来获得令人满意的结果？</p>
 ]]></content>
-      <categories>
-        <category>Transformer</category>
-      </categories>
-      <tags>
-        <tag>transformer</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>A Survey of Transformers</title>
-    <url>/2023/06/28/Transformer/A%20Survey%20of%20Transformers/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Transformer模型的发展综述～</p>
-<p>论文百度云链接: <a href="https://pan.baidu.com/s/1fwGSq4SysfLSOzSPKRQzjg">https://pan.baidu.com/s/1fwGSq4SysfLSOzSPKRQzjg</a><br>提取码: r2ii<br>—来自百度网盘超级会员v6的分享</p>
-<p><strong>继续加油读文章</strong><br><span id="more"></span></p>
-<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>Transformers 在自然语言处理、计算机视觉、音频处理等许多人工智能领域取得了巨大的成功。 因此，自然会引起学术界和工业界研究人员的极大兴趣。 到目前为止，已经提出了各种各样的 Transformer 变体（又名 X-formers），但是，仍然缺乏对这些 Transformer 变体的系统和全面的文献综述。 在本次调查中，我们对各种 X-formers 进行了全面审查。 我们首先简要介绍 vanilla Transformer，然后提出一个新的 X-formers 分类法。 接下来，我们从架构修改、预训练、应用三个角度介绍各种X-former。 最后，我们概述了未来研究的一些潜在方向。</p>
-<h1 id=""><a href="#" class="headerlink" title=" "></a> </h1>]]></content>
       <categories>
         <category>Transformer</category>
       </categories>
@@ -2084,28 +2112,6 @@ a_{i,j} = \frac{1}{2-y_i^\top y_j}(\sum^n_{k=1}\frac{1}{2-y_i^\top y_k})^{-1}
       </tags>
   </entry>
   <entry>
-    <title>A Mathematical Framework for Transformer Circuits</title>
-    <url>/2023/04/27/Transformer/A%20Mathematical%20Framework%20for%20Transformer%20Circuits/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><a href="https://transformer-circuits.pub/2021/framework/index.html">link</a></p>
-<p><strong>transformerd的数学框架？</strong><br><span id="more"></span></p>
-<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Transformer语言模型在新兴产业中的使用越来越广泛，比如GPT-3，LaMDA，Codex，Meena，Gopher和其他类似模型。<br>然而，随着这些模型的扩展，它们的开放性和高容量为意想不到的甚至有害的行为创造了越来越大的范围。 即使在大型模型经过训练多年后，创建者和用户仍会定期发现他们以前没有意识到的模型功能（包括有问题的行为）。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">【GPT-3】</span><br><span class="line">Language models are few-shot learners  [PDF]</span><br><span class="line">T.B. Brown, B. Mann, N. Ryder, M. Subbiah, J. Kaplan, P. Dhariwal, A. Neelakantan, P. Shyam, G. Sastry, A. Askell, others.</span><br><span class="line">arXiv preprint arXiv:2005.14165. 2020.</span><br><span class="line">【LaMDA】</span><br><span class="line">LaMDA: our breakthrough conversation technology  [link]</span><br><span class="line">E. Collins, Z. Ghahramani. 2021.</span><br><span class="line">【Codex】</span><br><span class="line">Evaluating large language models trained on code</span><br><span class="line">M. Chen, J. Tworek, H. Jun, Q. Yuan, H.P.d.O. Pinto, J. Kaplan, H. Edwards, Y. Burda, N. Joseph, G. Brockman, others.</span><br><span class="line">arXiv preprint arXiv:2107.03374. 2021.</span><br><span class="line">【Meena】</span><br><span class="line">Towards a human-like open-domain chatbot</span><br><span class="line">D. Adiwardana, M. Luong, D.R. So, J. Hall, N. Fiedel, R. Thoppilan, Z. Yang, A. Kulshreshtha, G. Nemade, Y. Lu, others.</span><br><span class="line">arXiv preprint arXiv:2001.09977. 2020.</span><br><span class="line">【Gopher】</span><br><span class="line">Scaling Language Models: Methods, Analysis &amp; Insights from Training Gopher  [PDF]</span><br><span class="line">J.W. Rae, S. Borgeaud, T. Cai, K. Millican, J. Hoffmann, F. Song, J. Aslanides, S. Henderson, R. Ring, S. Young, E. Rutherford, T. Hennigan, J. Menick, A. Cassirer, R. Powell, G.v.d. Driessche, L.A. Hendricks, M. Rauh, P. Huang, A. Glaese, J. Welbl, S. Dathathri, S. Huang, J. Uesato, J. Mellor, I. Higgins, A. Creswell, N. McAleese, A. Wu, E. Elsen, S. Jayakumar, E. Buchatskaya, D. Budden, E. Sutherland, K. Simonyan, M. Paganini, L. Sifre, L. Martens, X.L. Li, A. Kuncoro, A. Nematzadeh, E. Gribovskaya, D. Donato, A. Lazaridou, A. Mensch, J. Lespiau, M. Tsimpoukelli, N. Grigorev, D. Fritz, T. Sottiaux, M. Pajarskas, T. Pohlen, Z. Gong, D. Toyama, C.d.M. d’Autume, Y. Li, T. Terzi, V. Mikulik, I. Babuschkin, A. Clark, D.d.L. Casas, A. Guy, C. Jones, J. Bradbury, M. Johnson, B. Hechtman, L. Weidinger, I. Gabriel, W. Isaac, E. Lockhart, S. Osindero, L. Rimell, C. Dyer, O. Vinyals, K. Ayoub, J. Stanway, L. Bennett, D. Hassabis, K. Kavukcuoglu, G. Irving.</span><br><span class="line">Preprint. 2021.</span><br></pre></td></tr></table></figure>
-<p>解决这些问题的一种途径是寻求可解释性，试图对Transformer模型的详细计算进行逆向工程，类似于程序员将复杂的二进制文件反编译为人类可读的源代码。 如果这是可能的，它可能会提供一种更系统的方法来解释当前的安全问题、识别新的问题，甚至可能预测尚未构建的强大的未来模型的安全问题。 之前的一个项目，Distill Circuits, 曾尝试对视觉模型进行逆向工程，但到目前为止还没有类似的Tranformer或语言模型项目。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Thread: Circuits</span><br><span class="line">N. Cammarata, S. Carter, G. Goh, C. Olah, M. Petrov, L. Schubert, C. Voss, B. Egan, S.K. Lim.</span><br><span class="line">Distill. 2020.</span><br><span class="line">DOI: 10.23915/distill.00024</span><br></pre></td></tr></table></figure>
-<p>在本文中，我们尝试采取原始、初级的步骤来对Transformer模型进行逆向工程，因为现代语言模型令人难以置信的复杂性和规模，我们发现从最简单的模型开始并从那里开始工作是最有成效的。 我们的目标是发现简单的算法模式、主题或框架，这些模式、主题或框架随后可以应用于更大、更复杂的模型。 具体来说，在本文中，我们将研究只有两层或更少层且只有注意力块的Transformer——这与像 GPT-3 这样的大型现代Transformer形成对比，GPT-3有 96 层，且注意力块与 MLP 块交替出现。</p>
-<p>我们发现，通过以一种新的但在数学上等效的方式将Transformer的操作概念化，我们能够理解这些小模型，并对它们的内部运作方式获得重要的理解。 特别值得注意的是，我们发现我们称之为“感应头”的特定注意力头可以解释这些小模型中的上下文学习，并且这些头只在至少具有两个注意力层的模型中出现。 我们还介绍了对特定数据进行操作的一些示例。</p>
-<p>在第一篇论文中，我们并未尝试将我们的见解应用于更大的模型，但在即将发表的一篇论文中，我们将证明我们理解Transformer的数学框架和感应头的概念仍然至少部分相关，对于更大、更真实的模型——尽管我们距离能够完全逆向工程这些模型还有很长的路要走。</p>
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><h3 id="REVERSE-ENGINEERING-RESULTS"><a href="#REVERSE-ENGINEERING-RESULTS" class="headerlink" title="REVERSE ENGINEERING RESULTS"></a>REVERSE ENGINEERING RESULTS</h3><p>为了挑战Tranformer的逆向工程，我们先在其他算法和仅有注意力的模型上进行了尝试，有以下结论：</p>
-<h3 id="CONCEPTUAL-TAKE-AWAYS"><a href="#CONCEPTUAL-TAKE-AWAYS" class="headerlink" title="CONCEPTUAL TAKE-AWAYS"></a>CONCEPTUAL TAKE-AWAYS</h3><h2 id="Transformer回顾"><a href="#Transformer回顾" class="headerlink" title="Transformer回顾"></a>Transformer回顾</h2>]]></content>
-      <categories>
-        <category>Transformer</category>
-      </categories>
-      <tags>
-        <tag>transformer</tag>
-        <tag>math</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Choose a Transformer-Fourier or Galerkin</title>
     <url>/2023/04/27/Transformer/Choose%20a%20Transformer-Fourier%20or%20Galerkin/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><a href="https://arxiv.org/pdf/2105.14995.pdf">paper link</a></p>
@@ -2135,6 +2141,28 @@ a_{i,j} = \frac{1}{2-y_i^\top y_j}(\sum^n_{k=1}\frac{1}{2-y_i^\top y_k})^{-1}
 <h2 id="Transformer的变量学习"><a href="#Transformer的变量学习" class="headerlink" title="Transformer的变量学习"></a>Transformer的变量学习</h2><p>[84] 中的内核解释启发我们使用 Galerkin 投影重新表述注意力。 [95，定理 2] 给出了去除 softmax 归一化以制定傅里叶型注意力的理论基础。 Nyström 近似 [97] 本质上承认注意力矩阵和积分核之间的相似性。 [96, 66, 59] 启发我们尝试不同的层归一化和重新缩放的对角占优初始化方案。 在我们的工作中反复使用位置编码来丰富潜在表示的做法可以追溯到 [2, 26]，最近，有助于 AlphaFold 2 [48] 的成功，因为如果 目标在坐标系和/或变换组中具有依赖性 ansatz，但难以明确量化。 其他关于调整注意机制以保存重要物理特性的研究在 [82, 31, 44] 中。</p>
 <h1 id="三，PDE的算子学习"><a href="#三，PDE的算子学习" class="headerlink" title="三，PDE的算子学习"></a>三，PDE的算子学习</h1><p>紧跟[56,57]中的步骤，我们考虑用一个数据驱动模型来近似密度算子 $T:\mathcal H_1\to \mathcal H_2$，模型定义在两个Hilbert空间之上，且对于空间的约束为 $\mathbf{\Omega}\subset\mathbb R^m$。</p>
 ]]></content>
+      <categories>
+        <category>Transformer</category>
+      </categories>
+      <tags>
+        <tag>transformer</tag>
+        <tag>math</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>A Mathematical Framework for Transformer Circuits</title>
+    <url>/2023/04/27/Transformer/A%20Mathematical%20Framework%20for%20Transformer%20Circuits/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><a href="https://transformer-circuits.pub/2021/framework/index.html">link</a></p>
+<p><strong>transformerd的数学框架？</strong><br><span id="more"></span></p>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Transformer语言模型在新兴产业中的使用越来越广泛，比如GPT-3，LaMDA，Codex，Meena，Gopher和其他类似模型。<br>然而，随着这些模型的扩展，它们的开放性和高容量为意想不到的甚至有害的行为创造了越来越大的范围。 即使在大型模型经过训练多年后，创建者和用户仍会定期发现他们以前没有意识到的模型功能（包括有问题的行为）。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">【GPT-3】</span><br><span class="line">Language models are few-shot learners  [PDF]</span><br><span class="line">T.B. Brown, B. Mann, N. Ryder, M. Subbiah, J. Kaplan, P. Dhariwal, A. Neelakantan, P. Shyam, G. Sastry, A. Askell, others.</span><br><span class="line">arXiv preprint arXiv:2005.14165. 2020.</span><br><span class="line">【LaMDA】</span><br><span class="line">LaMDA: our breakthrough conversation technology  [link]</span><br><span class="line">E. Collins, Z. Ghahramani. 2021.</span><br><span class="line">【Codex】</span><br><span class="line">Evaluating large language models trained on code</span><br><span class="line">M. Chen, J. Tworek, H. Jun, Q. Yuan, H.P.d.O. Pinto, J. Kaplan, H. Edwards, Y. Burda, N. Joseph, G. Brockman, others.</span><br><span class="line">arXiv preprint arXiv:2107.03374. 2021.</span><br><span class="line">【Meena】</span><br><span class="line">Towards a human-like open-domain chatbot</span><br><span class="line">D. Adiwardana, M. Luong, D.R. So, J. Hall, N. Fiedel, R. Thoppilan, Z. Yang, A. Kulshreshtha, G. Nemade, Y. Lu, others.</span><br><span class="line">arXiv preprint arXiv:2001.09977. 2020.</span><br><span class="line">【Gopher】</span><br><span class="line">Scaling Language Models: Methods, Analysis &amp; Insights from Training Gopher  [PDF]</span><br><span class="line">J.W. Rae, S. Borgeaud, T. Cai, K. Millican, J. Hoffmann, F. Song, J. Aslanides, S. Henderson, R. Ring, S. Young, E. Rutherford, T. Hennigan, J. Menick, A. Cassirer, R. Powell, G.v.d. Driessche, L.A. Hendricks, M. Rauh, P. Huang, A. Glaese, J. Welbl, S. Dathathri, S. Huang, J. Uesato, J. Mellor, I. Higgins, A. Creswell, N. McAleese, A. Wu, E. Elsen, S. Jayakumar, E. Buchatskaya, D. Budden, E. Sutherland, K. Simonyan, M. Paganini, L. Sifre, L. Martens, X.L. Li, A. Kuncoro, A. Nematzadeh, E. Gribovskaya, D. Donato, A. Lazaridou, A. Mensch, J. Lespiau, M. Tsimpoukelli, N. Grigorev, D. Fritz, T. Sottiaux, M. Pajarskas, T. Pohlen, Z. Gong, D. Toyama, C.d.M. d’Autume, Y. Li, T. Terzi, V. Mikulik, I. Babuschkin, A. Clark, D.d.L. Casas, A. Guy, C. Jones, J. Bradbury, M. Johnson, B. Hechtman, L. Weidinger, I. Gabriel, W. Isaac, E. Lockhart, S. Osindero, L. Rimell, C. Dyer, O. Vinyals, K. Ayoub, J. Stanway, L. Bennett, D. Hassabis, K. Kavukcuoglu, G. Irving.</span><br><span class="line">Preprint. 2021.</span><br></pre></td></tr></table></figure>
+<p>解决这些问题的一种途径是寻求可解释性，试图对Transformer模型的详细计算进行逆向工程，类似于程序员将复杂的二进制文件反编译为人类可读的源代码。 如果这是可能的，它可能会提供一种更系统的方法来解释当前的安全问题、识别新的问题，甚至可能预测尚未构建的强大的未来模型的安全问题。 之前的一个项目，Distill Circuits, 曾尝试对视觉模型进行逆向工程，但到目前为止还没有类似的Tranformer或语言模型项目。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Thread: Circuits</span><br><span class="line">N. Cammarata, S. Carter, G. Goh, C. Olah, M. Petrov, L. Schubert, C. Voss, B. Egan, S.K. Lim.</span><br><span class="line">Distill. 2020.</span><br><span class="line">DOI: 10.23915/distill.00024</span><br></pre></td></tr></table></figure>
+<p>在本文中，我们尝试采取原始、初级的步骤来对Transformer模型进行逆向工程，因为现代语言模型令人难以置信的复杂性和规模，我们发现从最简单的模型开始并从那里开始工作是最有成效的。 我们的目标是发现简单的算法模式、主题或框架，这些模式、主题或框架随后可以应用于更大、更复杂的模型。 具体来说，在本文中，我们将研究只有两层或更少层且只有注意力块的Transformer——这与像 GPT-3 这样的大型现代Transformer形成对比，GPT-3有 96 层，且注意力块与 MLP 块交替出现。</p>
+<p>我们发现，通过以一种新的但在数学上等效的方式将Transformer的操作概念化，我们能够理解这些小模型，并对它们的内部运作方式获得重要的理解。 特别值得注意的是，我们发现我们称之为“感应头”的特定注意力头可以解释这些小模型中的上下文学习，并且这些头只在至少具有两个注意力层的模型中出现。 我们还介绍了对特定数据进行操作的一些示例。</p>
+<p>在第一篇论文中，我们并未尝试将我们的见解应用于更大的模型，但在即将发表的一篇论文中，我们将证明我们理解Transformer的数学框架和感应头的概念仍然至少部分相关，对于更大、更真实的模型——尽管我们距离能够完全逆向工程这些模型还有很长的路要走。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><h3 id="REVERSE-ENGINEERING-RESULTS"><a href="#REVERSE-ENGINEERING-RESULTS" class="headerlink" title="REVERSE ENGINEERING RESULTS"></a>REVERSE ENGINEERING RESULTS</h3><p>为了挑战Tranformer的逆向工程，我们先在其他算法和仅有注意力的模型上进行了尝试，有以下结论：</p>
+<h3 id="CONCEPTUAL-TAKE-AWAYS"><a href="#CONCEPTUAL-TAKE-AWAYS" class="headerlink" title="CONCEPTUAL TAKE-AWAYS"></a>CONCEPTUAL TAKE-AWAYS</h3><h2 id="Transformer回顾"><a href="#Transformer回顾" class="headerlink" title="Transformer回顾"></a>Transformer回顾</h2>]]></content>
       <categories>
         <category>Transformer</category>
       </categories>
@@ -5717,22 +5745,6 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </tags>
   </entry>
   <entry>
-    <title>hi3559a and nfs</title>
-    <url>/2022/05/19/hardware/hi3559a-nfs/</url>
-    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在进行板子调试的时候，用串口传输文件会比较繁琐，尤其是文件小而多时，所以此处采用了nfs服务，将PC机上的一个文件夹挂载到板子上共享存储服务。</p>
-<p><strong>可以使劲、快速的板砖啦…啦啦啦啦…</strong><br><span id="more"></span></p>
-<h2 id="1，PC上的安装和配置"><a href="#1，PC上的安装和配置" class="headerlink" title="1，PC上的安装和配置"></a>1，PC上的安装和配置</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 安装</span><br><span class="line">sudo apt-get install nfs-kernel-server</span><br><span class="line"># 共享文件夹</span><br><span class="line">sudo mkdir /home/demo/hi3559a_share</span><br><span class="line"># 配置文件，打开```/etc/exports```文件，在最后加上：</span><br><span class="line">/home/demo/hi3559a_share *(rw,sync,no_subtree_check)</span><br></pre></td></tr></table></figure>
-<p><strong>NOTE:参数说明找百度哦</strong><br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 重启服务，上面的配置完成之后，重启服务：</span><br><span class="line">sudo /etc/init.d/rpcbind restart//重启 rpcbind</span><br><span class="line">sudo /etc/init.d/nfs-kernel-server restart //重启 NFS</span><br></pre></td></tr></table></figure></p>
-<h2 id="2，开发板上的安装和配置"><a href="#2，开发板上的安装和配置" class="headerlink" title="2，开发板上的安装和配置"></a>2，开发板上的安装和配置</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 安装客户端</span><br><span class="line">sudo apt-get install nfs-common</span><br><span class="line"># 挂载文件夹</span><br><span class="line">mkdirs -p /home/hihope/hi3559av100</span><br><span class="line">chmod 777 /home/hihope/hi3559av100</span><br></pre></td></tr></table></figure>
-<h2 id="3，常用命令"><a href="#3，常用命令" class="headerlink" title="3，常用命令"></a>3，常用命令</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 挂载命令</span><br><span class="line">sudo mount -t nfs -o nolock,nfsvers=3,vers=3 192.168.86.105:/home/demo/hi3559a_share /home/hihope/hi3559av100</span><br><span class="line"># 卸载命令</span><br><span class="line">umount /home/hihope/hi3559av100</span><br><span class="line">df	//查看挂载信息</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>hardware</category>
-      </categories>
-      <tags>
-        <tag>hi3559a nfs</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>hi3559a，windows和vmware&amp;ubuntu的开发环境配置</title>
     <url>/2022/05/19/hardware/hi3559a-windows-vmware-software/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><h3 id="桥接模式"><a href="#桥接模式" class="headerlink" title="桥接模式"></a>桥接模式</h3><p>原理就找大佬们理解，也就不多说了。<br>我的理解是，PC和板子用网线连接，PC和虚拟机是逻辑连接，需要保证pc, ubuntu（vmware中的）和板子在同一个网段中。</p>
@@ -5791,6 +5803,22 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </categories>
       <tags>
         <tag>Hi3559a win10 vmware</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hi3559a and nfs</title>
+    <url>/2022/05/19/hardware/hi3559a-nfs/</url>
+    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在进行板子调试的时候，用串口传输文件会比较繁琐，尤其是文件小而多时，所以此处采用了nfs服务，将PC机上的一个文件夹挂载到板子上共享存储服务。</p>
+<p><strong>可以使劲、快速的板砖啦…啦啦啦啦…</strong><br><span id="more"></span></p>
+<h2 id="1，PC上的安装和配置"><a href="#1，PC上的安装和配置" class="headerlink" title="1，PC上的安装和配置"></a>1，PC上的安装和配置</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 安装</span><br><span class="line">sudo apt-get install nfs-kernel-server</span><br><span class="line"># 共享文件夹</span><br><span class="line">sudo mkdir /home/demo/hi3559a_share</span><br><span class="line"># 配置文件，打开```/etc/exports```文件，在最后加上：</span><br><span class="line">/home/demo/hi3559a_share *(rw,sync,no_subtree_check)</span><br></pre></td></tr></table></figure>
+<p><strong>NOTE:参数说明找百度哦</strong><br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 重启服务，上面的配置完成之后，重启服务：</span><br><span class="line">sudo /etc/init.d/rpcbind restart//重启 rpcbind</span><br><span class="line">sudo /etc/init.d/nfs-kernel-server restart //重启 NFS</span><br></pre></td></tr></table></figure></p>
+<h2 id="2，开发板上的安装和配置"><a href="#2，开发板上的安装和配置" class="headerlink" title="2，开发板上的安装和配置"></a>2，开发板上的安装和配置</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 安装客户端</span><br><span class="line">sudo apt-get install nfs-common</span><br><span class="line"># 挂载文件夹</span><br><span class="line">mkdirs -p /home/hihope/hi3559av100</span><br><span class="line">chmod 777 /home/hihope/hi3559av100</span><br></pre></td></tr></table></figure>
+<h2 id="3，常用命令"><a href="#3，常用命令" class="headerlink" title="3，常用命令"></a>3，常用命令</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 挂载命令</span><br><span class="line">sudo mount -t nfs -o nolock,nfsvers=3,vers=3 192.168.86.105:/home/demo/hi3559a_share /home/hihope/hi3559av100</span><br><span class="line"># 卸载命令</span><br><span class="line">umount /home/hihope/hi3559av100</span><br><span class="line">df	//查看挂载信息</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>hardware</category>
+      </categories>
+      <tags>
+        <tag>hi3559a nfs</tag>
       </tags>
   </entry>
   <entry>
