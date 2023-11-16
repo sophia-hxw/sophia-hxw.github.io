@@ -28,13 +28,20 @@
 <meta property="og:site_name" content="橦言无忌">
 <meta property="og:description" content="前言本文思想 papercoding multi-node（多机） multi-gpu（多卡）的工作原理和细节">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/11/16/Multimodal/Megatron-LM-Training%20Multi-Billion%20Parameter%20Language%20Models%20Using%20Model%20Parallelism/Megatron-LM-Training%20Multi-Billion%20Parameter%20Language%20Models%20Using%20Model%20Parallelism/self_attention.jpeg">
+<meta property="og:image" content="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/11/16/Multimodal/Megatron-LM-Training%20Multi-Billion%20Parameter%20Language%20Models%20Using%20Model%20Parallelism/inter_intra.jpeg">
+<meta property="og:image" content="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/11/16/Multimodal/Megatron-LM-Training%20Multi-Billion%20Parameter%20Language%20Models%20Using%20Model%20Parallelism/w_row_change.jpeg">
+<meta property="og:image" content="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/11/16/Multimodal/Megatron-LM-Training%20Multi-Billion%20Parameter%20Language%20Models%20Using%20Model%20Parallelism/row%20parallel%20linear%20layer.jpeg">
+<meta property="og:image" content="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/11/16/Multimodal/Megatron-LM-Training%20Multi-Billion%20Parameter%20Language%20Models%20Using%20Model%20Parallelism/w_column_change.jpeg">
+<meta property="og:image" content="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/11/16/Multimodal/Megatron-LM-Training%20Multi-Billion%20Parameter%20Language%20Models%20Using%20Model%20Parallelism/column%20parallel%20linear%20layer.jpeg">
+<meta property="og:image" content="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/11/16/Multimodal/Megatron-LM-Training%20Multi-Billion%20Parameter%20Language%20Models%20Using%20Model%20Parallelism/mlp.jpeg">
+<meta property="og:image" content="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/11/16/Multimodal/Megatron-LM-Training%20Multi-Billion%20Parameter%20Language%20Models%20Using%20Model%20Parallelism/final_mlp.jpeg">
+<meta property="og:image" content="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/11/16/Multimodal/Megatron-LM-Training%20Multi-Billion%20Parameter%20Language%20Models%20Using%20Model%20Parallelism/self_attention.jpeg">
 <meta property="article:published_time" content="2023-11-16T00:50:52.000Z">
-<meta property="article:modified_time" content="2023-11-16T03:27:06.254Z">
+<meta property="article:modified_time" content="2023-11-16T07:33:25.791Z">
 <meta property="article:author" content="xinwen">
 <meta property="article:tag" content="megatron">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/11/16/Multimodal/Megatron-LM-Training%20Multi-Billion%20Parameter%20Language%20Models%20Using%20Model%20Parallelism/Megatron-LM-Training%20Multi-Billion%20Parameter%20Language%20Models%20Using%20Model%20Parallelism/self_attention.jpeg">
+<meta name="twitter:image" content="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/11/16/Multimodal/Megatron-LM-Training%20Multi-Billion%20Parameter%20Language%20Models%20Using%20Model%20Parallelism/inter_intra.jpeg">
 
 <link rel="canonical" href="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/11/16/Multimodal/Megatron-LM-Training%20Multi-Billion%20Parameter%20Language%20Models%20Using%20Model%20Parallelism/">
 
@@ -226,7 +233,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2023-11-16 08:50:52 / 修改时间：11:27:06" itemprop="dateCreated datePublished" datetime="2023-11-16T08:50:52+08:00">2023-11-16</time>
+              <time title="创建时间：2023-11-16 08:50:52 / 修改时间：15:33:25" itemprop="dateCreated datePublished" datetime="2023-11-16T08:50:52+08:00">2023-11-16</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -258,14 +265,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.2k</span>
+              <span>2.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -289,11 +296,39 @@
 <h1 id="几个概念"><a href="#几个概念" class="headerlink" title="几个概念"></a>几个概念</h1><p>intra-layer model parallel approach和inter-layer model parallel approach的区别。猛一看，这两个的中文翻译都是“层内模型并行方法”。其实它们是有区别的：</p>
 <p><strong>inter-layer</strong> 并行，对应的是pipeline并行。例如6层CNN网络，前三层给一个GPU，后三层给另外一个GPU。</p>
 <p>而另外一个是<strong>intra-layer</strong>并行，对应的是tensor并行。仍然以6层CNN网络为例，横向切一刀，即一个tensor张量，会被分配到不同的GPU上面。</p>
-<p>其实就是上面的两个图，竖向切了一刀vs.横向切了一刀，那么这两个切法，就是<strong>正交的</strong>（夹角90度）。而且这两个方法可以同时在一个代码中实现，具有<strong>互补</strong>的关系。</p>
+<p>其实竖向切了一刀vs.横向切了一刀，那么这两个切法，就是<strong>正交的</strong>（夹角90度）。而且这两个方法可以同时在一个代码中实现，具有<strong>互补</strong>的关系。</p>
+<p><img src="inter_intra.jpeg" alt="inter_intra"></p>
+<h2 id="row-parallel-linear-layer"><a href="#row-parallel-linear-layer" class="headerlink" title="row parallel linear layer"></a>row parallel linear layer</h2><p>也就是</p>
+<p><img src="w_row_change.jpeg" alt="w_row"></p>
+<p>我们就可以把X1和W1放到一个GPU上；把X2和W2放到另外一个GPU上。它们都计算完毕之后，再相加（一个同步点），然后把相加的结果，回传给这两个GPU（如果有必要的话）。</p>
+<p><img src="row parallel linear layer.jpeg" alt="row_parallel"></p>
+<h2 id="column-parallel-linear"><a href="#column-parallel-linear" class="headerlink" title="column parallel linear"></a>column parallel linear</h2><p>也就是</p>
+<p><img src="w_column_change.jpeg" alt="w_column"></p>
+<p>同样的，我们可以把X和W1的乘积运算放一个GPU上；把X和W2的乘积运算放另外一个GPU上。</p>
+<p><img src="column parallel linear layer.jpeg" alt="column_parallel"></p>
+<h1 id="MLP的多GPU实现"><a href="#MLP的多GPU实现" class="headerlink" title="MLP的多GPU实现"></a>MLP的多GPU实现</h1><p>在原始的Transformer中，MLP，即point-wise feed forward sublayer，是包括了两个线性层的，实现了hidden.size -&gt; 4*hidden.size -&gt; hidden.size的这样的变换的神经网络。</p>
+<p>如果第一个线性层，使用横刀流，则需要在gelu之前加一个”同步点“（gpu停下手中的计算任务，把数据交换了再说，如果有结束的早的gpu，那就wait到其他的gpu的结果计算出来为止。。。这会导致一定程度的gpu浪费）。</p>
+<p>反过来看第一个线性层y=XA，如果使用纵刀流，结果会怎样呢？</p>
+<p>鉴于XA1和XA2是通过最后一个维度拼接的，那么我们当然可以先计算gelu(XA1)和gelu(XA2)，然后把gelu(XA1)和gelu(XA2)拼接，这不影响最终的结果。这个就有意思了，可以看到为了计算gelu这个非线性函数，我们不需要设置一个同步点了！</p>
+<p><strong>所以，第一层线性层，我们优先选择纵刀流（纵向切割权重A）。</strong></p>
+<p>第二个线性层呢？</p>
+<p>现在看看，当第一个线性层选了纵刀流的时候，结果就是传递给第二个线性层的X’是已经纵向切割的了，我们当然可以对B继续使用纵刀流，分别对 $XA_1$ 和 $XA_2$ 进行处理，这个时候就需要对 $B$ 切三刀，得到四块了，有些琐碎。还有一个方法，就是对B使用横刀流，这样，可以继续在gpu1上运行 $(XA_1)<em>B_1$，以及在GPU2上运行 $(XA_2)</em>B_2$。只有到最后计算完毕之后，才需要一个同步点，把两个gpu上分别的计算结果加在一起。</p>
+<p>所以，第二层线性层，我们优先选择横刀流（横向切割权重$B$）。</p>
+<p>因此，总结MLP的多GPU计算如下图所示：</p>
+<p><img src="mlp.jpeg" alt="mlp_multi_gpu"></p>
+<p>上图中，</p>
+<ul>
+<li>$X$，输入张量，$f$，自定义的激活函数，forward就是identity 函数，即X传播到不同的GPU上面；</li>
+<li>$XA_1$, $XA_2$，即通过对 $A$ 纵向一刀，得到的在两个gpu上运行的结果。当然，如果不是只切一刀，那当然可以使用更多的gpu来分别计算 $XA_1, XA_2, XA_3, XA_4\cdots$；</li>
+<li>$GELU$，非线性激活函数，$Y_1=GeLU(XA_1)；Y_2=GeLU(XA_2)$；</li>
+<li>$Y_1B_1$ 和 $Y_2B_2$，即通过对 $B$ 横向一刀，得到的在两个gpu上运行的结果。当然可以切很多刀，把更小的块，扔给一个个gpu。</li>
+<li>$g$，自定义的激活函数，前向forward的时候，是需要按照最后一个维度把Z1和Z2相加起来，即 $Z=Z_1 + Z_2$，pytorch中的all_reduce函数可以实现这个“归约”操作；</li>
+</ul>
+<p>总结上面的切分权值矩阵的方式，如下图所示：<br><img src="final_mlp.jpeg" alt="final_mlp"></p>
 <h1 id="Multi-head-self-attention-sublayer的实现"><a href="#Multi-head-self-attention-sublayer的实现" class="headerlink" title="Multi-head self-attention sublayer的实现"></a>Multi-head self-attention sublayer的实现</h1><p>分析清楚了MLP的多gpu的实现之后，multi-head self-attention sublayer就相对简单一些了，因为其中的四个线性层，都可以复用已有的column, row parallel linear layers。</p>
-<p><img src="./Megatron-LM-Training%20Multi-Billion%20Parameter%20Language%20Models%20Using%20Model%20Parallelism/self_attention.jpeg" alt="self_attention"></p>
+<p><img src="self_attention.jpeg" alt="self_attention"></p>
 <p>上图的左边是通过 $f$，先把 $X$ 分发到多个GPU上（直接copy）。然后每个head相关的三个线性层转换 $Q, K, V$，这三个都是用的“纵刀流linear layer”。在代码中，可以是使用一个 $h$ 到 $3h$ 的linear layer，最后再按照最后一个维度三等分，得到 $Q, K, V$。</p>
-<p>之后，计算  $Q^\top_1 K_1$<br>  ，之后扔给softmax，再给dropout，之后就是 $V_1$ 和这个attention score进行乘积。得到 $Y_1$，再走一个“横刀流”的linear layer。</p>
+<p>之后，计算  $Q^\top_1 K_1$，之后扔给softmax，再给dropout，之后就是 $V_1$ 和这个attention score进行乘积。得到 $Y_1$，再走一个“横刀流”的linear layer。</p>
 <p>当然，实际在代码实现的时候，不一定是一个head占一个gpu，也可以是一个gpu上有若干head，然后每个head的hidden.size和gpu中head的数量，合在一起，进行linear layers和multi-head self-attention的计算。</p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/366906920">Megatron论文和代码详细分析(1)</a></p>
 
@@ -395,7 +430,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87"><span class="nav-text">目标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%A0%E4%B8%AA%E6%A6%82%E5%BF%B5"><span class="nav-text">几个概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Multi-head-self-attention-sublayer%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-text">Multi-head self-attention sublayer的实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87"><span class="nav-text">目标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%A0%E4%B8%AA%E6%A6%82%E5%BF%B5"><span class="nav-text">几个概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#row-parallel-linear-layer"><span class="nav-text">row parallel linear layer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#column-parallel-linear"><span class="nav-text">column parallel linear</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MLP%E7%9A%84%E5%A4%9AGPU%E5%AE%9E%E7%8E%B0"><span class="nav-text">MLP的多GPU实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Multi-head-self-attention-sublayer%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-text">Multi-head self-attention sublayer的实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -479,13 +514,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">432k</span>
+    <span title="站点总字数">433k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:32</span>
+    <span title="站点阅读时长">6:33</span>
 </div>
 
         
