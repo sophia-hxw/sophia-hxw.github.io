@@ -164,7 +164,7 @@
   </entry>
   <entry>
     <title>resources of machine learning</title>
-    <url>/2023/10/31/tools/machine_learning_sources/</url>
+    <url>/2023/10/31/Tools/machine_learning_sources/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一些机器学习的各种资源，书籍和视频都有，随时更新～</p>
 <p><strong>come on~</strong><br><span id="more"></span></p>
 <h1 id="一，机器学习的视频学习资源"><a href="#一，机器学习的视频学习资源" class="headerlink" title="一，机器学习的视频学习资源"></a>一，机器学习的视频学习资源</h1><p>作为初学者，以下是一些优秀的机器学习视频学习资源，它们可以帮助你入门机器学习：</p>
@@ -179,7 +179,7 @@
 <h1 id="二，周志华的《机器学习》资源"><a href="#二，周志华的《机器学习》资源" class="headerlink" title="二，周志华的《机器学习》资源"></a>二，周志华的《机器学习》资源</h1><p><a href="https://github.com/Sophia-11/Machine-Learning-Notes">机器学习手推笔记</a><br><a href="https://github.com/hanmq/MachineLearning_Zhouzhihua_ProblemSets">课后习题</a><br><a href="https://github.com/fengyang95/tiny_ml">numpy coding</a></p>
 ]]></content>
       <categories>
-        <category>tools</category>
+        <category>Tools</category>
       </categories>
       <tags>
         <tag>sources</tag>
@@ -187,7 +187,7 @@
   </entry>
   <entry>
     <title>Deeplab系列网络</title>
-    <url>/2023/10/24/detection/deeplab-series/</url>
+    <url>/2023/10/24/Detection/deeplab-series/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>DeepLab系列论文一共有四篇，分别为：</p>
 <ul>
 <li><a href="http://arxiv.org/abs/1606.00915">DeepLab V1</a>，</li>
@@ -350,7 +350,7 @@
 </ol>
 ]]></content>
       <categories>
-        <category>detection</category>
+        <category>Detection</category>
       </categories>
       <tags>
         <tag>deeplab</tag>
@@ -358,7 +358,7 @@
   </entry>
   <entry>
     <title>虚函数与纯虚函数</title>
-    <url>/2023/10/19/cpp/%E8%99%9A%E5%87%BD%E6%95%B0/</url>
+    <url>/2023/10/19/Language/%E8%99%9A%E5%87%BD%E6%95%B0/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>虚函数可以说是在涉及C++的面试问题中经久不衰的话题了，这里就介绍一下虚函数的概念以及相关的常见问题。</p>
 <p><strong>加油~</strong><br><span id="more"></span></p>
 <h1 id="初识虚函数"><a href="#初识虚函数" class="headerlink" title="初识虚函数"></a>初识虚函数</h1><ul>
@@ -448,7 +448,7 @@
 </ul>
 ]]></content>
       <categories>
-        <category>cpp</category>
+        <category>Language</category>
       </categories>
       <tags>
         <tag>interview</tag>
@@ -456,7 +456,7 @@
   </entry>
   <entry>
     <title>delete和delete[]的区别</title>
-    <url>/2023/10/18/cpp/delete%E5%92%8Cdelete%5B%5D%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+    <url>/2023/10/18/Language/delete%E5%92%8Cdelete%5B%5D%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>C++中释放内存的方式有 delete 和 delete[] 两种，它们的区别是什么呢？</p>
 <p><strong>加油~</strong><br><span id="more"></span></p>
 <h1 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h1><p>在C++ Primer的书中提到，delete用来释放new申请的动态内存，delete[]用来释放由new[]申请的动态内存，也就是说：</p>
@@ -482,7 +482,7 @@
 <p><a href="https://blog.csdn.net/u012936940/article/details/80919880">C++中的delete和delete[ ]的区别</a></p>
 ]]></content>
       <categories>
-        <category>cpp</category>
+        <category>Language</category>
       </categories>
       <tags>
         <tag>interview</tag>
@@ -490,7 +490,7 @@
   </entry>
   <entry>
     <title>c++的四个智能指针</title>
-    <url>/2023/10/18/cpp/c++%E4%B8%AD%E7%9A%84%E5%9B%9B%E4%B8%AA%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/</url>
+    <url>/2023/10/18/Language/c++%E4%B8%AD%E7%9A%84%E5%9B%9B%E4%B8%AA%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>智能指针是C++11中的一个很重要的新特性，理解智能指针的用法无论对面试还是平时编写代码都有很大的好处，</p>
 <p>所以接下来就让我们了解一下C++中的4种智能指针是如何工作的吧。</p>
 <p><strong>加油~</strong><br><span id="more"></span></p>
@@ -525,7 +525,7 @@
 <p><a href="https://blog.csdn.net/k346k346/article/details/81478223">C++ STL 四种智能指针</a></p>
 ]]></content>
       <categories>
-        <category>cpp</category>
+        <category>Language</category>
       </categories>
       <tags>
         <tag>interview</tag>
@@ -533,7 +533,7 @@
   </entry>
   <entry>
     <title>c++11的常用新特性</title>
-    <url>/2023/10/18/cpp/c++11%E7%9A%84%E5%B8%B8%E7%94%A8%E6%96%B0%E7%89%B9%E6%80%A7/</url>
+    <url>/2023/10/18/Language/c++11%E7%9A%84%E5%B8%B8%E7%94%A8%E6%96%B0%E7%89%B9%E6%80%A7/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>C++11新增了很多新特性，这也成为了面试中非常常见的问题，这里介绍一些常用的新特性。C++11新特性有很多，这里就简单整理几个很常见的，应该足以应对面试中的问题了。</p>
 <p><strong>加油~</strong><br><span id="more"></span></p>
 <h1 id="C-11新特性"><a href="#C-11新特性" class="headerlink" title="C++11新特性"></a>C++11新特性</h1><h2 id="初始化列表"><a href="#初始化列表" class="headerlink" title="初始化列表"></a>初始化列表</h2><p>初始化列表，即用花括号来进行初始化。C++11中可以直接在变量名后面跟上初始化列表来进行对象的初始化，使用起来更加方便，例如：</p>
@@ -616,7 +616,7 @@
 <p>《C++ Primer》第五版</p>
 ]]></content>
       <categories>
-        <category>cpp</category>
+        <category>Language</category>
       </categories>
       <tags>
         <tag>interview</tag>
@@ -624,7 +624,7 @@
   </entry>
   <entry>
     <title>cnn相关的面试题</title>
-    <url>/2023/10/17/CNN/cnn_relate/</url>
+    <url>/2023/10/17/MachineLearning/cnn_relate/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>cnn的常见问题，持续加更中～</p>
 <p><strong>加油~</strong><br><span id="more"></span></p>
 <h1 id="Chapter-1"><a href="#Chapter-1" class="headerlink" title="Chapter-1"></a>Chapter-1</h1><h2 id="问题1：Softmax-Cross-Entropy反向求导"><a href="#问题1：Softmax-Cross-Entropy反向求导" class="headerlink" title="问题1：Softmax+Cross Entropy反向求导"></a>问题1：Softmax+Cross Entropy反向求导</h2><h2 id="问题2：BatchNorm层的详细解读-具体可以参考之后出版的百面深度学习2333"><a href="#问题2：BatchNorm层的详细解读-具体可以参考之后出版的百面深度学习2333" class="headerlink" title="问题2：BatchNorm层的详细解读(具体可以参考之后出版的百面深度学习2333)"></a>问题2：BatchNorm层的详细解读(具体可以参考之后出版的百面深度学习2333)</h2><ul>
@@ -664,7 +664,7 @@
 </ul>
 <h2 id="问题29：基于anchor匹配的目标检测和基于RNN集合匹配的目标检测有何区别，基于RNN集合匹配的损失定义有何缺陷"><a href="#问题29：基于anchor匹配的目标检测和基于RNN集合匹配的目标检测有何区别，基于RNN集合匹配的损失定义有何缺陷" class="headerlink" title="问题29：基于anchor匹配的目标检测和基于RNN集合匹配的目标检测有何区别，基于RNN集合匹配的损失定义有何缺陷"></a>问题29：基于anchor匹配的目标检测和基于RNN集合匹配的目标检测有何区别，基于RNN集合匹配的损失定义有何缺陷</h2><h2 id="问题30：CycleGAN的生成效果为啥一般都是位置不变纹理变化，为啥不能产生不同位置的生成效果"><a href="#问题30：CycleGAN的生成效果为啥一般都是位置不变纹理变化，为啥不能产生不同位置的生成效果" class="headerlink" title="问题30：CycleGAN的生成效果为啥一般都是位置不变纹理变化，为啥不能产生不同位置的生成效果"></a>问题30：CycleGAN的生成效果为啥一般都是位置不变纹理变化，为啥不能产生不同位置的生成效果</h2><h2 id="问题31：L2-regularization和Weight-decay"><a href="#问题31：L2-regularization和Weight-decay" class="headerlink" title="问题31：L2 regularization和Weight decay"></a>问题31：L2 regularization和Weight decay</h2><h2 id="问题32：深度学习中的batch的大小对学习效果有何影响？"><a href="#问题32：深度学习中的batch的大小对学习效果有何影响？" class="headerlink" title="问题32：深度学习中的batch的大小对学习效果有何影响？"></a>问题32：深度学习中的batch的大小对学习效果有何影响？</h2>]]></content>
       <categories>
-        <category>CNN</category>
+        <category>MachineLearning</category>
       </categories>
       <tags>
         <tag>interview</tag>
@@ -672,7 +672,7 @@
   </entry>
   <entry>
     <title>Physics-Guided, Physics-Informed, and Physics-Encoded Neural Networks in Scientific Computing</title>
-    <url>/2023/08/19/math/Physics-Guided,%20Physics-Informed,%20and%20Physics-Encoded%20Neural%20Networks%20in%20Scientific%20Computing/</url>
+    <url>/2023/08/19/Transformer/Physics-Guided,%20Physics-Informed,%20and%20Physics-Encoded%20Neural%20Networks%20in%20Scientific%20Computing/</url>
     <content><![CDATA[<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>最近计算能力的突破使得机器学习和深度学习可用于推进许多领域的科学计算，包括流体力学、固体力学、材料科学等，神经网络在这种混合科学中发挥着核心作用。 由于其固有的架构，传统神经网络在数据稀疏时无法成功训练以及确定范围，许多科学和工程领域就是这种情况。 尽管如此，神经网络给训练期间的物理驱动或基于知识的约束提供了坚实的基础。 一般来说，存在三种不同的神经网络框架来强化底层物理：(i) 物理引导神经网络 (PgNN)、(ii) 物理信息神经网络 (PiNN) 和 (iii) 物理编码神经网络 (PeNN)，这些方法为加速复杂多尺度多物理现象的数值建模提供了明显的优势。 此外，神经算子（NO）的最新发展为这些新的模拟范式增加了另一个维度，特别是当需要复杂的多物理系统的实时预测时。 所有这些模型也都有其独特的缺点和局限性，需要进一步的基础研究。 本研究旨在回顾科学计算研究中使用的四种神经网络框架（即 PgNN、PiNN、PeNN 和 NO），回顾了最先进的架构及其应用，讨论了局限性，并提出了在改进算法、考虑因果关系、扩展应用以及耦合科学和深度学习求解器方面的未来研究机会。 这篇批判性评论为研究人员和工程师提供了一个坚实的起点，帮助他们理解如何将不同的物理层集成到神经网络中。</p>
 <p><strong>PGNN,PINN,PENN</strong><br><span id="more"></span></p>
 <h1 id="一，介绍"><a href="#一，介绍" class="headerlink" title="一，介绍"></a>一，介绍</h1><p>机器学习（ML）和深度学习（DL）正在成为推动流体力学[1]、固体力学[2]、材料科学[3]等各个领域科学研究和计算的关键技术。 具有数千个处理器的多万亿次浮点运算机器出现并用于科学计算，并结合先进的基于感知的实验，预示着科学和工程领域结构化和非结构化异构数据的爆炸性增长。 ML 和 DL 方法首先被引入科学计算中，以解决缺乏有效数据进行建模的问题，该问题阻碍了科学家与异构且复杂的数据快速交互[4]。 这些方法显示出变革潜力，因为它们能够探索广阔的设计空间、识别多维联系以及管理不适定问题[5,6,7]。 然而，传统的机器学习和深度学习方法无法从复杂的多维数据中提取解释信息和专业知识，它们在映射观测或计算数据方面可能有效，但它们的预测可能在物理上不合理或可疑，导致概括性较差[8,9,10]。 因此，科学家们最初认为这些方法是一个神奇的黑匣子，缺乏坚实的数学基础，无法解释。 尽管如此，学习技术和理论构成了一种新的范式，可以比传统求解器更快地精确解决科学和实际问题。</p>
@@ -825,7 +825,7 @@
 </ul>
 ]]></content>
       <categories>
-        <category>math</category>
+        <category>Transformer</category>
       </categories>
       <tags>
         <tag>math</tag>
@@ -833,7 +833,7 @@
   </entry>
   <entry>
     <title>chatGPT怎么写指令？</title>
-    <url>/2023/07/10/tools/chatGPT%E6%80%8E%E4%B9%88%E5%86%99%E6%8C%87%E4%BB%A4/</url>
+    <url>/2023/07/10/Tools/chatGPT%E6%80%8E%E4%B9%88%E5%86%99%E6%8C%87%E4%BB%A4/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>chatGPT该怎么用？怎么写指令会得到更符合自己预期的反馈呢？</p>
 <p><strong>研究研究～</strong><br><span id="more"></span></p>
 <h1 id="一，写清楚指令"><a href="#一，写清楚指令" class="headerlink" title="一，写清楚指令"></a>一，写清楚指令</h1><h2 id="1，有细节才能得到更相关的答案"><a href="#1，有细节才能得到更相关的答案" class="headerlink" title="1，有细节才能得到更相关的答案"></a>1，有细节才能得到更相关的答案</h2><p>错误示范：写一篇全国甲卷文章</p>
@@ -880,7 +880,7 @@
 <h2 id="2，使用代码执行进行更准确的计算或调用外部API"><a href="#2，使用代码执行进行更准确的计算或调用外部API" class="headerlink" title="2，使用代码执行进行更准确的计算或调用外部API"></a>2，使用代码执行进行更准确的计算或调用外部API</h2><p>略</p>
 ]]></content>
       <categories>
-        <category>tools</category>
+        <category>Tools</category>
       </categories>
       <tags>
         <tag>chatGPT</tag>
@@ -888,7 +888,7 @@
   </entry>
   <entry>
     <title>怎么写国内外研究现状</title>
-    <url>/2023/07/10/tools/%E6%80%8E%E4%B9%88%E5%86%99%E5%9B%BD%E5%86%85%E5%A4%96%E7%A0%94%E7%A9%B6%E7%8E%B0%E7%8A%B6/</url>
+    <url>/2023/07/10/Tools/%E6%80%8E%E4%B9%88%E5%86%99%E5%9B%BD%E5%86%85%E5%A4%96%E7%A0%94%E7%A9%B6%E7%8E%B0%E7%8A%B6/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>科研论文写作中，研究现状是不可避免的一个环节，能整理我们对这个知识领域的了解程度，形成相应的知识框架。后面准备一篇相应的英文研究现状模板。。。</p>
 <p><strong>科研论文之—国内外研究现状</strong><br><span id="more"></span></p>
 <h1 id="一，国外研究现状"><a href="#一，国外研究现状" class="headerlink" title="一，国外研究现状"></a>一，国外研究现状</h1><ul>
@@ -922,7 +922,7 @@
 </ul>
 ]]></content>
       <categories>
-        <category>tools</category>
+        <category>Tools</category>
       </categories>
       <tags>
         <tag>writing</tag>
@@ -930,7 +930,7 @@
   </entry>
   <entry>
     <title>On Interpretability of Artificial Neural Networks-A Survey</title>
-    <url>/2023/06/28/CNN/On%20Interpretability%20of%20Artificial%20Neural%20Networks%20A%20Survey/</url>
+    <url>/2023/06/28/MachineLearning/On%20Interpretability%20of%20Artificial%20Neural%20Networks%20A%20Survey/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>title: On Interpretability of Artificial Neural Networks A Survey</p>
 <p>链接: <a href="https://pan.baidu.com/s/1mmXJSe-n63EYjxNztRrCig">https://pan.baidu.com/s/1mmXJSe-n63EYjxNztRrCig</a><br>提取码: 8q5v<br>—来自百度网盘超级会员v6的分享</p>
 <p><strong>ANN 模型的解释综述文章～</strong><br><span id="more"></span></p>
@@ -1024,7 +1024,7 @@ S_{C,k,l}=\lim_{\epsilon\rightarrow 0}\frac{h_{l,k}(f_l(x)+\epsilon v^l_C)-(h_{l
 m^\ast = \mathop{argmin}
 \end{align*}</script>]]></content>
       <categories>
-        <category>CNN</category>
+        <category>MachineLearning</category>
       </categories>
       <tags>
         <tag>interpretability</tag>
@@ -1032,7 +1032,7 @@ m^\ast = \mathop{argmin}
   </entry>
   <entry>
     <title>交叉熵和KL散度</title>
-    <url>/2023/06/28/math/cross_entropy_and_the_KL_divergence/</url>
+    <url>/2023/06/28/MachineLearning/cross_entropy_and_the_KL_divergence/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>KL散度和交叉熵都可以用来作为模型的loss函数，但二者的使用场景不一样。在这里引申一下模型loss的含义：“通过样本来计算模型分布与目标分布间的差异。”，这就是KL散度的作用。但有时候我们的目标分布会是常数，也就是这个分布是已知且不变的，例如分类任务，这个时候我们就会使用交叉熵来衡量模型的预测分布与实际分布之间的差异。</p>
 <p>CNN模型中常用的交叉熵对比数学中的KL散度概念～</p>
 <p><strong>调参的背后是无尽的数学理论啊～</strong><br><span id="more"></span></p>
@@ -1066,25 +1066,10 @@ m^\ast = \mathop{argmin}
 \end{align*}</script><p>当我们的主观认知完全匹配客观现实的时候，KL-散度应该等于 0，其它任何时候都会大于 0。由于存在恒为正这一性质，KL-散度经常用于描述两个分布是否接近，也就是作为两个分布之间“距离”的度量；不过由于运算不满足交换律，所以又不能完全等同于“距离”来理解。<br>机器学习中通常用交叉熵作为损失函数的原因在与，客观分布并不随参数变化，所以即使是优化 KL-散度，对参数求导的时候也只有交叉熵的导数了。</p>
 ]]></content>
       <categories>
-        <category>math</category>
+        <category>MachineLearning</category>
       </categories>
       <tags>
         <tag>math</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>A Survey of Transformers</title>
-    <url>/2023/06/28/Transformer/A%20Survey%20of%20Transformers/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Transformer模型的发展综述～</p>
-<p>论文百度云链接: <a href="https://pan.baidu.com/s/1fwGSq4SysfLSOzSPKRQzjg">https://pan.baidu.com/s/1fwGSq4SysfLSOzSPKRQzjg</a><br>提取码: r2ii<br>—来自百度网盘超级会员v6的分享</p>
-<p><strong>继续加油读文章</strong><br><span id="more"></span></p>
-<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>Transformers 在自然语言处理、计算机视觉、音频处理等许多人工智能领域取得了巨大的成功。 因此，自然会引起学术界和工业界研究人员的极大兴趣。 到目前为止，已经提出了各种各样的 Transformer 变体（又名 X-formers），但是，仍然缺乏对这些 Transformer 变体的系统和全面的文献综述。 在本次调查中，我们对各种 X-formers 进行了全面审查。 我们首先简要介绍 vanilla Transformer，然后提出一个新的 X-formers 分类法。 接下来，我们从架构修改、预训练、应用三个角度介绍各种X-former。 最后，我们概述了未来研究的一些潜在方向。</p>
-<h1 id=""><a href="#" class="headerlink" title=" "></a> </h1>]]></content>
-      <categories>
-        <category>Transformer</category>
-      </categories>
-      <tags>
-        <tag>transformer</tag>
       </tags>
   </entry>
   <entry>
@@ -1230,6 +1215,21 @@ where head_i=\mathrm{Attention}(\mathbf Q_i,\mathbf K_i,\mathbf V_i)
 <p>出现了各种类型的神经网络，例如 CNN、RNN 和 Transformer。在CV领域，CNNs曾经是主流选择，但是现在Transformer开始流行了。 CNN 可以捕获归纳偏差，例如翻译等方差和局部性，而 ViT 使用大规模训练来超越归纳偏差。根据目前可用的证据，CNN 在小型数据集上表现良好，而 Transformer 在大型数据集上表现更好。未来的问题是使用 CNN 还是 Transformer。</p>
 <p>通过使用大型数据集进行训练，Transformer 可以在 NLP 和 CV 基准测试上实现最先进的性能，神经网络可能需要大数据而不是归纳偏差。最后，我们留给大家一个问题：Transformer 是否可以通过非常简单的计算范式（例如，仅使用全连接层）和海量数据训练来获得令人满意的结果？</p>
 ]]></content>
+      <categories>
+        <category>Transformer</category>
+      </categories>
+      <tags>
+        <tag>transformer</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>A Survey of Transformers</title>
+    <url>/2023/06/28/Transformer/A%20Survey%20of%20Transformers/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Transformer模型的发展综述～</p>
+<p>论文百度云链接: <a href="https://pan.baidu.com/s/1fwGSq4SysfLSOzSPKRQzjg">https://pan.baidu.com/s/1fwGSq4SysfLSOzSPKRQzjg</a><br>提取码: r2ii<br>—来自百度网盘超级会员v6的分享</p>
+<p><strong>继续加油读文章</strong><br><span id="more"></span></p>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>Transformers 在自然语言处理、计算机视觉、音频处理等许多人工智能领域取得了巨大的成功。 因此，自然会引起学术界和工业界研究人员的极大兴趣。 到目前为止，已经提出了各种各样的 Transformer 变体（又名 X-formers），但是，仍然缺乏对这些 Transformer 变体的系统和全面的文献综述。 在本次调查中，我们对各种 X-formers 进行了全面审查。 我们首先简要介绍 vanilla Transformer，然后提出一个新的 X-formers 分类法。 接下来，我们从架构修改、预训练、应用三个角度介绍各种X-former。 最后，我们概述了未来研究的一些潜在方向。</p>
+<h1 id=""><a href="#" class="headerlink" title=" "></a> </h1>]]></content>
       <categories>
         <category>Transformer</category>
       </categories>
@@ -1406,7 +1406,7 @@ where head_i=\mathrm{Attention}(\mathbf Q_i,\mathbf K_i,\mathbf V_i)
   </entry>
   <entry>
     <title>Deep Residual Learning for Image Recognition</title>
-    <url>/2023/06/09/CNN/Deep%20Residual%20Learning%20for%20Image%20Recognition/</url>
+    <url>/2023/06/09/MachineLearning/Deep%20Residual%20Learning%20for%20Image%20Recognition/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>残差连接，让深层神经网络能够正常训练而不至于陷入梯度消失困境的有力武器，Kaiming He的又一神作之一。</p>
 <p><strong>理解残差连接的由来和贡献，以及后续还有什么优化方向</strong><br><span id="more"></span></p>
 <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>更深的神经网络更难训练，本文提出了一个残差学习框架，简化更深的神经网络训练。 本文明确地将网络层重新表述为考虑了输入的learning redidual functions，而不是learning unreferenced functions。 本文提供了全面的经验证据，表明这些残差网络更容易优化，并且可以从显著增加的深度中获得更好准确性。 </p>
@@ -1448,7 +1448,7 @@ where head_i=\mathrm{Attention}(\mathbf Q_i,\mathbf K_i,\mathbf V_i)
 <h2 id="4-3-PASCAL-和-MS-COCO上的目标检测"><a href="#4-3-PASCAL-和-MS-COCO上的目标检测" class="headerlink" title="4.3 PASCAL 和 MS COCO上的目标检测"></a>4.3 PASCAL 和 MS COCO上的目标检测</h2><p>本文的方法在其他识别任务上具有良好的泛化性能。 表 7 和表 8 显示了 PASCAL VOC 2007 和 2012 [5] 以及 COCO [26] 的对象检测基线结果。 本文采用 Faster R-CNN [32] 作为检测方法。 在这里，本文对用 ResNet-101 替换 VGG-16 [41] 的改进感兴趣。 使用两种模型的检测实现（见附录）是相同的，因此收益只能归功于更好的网络。 最引人注目的是，在具有挑战性的 COCO 数据集上，本文获得了 COCO 标准指标 (mAP@[.5, .95]) 6.0% 的提高，相对提高了 28%。 这种增益完全归功于学习到的表征。<br>基于深度残差网络，本文在 ILSVRC &amp; COCO 2015 竞赛的几个赛道上获得了第一名：ImageNet 检测、ImageNet 定位、COCO 检测和 COCO 分割。 详情载于附录。</p>
 ]]></content>
       <categories>
-        <category>CNN</category>
+        <category>MachineLearning</category>
       </categories>
       <tags>
         <tag>Resnet</tag>
@@ -1456,7 +1456,7 @@ where head_i=\mathrm{Attention}(\mathbf Q_i,\mathbf K_i,\mathbf V_i)
   </entry>
   <entry>
     <title>Numerical Methods for algorithmic Systems and Neural Networks</title>
-    <url>/2023/05/17/tools/Numerical_Methods_for_algorithmic_Systems_and_Neural_Networks/</url>
+    <url>/2023/05/17/Tools/Numerical_Methods_for_algorithmic_Systems_and_Neural_Networks/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>数值方法和DNN的交叉学科所包含的知识，可以逐步补充完整的～</p>
 <p><strong>作者</strong><br>Sebastian Kinnewig, Leon Kolditz, Julian Roth, Thomas Wick   </p>
 <p><strong>参考链接</strong><br><a href="https://www.ifam.uni-hannover.de/en/wick/">https://www.ifam.uni-hannover.de/en/wick/</a><br><a href="https://www.ifam.uni-hannover.de/en/">https://www.ifam.uni-hannover.de/en/</a></p>
@@ -1465,7 +1465,7 @@ where head_i=\mathrm{Attention}(\mathbf Q_i,\mathbf K_i,\mathbf V_i)
 <p><img src="Numerical_Methods_for_algorithmic_Systems_and_Neural_Networks.jpeg" alt="img"></p>
 ]]></content>
       <categories>
-        <category>tools</category>
+        <category>Tools</category>
       </categories>
       <tags>
         <tag>numerical methods</tag>
@@ -1473,7 +1473,7 @@ where head_i=\mathrm{Attention}(\mathbf Q_i,\mathbf K_i,\mathbf V_i)
   </entry>
   <entry>
     <title>Training Neural Networks by Lifted Proximal Operator Machines</title>
-    <url>/2023/05/10/CNN/Training%20Neural%20Networks%20by%20Lifted%20Proximal%20Operator%20Machines/</url>
+    <url>/2023/05/10/MachineLearning/Training%20Neural%20Networks%20by%20Lifted%20Proximal%20Operator%20Machines/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>title: Training Neural Networks by Lifted Proximal Operator Machines</p>
 <p>论文百度云盘链接:<a href="https://pan.baidu.com/s/14x2KrlBVhfdWWy8oQBjROw?pwd=axgn">https://pan.baidu.com/s/14x2KrlBVhfdWWy8oQBjROw?pwd=axgn</a> </p>
 <p><strong>提升近端算子机对前馈神经网络的训练问题～</strong><br><span id="more"></span></p>
@@ -1776,7 +1776,7 @@ k-\tau^i_j(k)\leq \Delta,\; k=0,1...
 <h1 id="七，结论"><a href="#七，结论" class="headerlink" title="七，结论"></a>七，结论</h1><p>在这项工作中，我们开发了 LPOM 来训练全连接的前馈神经网络。 通过将激活函数重写为等效的近端算子，LPOM 将 NN 的训练公式化为块多凸模型。 这引出了我们具有收敛保证的新型 BCD 求解方法。 由于公式和求解方法，LPOM 避免了梯度消失或爆炸问题，适用于一般非递减 $Lipschitz$ 连续激活函数。 此外，它不需要比分层激活更多的辅助变量，并且其参数调整相对简单。 也可以并行解决。 我们首先提出了一种具有收敛保证的新异步 BCD 方法。 然后我们用它来求解LPOM，得到async-LPOM。 为了更快的速度，我们开发了 sync-LPOM。 我们的实验结果表明，LPOM 在全连接前馈 NN 上的效果优于 SGD、Adam、AMS-Grad、[17]、[23] 和 [24]。 我们还验证了 sync-LPOM 在各种自动编码器训练问题上的效率和有效性。 未来的工作包括扩展 LPOM 以训练卷积和递归神经网络，并将 LPOM 应用于网络量化。</p>
 ]]></content>
       <categories>
-        <category>CNN</category>
+        <category>MachineLearning</category>
       </categories>
       <tags>
         <tag>LPOM</tag>
@@ -1784,7 +1784,7 @@ k-\tau^i_j(k)\leq \Delta,\; k=0,1...
   </entry>
   <entry>
     <title>markdown中的符号和使用小技巧</title>
-    <url>/2023/05/06/tools/markdown_tools/</url>
+    <url>/2023/05/06/Tools/markdown_tools/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>写markdown的小技巧和实用符号随记</p>
 <p><strong>多写写会更熟悉～</strong><br><span id="more"></span></p>
 <h1 id="一，希腊字母"><a href="#一，希腊字母" class="headerlink" title="一，希腊字母"></a>一，希腊字母</h1><div class="table-container">
@@ -2049,7 +2049,7 @@ k-\tau^i_j(k)\leq \Delta,\; k=0,1...
 </ul>
 ]]></content>
       <categories>
-        <category>tools</category>
+        <category>Tools</category>
       </categories>
       <tags>
         <tag>markdown</tag>
@@ -2057,7 +2057,7 @@ k-\tau^i_j(k)\leq \Delta,\; k=0,1...
   </entry>
   <entry>
     <title>怎么读论文？</title>
-    <url>/2023/05/05/tools/how_to_read_paper/</url>
+    <url>/2023/05/05/Tools/how_to_read_paper/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>又言论文十问，由沈向洋博士提出</p>
 <p><strong>加油读文章</strong><br><span id="more"></span></p>
 <h2 id="哪十个问题呢？"><a href="#哪十个问题呢？" class="headerlink" title="哪十个问题呢？"></a>哪十个问题呢？</h2><ul>
@@ -2074,7 +2074,7 @@ k-\tau^i_j(k)\leq \Delta,\; k=0,1...
 </ul>
 ]]></content>
       <categories>
-        <category>tools</category>
+        <category>Tools</category>
       </categories>
       <tags>
         <tag>paper reading</tag>
@@ -2263,8 +2263,8 @@ a_{i,j} = \frac{1}{2-y_i^\top y_j}(\sum^n_{k=1}\frac{1}{2-y_i^\top y_k})^{-1}
         <category>Transformer</category>
       </categories>
       <tags>
-        <tag>transformer</tag>
         <tag>math</tag>
+        <tag>transformer</tag>
       </tags>
   </entry>
   <entry>
@@ -2301,13 +2301,13 @@ a_{i,j} = \frac{1}{2-y_i^\top y_j}(\sum^n_{k=1}\frac{1}{2-y_i^\top y_k})^{-1}
         <category>Transformer</category>
       </categories>
       <tags>
-        <tag>transformer</tag>
         <tag>math</tag>
+        <tag>transformer</tag>
       </tags>
   </entry>
   <entry>
     <title>seven concepts in designing and analysising of algoritms</title>
-    <url>/2023/04/25/math/seven_concepts_algorithms/</url>
+    <url>/2023/04/25/MachineLearning/seven_concepts_algorithms/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>design and analysis of algorithms can be broadly achieved with the help of seven concepts</p>
 <p>《Numerical Methods for Algorithms Systems and Neural Networks》<br><a href="https://www.ifam.uni-hannover.de/en">reference link</a><br><a href="http://dx.doi.org/10.15488/11897">doi</a></p>
 <p><strong>从七个要素来看算法的设计和分析……</strong><br><span id="more"></span></p>
@@ -2324,7 +2324,7 @@ a_{i,j} = \frac{1}{2-y_i^\top y_j}(\sum^n_{k=1}\frac{1}{2-y_i^\top y_k})^{-1}
 <h2 id="7-Stability"><a href="#7-Stability" class="headerlink" title="7, Stability"></a>7, Stability</h2><p>最后，必须研究算法和实现在参数（模型、材料、数值）变化、边界条件、初始条件、不确定性方面的稳健性。 稳定性在最广泛的意义上与阿达玛的第三个条件相关。</p>
 ]]></content>
       <categories>
-        <category>math</category>
+        <category>MachineLearning</category>
       </categories>
       <tags>
         <tag>algorithms</tag>
@@ -2332,7 +2332,7 @@ a_{i,j} = \frac{1}{2-y_i^\top y_j}(\sum^n_{k=1}\frac{1}{2-y_i^\top y_k})^{-1}
   </entry>
   <entry>
     <title>General datasets for deep learning in CV</title>
-    <url>/2023/03/23/CNN/datasets/</url>
+    <url>/2023/03/23/MachineLearning/datasets/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>通用检测任务的常用数据集，包含VOC，COCO，ImageNet，不断更新其他分支任务的数据集。</p>
 <p><strong>big data is all you need</strong><br><span id="more"></span></p>
 <h2 id="一，PASCAL-VOC"><a href="#一，PASCAL-VOC" class="headerlink" title="一，PASCAL VOC"></a>一，PASCAL VOC</h2><h3 id="1-1-简介"><a href="#1-1-简介" class="headerlink" title="1.1 简介"></a>1.1 简介</h3><p>由Mark Everingham (University ofLeeds)、Luc van Gool (ETHZ, Zurich)等人创立，有1.7W+张图片，分为20类。</p>
@@ -2377,7 +2377,7 @@ a_{i,j} = \frac{1}{2-y_i^\top y_j}(\sum^n_{k=1}\frac{1}{2-y_i^\top y_k})^{-1}
 </ul>
 ]]></content>
       <categories>
-        <category>CNN</category>
+        <category>MachineLearning</category>
       </categories>
       <tags>
         <tag>datasets</tag>
@@ -2385,7 +2385,7 @@ a_{i,j} = \frac{1}{2-y_i^\top y_j}(\sum^n_{k=1}\frac{1}{2-y_i^\top y_k})^{-1}
   </entry>
   <entry>
     <title>General activate functions</title>
-    <url>/2023/03/23/CNN/activation%20functions/</url>
+    <url>/2023/03/23/MachineLearning/activation%20functions/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>激活函数汇总对比~</p>
 <p><strong>随时加更中~</strong><br><span id="more"></span></p>
 <h2 id="一，定义"><a href="#一，定义" class="headerlink" title="一，定义"></a>一，定义</h2><p>激活函数（又叫激励函数）是模型整个结构中的非线性扭曲力，神经网络的每层都会有一个激活函数。</p>
@@ -2580,7 +2580,7 @@ f^{'}(x)=
 <h3 id="7，如何解决ReLU神经元“死亡”的问题？"><a href="#7，如何解决ReLU神经元“死亡”的问题？" class="headerlink" title="7，如何解决ReLU神经元“死亡”的问题？"></a>7，如何解决ReLU神经元“死亡”的问题？</h3><p>①采用Leaky ReLU等激活函数 ②设置较小的学习率进行训练 ③使用momentum优化算法动态调整学习率</p>
 ]]></content>
       <categories>
-        <category>CNN</category>
+        <category>MachineLearning</category>
       </categories>
       <tags>
         <tag>activation</tag>
@@ -3046,7 +3046,7 @@ f^\ast,g^\ast=\mathop{argmin}_{f\in\mathcal{B_{\mathcal{X}}},g\in\mathcal{B_{\ma
   </entry>
   <entry>
     <title>Lifted Proximal Operator Machines</title>
-    <url>/2023/03/22/CNN/Lifted%20Proximal%20Operator%20Machines/</url>
+    <url>/2023/03/22/MachineLearning/Lifted%20Proximal%20Operator%20Machines/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>title: Lifted Proximal Operator Machines</p>
 <p>论文百度云链接: <a href="https://pan.baidu.com/s/1J2hdhLMp_xW6QcmWRi1-zA">https://pan.baidu.com/s/1J2hdhLMp_xW6QcmWRi1-zA</a><br>提取码: ersk </p>
 <p><strong>提升近端算子机，将非凸问题进行凸化的利器，已用于分析DNN的网络和训练策略等~</strong><br><span id="more"></span></p>
@@ -3271,7 +3271,7 @@ W^{i,t+1}=Y^{i,t}-\frac{1}{\beta}(\phi(Y^{i,t}X^i)-X^{i+1})(X^i)^{+}
 <h1 id="重要文献"><a href="#重要文献" class="headerlink" title="重要文献"></a>重要文献</h1><p><a href="https://arxiv.org/abs/1805.01532">Lifted neural networks</a><br><a href="https://arxiv.org/abs/1512.03385">Deep residual learning for image recognition</a></p>
 ]]></content>
       <categories>
-        <category>CNN</category>
+        <category>MachineLearning</category>
       </categories>
       <tags>
         <tag>LPOM</tag>
@@ -3593,7 +3593,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>数学专业课学习资源</title>
-    <url>/2022/11/15/math/learning_video_source/</url>
+    <url>/2022/11/15/MachineLearning/learning_video_source/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>数学专业课的学习资源，大多是视频，后续会不断增加其他形式~</p>
 <p><strong>多年前翘的课，早晚要还回去~</strong><br><span id="more"></span></p>
 <h2 id="高等数学"><a href="#高等数学" class="headerlink" title="高等数学"></a>高等数学</h2><ul>
@@ -3642,7 +3642,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 </ul>
 ]]></content>
       <categories>
-        <category>math</category>
+        <category>MachineLearning</category>
       </categories>
       <tags>
         <tag>math</tag>
@@ -3651,7 +3651,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>阅读清单来了，下半部分</title>
-    <url>/2022/11/15/tools/readinglist_2023_half2/</url>
+    <url>/2022/11/15/Tools/readinglist_2023_half2/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>想给自己立flag了，能戒掉游戏不？能多读两本书吗？</p>
 <p><strong>从2023就开始吧~</strong><br><span id="more"></span></p>
 <h2 id="工具类"><a href="#工具类" class="headerlink" title="工具类"></a>工具类</h2><ul>
@@ -3716,7 +3716,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 </ul>
 ]]></content>
       <categories>
-        <category>tools</category>
+        <category>Tools</category>
       </categories>
       <tags>
         <tag>readinglist</tag>
@@ -3724,7 +3724,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>阅读清单来了，上半部分</title>
-    <url>/2022/11/15/tools/readinglist_2023_half1%20copy/</url>
+    <url>/2022/11/15/Tools/readinglist_2023_half1%20copy/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>想给自己立flag了，能戒掉游戏不？能多读两本书吗？</p>
 <p><strong>从2023就开始吧~</strong><br><span id="more"></span></p>
 <ul>
@@ -3811,7 +3811,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 </ul>
 ]]></content>
       <categories>
-        <category>tools</category>
+        <category>Tools</category>
       </categories>
       <tags>
         <tag>readinglist</tag>
@@ -3819,7 +3819,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>Several spaces in Real Variable Functions</title>
-    <url>/2022/11/14/math/several%20spaces/</url>
+    <url>/2022/11/14/MachineLearning/several%20spaces/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>实变函数中理不清的几个空间问题，不断更新中，一边学习，一边总结~</p>
 <p><strong>实变函数与泛函分析中的几个空间，各种空间，还在学习中…</strong><br><span id="more"></span></p>
 <h2 id="一，度量空间"><a href="#一，度量空间" class="headerlink" title="一，度量空间"></a>一，度量空间</h2><p>设 $\mathbf{X}$ 是集合，对 $\forall x,y\in{X}$ 都有实数 $d(x,y)$ 对应，而且满足：</p>
@@ -3903,7 +3903,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 </ul>
 ]]></content>
       <categories>
-        <category>math</category>
+        <category>MachineLearning</category>
       </categories>
       <tags>
         <tag>real-variable-funcs</tag>
@@ -3990,7 +3990,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>区块链中的名词解释</title>
-    <url>/2022/11/14/tools/clock_chain_new_words/</url>
+    <url>/2022/11/14/Tools/clock_chain_new_words/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>区块链中的各种链解释~</p>
 <p><strong>区块链，去中心化的新技术~</strong><br><span id="more"></span></p>
 <h2 id="1，公链"><a href="#1，公链" class="headerlink" title="1，公链"></a>1，公链</h2><p>比特币、以太坊是时下流行的公链。</p>
@@ -4008,7 +4008,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 <h2 id="8，测试链"><a href="#8，测试链" class="headerlink" title="8，测试链"></a>8，测试链</h2><p>一是开发者为了方便大家学习使用而提供的测试用途的区块链网络，如比特币测试链、以太坊测试链等；<br>二是用户自行搭建的测试网络。</p>
 ]]></content>
       <categories>
-        <category>tools</category>
+        <category>Tools</category>
       </categories>
       <tags>
         <tag>blockchain</tag>
@@ -4016,7 +4016,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>cpp相关面试题</title>
-    <url>/2022/10/17/cpp/interview_1/</url>
+    <url>/2022/10/17/Language/interview_1/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>c++的常见面试题，随时加更中～</p>
 <p><strong>加油~</strong><br><span id="more"></span></p>
 <h1 id="chapter-1"><a href="#chapter-1" class="headerlink" title="chapter-1"></a>chapter-1</h1><h2 id="问题1-incluede-后面使用双引号-“-“-和尖括号-lt-gt-的区别"><a href="#问题1-incluede-后面使用双引号-“-“-和尖括号-lt-gt-的区别" class="headerlink" title="问题1: incluede 后面使用双引号 “ “ 和尖括号 &lt;&gt; 的区别"></a>问题1: incluede 后面使用双引号 “ “ 和尖括号 &lt;&gt; 的区别</h2><p><strong>参考：</strong></p>
@@ -4044,7 +4044,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 <p><a href="new/delete与malloc/free的区别与联系详解！">new/delete与malloc/free的区别与联系详解！</a></p>
 ]]></content>
       <categories>
-        <category>cpp</category>
+        <category>Language</category>
       </categories>
       <tags>
         <tag>interview</tag>
@@ -4052,7 +4052,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>hexo上的next主题增量优化</title>
-    <url>/2022/08/04/ubuntuOS/hexo-next-theme2/</url>
+    <url>/2022/08/04/OS/hexo-next-theme2/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>接着继续优化hexo上next的主题，现在基本就是，缺什么补上，看着什么补顺眼就美化，赞的啦~</p>
 <p><strong>立志成为顺眼的博客~</strong><br><span id="more"></span></p>
 <h2 id="1，代码折叠"><a href="#1，代码折叠" class="headerlink" title="1，代码折叠"></a>1，代码折叠</h2><h3 id="1-1-添加code-unfold-js"><a href="#1-1-添加code-unfold-js" class="headerlink" title="1.1 添加code-unfold.js"></a>1.1 添加code-unfold.js</h3><p>新增文件，路径为themes/next/source/js/code-unfold.js，代码为：<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">var CODE_MAX_HEIGHT = 200;</span><br><span class="line">var containers = [];</span><br><span class="line"></span><br><span class="line">// 展开</span><br><span class="line">$(&#x27;body&#x27;).on(&#x27;click&#x27;, &#x27;.js_unfold_code_btn&#x27;, function () &#123;</span><br><span class="line">  $(this).closest(&#x27;.js_highlight_container&#x27;).addClass(&#x27;on&#x27;);</span><br><span class="line">&#125;);</span><br><span class="line">// 收起</span><br><span class="line">$(&#x27;body&#x27;).on(&#x27;click&#x27;, &#x27;.js_retract_code_btn&#x27;, function () &#123;</span><br><span class="line">  var $container = $(this).closest(&#x27;.js_highlight_container&#x27;).removeClass(&#x27;on&#x27;);</span><br><span class="line">  var winTop = $(window).scrollTop();</span><br><span class="line">  var offsetTop = $container.offset().top;</span><br><span class="line">  $(this).css(&#x27;top&#x27;, 0);</span><br><span class="line">  if (winTop &gt; offsetTop) &#123;</span><br><span class="line">    // 设置滚动条位置</span><br><span class="line">    $(&#x27;body, html&#x27;).animate(&#123;</span><br><span class="line">      scrollTop: $container.offset().top - CODE_MAX_HEIGHT</span><br><span class="line">    &#125;, 600);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line">// 滚动事件，触发动画效果</span><br><span class="line">$(window).on(&#x27;scroll&#x27;, function () &#123;</span><br><span class="line">  var scrollTop = $(window).scrollTop();</span><br><span class="line">  var temp = [];</span><br><span class="line">  for (let i = 0; i &lt; containers.length; i++) &#123;</span><br><span class="line">    var item = containers[i];</span><br><span class="line">    var &#123; $container, height, $hide, hasHorizontalScrollbar &#125; = item;</span><br><span class="line">    if ($container.closest(&#x27;body&#x27;).length === 0) &#123;</span><br><span class="line">      // 如果 $container 元素已经不在页面上, 则删除该元素</span><br><span class="line">      // 防止pjax页面跳转之后，元素未删除</span><br><span class="line">      continue;</span><br><span class="line">    &#125;</span><br><span class="line">    temp.push(item);</span><br><span class="line">    if (!$container.hasClass(&#x27;on&#x27;)) &#123;</span><br><span class="line">      continue;</span><br><span class="line">    &#125;</span><br><span class="line">    var offsetTop = $container.offset().top;</span><br><span class="line">    var hideBtnHeight = $hide.outerHeight();</span><br><span class="line">    // 减去按钮高度，减去底部滚动条高度</span><br><span class="line">    var maxTop = parseInt(height - (hasHorizontalScrollbar ? 17 : 0) - hideBtnHeight);</span><br><span class="line">    let top = parseInt(</span><br><span class="line">      Math.min(</span><br><span class="line">        Math.max(scrollTop - offsetTop, 0), // 如果小于 0 ，则取 0</span><br><span class="line">        maxTop,// 如果大于 height ，则取 height</span><br><span class="line">      )</span><br><span class="line">    );</span><br><span class="line">    // 根据 sin 曲线设置&quot;收起代码&quot;位置</span><br><span class="line">    var halfHeight = parseInt($(window).height() / 2 * Math.sin((top / maxTop) * 90 * (2 * Math.PI/360)));</span><br><span class="line">    $hide.css(&#x27;top&#x27;, Math.min(top + halfHeight, maxTop));</span><br><span class="line">  &#125;</span><br><span class="line">  containers = temp;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">// 添加隐藏容器</span><br><span class="line">function addCodeWrap($node) &#123;</span><br><span class="line">  var $container = $node.wrap(&#x27;&lt;div class=&quot;js_highlight_container highlight-container&quot;&gt;&lt;div class=&quot;highlight-wrap&quot;&gt;&lt;/div&gt;&lt;/div&gt;&#x27;).closest(&#x27;.js_highlight_container&#x27;);</span><br><span class="line"></span><br><span class="line">  // 底部 &quot;展开代码&quot; 与 侧边栏 &quot;收起代码&quot;</span><br><span class="line">  var $btn = $(`</span><br><span class="line">    &lt;div class=&quot;highlight-footer&quot;&gt;</span><br><span class="line">      &lt;a class=&quot;js_unfold_code_btn show-btn&quot; href=&quot;javascript:;&quot;&gt;展开代码&lt;i class=&quot;fa fa-angle-down&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/a&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;a class=&quot;js_retract_code_btn hide-btn&quot; href=&quot;javascript:;&quot;&gt;&lt;i class=&quot;fa fa-angle-up&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;收起代码&lt;/a&gt;</span><br><span class="line">  `);</span><br><span class="line"></span><br><span class="line">  $container.append($btn);</span><br><span class="line">  return $container;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">function codeUnfold () &#123;</span><br><span class="line">  $(&#x27;.highlight&#x27;).each(function () &#123;</span><br><span class="line">    // 防止重复渲染</span><br><span class="line">    if (this.__render__ === true) &#123;</span><br><span class="line">      return true;</span><br><span class="line">    &#125;</span><br><span class="line">    this.__render__ = true;</span><br><span class="line">    var $this = $(this);</span><br><span class="line">    var height = $(this).outerHeight();</span><br><span class="line">    if (height &gt; CODE_MAX_HEIGHT) &#123;</span><br><span class="line">      // 添加展开&amp;收起容器</span><br><span class="line">      var $container = addCodeWrap($this, height);</span><br><span class="line">      containers.push(&#123;</span><br><span class="line">        $container,</span><br><span class="line">        height,</span><br><span class="line">        $hide: $container.find(&#x27;.js_retract_code_btn&#x27;),</span><br><span class="line">        hasHorizontalScrollbar: this.scrollWidth &gt; this.offsetWidth,</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
@@ -4069,7 +4069,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 <h3 id="1-5-引用样式"><a href="#1-5-引用样式" class="headerlink" title="1.5 引用样式"></a>1.5 引用样式</h3><p>修改文件<code>themes/next/source/css/_common/components/components.styl</code>，在最后添加一行<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@import &#x27;post&#x27;;</span><br><span class="line">@import &#x27;pages&#x27;;</span><br><span class="line">@import &#x27;third-party&#x27;;</span><br><span class="line">// 添加这一行</span><br><span class="line">@import &#x27;highlight&#x27;</span><br></pre></td></tr></table></figure></p>
 ]]></content>
       <categories>
-        <category>ubuntuOS</category>
+        <category>OS</category>
       </categories>
       <tags>
         <tag>hexo</tag>
@@ -4077,7 +4077,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>ssh环境构建和常用命令</title>
-    <url>/2022/08/04/ubuntuOS/ssh-server-on-ubuntu/</url>
+    <url>/2022/08/04/OS/ssh-server-on-ubuntu/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>ubuntu上的ssh服务，包含客户端和服务端的应用环境。在docker中使用ssh服务，若没有自动启动，docker关闭重启后服务会挂掉，再次连接就会报<code>Connection refused</code>问题，怎么解决呢？</p>
 <p>本文中的命令主要基于ubuntu的系统，大多为ubuntu20.04。</p>
 <p><strong>ssh也是常用的工具呀~</strong><br><span id="more"></span></p>
@@ -4088,7 +4088,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 <h2 id="docker使用-已经在运行的系统或docker"><a href="#docker使用-已经在运行的系统或docker" class="headerlink" title="docker使用-已经在运行的系统或docker"></a>docker使用-已经在运行的系统或docker</h2><p>进入docker内部，手动重启ssh服务<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker exec -it xinwen bash</span><br><span class="line">sudo /etc/init.d/ssh start  //启动服务命令1</span><br></pre></td></tr></table></figure></p>
 ]]></content>
       <categories>
-        <category>ubuntuOS</category>
+        <category>OS</category>
       </categories>
       <tags>
         <tag>ssh</tag>
@@ -4096,7 +4096,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>Python替你七夕表白</title>
-    <url>/2022/08/04/tools/blessing/</url>
+    <url>/2022/08/04/Tools/blessing/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>金风玉露一相逢，便胜却人间无数~</p>
 <p><strong>七夕节快乐~</strong><br><span id="more"></span></p>
 <h2 id="精彩截图"><a href="#精彩截图" class="headerlink" title="精彩截图"></a>精彩截图</h2><p><img src="first.png" alt="blessing-first"><br><img src="next.png" alt="blessing-next"><br><img src="end.png" alt="blessing-end"><br>实际是个动画，挺惊喜哦~</p>
@@ -4104,7 +4104,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 <p>Python运行就好啦，拿走不谢~~</p>
 ]]></content>
       <categories>
-        <category>tools</category>
+        <category>Tools</category>
       </categories>
       <tags>
         <tag>blessing</tag>
@@ -4112,7 +4112,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>vscode连接远程机器上的docker</title>
-    <url>/2022/08/02/ubuntuOS/vscode-docker-otherPC/</url>
+    <url>/2022/08/02/OS/vscode-docker-otherPC/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>vscode连接远程机器上的docker，应用太多了，此处是用win的PC连接远程ubuntuPC上运行的docker，docker是基于ubuntu20.04的博客部署系统~</p>
 <p><strong>又一个利器~</strong><br><span id="more"></span></p>
 <h2 id="1，前提"><a href="#1，前提" class="headerlink" title="1，前提"></a>1，前提</h2><p>宿主机连接本机上运行的docker，并用vscode连接，详见<a href="https://sophia-hxw.github.io/2022/08/01/ubuntuOS/vscode-docker-onePC/">宿主机上vscode连接本机docker</a></p>
@@ -4132,7 +4132,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 <p>本文中对应的系统：<br>ubuntu20.04-&gt;ubuntu20.04-&gt;windows</p>
 ]]></content>
       <categories>
-        <category>ubuntuOS</category>
+        <category>OS</category>
       </categories>
       <tags>
         <tag>docker</tag>
@@ -4141,7 +4141,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>vscode连接本机docker</title>
-    <url>/2022/08/01/ubuntuOS/vscode-docker-onePC/</url>
+    <url>/2022/08/01/OS/vscode-docker-onePC/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>vscode连接docker方便开发，此处主要用在hexo的博客编写，很方便~</p>
 <p><strong>安心码文了~</strong><br><span id="more"></span></p>
 <h2 id="1，docker启动"><a href="#1，docker启动" class="headerlink" title="1，docker启动"></a>1，docker启动</h2><h3 id="1-1-blog镜像的配置"><a href="#1-1-blog镜像的配置" class="headerlink" title="1.1 blog镜像的配置"></a>1.1 blog镜像的配置</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FROM ubuntu:20.04</span><br><span class="line"></span><br><span class="line">WORKDIR /home</span><br><span class="line">LABEL maintainer=&quot;XINWEN&quot;</span><br><span class="line">RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak</span><br><span class="line">RUN echo &quot;deb http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse&quot; &gt;&gt; /etc/apt/sources.list \</span><br><span class="line">    &amp;&amp; echo &quot;deb-src http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse&quot; &gt;&gt; /etc/apt/sources.list \</span><br><span class="line">    &amp;&amp; echo &quot;deb http://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe multiverse&quot; &gt;&gt; /etc/apt/sources.list \</span><br><span class="line">    &amp;&amp; echo &quot;deb-src http://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe multiverse&quot; &gt;&gt; /etc/apt/sources.list \</span><br><span class="line">    &amp;&amp; echo &quot;deb http://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe multiverse&quot; &gt;&gt; /etc/apt/sources.list \</span><br><span class="line">    &amp;&amp; echo &quot;deb-src http://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe multiverse&quot; &gt;&gt; /etc/apt/sources.list \</span><br><span class="line">    &amp;&amp; echo &quot;deb http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse&quot; &gt;&gt; /etc/apt/sources.list \</span><br><span class="line">    &amp;&amp; echo &quot;deb-src http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse&quot; &gt;&gt; /etc/apt/sources.list \</span><br><span class="line">    &amp;&amp; echo &quot;deb http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse&quot; &gt;&gt; /etc/apt/sources.list \</span><br><span class="line">    &amp;&amp; echo &quot;deb-src http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse&quot; &gt;&gt; /etc/apt/sources.list </span><br><span class="line"></span><br><span class="line">ENV TZ=Asia/Shanghai</span><br><span class="line">RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime &amp;&amp; echo $TZ &gt; /etc/timezone</span><br><span class="line"></span><br><span class="line">RUN apt-get update &amp;&amp; apt-get upgrade -y</span><br><span class="line"></span><br><span class="line">RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends apt-utils \</span><br><span class="line">    &amp;&amp; apt-get -y install dialog</span><br><span class="line"></span><br><span class="line">RUN apt-get -y install dialog clang-format nfs-common \</span><br><span class="line">    &amp;&amp; apt-get -y install openssh-server \</span><br><span class="line">    &amp;&amp; apt-get -y install vim python3-pip git curl</span><br><span class="line"></span><br><span class="line">RUN pip3 install -i http://mirrors.aliyun.com/pypi/simple -U pip --trusted-host mirrors.aliyun.com \</span><br><span class="line">    &amp;&amp; pip3 config set global.index-url http://mirrors.aliyun.com/pypi/simple/ \</span><br><span class="line">    &amp;&amp; pip3 config set install.trusted-host mirrors.aliyun.com</span><br><span class="line"></span><br><span class="line">RUN apt-get install -y nodejs npm</span><br><span class="line"></span><br><span class="line">RUN node -v \</span><br><span class="line">    &amp;&amp; npm install n -g \</span><br><span class="line">    &amp;&amp; n stable \</span><br><span class="line">    &amp;&amp; hash -r \</span><br><span class="line">    &amp;&amp; cp /usr/local/bin/node /usr/bin/node \</span><br><span class="line">    &amp;&amp; node -v</span><br><span class="line"></span><br><span class="line">RUN mkdir /var/run/sshd</span><br><span class="line">EXPOSE 22</span><br><span class="line">CMD [&quot;/user/sbin/ssh&quot;,&quot;-D&quot;]</span><br><span class="line"></span><br><span class="line">ENTRYPOINT /bin/bash</span><br></pre></td></tr></table></figure>
@@ -4169,7 +4169,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 <p>点击左下角”&gt;&lt;“标志，在顶部的输入下拉框选择<code>Attach to Running Container...</code>就能打开docker的home目录。</p>
 ]]></content>
       <categories>
-        <category>ubuntuOS</category>
+        <category>OS</category>
       </categories>
       <tags>
         <tag>docker</tag>
@@ -4178,7 +4178,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>hexo上的next主题优化项</title>
-    <url>/2022/08/01/ubuntuOS/hexo-next-theme/</url>
+    <url>/2022/08/01/OS/hexo-next-theme/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>hexo上next的主题优化项，选择了一些个人的偏爱项，基本就是当前博客的展示效果了~</p>
 <p><strong>安心码文了~</strong><br><span id="more"></span></p>
 <h2 id="1，下载主题文件"><a href="#1，下载主题文件" class="headerlink" title="1，下载主题文件"></a>1，下载主题文件</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd hexo #本文blog的主目录的名称为hexo</span><br><span class="line"></span><br><span class="line">git clone https://github.com/theme-next/hexo-theme-next themes/next</span><br><span class="line"></span><br></pre></td></tr></table></figure>
@@ -4296,7 +4296,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 <h2 id="3，总结"><a href="#3，总结" class="headerlink" title="3，总结"></a>3，总结</h2><p>以上是本博客中已经部署的样式，可以按需选用~</p>
 ]]></content>
       <categories>
-        <category>ubuntuOS</category>
+        <category>OS</category>
       </categories>
       <tags>
         <tag>hexo</tag>
@@ -4318,7 +4318,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>XR, VR和AR的概念区别</title>
-    <url>/2022/07/26/tools/xr-vr-ar/</url>
+    <url>/2022/07/26/Tools/xr-vr-ar/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>元宇宙与人机交互中的几个基本概念，比如XR，VR，AR等，你能正确理解么？</p>
 <p><strong>元宇宙，新世界啦~</strong><br><span id="more"></span></p>
 <h2 id="XR"><a href="#XR" class="headerlink" title="XR"></a>XR</h2><p>Extended Reality，拓展现实。</p>
@@ -4332,7 +4332,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>简单地说，VR的画面都是假的，AR的画面是一半真的，一半假的。</p>
 ]]></content>
       <categories>
-        <category>tools</category>
+        <category>Tools</category>
       </categories>
       <tags>
         <tag>XR</tag>
@@ -4340,13 +4340,13 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>cs229之独立成分分析（note11）</title>
-    <url>/2022/07/22/cs229/note11/</url>
+    <url>/2022/07/22/MachineLearning/cs229note11/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>cs229讲义 斯坦福大学的CS229课程是学习机器学习的必备之课，之前是由吴恩达主讲的课程，后来由于不明原因课程被斯坦福大学下架。</p>
 <p>note11的主要内容：。。。</p>
 <p><strong>重新理解，加油~</strong><br><span id="more"></span></p>
 <h2 id=""><a href="#" class="headerlink" title=" "></a> </h2>]]></content>
       <categories>
-        <category>cs229</category>
+        <category>MachineLearning</category>
       </categories>
       <tags>
         <tag>cs229</tag>
@@ -4354,7 +4354,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>liquid学习资源</title>
-    <url>/2022/07/20/tools/liquid-intro/</url>
+    <url>/2022/07/20/Tools/liquid-intro/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Liquid 是一门灵活、安全的模版语言，被用于许多不同环境中。Liquid 被创建之初是用在 Shopify 商店系统中的，后来也被广泛用于 Jekyll 网站中。随着时间的推移，Shopify 和 Jekyll 分别为 Liquid 添加了针对各自用途的对象（object）、标记（tag）和过滤器（filter）。目前最流行的 Liquid 版本包括 Liquid、Shopify Liquid 和 Jekyll Liquid。</p>
 <p><a href="https://liquid.bootcss.com/basics/introduction/">websit</a></p>
 <p><strong>学习新内容了，要加油哦~</strong><br><span id="more"></span></p>
@@ -4376,7 +4376,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 <p>Note: 只能用于搜索字符串。你不能将其用于从一个对象数组中检查是否存在某个对象。</p>
 <h2 id="3，真值和假值"><a href="#3，真值和假值" class="headerlink" title="3，真值和假值"></a>3，真值和假值</h2>]]></content>
       <categories>
-        <category>tools</category>
+        <category>Tools</category>
       </categories>
       <tags>
         <tag>liquid</tag>
@@ -4384,7 +4384,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>cs229之感知器和大边界分类器（note6）</title>
-    <url>/2022/07/12/cs229/note6/</url>
+    <url>/2022/07/12/MachineLearning/cs229note6/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>cs229讲义 斯坦福大学的CS229课程是学习机器学习的必备之课，之前是由吴恩达主讲的课程，后来由于不明原因课程被斯坦福大学下架。</p>
 <p>note6的主要内容：感知器和大边界分类器</p>
 <p><strong>重新理解，加油~</strong><br><span id="more"></span></p>
@@ -4404,7 +4404,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 <script type="math/tex; mode=display">\begin{array}{ll}\sqrt{k}\mathcal{D} & \geq ||\theta^{(k+1)}|| \\ & \geq (\theta^{(k+1)})^{T}u \\ &\geq k\gamma  \end{array}</script><p>上面第二个不等式是基于 $u $是一个单位向量（$z^{T}u = ||z||\cdot||u|| cos\phi \leq ||z|| \cdot ||u|| $，其中的$\phi $ 是向量 $z $和向量 $u $的夹角）。结果则表明 $k \leq (\mathcal{D}/\gamma)^{2} $。因此，如果感知器犯了一个第 $k $个错误，则 $k ≤ (\mathcal{D}/\gamma )^{2} $。</p>
 ]]></content>
       <categories>
-        <category>cs229</category>
+        <category>MachineLearning</category>
       </categories>
       <tags>
         <tag>cs229</tag>
@@ -4412,7 +4412,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>cs229之kmeans聚类算法（note7）</title>
-    <url>/2022/07/11/cs229/note7/</url>
+    <url>/2022/07/11/MachineLearning/cs229note7/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>cs229讲义 斯坦福大学的CS229课程是学习机器学习的必备之课，之前是由吴恩达主讲的课程，后来由于不明原因课程被斯坦福大学下架。</p>
 <p>note7的主要内容：kmeans算法</p>
 <p><strong>重新理解，加油~</strong><br><span id="more"></span></p>
@@ -4444,7 +4444,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 <p>失真函数 $J $，是一个非凸函数，所以对 $J $进行坐标下降并不一定能够收敛到全局最小值，也就是说，$k $均值聚类算法可能只是局部最优的。通常除了这个问题之外，$k $均值聚类效果都不错，能给出很好的聚类。如果你担心陷入到某些比较差的局部最小值，通常可以多次运行 $k $均值距离（使用不同的随机值进行来对聚类重心 $μ_{j} $ 进行初始化）。然后从所有的不同聚类方案中，选择能提供最小失真 $J(c,μ) $ 的。</p>
 ]]></content>
       <categories>
-        <category>cs229</category>
+        <category>MachineLearning</category>
       </categories>
       <tags>
         <tag>cs229</tag>
@@ -4452,7 +4452,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>cs229之学习理论（note4）</title>
-    <url>/2022/07/08/cs229/note4/</url>
+    <url>/2022/07/08/MachineLearning/cs229note4/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>cs229讲义 斯坦福大学的CS229课程是学习机器学习的必备之课，之前是由吴恩达主讲的课程，后来由于不明原因课程被斯坦福大学下架。</p>
 <p>note4的主要内容：偏差和方差权衡，假设集合有限/无限的学习理论</p>
 <p><strong>重新理解，加油~</strong><br><span id="more"></span></p>
@@ -4521,7 +4521,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 <p>换个方式来说，要保证使用 $\mathcal{H}$ 训练的算法的学习效果“良好”，那么训练集样本规模 $m $ 需要与 $\mathcal{H} $ 的 VC 维度线性相关。这也表明，对于“绝大多数”假设类来说，（假设是“合理”参数化的）VC 维度也大概会和参数的个数线性相关。把这些综合到一起，我们就能得出这样的一个结论：<strong>对于一个试图将训练误差最小化的学习算法来说：训练样本个数通常与假设类 $\mathcal{H} $ 的参数个数线性相关</strong>。</p>
 ]]></content>
       <categories>
-        <category>cs229</category>
+        <category>MachineLearning</category>
       </categories>
       <tags>
         <tag>cs229</tag>
@@ -4529,7 +4529,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>cs229之主成分分析（note10）</title>
-    <url>/2022/07/06/cs229/note10/</url>
+    <url>/2022/07/06/MachineLearning/cs229note10/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>cs229讲义 斯坦福大学的CS229课程是学习机器学习的必备之课，之前是由吴恩达主讲的课程，后来由于不明原因课程被斯坦福大学下架。</p>
 <p>note10的主要内容：PCA</p>
 <p><strong>重新理解，加油~</strong><br><span id="more"></span></p>
@@ -4568,7 +4568,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 <p>最后，正如在遥控直升机飞行员样例，可以把 PCA 作为一种降噪算法。在那个例子中，算法从对遥控飞行技巧和热爱程度的带噪的衡量中估计了直观的“遥控飞行原动力”。同时，还能把这种思路用于人脸图像，得到的就是特征脸算法，其中每个点 $x^{(i)} \in \mathcal{R}^{100×100} $ 都是一个 $10000 $ 维的向量，每个坐标对应的是一个 $100x100 $ 的人脸图像中的一个像素灰度值。使用主特征分析算法，我们就可以用更低维度的 $y^{(i)} $ 来表示每个图像 $x^{(i)} $。在这个过程中，我们希望主成分能够保存有用的信息和面孔之间的系统变化，能捕获到一个人看上去的模样，而不是由于细微的光线变化、轻微的拍摄状况差别等而引起的图像中的“噪音”。然后通过降低维度计算 $||y^{(i)} − y^{(j)}||_{2} $ 来测量人脸 $i $ 和 $j $ 之间的距离，这样就能得到面部匹配和检索算法。</p>
 ]]></content>
       <categories>
-        <category>cs229</category>
+        <category>MachineLearning</category>
       </categories>
       <tags>
         <tag>cs229</tag>
@@ -4576,7 +4576,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>cs229之正则化与模型选择（note5）</title>
-    <url>/2022/07/04/cs229/note5/</url>
+    <url>/2022/07/04/MachineLearning/cs229note5/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>cs229讲义 斯坦福大学的CS229课程是学习机器学习的必备之课，之前是由吴恩达主讲的课程，后来由于不明原因课程被斯坦福大学下架。</p>
 <p>note5的主要内容：模型选择，特征选择，贝叶斯估计</p>
 <p><strong>重新理解，加油~</strong><br><span id="more"></span></p>
@@ -4637,7 +4637,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 <p>实际应用里面，对先验概率分布 $p(\theta) $ 的常见选择是假设 $\theta \sim N(0 ,\tau^{2}I) $。使用这样的一个先验概率分布，拟合出来的参数 $θ_{MAP} $ 将比最大似然估计得到的参数范数更小。在实践中，贝叶斯最大后验估计（Bayesian MAP estimate）对比参数的最大似然估计（ML estimate of the parameters），前者就更易于避免过拟合。例如，贝叶斯逻辑回归就是一种非常有效率的文本分类算法，即便在文本分类中参数规模 $n $ 通常是远远大于样本规模 $m $ 的，即 $n ≫ m $。</p>
 ]]></content>
       <categories>
-        <category>cs229</category>
+        <category>MachineLearning</category>
       </categories>
       <tags>
         <tag>cs229</tag>
@@ -4645,7 +4645,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>cs229的lecture note1</title>
-    <url>/2022/06/22/cs229/note1/</url>
+    <url>/2022/06/22/MachineLearning/cs229note1/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>cs229讲义 斯坦福大学的CS229课程是学习机器学习的必备之课，之前是由吴恩达主讲的课程，后来由于不明原因课程被斯坦福大学下架。</p>
 <p>note1的主要内容：监督学习概览，线性回归机器概率解释，逻辑回归…..</p>
 <p><strong>重新理解，加油~</strong><br><span id="more"></span></p>
@@ -4697,7 +4697,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 <script type="math/tex; mode=display">p(y;\eta) = b(y)exp(\eta^{T}T(y)-a(\eta))</script><p>上面的式子中，$\eta$叫做此分布的自然参数（也叫典范参数），$T(y)$ 叫做充分统计量，我们目前用的这些分布中通常$T(y) = y$；而 $a(\eta)$ 是一个对数分割函数，$e^{-a(\eta)}$这个量本质上扮演了归一化常数的角色，也就是确保 $p(y;\eta)$的总和等于1</p>
 ]]></content>
       <categories>
-        <category>cs229</category>
+        <category>MachineLearning</category>
       </categories>
       <tags>
         <tag>cs229</tag>
@@ -4705,7 +4705,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>shopify-cli在ubuntu20.04上搭建使用环境</title>
-    <url>/2022/06/17/ubuntuOS/shopify-cli/</url>
+    <url>/2022/06/17/OS/shopify-cli/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在本地构建shopify中主题和app的开发环境，在ubuntu和docker环境中构建的主要步骤~</p>
 <p>主题涉及到liquid、css和html，前端可能相对更熟悉。</p>
 <p><strong>先尝试主题的构建，再逐步到app开发~</strong><br><span id="more"></span></p>
@@ -4717,7 +4717,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 <h2 id="4，参考文献"><a href="#4，参考文献" class="headerlink" title="4，参考文献"></a>4，参考文献</h2><p><a href="https://shopify.dev/themes">帮助文档</a></p>
 ]]></content>
       <categories>
-        <category>ubuntuOS</category>
+        <category>OS</category>
       </categories>
       <tags>
         <tag>shopify-cli</tag>
@@ -4725,7 +4725,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>jetson性能对比</title>
-    <url>/2022/06/09/cv_engineering/jetson-performance/</url>
+    <url>/2022/06/09/Engineering/jetson-performance/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>yolo, mask rcnn和其他图像分类算法在常用jetson硬件上的表现，仅供参考哦~</p>
 <p><strong>工程上选模型可做参考~</strong><br><span id="more"></span></p>
 <h2 id="1，yolo系列"><a href="#1，yolo系列" class="headerlink" title="1，yolo系列"></a>1，yolo系列</h2><div class="table-container">
@@ -5517,7 +5517,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 </div>
 ]]></content>
       <categories>
-        <category>cv engineering</category>
+        <category>Engineering</category>
       </categories>
       <tags>
         <tag>jetson</tag>
@@ -5525,12 +5525,12 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>人脸识别的算法演变</title>
-    <url>/2022/06/08/facerecog/face-recognition-algorithms/</url>
+    <url>/2022/06/08/Detection/face-recognition-algorithms/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>人脸识别的算法演变之路，从传统方法到CNN，再到各种loss和其他的优化方向等等~</p>
 <p><strong>抓紧时间看论文啊，会不断更新的~</strong><br><span id="more"></span></p>
 <h2 id="1，一些传统思路"><a href="#1，一些传统思路" class="headerlink" title="1，一些传统思路"></a>1，一些传统思路</h2><h3 id="Eigenface"><a href="#Eigenface" class="headerlink" title="Eigenface"></a>Eigenface</h3><h3 id="LDA"><a href="#LDA" class="headerlink" title="LDA"></a>LDA</h3><h3 id="LBP-Joint-Bayes"><a href="#LBP-Joint-Bayes" class="headerlink" title="LBP+Joint Bayes"></a>LBP+Joint Bayes</h3><h2 id="2，CNN基线"><a href="#2，CNN基线" class="headerlink" title="2，CNN基线"></a>2，CNN基线</h2><h3 id="softmax"><a href="#softmax" class="headerlink" title="softmax"></a>softmax</h3><h2 id="3，CNN和各种Loss"><a href="#3，CNN和各种Loss" class="headerlink" title="3，CNN和各种Loss"></a>3，CNN和各种Loss</h2><h3 id="Pairwise"><a href="#Pairwise" class="headerlink" title="Pairwise"></a>Pairwise</h3><h3 id="Triplet"><a href="#Triplet" class="headerlink" title="Triplet"></a>Triplet</h3><h3 id="DeepFace"><a href="#DeepFace" class="headerlink" title="DeepFace"></a>DeepFace</h3><h3 id="DeepID1"><a href="#DeepID1" class="headerlink" title="DeepID1"></a>DeepID1</h3><h3 id="DeepID2"><a href="#DeepID2" class="headerlink" title="DeepID2"></a>DeepID2</h3><h3 id="DeepID2-1"><a href="#DeepID2-1" class="headerlink" title="DeepID2+"></a>DeepID2+</h3><h3 id="DeepID3"><a href="#DeepID3" class="headerlink" title="DeepID3"></a>DeepID3</h3><h3 id="FaceNet"><a href="#FaceNet" class="headerlink" title="FaceNet"></a>FaceNet</h3><h3 id="Center-Loss"><a href="#Center-Loss" class="headerlink" title="Center Loss"></a>Center Loss</h3><h2 id="归一化等"><a href="#归一化等" class="headerlink" title="归一化等"></a>归一化等</h2><h3 id="Lsoftmax"><a href="#Lsoftmax" class="headerlink" title="Lsoftmax"></a>Lsoftmax</h3><h3 id="Asoftmax"><a href="#Asoftmax" class="headerlink" title="Asoftmax"></a>Asoftmax</h3><h3 id="NormFace-Coco-Loss"><a href="#NormFace-Coco-Loss" class="headerlink" title="NormFace/Coco Loss"></a>NormFace/Coco Loss</h3><h3 id="Feature-Incay"><a href="#Feature-Incay" class="headerlink" title="Feature Incay"></a>Feature Incay</h3><h3 id="AMSoftmax-CosFace"><a href="#AMSoftmax-CosFace" class="headerlink" title="AMSoftmax/CosFace"></a>AMSoftmax/CosFace</h3><h3 id="Arcface-InsightFace"><a href="#Arcface-InsightFace" class="headerlink" title="Arcface/InsightFace"></a>Arcface/InsightFace</h3>]]></content>
       <categories>
-        <category>facerecog</category>
+        <category>Detection</category>
       </categories>
       <tags>
         <tag>face recognition</tag>
@@ -5538,7 +5538,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>UI设计资源</title>
-    <url>/2022/06/02/tools/UI-source/</url>
+    <url>/2022/06/02/Tools/UI-source/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>设计师资源，日常APP或者网页设计中用得上的，基本免费，当然也有消费的项目~</p>
 <p><strong>物美价廉~</strong><br><span id="more"></span></p>
 <h2 id="1-最大的免费图标库-Flaticon"><a href="#1-最大的免费图标库-Flaticon" class="headerlink" title="1, 最大的免费图标库-Flaticon"></a>1, 最大的免费图标库-Flaticon</h2><p><a href="https://www.flaticon.com/">official link</a></p>
@@ -5558,7 +5558,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 <p>很多原型，各个业务领域，高保真、低保真都有</p>
 ]]></content>
       <categories>
-        <category>tools</category>
+        <category>Tools</category>
       </categories>
       <tags>
         <tag>UI source</tag>
@@ -5566,7 +5566,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>useful pip source in China</title>
-    <url>/2022/05/20/python/pip-source-in-China/</url>
+    <url>/2022/05/20/Language/pip-source-in-China/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>python安装模块常用的是pip，但是source在国外，如果没有好用的梯子，那就换成国内的镜像源吧，本文基本内容如下：</p>
 <ul>
 <li>国内的常用pip源；</li>
@@ -5591,7 +5591,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 <h2 id="5，pip包下载"><a href="#5，pip包下载" class="headerlink" title="5，pip包下载"></a>5，pip包下载</h2><p><a href="https://pypi.org/">pypi</a></p>
 ]]></content>
       <categories>
-        <category>python</category>
+        <category>Language</category>
       </categories>
       <tags>
         <tag>pip source</tag>
@@ -5599,7 +5599,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>vmware中的ubuntu突然没有网络</title>
-    <url>/2022/05/20/ubuntuOS/vmware-ubuntu1804-wlan-error/</url>
+    <url>/2022/05/20/OS/vmware-ubuntu1804-wlan-error/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在vmware虚拟机中使用ubuntu系统时，有次突然出现没有了网络，几番查找后，找到了解决办法，但是至今不晓得问题的成因，尴尬了~~尽管如此，先把问题解决了再说吧^_^</p>
 <p><strong>come on, girl~~</strong><br><span id="more"></span></p>
 <h2 id="1，首先查看Ubuntu的网络设置"><a href="#1，首先查看Ubuntu的网络设置" class="headerlink" title="1，首先查看Ubuntu的网络设置"></a>1，首先查看Ubuntu的网络设置</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd /var/lib/NetworkManager</span><br><span class="line">sudo cat NetworkManager.state</span><br></pre></td></tr></table></figure>
@@ -5607,7 +5607,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 <h2 id="2，解决方案"><a href="#2，解决方案" class="headerlink" title="2，解决方案"></a>2，解决方案</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 关闭网络</span><br><span class="line">sudo service network-manager stop</span><br><span class="line"># 用vi或者gedit修改NetworkManager.state</span><br><span class="line">NetworkingEnabled=true</span><br><span class="line"># 重新开启网络</span><br><span class="line">sudo service network-manager start</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>ubuntuOS</category>
+        <category>OS</category>
       </categories>
       <tags>
         <tag>ubuntu wlan error</tag>
@@ -5615,7 +5615,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>ubuntu中解决PL2303的驱动问题</title>
-    <url>/2022/05/20/hardware/ubuntu-PL2303/</url>
+    <url>/2022/05/20/Engineering/ubuntu-PL2303/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这个问题出现在，win10的PC+VMWare的ubuntu+hi3559a环境搭建时ubuntu系统出现的驱动问题，若有类似情况，亦可用下文方案解决。</p>
 <span id="more"></span>
 <h2 id="1，详细步骤"><a href="#1，详细步骤" class="headerlink" title="1，详细步骤"></a>1，详细步骤</h2><ul>
@@ -5631,51 +5631,15 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 </ul>
 ]]></content>
       <categories>
-        <category>hardware</category>
+        <category>Engineering</category>
       </categories>
       <tags>
         <tag>ubuntu PL2303</tag>
       </tags>
   </entry>
   <entry>
-    <title>边缘提取方法</title>
-    <url>/2022/05/19/cv_engineering/edge-extract/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Chen Mingming老师组的三个边缘提取的模型，还有部分数据集，效果不错~</p>
-<p><strong>用边缘特征做过一些图像应用哦</strong><br><span id="more"></span></p>
-<h2 id="1，边缘提取hed"><a href="#1，边缘提取hed" class="headerlink" title="1，边缘提取hed"></a>1，边缘提取hed</h2><p><a href="https://github.com/s9xie/hed">github link</a></p>
-<ul>
-<li>作者<br>南开大学程明明</li>
-<li>对应文章   <ul>
-<li>author = {“Xie, Saining and Tu, Zhuowen”},</li>
-<li>Title = {Holistically-Nested Edge Detection},</li>
-<li>Booktitle = “Proceedings of IEEE International Conference on Computer Vision”,</li>
-<li>Year = {2015},</li>
-</ul>
-</li>
-<li>结果<br>BSDS benchmark数据集：<br>ODS=.790 and OIS=.808<br>BSD500 数据集：<br>ODS F-score of .790<br>NYU Depth 数据集：<br>ODS F-score of .746<br>速度： (0.4s per image)</li>
-</ul>
-<h2 id="2，边缘提取rcf"><a href="#2，边缘提取rcf" class="headerlink" title="2，边缘提取rcf"></a>2，边缘提取rcf</h2><p><a href="https://github.com/meteorshowers/RCF-pytorch">pytorch版本：github</a><br><a href="https://github.com/yun-liu/rcf">caffe版本：github</a></p>
-<ul>
-<li>作者<br>南开大学程明明</li>
-<li>文章<br>title={Richer Convolutional Features for Edge Detection},<br>author={Liu, Yun and Cheng, Ming-Ming and Hu, Xiaowei and Bian, Jia-Wang and Zhang, Le and Bai, Xiang and Tang, Jinhui},<br>journal={IEEE Transactions on Pattern Analysis and Machine Intelligence},<br>year={2019}</li>
-<li>特性<br>Using VGG16 network；<br>BSDS500 benchmark 数据集：<br>ODS F-measure of 0.811， speed (8 FPS)<br>fast version of RCF 快速版本：<br>ODS F-measure of 0.806 with 30 FPS</li>
-</ul>
-<h2 id="3，边缘提取dfi"><a href="#3，边缘提取dfi" class="headerlink" title="3，边缘提取dfi"></a>3，边缘提取dfi</h2><p><a href="https://github.com/backseason/DFI">github link</a></p>
-<ul>
-<li>作者<br>南开大学程明明</li>
-<li>文章<br>title={Dynamic Feature Integration for Simultaneous Detection of Salient Object, Edge and Skeleton},<br>author={Jiang-Jiang Liu and Qibin Hou and Ming-Ming Cheng},<br>journal={IEEE Transactions on Image Processing},<br>year={2020}</li>
-</ul>
-]]></content>
-      <categories>
-        <category>cv engineering</category>
-      </categories>
-      <tags>
-        <tag>edge extract</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>hi3559a开发记录</title>
-    <url>/2022/05/19/hardware/hi3559a-coding/</url>
+    <url>/2022/05/19/Engineering/hi3559a-coding/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>hisi视觉模型开发，主要是检测任务，三个类别，本文包含项目开发的基本流程，包括模型训练，模型转化以及hisi官方提供的关于yolov3的源码及其调用分析。</p>
 <span id="more"></span>
 <h2 id="1，模型训练"><a href="#1，模型训练" class="headerlink" title="1，模型训练"></a>1，模型训练</h2><h3 id="1-1-运行环境"><a href="#1-1-运行环境" class="headerlink" title="1.1 运行环境"></a>1.1 运行环境</h3><p>在caffe的基础docker中操作的，方便后续其他视觉框架转到caffe的模型，其实训练框架用的是darknet。<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker pull bvlc/caffe</span><br></pre></td></tr></table></figure></p>
@@ -5725,15 +5689,51 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 </ul>
 ]]></content>
       <categories>
-        <category>hardware</category>
+        <category>Engineering</category>
       </categories>
       <tags>
         <tag>hi3559a cv model</tag>
       </tags>
   </entry>
   <entry>
+    <title>边缘提取方法</title>
+    <url>/2022/05/19/Engineering/edge-extract/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Chen Mingming老师组的三个边缘提取的模型，还有部分数据集，效果不错~</p>
+<p><strong>用边缘特征做过一些图像应用哦</strong><br><span id="more"></span></p>
+<h2 id="1，边缘提取hed"><a href="#1，边缘提取hed" class="headerlink" title="1，边缘提取hed"></a>1，边缘提取hed</h2><p><a href="https://github.com/s9xie/hed">github link</a></p>
+<ul>
+<li>作者<br>南开大学程明明</li>
+<li>对应文章   <ul>
+<li>author = {“Xie, Saining and Tu, Zhuowen”},</li>
+<li>Title = {Holistically-Nested Edge Detection},</li>
+<li>Booktitle = “Proceedings of IEEE International Conference on Computer Vision”,</li>
+<li>Year = {2015},</li>
+</ul>
+</li>
+<li>结果<br>BSDS benchmark数据集：<br>ODS=.790 and OIS=.808<br>BSD500 数据集：<br>ODS F-score of .790<br>NYU Depth 数据集：<br>ODS F-score of .746<br>速度： (0.4s per image)</li>
+</ul>
+<h2 id="2，边缘提取rcf"><a href="#2，边缘提取rcf" class="headerlink" title="2，边缘提取rcf"></a>2，边缘提取rcf</h2><p><a href="https://github.com/meteorshowers/RCF-pytorch">pytorch版本：github</a><br><a href="https://github.com/yun-liu/rcf">caffe版本：github</a></p>
+<ul>
+<li>作者<br>南开大学程明明</li>
+<li>文章<br>title={Richer Convolutional Features for Edge Detection},<br>author={Liu, Yun and Cheng, Ming-Ming and Hu, Xiaowei and Bian, Jia-Wang and Zhang, Le and Bai, Xiang and Tang, Jinhui},<br>journal={IEEE Transactions on Pattern Analysis and Machine Intelligence},<br>year={2019}</li>
+<li>特性<br>Using VGG16 network；<br>BSDS500 benchmark 数据集：<br>ODS F-measure of 0.811， speed (8 FPS)<br>fast version of RCF 快速版本：<br>ODS F-measure of 0.806 with 30 FPS</li>
+</ul>
+<h2 id="3，边缘提取dfi"><a href="#3，边缘提取dfi" class="headerlink" title="3，边缘提取dfi"></a>3，边缘提取dfi</h2><p><a href="https://github.com/backseason/DFI">github link</a></p>
+<ul>
+<li>作者<br>南开大学程明明</li>
+<li>文章<br>title={Dynamic Feature Integration for Simultaneous Detection of Salient Object, Edge and Skeleton},<br>author={Jiang-Jiang Liu and Qibin Hou and Ming-Ming Cheng},<br>journal={IEEE Transactions on Image Processing},<br>year={2020}</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Engineering</category>
+      </categories>
+      <tags>
+        <tag>edge extract</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>rcnn，yolo和ssd系列模型</title>
-    <url>/2022/05/19/detection/fasterrcnn-yolo-ssd/</url>
+    <url>/2022/05/19/Detection/fasterrcnn-yolo-ssd/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>简述目标检测算法早期三个比较出名的系列~</p>
 <p><strong>太灌水了，质量要提高啊~</strong><br><span id="more"></span></p>
 <h2 id="1，rcnn系列"><a href="#1，rcnn系列" class="headerlink" title="1，rcnn系列"></a>1，rcnn系列</h2><p>针对之前RCNN系列selective search的方法导致算法没有实时性，所以faster rcnn提出RPN网络来取代之前的方法，可以理解为fasterrcnn=fast rcnn+rpn网络，且rpn网络和fast rcnn的分类，回归网络共用特征提取层，这样使得引入RPN网络不会增加太多计算量。整体流程为先使用RPN网络找出可能存在object的区域，再将这些区域送入fast rcnn中进一步定位和分类。所以faster rcnn是典型的Two stage算法。因为faster rcnn中包含了两次定位，所以其精度一般高于YOLO和SSD算法，所以速度一般慢于YOLO和SSD。</p>
@@ -5741,7 +5741,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 <h2 id="3，ssd系列"><a href="#3，ssd系列" class="headerlink" title="3，ssd系列"></a>3，ssd系列</h2><p>SSD相比于faster rcnn使用了多层网络特征，而不仅仅使用最后一层feature map。SSD还借鉴了YOLO算法中将检测任务转换为回归任务的思想，且SSD也借鉴了faster rcnn中的anchor机制，只是SSD的anchor不是每个位置的精调，而是类似于YOLO那样在feature map上分割出网格，在网格上产生anchor。但是SSD和YOLO不需要selective search步骤，所以SSD和YOLO同属于One-Stage算法。</p>
 ]]></content>
       <categories>
-        <category>detection</category>
+        <category>Detection</category>
       </categories>
       <tags>
         <tag>rcnn</tag>
@@ -5751,7 +5751,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>deepstream sample test4</title>
-    <url>/2022/05/19/tools/deepstream_sample_test4/</url>
+    <url>/2022/05/19/Engineering/deepstream_sample_test4/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>准备系统学习下deepstream的相关内容，先跑下示例，是基于docker的。</p>
 <p><strong>继续加油，还有很多内容哦~</strong><br><span id="more"></span></p>
 <h2 id="1，deepstream的test4实例"><a href="#1，deepstream的test4实例" class="headerlink" title="1，deepstream的test4实例"></a>1，deepstream的test4实例</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">nvidia-docker run -it -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY -v/home/hello/code:/home/code --name=kafkads nvcr.io/nvidia/deepstream:5.1-21.02-samples</span><br><span class="line"></span><br><span class="line">apt install python3-gi python3-gst-1.0 -y</span><br><span class="line">apt install python3-distutils</span><br><span class="line">cd /opt/nvidia/deepstream/deepstream-5.1/lib</span><br><span class="line">python3 setup.py install</span><br><span class="line"></span><br><span class="line">apt-get install libglib2.0 libglib2.0-dev</span><br><span class="line">apt-get install libjansson4  libjansson-dev</span><br><span class="line">apt-get install librdkafka1=0.11.3-1build1</span><br><span class="line"></span><br><span class="line">apt-get install libgstreamer-plugins-base1.0-dev libgstreamer1.0-dev</span><br><span class="line">apt-get install libgstrtspserver-1.0-dev libx11-dev</span><br><span class="line"></span><br><span class="line">apt-get install nvidia-cuda-toolkit</span><br><span class="line"></span><br><span class="line">deepstream-test4-app -i /opt/nvidia/deepstream/deepstream/samples/streams/sample_720p.h264 -p /opt/nvidia/deepstream/deepstream-5.1/lib/libnvds_kafka_proto.so --conn-str=&quot;192.168.8.116;9092;test&quot; -c cfg_kafka.txt -s 0 --no-display</span><br><span class="line"></span><br><span class="line">python3 deepstream_test_4.py -i /opt/nvidia/deepstream/deepstream/samples/streams/sample_720p.h264 -p /opt/nvidia/deepstream/deepstream-5.1/lib/libnvds_kafka_proto.so --conn-str=&quot;192.168.8.116;9092;test&quot; -c cfg_kafka.txt -s &quot;0&quot; --no-display</span><br></pre></td></tr></table></figure>
@@ -5768,7 +5768,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 <h2 id="3，参考文献"><a href="#3，参考文献" class="headerlink" title="3，参考文献"></a>3，参考文献</h2><p><a href="https://forums.developer.nvidia.com/t/cant-install-deepstream-5-1-on-rtx2070-dgpu/174842/7">nvidia论坛</a></p>
 ]]></content>
       <categories>
-        <category>tools</category>
+        <category>Engineering</category>
       </categories>
       <tags>
         <tag>deepstream sample</tag>
@@ -5776,7 +5776,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>tensorrt parser的构建dockerfile</title>
-    <url>/2022/05/19/cv_engineering/trt_parser.Dokcerfile/</url>
+    <url>/2022/05/19/Engineering/trt_parser.Dokcerfile/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>trtparser的自构建镜像，是基于官方的trtparser，自己添加了一些常用软件，特点如下：</p>
 <ul>
 <li>ubuntu换源；</li>
@@ -5788,7 +5788,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 <h2 id="dockerfile代码"><a href="#dockerfile代码" class="headerlink" title="dockerfile代码"></a>dockerfile代码</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FROM nvcr.io/nvidia/tensorrt:20.02-py3</span><br><span class="line"></span><br><span class="line">LABEL maintainer=&quot;XINWEN&quot;</span><br><span class="line">RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak</span><br><span class="line">RUN echo &quot;deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse&quot; &gt;&gt; /etc/apt/sources.list \</span><br><span class="line">    &amp;&amp; echo &quot;deb-src http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse&quot; &gt;&gt; /etc/apt/sources.list \</span><br><span class="line">    &amp;&amp; echo &quot;deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse&quot; &gt;&gt; /etc/apt/sources.list \</span><br><span class="line">    &amp;&amp; echo &quot;deb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse&quot; &gt;&gt; /etc/apt/sources.list \</span><br><span class="line">    &amp;&amp; echo &quot;deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse&quot; &gt;&gt; /etc/apt/sources.list \</span><br><span class="line">    &amp;&amp; echo &quot;deb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse&quot; &gt;&gt; /etc/apt/sources.list \</span><br><span class="line">    &amp;&amp; echo &quot;deb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse&quot; &gt;&gt; /etc/apt/sources.list \</span><br><span class="line">    &amp;&amp; echo &quot;deb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse&quot; &gt;&gt; /etc/apt/sources.list \</span><br><span class="line">    &amp;&amp; echo &quot;deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse&quot; &gt;&gt; /etc/apt/sources.list \</span><br><span class="line">    &amp;&amp; echo &quot;deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse&quot; &gt;&gt; /etc/apt/sources.list \</span><br><span class="line">    &amp;&amp; apt-get update \</span><br><span class="line">    &amp;&amp; apt-get -y install clang-format nfs-common \</span><br><span class="line">    &amp;&amp; apt-get -y install openssh-client </span><br><span class="line"></span><br><span class="line">RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py &amp;&amp; python3 get-pip.py --force-reinstall</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ADD ./soft/* /softs/</span><br><span class="line">WORKDIR /softs</span><br><span class="line">RUN pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple --upgrade pip \</span><br><span class="line">    &amp;&amp; pip3 install torch-1.3.0-cp36-cp36m-manylinux1_x86_64.whl \</span><br><span class="line">    &amp;&amp; pip3 install Pillow-6.0.0-cp36-cp36m-manylinux1_x86_64.whl \</span><br><span class="line">    &amp;&amp; pip3 install h5py-2.10.0-cp36-cp36m-manylinux1_x86_64.whl \</span><br><span class="line">    &amp;&amp; pip3 install grpcio-1.27.2-cp36-cp36m-manylinux2010_x86_64.whl \</span><br><span class="line">    &amp;&amp; pip3 install tensorboard-1.15.0-py3-none-any.whl \</span><br><span class="line">    &amp;&amp; pip3 install onnx-1.6.0-cp36-cp36m-manylinux1_x86_64.whl \</span><br><span class="line">    &amp;&amp; pip3 install opencv_python-4.2.0.32-cp36-cp36m-manylinux1_x86_64.whl \</span><br><span class="line">    &amp;&amp; pip3 install tensorflow_gpu-1.15.0-cp36-cp36m-manylinux2010_x86_64.whl \</span><br><span class="line">    &amp;&amp; pip3 install torchvision-0.4.1-cp36-cp36m-manylinux1_x86_64.whl \</span><br><span class="line">    &amp;&amp; pip3 install onnxruntime-1.1.0-cp36-cp36m-manylinux1_x86_64.whl \</span><br><span class="line">    &amp;&amp; cd onnx-simplifier-0.2.2 &amp;&amp; python3 setup.py install \</span><br><span class="line"># RUN pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple --upgrade pip \</span><br><span class="line">#     &amp;&amp; pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple torch==1.3.0 torchvision==0.4.1 \</span><br><span class="line">#     &amp;&amp; pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple onnx==1.6.0 onnxruntime==1.1.0 onnx-simplifier==0.2.2 \</span><br><span class="line">#     &amp;&amp; pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple opencv_python==4.2.0 Pillow==6.0.0 \</span><br><span class="line">#     &amp;&amp; pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple tensorflow_gpu==1.15.0 \</span><br><span class="line">    &amp;&amp; pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple pytest pyhamcrest pytest-cov black==19.3b0 isort==4.3.21 flake8 &#x27;pillow&lt;7.0.0&#x27; cython dvc</span><br><span class="line"></span><br><span class="line">WORKDIR /workspace</span><br><span class="line">RUN rm -rf /softs</span><br><span class="line"></span><br><span class="line"># RUN apt-get -y install isort clang-format nfs-common</span><br><span class="line">ENTRYPOINT /bin/bash</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>cv engineering</category>
+        <category>Engineering</category>
       </categories>
       <tags>
         <tag>tensorrt parser</tag>
@@ -5796,7 +5796,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>tensorrt client的构建dockerfile</title>
-    <url>/2022/05/19/cv_engineering/trt_client.Dockerfile/</url>
+    <url>/2022/05/19/Engineering/trt_client.Dockerfile/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>trtserver的docker镜像，官方的基础镜像，自己加了一些常用包，然后写了dockerfile来构建，基本内容如下：</p>
 <ul>
 <li>基础镜像是：tensorrtserver:20.02-py3-clientsdk</li>
@@ -5807,7 +5807,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 <p><strong>dockerfile加持后真的方便呀~</strong><br><span id="more"></span></p>
 <h2 id="dockerfile源码"><a href="#dockerfile源码" class="headerlink" title="dockerfile源码"></a>dockerfile源码</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FROM nvcr.io/nvidia/tensorrtserver:20.02-py3-clientsdk</span><br><span class="line"></span><br><span class="line">LABEL maintainer=&quot;XINWEN&quot;</span><br><span class="line">RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak</span><br><span class="line">RUN echo &quot;deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse&quot; &gt;&gt; /etc/apt/sources.list \</span><br><span class="line">    &amp;&amp; echo &quot;deb-src http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse&quot; &gt;&gt; /etc/apt/sources.list \</span><br><span class="line">    &amp;&amp; echo &quot;deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse&quot; &gt;&gt; /etc/apt/sources.list \</span><br><span class="line">    &amp;&amp; echo &quot;deb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse&quot; &gt;&gt; /etc/apt/sources.list \</span><br><span class="line">    &amp;&amp; echo &quot;deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse&quot; &gt;&gt; /etc/apt/sources.list \</span><br><span class="line">    &amp;&amp; echo &quot;deb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse&quot; &gt;&gt; /etc/apt/sources.list \</span><br><span class="line">    &amp;&amp; echo &quot;deb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse&quot; &gt;&gt; /etc/apt/sources.list \</span><br><span class="line">    &amp;&amp; echo &quot;deb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse&quot; &gt;&gt; /etc/apt/sources.list \</span><br><span class="line">    &amp;&amp; echo &quot;deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse&quot; &gt;&gt; /etc/apt/sources.list \</span><br><span class="line">    &amp;&amp; echo &quot;deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse&quot; &gt;&gt; /etc/apt/sources.list \</span><br><span class="line">    &amp;&amp; apt-get update \</span><br><span class="line">    &amp;&amp; apt-get -y install clang-format nfs-common</span><br><span class="line"></span><br><span class="line">RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py &amp;&amp; python3 get-pip.py --force-reinstall</span><br><span class="line"></span><br><span class="line">ADD ./soft/* /softs/</span><br><span class="line">WORKDIR /softs</span><br><span class="line">RUN pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple --upgrade pip \</span><br><span class="line">    &amp;&amp; pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple bcolz \</span><br><span class="line">    # &amp;&amp; pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple onnx==1.5.0 \</span><br><span class="line">    &amp;&amp; pip3 install torch-1.3.0-cp36-cp36m-manylinux1_x86_64.whl \</span><br><span class="line">    &amp;&amp; pip3 install Pillow-6.0.0-cp36-cp36m-manylinux1_x86_64.whl \</span><br><span class="line">    &amp;&amp; pip3 install h5py-2.10.0-cp36-cp36m-manylinux1_x86_64.whl \</span><br><span class="line">    &amp;&amp; pip3 install opencv_python-4.2.0.32-cp36-cp36m-manylinux1_x86_64.whl \</span><br><span class="line">    &amp;&amp; pip3 install tensorflow_gpu-1.15.0-cp36-cp36m-manylinux2010_x86_64.whl \</span><br><span class="line">    &amp;&amp; pip3 install torchvision-0.4.1-cp36-cp36m-manylinux1_x86_64.whl \</span><br><span class="line">    # &amp;&amp; pip3 install onnxruntime-1.1.0-cp36-cp36m-manylinux1_x86_64.whl \</span><br><span class="line">    # &amp;&amp; cd onnx-simplifier-0.2.2 &amp;&amp; python3 setup.py install \</span><br><span class="line">    &amp;&amp; pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple pytest pyhamcrest pytest-cov black==19.3b0 isort==4.3.21 flake8 &#x27;pillow&lt;7.0.0&#x27; cython dvc \</span><br><span class="line">    # &amp;&amp; pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple scipy \</span><br><span class="line">    # &amp;&amp; pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple sklearn \</span><br><span class="line">    # &amp;&amp; pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple matplotlib \</span><br><span class="line">    &amp;&amp; pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple numpy \</span><br><span class="line">    # &amp;&amp; pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple pymongo</span><br><span class="line">    &amp;&amp; pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple pymysql</span><br><span class="line"></span><br><span class="line">WORKDIR /workspace</span><br><span class="line">RUN rm -rf /softs</span><br><span class="line"></span><br><span class="line">ENTRYPOINT /bin/bash</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
-        <category>cv engineering</category>
+        <category>Engineering</category>
       </categories>
       <tags>
         <tag>tensorrt client</tag>
@@ -5815,12 +5815,12 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>makefile example--socket &amp; mysql</title>
-    <url>/2022/05/19/cpp/makefile%20exam1-SOCKET%20mysql/</url>
+    <url>/2022/05/19/Language/makefile%20exam1-SOCKET%20mysql/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>用makefile的方式来编译socket服务端代码，包含常用makefile语法的使用~</p>
 <p><strong>好久没这么用cpp了，耍起来啊~</strong><br><span id="more"></span></p>
 <h2 id="1，socket服务端编译-用到mysql数据库"><a href="#1，socket服务端编译-用到mysql数据库" class="headerlink" title="1，socket服务端编译(用到mysql数据库)"></a>1，socket服务端编译(用到mysql数据库)</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#用变量定义文件目录</span><br><span class="line">INCL=-I/usr/local/mysql/include -I$(HOME)/incl</span><br><span class="line">#注意动态库或者静态库的写法</span><br><span class="line">LIB=-L/usr/local/mysql/lib -lmysqlclient -lmysqld -lmysqlservices -L$(HOME)/lib -lbanktest</span><br><span class="line">BINDIR=$(HOME)/bin</span><br><span class="line"></span><br><span class="line">.SUFFIXES: .cpp .c</span><br><span class="line"></span><br><span class="line">#后缀为cpp的文件怎么编译成.o</span><br><span class="line">.cpp.o:</span><br><span class="line">	g++ $&#123;INCL&#125; -c $&lt;</span><br><span class="line"></span><br><span class="line">#后缀为c的文件怎么编译成.o</span><br><span class="line">.c.o:</span><br><span class="line">	gcc $(INCL) -c $&lt;</span><br><span class="line"></span><br><span class="line">all: clean server</span><br><span class="line"></span><br><span class="line">server:server.o</span><br><span class="line">	@echo &quot;============开始编译============&quot;</span><br><span class="line">	gcc -o $@ $? $(LIB)</span><br><span class="line">	@mv $@ $(BINDIR)</span><br><span class="line">	@echo &quot;============编译结束============&quot;</span><br><span class="line"></span><br><span class="line">clean:</span><br><span class="line">	@rm -f *.o</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
-        <category>cpp</category>
+        <category>Language</category>
       </categories>
       <tags>
         <tag>makefile mysql</tag>
@@ -5828,7 +5828,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>makefile example--des &amp; md5 &amp; base64</title>
-    <url>/2022/05/19/cpp/makefile%20exam2-des%20md5%20base64/</url>
+    <url>/2022/05/19/Language/makefile%20exam2-des%20md5%20base64/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>makefile编译代码，有其他需要链接的库，包含mysql，base64等等三方服务，详情看代码吧~</p>
 <p><strong>写这个大概在五年之前了哦~</strong><br><span id="more"></span></p>
 <h2 id="编译des-md5-base64密码服务"><a href="#编译des-md5-base64密码服务" class="headerlink" title="编译des md5 base64密码服务"></a>编译des md5 base64密码服务</h2><ul>
@@ -5836,7 +5836,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 </ul>
 ]]></content>
       <categories>
-        <category>cpp</category>
+        <category>Language</category>
       </categories>
       <tags>
         <tag>makefile md5 base64</tag>
@@ -5844,7 +5844,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>mongodb的构建docker</title>
-    <url>/2022/05/19/tools/mongodb-docker/</url>
+    <url>/2022/05/19/Tools/mongodb-docker/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>早期的博客，搬运过来的，貌似仍然能用，可以很方便的构建mongodb数据库~</p>
 <p><strong>温故而知新，加油~</strong><br><span id="more"></span></p>
 <h2 id="1，Docker搭建Mongodb"><a href="#1，Docker搭建Mongodb" class="headerlink" title="1，Docker搭建Mongodb"></a>1，Docker搭建Mongodb</h2><h3 id="1-1-基本搭建步骤"><a href="#1-1-基本搭建步骤" class="headerlink" title="1.1 基本搭建步骤"></a>1.1 基本搭建步骤</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 获取docker镜像</span><br><span class="line">docker pull mongo</span><br><span class="line"># 创建mongodb容器</span><br><span class="line">docker run --name  my-mongo  -p 27017:27017  -d mongo --auth</span><br><span class="line"># 如果加需要验证就加--auth，不需要验证，就去掉。默认mongodb是不使用用户认证</span><br><span class="line"># 进入容器设置用户</span><br><span class="line">docker exec -it 容器id /bin/bash</span><br><span class="line"># 用户设置命令</span><br><span class="line">mongo</span><br><span class="line">use admin</span><br><span class="line">db.createUser(&#123;user:&quot;root&quot;,pwd:&quot;root&quot;,roles:[&#123;role:&#x27;root&#x27;,db:&#x27;admin&#x27;&#125;]&#125;)   //创建用户,此用户创建成功,则后续操作都需要用户认证</span><br><span class="line">exit</span><br><span class="line"># 或者直接进入admin用户</span><br><span class="line">docker exec -it ly-mongo mongo admin</span><br><span class="line">db.createUser(&#123;user:&quot;root&quot;,pwd:&quot;root&quot;,roles:[&#123;role:&#x27;root&#x27;,db:&#x27;admin&#x27;&#125;]&#125;)   //创建用户,此用户创建成功,则后续操作都需要用户认证</span><br><span class="line">exit</span><br></pre></td></tr></table></figure>
@@ -5859,7 +5859,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 <h2 id="3，推荐用法"><a href="#3，推荐用法" class="headerlink" title="3，推荐用法"></a>3，推荐用法</h2><p>执行如下命令拉取Mongo镜像：<br>docker pull mongo<br>创建Mongo专用的文件夹：<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd /mnt</span><br><span class="line">mkdir mongodb</span><br><span class="line">cd ./mongodb</span><br><span class="line">mkdir data</span><br><span class="line">mkdir backup</span><br></pre></td></tr></table></figure><br>执行如下命令启动MongoDB：<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run --name mongo -p 27017:27017 -v /mnt/mongodb/data:/data/db -v /mnt/mongodb/backup:/data/backup -d mongo --auth</span><br></pre></td></tr></table></figure><br>接下来，我们需要进入容器的命令行去创建用户名和密码：<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker exec -it mongo mongo admin</span><br><span class="line">db.createUser(&#123; user: &#x27;jsmith&#x27;, pwd: &#x27;password&#x27;, roles: [ &#123; role: &quot;userAdminAnyDatabase&quot;, db: &quot;admin&quot; &#125; ] &#125;);</span><br><span class="line">use test;</span><br><span class="line">db.createUser(&#123;user:&quot;testuser&quot;,pwd:&quot;testpass&quot;,roles:[&quot;readWrite&quot;]&#125;);</span><br><span class="line">db.auth(&quot;testuser&quot;,&quot;testpass&quot;)</span><br></pre></td></tr></table></figure><br>在运行一段时间以后，我们可以执行如下命令进行数据库备份：<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker exec mongo sh -c &#x27;exec var=`date +%Y%m%d%H%M` &amp;amp;&amp;amp; mongodump -h localhost --port 27017 -u jsmith -p password -d dbname -o /data/backup/$var_test1.dat&#x27;</span><br></pre></td></tr></table></figure></p>
 ]]></content>
       <categories>
-        <category>tools</category>
+        <category>Tools</category>
       </categories>
       <tags>
         <tag>mongodb docker</tag>
@@ -5867,12 +5867,12 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>几个电视台的直播流</title>
-    <url>/2022/05/19/cv_engineering/several-livestream/</url>
+    <url>/2022/05/19/Engineering/several-livestream/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>常用电视台的直播流，rtsp流，无意中检索到的，就保存了~</p>
 <p><strong>网速好，可以直接看任意台哦</strong><br><span id="more"></span></p>
 <h2 id="常用电视台的直播流"><a href="#常用电视台的直播流" class="headerlink" title="常用电视台的直播流"></a>常用电视台的直播流</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># cap = cv2.VideoCapture(&quot;rtmp://58.200.131.2:1935/livetv/hunantv&quot;) #湖南台</span><br><span class="line"># cap = cv2.VideoCapture(&quot;rtmp://58.200.131.2:1935/livetv/dftv&quot;) #东方台</span><br><span class="line"># cap = cv2.VideoCapture(&quot;rtmp://58.200.131.2:1935/livetv/gdtv&quot;) #广东台</span><br><span class="line"># cap = cv2.VideoCapture(&quot;rtmp://58.200.131.2:1935/livetv/gxtv&quot;) #广西台</span><br><span class="line"></span><br><span class="line">CCTV1高清：http://ivi.bupt.edu.cn/hls/cctv1hd.m3u8</span><br><span class="line">CCTV3高清：http://ivi.bupt.edu.cn/hls/cctv3hd.m3u8</span><br><span class="line">CCTV5高清：http://ivi.bupt.edu.cn/hls/cctv5hd.m3u8</span><br><span class="line">CCTV5+高清：http://ivi.bupt.edu.cn/hls/cctv5phd.m3u8</span><br><span class="line">CCTV6高清：http://ivi.bupt.edu.cn/hls/cctv6hd.m3u8</span><br><span class="line"></span><br><span class="line">CCTV-1综合:rtmp://58.200.131.2:1935/livetv/cctv1</span><br><span class="line">CCTV-2财经:rtmp://58.200.131.2:1935/livetv/cctv2</span><br><span class="line">CCTV-3综艺:rtmp://58.200.131.2:1935/livetv/cctv3</span><br><span class="line">CCTV-4中文国际:rtmp://58.200.131.2:1935/livetv/cctv4</span><br><span class="line">CCTV-5体育:rtmp://58.200.131.2:1935/livetv/cctv5</span><br><span class="line">CCTV-6电影:rtmp://58.200.131.2:1935/livetv/cctv6</span><br><span class="line">CCTV-7军事农业:rtmp://58.200.131.2:1935/livetv/cctv7</span><br><span class="line">CCTV-8电视剧:rtmp://58.200.131.2:1935/livetv/cctv8</span><br><span class="line">CCTV-9记录:rtmp://58.200.131.2:1935/livetv/cctv9</span><br><span class="line">CCTV-10科教:rtmp://58.200.131.2:1935/livetv/cctv10</span><br><span class="line">CCTV-11戏曲:rtmp://58.200.131.2:1935/livetv/cctv11</span><br><span class="line">CCTV-12社会与法:rtmp://58.200.131.2:1935/livetv/cctv12</span><br><span class="line">CCTV-13新闻:rtmp://58.200.131.2:1935/livetv/cctv13</span><br><span class="line">CCTV-14少儿:rtmp://58.200.131.2:1935/livetv/cctv14</span><br><span class="line">CCTV-15音乐:rtmp://58.200.131.2:1935/livetv/cctv15</span><br><span class="line">安徽卫视:rtmp://58.200.131.2:1935/livetv/ahtv</span><br><span class="line">兵团卫视:rtmp://58.200.131.2:1935/livetv/bttv</span><br><span class="line">重庆卫视:rtmp://58.200.131.2:1935/livetv/cqtv</span><br><span class="line">东方卫视:rtmp://58.200.131.2:1935/livetv/dftv</span><br><span class="line">东南卫视:rtmp://58.200.131.2:1935/livetv/dntv</span><br><span class="line">广东卫视:rtmp://58.200.131.2:1935/livetv/gdtv</span><br><span class="line">广西卫视:rtmp://58.200.131.2:1935/livetv/gxtv</span><br><span class="line">甘肃卫视:rtmp://58.200.131.2:1935/livetv/gstv</span><br><span class="line">贵州卫视:rtmp://58.200.131.2:1935/livetv/gztv</span><br><span class="line">湖北卫视:rtmp://58.200.131.2:1935/livetv/hbtv</span><br><span class="line">湖南卫视:rtmp://58.200.131.2:1935/livetv/hunantv</span><br><span class="line">河北卫视:rtmp://58.200.131.2:1935/livetv/hebtv</span><br><span class="line">河南卫视:rtmp://58.200.131.2:1935/livetv/hntv</span><br><span class="line">黑龙江卫视:rtmp://58.200.131.2:1935/livetv/hljtv</span><br><span class="line">江苏卫视:rtmp://58.200.131.2:1935/livetv/jstv</span><br><span class="line">江西卫视:rtmp://58.200.131.2:1935/livetv/jxtv</span><br><span class="line">吉林卫视:rtmp://58.200.131.2:1935/livetv/jltv</span><br><span class="line">辽宁卫视:rtmp://58.200.131.2:1935/livetv/lntv</span><br><span class="line">内蒙古卫视:rtmp://58.200.131.2:1935/livetv/nmtv</span><br><span class="line">宁夏卫视:rtmp://58.200.131.2:1935/livetv/nxtv</span><br><span class="line">青海卫视:rtmp://58.200.131.2:1935/livetv/qhtv</span><br><span class="line">四川卫视:rtmp://58.200.131.2:1935/livetv/sctv</span><br><span class="line">山东卫视:rtmp://58.200.131.2:1935/livetv/sdtv</span><br><span class="line">山西卫视:rtmp://58.200.131.2:1935/livetv/sxrtv</span><br><span class="line">陕西卫视:rtmp://58.200.131.2:1935/livetv/sxtv</span><br><span class="line">山东教育:rtmp://58.200.131.2:1935/livetv/sdetv</span><br><span class="line">中国教育-1:rtmp://58.200.131.2:1935/livetv/cetv1</span><br><span class="line">中国教育-3:rtmp://58.200.131.2:1935/livetv/cetv3</span><br><span class="line">中国教育-4:rtmp://58.200.131.2:1935/livetv/cetv4</span><br><span class="line">CCTV-第一剧场:rtmp://58.200.131.2:1935/livetv/dyjctv</span><br><span class="line">CCTV-国防军事:rtmp://58.200.131.2:1935/livetv/gfjstv</span><br><span class="line">CCTV-怀旧剧场:rtmp://58.200.131.2:1935/livetv/hjjctv</span><br><span class="line">CCTV-风云剧场:rtmp://58.200.131.2:1935/livetv/fyjctv</span><br><span class="line">CCTV-风云足球:rtmp://58.200.131.2:1935/livetv/fyzqtv</span><br><span class="line">CCTV-风云音乐:rtmp://58.200.131.2:1935/livetv/fyyytv</span><br><span class="line">CCTV-世界地理:rtmp://58.200.131.2:1935/livetv/sjdltv</span><br><span class="line">CCTV-1HD:rtmp://58.200.131.2:1935/livetv/cctv1hd</span><br><span class="line">CCTV-2HD:rtmp://58.200.131.2:1935/livetv/cctv2hd</span><br><span class="line">CCTV-3HD:rtmp://58.200.131.2:1935/livetv/cctv3hd</span><br><span class="line">CCTV-4HD:rtmp://58.200.131.2:1935/livetv/cctv4hd</span><br><span class="line">CCTV-5HD:rtmp://58.200.131.2:1935/livetv/cctv5hd</span><br><span class="line">CCTV5+HD:rtmp://58.200.131.2:1935/livetv/cctv5phd</span><br><span class="line">CCTV-6HD:rtmp://58.200.131.2:1935/livetv/cctv6hd</span><br><span class="line">CCTV-7HD:rtmp://58.200.131.2:1935/livetv/cctv7hd</span><br><span class="line">CCTV-8HD:rtmp://58.200.131.2:1935/livetv/cctv8hd</span><br><span class="line">CCTV-9HD:rtmp://58.200.131.2:1935/livetv/cctv9hd</span><br><span class="line">CCTV-10HD:rtmp://58.200.131.2:1935/livetv/cctv10hd</span><br><span class="line">CCTV-12HD:rtmp://58.200.131.2:1935/livetv/cctv12hd</span><br><span class="line">CCTV-14HD:rtmp://58.200.131.2:1935/livetv/cctv14hd</span><br><span class="line">CGTN-新闻:rtmp://58.200.131.2:1935/livetv/cctv16</span><br><span class="line">CETV-1:rtmp://58.200.131.2:1935/livetv/cetv1</span><br><span class="line">CETV-3:rtmp://58.200.131.2:1935/livetv/cetv3</span><br><span class="line">CETV-4:rtmp://58.200.131.2:1935/livetv/cetv4</span><br><span class="line">北京卫视高清:rtmp://58.200.131.2:1935/livetv/btv1hd</span><br><span class="line">北京影视高清:rtmp://58.200.131.2:1935/livetv/btv4hd</span><br><span class="line">北京体育高清:rtmp://58.200.131.2:1935/livetv/btv6hd</span><br><span class="line">北京新闻高清:rtmp://58.200.131.2:1935/livetv/btv9hd</span><br><span class="line">北京纪实高清:rtmp://58.200.131.2:1935/livetv/btv11hd</span><br><span class="line">北京卫视:rtmp://58.200.131.2:1935/livetv/btv1</span><br><span class="line">北京文艺:rtmp://58.200.131.2:1935/livetv/btv2</span><br><span class="line">北京科教:rtmp://58.200.131.2:1935/livetv/btv3</span><br><span class="line">北京影视:rtmp://58.200.131.2:1935/livetv/btv4</span><br><span class="line">北京财经:rtmp://58.200.131.2:1935/livetv/btv5</span><br><span class="line">北京体育:rtmp://58.200.131.2:1935/livetv/btv6</span><br><span class="line">北京生活:rtmp://58.200.131.2:1935/livetv/btv7</span><br><span class="line">北京青年:rtmp://58.200.131.2:1935/livetv/btv8</span><br><span class="line">北京新闻:rtmp://58.200.131.2:1935/livetv/btv9</span><br><span class="line">北京卡酷:rtmp://58.200.131.2:1935/livetv/btv10</span><br><span class="line">北京文艺高清:rtmp://58.200.131.2:1935/livetv/btv2hd</span><br><span class="line">安徽卫视高清:rtmp://58.200.131.2:1935/livetv/ahhd</span><br><span class="line">重庆卫视高清:rtmp://58.200.131.2:1935/livetv/cqhd</span><br><span class="line">东方卫视高清:rtmp://58.200.131.2:1935/livetv/dfhd</span><br><span class="line">天津卫视高清:rtmp://58.200.131.2:1935/livetv/tjhd</span><br><span class="line">东南卫视高清:rtmp://58.200.131.2:1935/livetv/dnhd</span><br><span class="line">江西卫视高清:rtmp://58.200.131.2:1935/livetv/jxhd</span><br><span class="line">河北卫视高清:rtmp://58.200.131.2:1935/livetv/hebhd</span><br><span class="line">湖南卫视高清:rtmp://58.200.131.2:1935/livetv/hunanhd</span><br><span class="line">湖北卫视高清:rtmp://58.200.131.2:1935/livetv/hbhd</span><br><span class="line">辽宁卫视高清:rtmp://58.200.131.2:1935/livetv/lnhd</span><br><span class="line">四川卫视高清:rtmp://58.200.131.2:1935/livetv/schd</span><br><span class="line">江苏卫视高清:rtmp://58.200.131.2:1935/livetv/jshd</span><br><span class="line">浙江卫视高清:rtmp://58.200.131.2:1935/livetv/zjhd</span><br><span class="line">山东卫视高清:rtmp://58.200.131.2:1935/livetv/sdhd</span><br><span class="line">广东卫视高清:rtmp://58.200.131.2:1935/livetv/gdhd</span><br><span class="line">深圳卫视高清:rtmp://58.200.131.2:1935/livetv/szhd</span><br><span class="line">黑龙江卫视高清:rtmp://58.200.131.2:1935/livetv/hljhd</span><br><span class="line">CHC高清电影:rtmp://58.200.131.2:1935/livetv/chchd</span><br><span class="line">上海纪实高清:rtmp://58.200.131.2:1935/livetv/docuchina</span><br><span class="line">金鹰纪实高清:rtmp://58.200.131.2:1935/livetv/gedocu</span><br><span class="line">全纪实高清:rtmp://58.200.131.2:1935/livetv/documentaryhd</span><br><span class="line">凤凰卫视中文台:rtmp://58.200.131.2:1935/livetv/fhzw</span><br><span class="line">凤凰卫视资讯台:rtmp://58.200.131.2:1935/livetv/fhzx</span><br><span class="line">凤凰卫视电影台:rtmp://58.200.131.2:1935/livetv/fhdy</span><br><span class="line">星空卫视:rtmp://58.200.131.2:1935/livetv/startv</span><br><span class="line">Star Sports:rtmp://58.200.131.2:1935/livetv/starsports</span><br><span class="line">Channel[V]:rtmp://58.200.131.2:1935/livetv/channelv</span><br><span class="line">探索频道:rtmp://58.200.131.2:1935/livetv/discovery</span><br><span class="line">国家地理频道:rtmp://58.200.131.2:1935/livetv/natlgeo</span><br><span class="line">CHC家庭影院:rtmp://58.200.131.2:1935/livetv/chctv</span><br><span class="line">CHC动作电影:rtmp://58.200.131.2:1935/livetv/chcatv</span><br><span class="line">美国电视频道:rtmp://media3.scctv.net/live/scctv_800</span><br><span class="line">香港财经:rtmp://202.69.69.180:443/webcast/bshdlive-pc</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
       <categories>
-        <category>cv engineering</category>
+        <category>Engineering</category>
       </categories>
       <tags>
         <tag>livestream</tag>
@@ -5880,7 +5880,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>hi3559a and nfs</title>
-    <url>/2022/05/19/hardware/hi3559a-nfs/</url>
+    <url>/2022/05/19/Engineering/hi3559a-nfs/</url>
     <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在进行板子调试的时候，用串口传输文件会比较繁琐，尤其是文件小而多时，所以此处采用了nfs服务，将PC机上的一个文件夹挂载到板子上共享存储服务。</p>
 <p><strong>可以使劲、快速的板砖啦…啦啦啦啦…</strong><br><span id="more"></span></p>
 <h2 id="1，PC上的安装和配置"><a href="#1，PC上的安装和配置" class="headerlink" title="1，PC上的安装和配置"></a>1，PC上的安装和配置</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 安装</span><br><span class="line">sudo apt-get install nfs-kernel-server</span><br><span class="line"># 共享文件夹</span><br><span class="line">sudo mkdir /home/demo/hi3559a_share</span><br><span class="line"># 配置文件，打开```/etc/exports```文件，在最后加上：</span><br><span class="line">/home/demo/hi3559a_share *(rw,sync,no_subtree_check)</span><br></pre></td></tr></table></figure>
@@ -5888,7 +5888,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 <h2 id="2，开发板上的安装和配置"><a href="#2，开发板上的安装和配置" class="headerlink" title="2，开发板上的安装和配置"></a>2，开发板上的安装和配置</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 安装客户端</span><br><span class="line">sudo apt-get install nfs-common</span><br><span class="line"># 挂载文件夹</span><br><span class="line">mkdirs -p /home/hihope/hi3559av100</span><br><span class="line">chmod 777 /home/hihope/hi3559av100</span><br></pre></td></tr></table></figure>
 <h2 id="3，常用命令"><a href="#3，常用命令" class="headerlink" title="3，常用命令"></a>3，常用命令</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 挂载命令</span><br><span class="line">sudo mount -t nfs -o nolock,nfsvers=3,vers=3 192.168.86.105:/home/demo/hi3559a_share /home/hihope/hi3559av100</span><br><span class="line"># 卸载命令</span><br><span class="line">umount /home/hihope/hi3559av100</span><br><span class="line">df	//查看挂载信息</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
-        <category>hardware</category>
+        <category>Engineering</category>
       </categories>
       <tags>
         <tag>hi3559a nfs</tag>
@@ -5896,7 +5896,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>hi3559a，windows和vmware&amp;ubuntu的开发环境配置</title>
-    <url>/2022/05/19/hardware/hi3559a-windows-vmware-software/</url>
+    <url>/2022/05/19/Engineering/hi3559a-windows-vmware-software/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><h3 id="桥接模式"><a href="#桥接模式" class="headerlink" title="桥接模式"></a>桥接模式</h3><p>原理就找大佬们理解，也就不多说了。<br>我的理解是，PC和板子用网线连接，PC和虚拟机是逻辑连接，需要保证pc, ubuntu（vmware中的）和板子在同一个网段中。</p>
 <h3 id="windows系统需要确认"><a href="#windows系统需要确认" class="headerlink" title="windows系统需要确认"></a>windows系统需要确认</h3><ul>
 <li>关闭win10防火墙</li>
@@ -5949,7 +5949,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 <h2 id="3，关联资源"><a href="#3，关联资源" class="headerlink" title="3，关联资源"></a>3，关联资源</h2><p>参考连接：<a href="https://www.cnblogs.com/czjk/p/11699198.html">https://www.cnblogs.com/czjk/p/11699198.html</a></p>
 ]]></content>
       <categories>
-        <category>hardware</category>
+        <category>Engineering</category>
       </categories>
       <tags>
         <tag>Hi3559a win10 vmware</tag>
@@ -5957,13 +5957,13 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>anaconda安装，换源及构建虚拟环境</title>
-    <url>/2022/05/17/python/anaconda-basic/</url>
+    <url>/2022/05/17/Language/anaconda-basic/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>anaconda的安装，换源和虚拟环境构建，对于python语言来说，anaconda是个不错的环境管理方案，可以隔离不同的python应用和包需求。</p>
 <p><strong>工欲善其事必先利其器~</strong><br><span id="more"></span></p>
 <h2 id="anaconda安装并换源："><a href="#anaconda安装并换源：" class="headerlink" title="anaconda安装并换源："></a>anaconda安装并换源：</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">bash Anaconda3-5.2.0-Linux-x86_64.sh</span><br><span class="line">vim ~/.bashrc</span><br><span class="line">export PATH=/home/XXX/anaconda3/bin:$PATH（XXX为自己的用户名）（在文件末尾处添加该语句）</span><br><span class="line">source ~/.bashrc</span><br><span class="line"></span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/</span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge </span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/msys2/</span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/</span><br><span class="line">conda config --set show_channel_urls yes</span><br><span class="line">之后vim ~/.condarc，把defaults删掉</span><br></pre></td></tr></table></figure>
 <h2 id="虚拟环境"><a href="#虚拟环境" class="headerlink" title="虚拟环境"></a>虚拟环境</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">conda create -n exp38 python==3.8</span><br><span class="line">conda activate exp38</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
-        <category>python</category>
+        <category>Language</category>
       </categories>
       <tags>
         <tag>anaconda basic</tag>
@@ -5971,7 +5971,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>faster rcnn的前向传播过程</title>
-    <url>/2022/05/16/detection/forward-of-faster-rcnn/</url>
+    <url>/2022/05/16/Detection/forward-of-faster-rcnn/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>faster rcnn的前传过程和训练步骤</p>
 <p><strong>经典的二阶段算法啊~</strong></p>
 <span id="more"></span>
@@ -5984,7 +5984,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 </ul>
 ]]></content>
       <categories>
-        <category>detection</category>
+        <category>Detection</category>
       </categories>
       <tags>
         <tag>faster rcnn forward</tag>
@@ -5992,7 +5992,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>faster rcnn中的类别不均衡问题</title>
-    <url>/2022/05/16/detection/class-imbalance-in-faster-rcnn/</url>
+    <url>/2022/05/16/Detection/class-imbalance-in-faster-rcnn/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>faster rcnn是17年前后He Kaiming应用比较广泛的大作之一，是典型的二阶段方法，其中有哪些比较好的处理类别不均衡的思想呢？可以从论文中窥探一二~</p>
 <p><strong>多看论文啊~</strong><br><span id="more"></span></p>
 <h2 id="1，论文中的解决方法"><a href="#1，论文中的解决方法" class="headerlink" title="1，论文中的解决方法"></a>1，论文中的解决方法</h2><ul>
@@ -6018,7 +6018,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 <h2 id="3，衍生到通用类别不均衡问题"><a href="#3，衍生到通用类别不均衡问题" class="headerlink" title="3，衍生到通用类别不均衡问题"></a>3，衍生到通用类别不均衡问题</h2><p>限制正负样本比例为1:1，如果正样本不足，就用负样本补充，这种方法后面研究工作用的不多。通常针对类别不平衡问题可以从调整样本数或修改loss weight两方面去解决，常用的方法有OHEM、OHNM、class balanced loss和Focal loss。</p>
 ]]></content>
       <categories>
-        <category>detection</category>
+        <category>Detection</category>
       </categories>
       <tags>
         <tag>faster rcnn</tag>
@@ -6027,7 +6027,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>nms的原理和作用</title>
-    <url>/2022/05/16/detection/-priciple-and-effects-of-nms/</url>
+    <url>/2022/05/16/Detection/-priciple-and-effects-of-nms/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>nms的原理，应用和发展方向</p>
 <p><strong>尤其在anchor based中用得多~</strong><br><span id="more"></span></p>
 <h2 id="1，作用和原理"><a href="#1，作用和原理" class="headerlink" title="1，作用和原理"></a>1，作用和原理</h2><ul>
@@ -6048,7 +6048,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 <p>softNMS基本思想：用稍低一点的分数来代替原有的分数，而不是直接置零）</p>
 <h2 id="4，发展新动向？"><a href="#4，发展新动向？" class="headerlink" title="4，发展新动向？"></a>4，发展新动向？</h2>]]></content>
       <categories>
-        <category>detection</category>
+        <category>Detection</category>
       </categories>
       <tags>
         <tag>nms</tag>
@@ -6056,7 +6056,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>rpn的原理和作用</title>
-    <url>/2022/05/16/detection/principle-and-effects-of-rpn/</url>
+    <url>/2022/05/16/Detection/principle-and-effects-of-rpn/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>rpn原理和作用</p>
 <span id="more"></span>
 <h2 id="1，作用"><a href="#1，作用" class="headerlink" title="1，作用"></a>1，作用</h2><p>RPN专门用来提取候选框，一方面RPN耗时少，另一方面RPN可以很容易结合到Fast RCNN中，成为一个整体。</p>
@@ -6065,15 +6065,37 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 <h2 id="4，为什么提出anchor-box？"><a href="#4，为什么提出anchor-box？" class="headerlink" title="4，为什么提出anchor box？"></a>4，为什么提出anchor box？</h2><p>主要有两个原因：一个窗口只能检测一个目标、无法解决多尺度问题。<br>目前anchor box尺寸的选择主要有三种方式：人为经验选取、k-means聚类、作为超参数进行学习<br>为什么使用不同尺寸和不同长宽比？ 为了得到更大的交并比(IOU)。</p>
 ]]></content>
       <categories>
-        <category>detection</category>
+        <category>Detection</category>
       </categories>
       <tags>
         <tag>rpn</tag>
       </tags>
   </entry>
   <entry>
+    <title>roi align</title>
+    <url>/2022/05/16/Detection/roi-align/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>roi align产生的背景，原理和应用场景</p>
+<p><strong>主要对比roi pooling</strong><br><span id="more"></span></p>
+<h2 id="1，背景"><a href="#1，背景" class="headerlink" title="1，背景"></a>1，背景</h2><p>在mask rcnn中提出，是为了解决roi pooling的两次量化带来的位置精度损失问题。</p>
+<h2 id="2，思路"><a href="#2，思路" class="headerlink" title="2，思路"></a>2，思路</h2><p>取消量化操作，使用双线性内插的方法获得坐标为浮点数的像素点上的图像数值,从而将整个特征聚集过程转化为一个连续的操作。值得注意的是，在具体的算法操作上，ROI Align并不是简单地补充出候选区域边界上的坐标点，然后将这些坐标点进行池化，而是重新设计了一套比较优雅的流程，大致算法流程为：</p>
+<ul>
+<li>遍历每一个候选区域，保持浮点数边界不做量化。</li>
+<li>将候选区域分割成k x k个单元，每个单元的边界也不做量化。</li>
+<li>在每个单元中计算固定四个坐标位置，用双线性内插的方法计算出这四个位置的值，然后进行最大池化操作。</li>
+</ul>
+<h2 id="3，区别"><a href="#3，区别" class="headerlink" title="3，区别"></a>3，区别</h2><p>ROI Align舍去了近似像素取整数的量化方法，改用双线性插值的方法确定特征图坐标对应于原图中的像素位置.ROI Align很好地解决了ROI Pooling操作中两次量化造成的区域不匹配(mis-alignment)的问题。</p>
+<h2 id="4，应用场景"><a href="#4，应用场景" class="headerlink" title="4，应用场景"></a>4，应用场景</h2><p>对于检测图片中大目标物体时，两种方案的差别不大，而如果是图片中有较多小目标物体需要检测，则优先选择RoiAlign，更精准些。</p>
+]]></content>
+      <categories>
+        <category>Detection</category>
+      </categories>
+      <tags>
+        <tag>roi align</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>roi pooling</title>
-    <url>/2022/05/16/detection/roi-pooling/</url>
+    <url>/2022/05/16/Detection/roi-pooling/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>roi pooling的基本原理和应用</p>
 <p><strong>加油，夯实基础~</strong><br><span id="more"></span></p>
 <h2 id="1，基本原理"><a href="#1，基本原理" class="headerlink" title="1，基本原理"></a>1，基本原理</h2><p>RoI Pooling的过程就是将一个个大小不同的box矩形框，都映射成大小固定$(w * h)$的矩形框，最大的好处就在于极大地提高了处理速度。</p>
@@ -6094,37 +6116,15 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 <p>经过上述两次量化，此时的候选框已经和最开始回归出来的位置有一定的偏差，这个偏差会影响检测或者分割的准确度</p>
 ]]></content>
       <categories>
-        <category>detection</category>
+        <category>Detection</category>
       </categories>
       <tags>
         <tag>roi pooling</tag>
       </tags>
   </entry>
   <entry>
-    <title>roi align</title>
-    <url>/2022/05/16/detection/roi-align/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>roi align产生的背景，原理和应用场景</p>
-<p><strong>主要对比roi pooling</strong><br><span id="more"></span></p>
-<h2 id="1，背景"><a href="#1，背景" class="headerlink" title="1，背景"></a>1，背景</h2><p>在mask rcnn中提出，是为了解决roi pooling的两次量化带来的位置精度损失问题。</p>
-<h2 id="2，思路"><a href="#2，思路" class="headerlink" title="2，思路"></a>2，思路</h2><p>取消量化操作，使用双线性内插的方法获得坐标为浮点数的像素点上的图像数值,从而将整个特征聚集过程转化为一个连续的操作。值得注意的是，在具体的算法操作上，ROI Align并不是简单地补充出候选区域边界上的坐标点，然后将这些坐标点进行池化，而是重新设计了一套比较优雅的流程，大致算法流程为：</p>
-<ul>
-<li>遍历每一个候选区域，保持浮点数边界不做量化。</li>
-<li>将候选区域分割成k x k个单元，每个单元的边界也不做量化。</li>
-<li>在每个单元中计算固定四个坐标位置，用双线性内插的方法计算出这四个位置的值，然后进行最大池化操作。</li>
-</ul>
-<h2 id="3，区别"><a href="#3，区别" class="headerlink" title="3，区别"></a>3，区别</h2><p>ROI Align舍去了近似像素取整数的量化方法，改用双线性插值的方法确定特征图坐标对应于原图中的像素位置.ROI Align很好地解决了ROI Pooling操作中两次量化造成的区域不匹配(mis-alignment)的问题。</p>
-<h2 id="4，应用场景"><a href="#4，应用场景" class="headerlink" title="4，应用场景"></a>4，应用场景</h2><p>对于检测图片中大目标物体时，两种方案的差别不大，而如果是图片中有较多小目标物体需要检测，则优先选择RoiAlign，更精准些。</p>
-]]></content>
-      <categories>
-        <category>detection</category>
-      </categories>
-      <tags>
-        <tag>roi align</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>yolo4中的数据增强</title>
-    <url>/2022/05/16/detection/-data-augmentation-in-yolo4/</url>
+    <url>/2022/05/16/Detection/-data-augmentation-in-yolo4/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>常用数据增强方式和yolov4中使用的数据增强方式及其有效性。</p>
 <p><strong>加油啊，还没总结完~</strong><br><span id="more"></span></p>
 <h2 id="1，常用数据增强方式"><a href="#1，常用数据增强方式" class="headerlink" title="1，常用数据增强方式"></a>1，常用数据增强方式</h2><h3 id="1-1-畸变"><a href="#1-1-畸变" class="headerlink" title="1.1 畸变"></a>1.1 畸变</h3><ul>
@@ -6171,7 +6171,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 </ul>
 ]]></content>
       <categories>
-        <category>detection</category>
+        <category>Detection</category>
       </categories>
       <tags>
         <tag>data augmentation</tag>
@@ -6179,7 +6179,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>一阶段和两阶段目标检测网络</title>
-    <url>/2022/05/16/detection/one-stage-vs-two-stage/</url>
+    <url>/2022/05/16/Detection/one-stage-vs-two-stage/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>一阶段和二阶段目标检测算法</p>
 <p><strong>总结不到位，请重来~</strong><br><span id="more"></span></p>
 <h2 id="1，one-stage"><a href="#1，one-stage" class="headerlink" title="1，one stage"></a>1，one stage</h2><p>One-Stage检测算法，没有selective search产生region proposal的阶段，直接产生物体的类别概率和位置坐标，经过单次检测即可直接获得最终的检测结果。相比Two-Stage有更快的速度，但准确度低。代表网络有YOLO v1/v2/v3/9000,SSD,Retina-Net. （two-stage算法中的roi pooling会对目标做resize, 小目标的特征被放大，其特征轮廓也更为清晰，因此检测也更为准确）</p>
@@ -6189,7 +6189,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 <h2 id="3，异同"><a href="#3，异同" class="headerlink" title="3，异同"></a>3，异同</h2><p>Two-Stage先对前景背景做了筛选，再进行回归，回归效果比较好，准度高但是相比较慢，One-Stage是直接对特征上的点进行直接回归，优点是速度快，因为用了多层特征图出框可能小目标效果比较好一点，缺点是因为正负样本失衡导致效果较差，要结合难例挖掘。</p>
 ]]></content>
       <categories>
-        <category>detection</category>
+        <category>Detection</category>
       </categories>
       <tags>
         <tag>one stage</tag>
@@ -6198,7 +6198,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>基于框和无框方法的目标检测</title>
-    <url>/2022/05/16/detection/-anchor-based-vs-anchor-free/</url>
+    <url>/2022/05/16/Detection/-anchor-based-vs-anchor-free/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>anchor based和anchor free两种方法对比，基本内容包含：</p>
 <ul>
 <li>各自定义</li>
@@ -6252,7 +6252,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 </ul>
 ]]></content>
       <categories>
-        <category>detection</category>
+        <category>Detection</category>
       </categories>
       <tags>
         <tag>anchor based</tag>
@@ -6261,7 +6261,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>小目标检测</title>
-    <url>/2022/05/16/detection/tiny-obj-det/</url>
+    <url>/2022/05/16/Detection/tiny-obj-det/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>早期经典方法为何对小目标检测效果不好？小目标检测有哪几种方案？</p>
 <p><strong>一步一步来~</strong><br><span id="more"></span></p>
 <h2 id="1，faster-rcnn-yolo-ssd等对小目标为啥不work？"><a href="#1，faster-rcnn-yolo-ssd等对小目标为啥不work？" class="headerlink" title="1，faster rcnn, yolo, ssd等对小目标为啥不work？"></a>1，faster rcnn, yolo, ssd等对小目标为啥不work？</h2><p>SSD，YOLO等单阶段多尺度算法，小目标检测需要较高的分辨率，SSD对于高分辨的低层特征没有再利用，而这些层对于检测小目标很重要。按SSD的设计思想，其实SSD对小目标应该有比较好的效果，但是需要重新精细设计SSD中的default box，比如重新设计min_sizes参数，扩大小default box的数量来cover住小目标。但是随着default box数量的增加，网络速度也会降低。YOLO网络可以理解为是强行把图片分割成7*7个网格，每个网格预测2个目标，相当于只有98个anchor，所以不管是小目标，还是大目标，YOLO的表现都不是很理想，但是由于只需处理少量的anchor，所以YOLO的速度上有很大优势。</p>
@@ -6273,7 +6273,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 <h3 id="2-4-借鉴Cascade-R-CNN的设计思路"><a href="#2-4-借鉴Cascade-R-CNN的设计思路" class="headerlink" title="2.4 借鉴Cascade R-CNN的设计思路"></a>2.4 借鉴Cascade R-CNN的设计思路</h3><p>优化目标检测中Two-Stage方法中的IOU阈值。检测中的IOU阈值对于样本的选取是至关重要的，如果IOU阈值过高，会导致正样本质量很高，但是数量会很少，会出现样本比例不平衡的影响；如果IOU阈值较低，样本数量就会增加，但是样本的质量也会下降。如何选取好的IOU，对于检测结果来说很重要。⑤采用分割代替检测方法，先分割，后回归bbox来检测微小目标。</p>
 ]]></content>
       <categories>
-        <category>detection</category>
+        <category>Detection</category>
       </categories>
       <tags>
         <tag>tiny objects det</tag>
@@ -6281,13 +6281,13 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>目标检测网络小结</title>
-    <url>/2022/05/16/detection/object-detection-models/</url>
+    <url>/2022/05/16/Detection/object-detection-models/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>目标检测的经典网络，会不断更新哦~</p>
 <p><strong>催就更~</strong><br><span id="more"></span></p>
 <h2 id="目标检测经典网络"><a href="#目标检测经典网络" class="headerlink" title="目标检测经典网络"></a>目标检测经典网络</h2><p><img src="det_models.png" alt="obj_detec">   </p>
 ]]></content>
       <categories>
-        <category>detection</category>
+        <category>Detection</category>
       </categories>
       <tags>
         <tag>objext detection</tag>
@@ -6295,7 +6295,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>传统目标检测小结</title>
-    <url>/2022/05/16/detection/traditional-obj-det/</url>
+    <url>/2022/05/16/Detection/traditional-obj-det/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>传统目标检测的发展历程和优缺点</p>
 <p><strong>有时间整理下HOG+SVM的原理吧~</strong><br><span id="more"></span></p>
 <h2 id="1，主线"><a href="#1，主线" class="headerlink" title="1，主线"></a>1，主线</h2><p>区域选择-&gt;特征提取-&gt;分类器</p>
@@ -6319,7 +6319,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 </ul>
 ]]></content>
       <categories>
-        <category>detection</category>
+        <category>Detection</category>
       </categories>
       <tags>
         <tag>object detection</tag>
@@ -6327,7 +6327,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>Nvidia GTX3090配置ubuntu20.04环境</title>
-    <url>/2022/05/14/hardware/GTX3090-server-env/</url>
+    <url>/2022/05/14/Engineering/GTX3090-server-env/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>主机环境：DELL T7920图形工作站，2<em>银牌4214R，24核 2.4G 64G内存，2</em>1TB M.2固态，RTX3090，ubuntu2004系统，主要用于深度学习视觉方向的开发环境搭建。</p>
 <span id="more"></span>
 <h2 id="1，系统安装"><a href="#1，系统安装" class="headerlink" title="1，系统安装"></a>1，系统安装</h2><p><a href="https://github.com/sophia-hxw/uglyBlog/blob/main/ubuntu/UEFI%E5%92%8CLegacy.md">ubuntu2004安装</a></p>
@@ -6337,7 +6337,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 <h2 id="3，基本环境"><a href="#3，基本环境" class="headerlink" title="3，基本环境"></a>3，基本环境</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">py37或py38</span><br><span class="line">cuda11.0</span><br><span class="line">cudnn8.0.4</span><br><span class="line">tf2.5（tf-nightly）或 tf1.15.4</span><br><span class="line">pytorch1.7</span><br><span class="line">keras2.3</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>hardware</category>
+        <category>Engineering</category>
       </categories>
       <tags>
         <tag>GTX3090</tag>
@@ -6345,13 +6345,13 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>static IP of ubuntu20.04</title>
-    <url>/2022/05/14/ubuntuOS/staticIP-of-ubuntu/</url>
+    <url>/2022/05/14/OS/staticIP-of-ubuntu/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>自己搭建了一个简单的服务系统，就有了固定服务器ip的需求，方法不多说了，见下文~</p>
 <p><strong>so easy~</strong><br><span id="more"></span></p>
 <h2 id="1，详细步骤"><a href="#1，详细步骤" class="headerlink" title="1，详细步骤"></a>1，详细步骤</h2><p>系统版本：20.04<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ip addr</span><br><span class="line"># 打开文件</span><br><span class="line">sudo vi /etc/netplan/01-netplan-manager-all.yaml</span><br><span class="line"># 添加内容：</span><br><span class="line">network:</span><br><span class="line">    ethernets:</span><br><span class="line">        ens33:#网卡名称，可能不一样</span><br><span class="line">            dhcp4: false</span><br><span class="line">            addresses: [192.168.1.18/24]</span><br><span class="line">            optional: true</span><br><span class="line">            gateway4: 192.168.1.1</span><br><span class="line">            nameservers:</span><br><span class="line">                addresses: [192.168.1.1,114.114.114.114]</span><br><span class="line">    version: 2</span><br><span class="line"># 使配置生效</span><br><span class="line">sudo netplan apply</span><br></pre></td></tr></table></figure></p>
 ]]></content>
       <categories>
-        <category>ubuntuOS</category>
+        <category>OS</category>
       </categories>
       <tags>
         <tag>static IP</tag>
@@ -6359,7 +6359,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>backup and recovery of ubuntu OS</title>
-    <url>/2022/05/14/ubuntuOS/ubuntu-backup-and-recovery/</url>
+    <url>/2022/05/14/OS/ubuntu-backup-and-recovery/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>ubuntu物理机系统，以前崩溃了就一直重装，然后各种软件挺头疼，想起在windows中屡试不爽的备份和换源，想在ubuntu系统中实践下，印象中，测试过两次，效果不太好，有待继续考证~~</p>
 <p><strong>路漫漫其修远兮，壮士加油~~</strong><br><span id="more"></span></p>
 <h2 id="1，系统备份"><a href="#1，系统备份" class="headerlink" title="1，系统备份"></a>1，系统备份</h2><h3 id="1-1-先清理"><a href="#1-1-先清理" class="headerlink" title="1.1 先清理"></a>1.1 先清理</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 清理旧版本的软件缓存</span><br><span class="line">sudo apt-get autoclean</span><br><span class="line"># 清理所有软件缓存</span><br><span class="line">sudo apt-get clean</span><br><span class="line"># 删除系统不再使用的孤立软件</span><br><span class="line">sudo apt-get autoremove</span><br></pre></td></tr></table></figure>
@@ -6379,7 +6379,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 <h2 id="2，系统还原"><a href="#2，系统还原" class="headerlink" title="2，系统还原"></a>2，系统还原</h2><p><a href="https://blog.csdn.net/qq_35523593/article/details/78545530">reference_link</a></p>
 ]]></content>
       <categories>
-        <category>ubuntuOS</category>
+        <category>OS</category>
       </categories>
       <tags>
         <tag>ubuntu backup</tag>
@@ -6388,7 +6388,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>docker server on ubuntu20.04</title>
-    <url>/2022/05/14/ubuntuOS/docker-server-of-ubuntu/</url>
+    <url>/2022/05/14/OS/docker-server-of-ubuntu/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>ubuntu中docker server的搭建，也是常用的工程化工具了~</p>
 <p><strong>go on~</strong><br><span id="more"></span></p>
 <h2 id="1，安装步骤"><a href="#1，安装步骤" class="headerlink" title="1，安装步骤"></a>1，安装步骤</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">## 添加https源</span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt install apt-transport-https ca-certificates curl gnupg-agent software-properties-common</span><br><span class="line"></span><br><span class="line">## 导入源仓库的 GPG key</span><br><span class="line">curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -</span><br><span class="line"></span><br><span class="line">## Docker APT源添加到系统</span><br><span class="line">sudo add-apt-repository &quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable&quot;</span><br><span class="line"></span><br><span class="line">## 列出当前的docker版本</span><br><span class="line">sudo apt update</span><br><span class="line">apt list -a docker-ce</span><br><span class="line"></span><br><span class="line">## 安装特定版本docker</span><br><span class="line">sudo apt install docker-ce=&lt;VERSION&gt; docker-ce-cli=&lt;VERSION&gt; containerd.io</span><br><span class="line"></span><br><span class="line">## 阻止Docker自动更新</span><br><span class="line">sudo apt-mark hold docker-ce</span><br></pre></td></tr></table></figure>
@@ -6397,7 +6397,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 <h2 id="3，docker镜像查询"><a href="#3，docker镜像查询" class="headerlink" title="3，docker镜像查询"></a>3，docker镜像查询</h2><p><a href="https://hub.docker.com/">official docker hub</a></p>
 ]]></content>
       <categories>
-        <category>ubuntuOS</category>
+        <category>OS</category>
       </categories>
       <tags>
         <tag>docker</tag>
@@ -6405,13 +6405,13 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>macOS中brew安装</title>
-    <url>/2022/05/14/macOS/brew-error-fix/</url>
+    <url>/2022/05/14/OS/brew-error-fix/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>macOS中常用brew来安装其他的软件，若brew命令找不到，那就需要自行安装了，详细步骤见下文哦~</p>
 <p><strong>MacOS还是不太熟练，加油~</strong><br><span id="more"></span></p>
 <h2 id="1，macOS-brew-install"><a href="#1，macOS-brew-install" class="headerlink" title="1，macOS brew install"></a>1，macOS brew install</h2><p>mac环境下，如何解决brew command not found错误，在终端下，执行以下命令，即可安装brew：<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">% /usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;</span><br><span class="line"></span><br><span class="line">% echo &#x27;eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;&#x27; &gt;&gt; /Users/xinwen/.zprofile</span><br><span class="line"></span><br><span class="line">% eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;</span><br></pre></td></tr></table></figure><br>在终端环境下，brew —version 查看brew的版本，也可以验证brew是否安装成功</p>
 ]]></content>
       <categories>
-        <category>macOS</category>
+        <category>OS</category>
       </categories>
       <tags>
         <tag>M1 Mac</tag>
@@ -6419,7 +6419,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>Docker on Windows10</title>
-    <url>/2022/05/10/tools/win10-WSL2-docker/</url>
+    <url>/2022/05/10/OS/win10-WSL2-docker/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>想在win10中使用docker desktop，所以采用了常用的WSL2组件的方式，亲测可用，用docker来配置一系列的开发环境还是比较省心的，若有定制的环境，还可以用dockerfile来构建，避免重复造轮子~</p>
 <p><strong>速度杠杠的了~</strong><br><span id="more"></span></p>
 <h2 id="1，windows环境"><a href="#1，windows环境" class="headerlink" title="1，windows环境"></a>1，windows环境</h2><p>win10内部版本高于19041，可在电脑属性中查看；<br>找到”启动或者关闭Windows功能”中打开“虚拟机平台”；</p>
@@ -6431,7 +6431,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 <h2 id="3，理论啥的"><a href="#3，理论啥的" class="headerlink" title="3，理论啥的"></a>3，理论啥的</h2><p>Docker Desktop for windows方式，其实质是利用docker的C/S架构，将windows模式下的docker对应docker.sock，docker客户端二进制和docker的数据目录挂载到WSL2里面的linux机器，在此linux机器下执行docker命令(docker命令为docker客户端)，实质为客户端通过 挂载的/var/run/docker.sock文件与windows里面的dockerd服务端进程通信。</p>
 ]]></content>
       <categories>
-        <category>tools</category>
+        <category>OS</category>
       </categories>
       <tags>
         <tag>Win10 docker</tag>
@@ -6439,7 +6439,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>M1的MacOS系统恢复</title>
-    <url>/2022/05/10/macOS/m1-MacOS-Recovery/</url>
+    <url>/2022/05/10/OS/m1-MacOS-Recovery/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>macOS系统恢复出厂设置，2020款的MacPro，M1芯片的~</p>
 <p><strong>M1的兼容性还有待各位大神填坑了~</strong><br><span id="more"></span></p>
 <h2 id="1，Apple-Silicon-M1-Mac如何恢复出厂设置"><a href="#1，Apple-Silicon-M1-Mac如何恢复出厂设置" class="headerlink" title="1，Apple Silicon M1 Mac如何恢复出厂设置"></a>1，Apple Silicon M1 Mac如何恢复出厂设置</h2><ul>
@@ -6458,7 +6458,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 <h2 id="4，重新安装MacOS"><a href="#4，重新安装MacOS" class="headerlink" title="4，重新安装MacOS"></a>4，重新安装MacOS</h2><p>登录用户候，从选项列表中选择“重新安装MacOS ”。系统会要求您选择要安装的位置，该位置应为Macintosh HD（如果决定更改，则为硬盘驱动器的任何名称）。<br>然后，您的Mac将下载最新版本的MacOS，进行安装。</p>
 ]]></content>
       <categories>
-        <category>macOS</category>
+        <category>OS</category>
       </categories>
       <tags>
         <tag>M1 Mac</tag>
@@ -6466,7 +6466,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>Legacy and UEFI mode on computers</title>
-    <url>/2022/05/10/hardware/UEFI-and-Legacy-mode-of-PC/</url>
+    <url>/2022/05/10/Engineering/UEFI-and-Legacy-mode-of-PC/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>模式问题在安装系统时遇到比较多，老点的机器大多是MBR模式，以前用的光盘，优盘和恢复系统基本问题都不大。现在新的机器越来越多UEFI的模式了，所以装机时会有些需要注意的点，当然还有二者的混合模式，总而言之，这里只是简单的区别，想彻底了解的朋友还是自行查看更多资料哦~</p>
 <span id="more"></span>
 <h2 id="1，传统Legacy（MBR）模式"><a href="#1，传统Legacy（MBR）模式" class="headerlink" title="1，传统Legacy（MBR）模式"></a>1，传统Legacy（MBR）模式</h2><ul>
@@ -6498,7 +6498,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 </ul>
 ]]></content>
       <categories>
-        <category>hardware</category>
+        <category>Engineering</category>
       </categories>
       <tags>
         <tag>legacy and uefi</tag>
@@ -6507,7 +6507,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>hexo的主要搭建过程</title>
-    <url>/2022/05/10/ubuntuOS/hexo-main/</url>
+    <url>/2022/05/10/OS/hexo-main/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这个基本就是简单的搭建示例，对前端小白很友好，也够简单整洁，是喜欢的风格没跑了~</p>
 <p><strong>安心码文了~</strong><br><span id="more"></span></p>
 <h2 id="1，安装hexo"><a href="#1，安装hexo" class="headerlink" title="1，安装hexo"></a>1，安装hexo</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 使用 npm 一键安装 Hexo 博客程序</span><br><span class="line">npm install -g hexo-cli</span><br><span class="line">hexo init      # 初始化</span><br><span class="line">npm install    # 安装组件</span><br><span class="line">hexo g   # 生成页面</span><br><span class="line">hexo s   # 启动预览</span><br></pre></td></tr></table></figure>
@@ -6531,7 +6531,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 </ul>
 ]]></content>
       <categories>
-        <category>ubuntuOS</category>
+        <category>OS</category>
       </categories>
       <tags>
         <tag>hexo</tag>
@@ -6539,13 +6539,13 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>ubuntu20.04 install and update nodejs</title>
-    <url>/2022/05/10/ubuntuOS/ubuntu20.04-install-and-update-nodejs/</url>
+    <url>/2022/05/10/OS/ubuntu20.04-install-and-update-nodejs/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在ubuntu系统中安装和更新nodejs，做什么用呢？在搭建自己的博客系统时用到，因为对ubuntu中常用的开发软件比较熟悉，哈哈~~</p>
 <p><strong>喜欢自己搭建的博客，努力码文吧~~</strong><br><span id="more"></span></p>
 <h2 id="构建和更新命令"><a href="#构建和更新命令" class="headerlink" title="构建和更新命令"></a>构建和更新命令</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># install on ubuntu20.04</span><br><span class="line">apt-get install -y nodejs npm</span><br><span class="line"># upgrade</span><br><span class="line">node -v</span><br><span class="line">npm install n -g</span><br><span class="line">n stable</span><br><span class="line">hash -r</span><br><span class="line"># 3, softlink update</span><br><span class="line">cp /usr/local/bin/node /usr/bin/node</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>ubuntuOS</category>
+        <category>OS</category>
       </categories>
       <tags>
         <tag>nodejs &amp; npm</tag>
@@ -6553,14 +6553,14 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>jekyll on ubuntu20.04</title>
-    <url>/2022/05/10/ubuntuOS/jekyll-on-ubuntu/</url>
+    <url>/2022/05/10/OS/jekyll-on-ubuntu/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>还是在自建博客过程中发现的需求之一，看帖子说现在很多人用jekyll建博客，但是我这边在部署到github的时候出现了一堆问题，还是递归的出现…就是在解决问题时，会冒出另一个~所以果断转战到hexo了，下面是初步尝试环境的搭建~   </p>
 <p>说明：在docker中，使用的都是root权限，所以一般用户自行添加sudo来运行命令</p>
 <p><strong>还是很弱啊，要加油~</strong><br><span id="more"></span></p>
 <h2 id="1，详细步骤"><a href="#1，详细步骤" class="headerlink" title="1，详细步骤"></a>1，详细步骤</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># jekyll依赖</span><br><span class="line">    apt-get install ruby-full build-essential zlib1g-dev</span><br><span class="line"># 环境变量</span><br><span class="line">    echo &#x27;# Install Ruby Gems to ~/gems&#x27; &gt;&gt; ~/.bashrc</span><br><span class="line">    echo &#x27;export GEM_HOME=&quot;$HOME/gems&quot;&#x27; &gt;&gt; ~/.bashrc</span><br><span class="line">    echo &#x27;export PATH=&quot;$HOME/gems/bin:$PATH&quot;&#x27; &gt;&gt; ~/.bashrc</span><br><span class="line">    source ~/.bashrc</span><br><span class="line"># 移除gem默认源，改成ruby-china源</span><br><span class="line">    gem sources -r https://rubygems.org/ -a https://gems.ruby-china.com/</span><br><span class="line"># 安装jekyll</span><br><span class="line">    gem install jekyll bundler</span><br><span class="line"># 使用Gemfile和Bundle的项目，可以做下面修改，就不用修改Gemfile的source</span><br><span class="line">    bundle config mirror.https://rubygems.org https://gems.ruby-china.com</span><br><span class="line"># 删除Bundle的一个镜像源</span><br><span class="line">    bundle config --delete &#x27;mirror.https://rubygems.org&#x27;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>ubuntuOS</category>
+        <category>OS</category>
       </categories>
       <tags>
         <tag>jekyll</tag>
@@ -6568,7 +6568,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
   </entry>
   <entry>
     <title>ubuntu20.04 change its source</title>
-    <url>/2022/05/09/ubuntuOS/ubuntu20.04-change-its-source/</url>
+    <url>/2022/05/09/OS/ubuntu20.04-change-its-source/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>ubuntu官方源由于众所周知的原因，更新啊、安装软件啊都比较慢，甚至经常就卡住不动了，所以换源还是个很基础的操作滴，以前感觉“阿里云”好用，最近在ubuntu20.04上测试，莫名多了些问题，切换到“清华”源，丝滑般流畅啊~~</p>
 <p><strong>相当于基础平A操作了，没有花样，就是好用~</strong></p>
 <span id="more"></span>
@@ -6576,7 +6576,7 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
 <h2 id="2，可用源"><a href="#2，可用源" class="headerlink" title="2，可用源"></a>2，可用源</h2><p>可自行选用，亲测可用：清华源<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#清华源</span><br><span class="line">deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal main restricted universe multiverse</span><br><span class="line">deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-updates main restricted universe multiverse</span><br><span class="line">deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-backports main restricted universe multiverse</span><br><span class="line">deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-security main restricted universe multiverse</span><br><span class="line"></span><br><span class="line">#添加阿里源</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse</span><br><span class="line"></span><br><span class="line">#中科大源</span><br><span class="line">deb https://mirrors.ustc.edu.cn/ubuntu/ bionic main restricted universe multiverse</span><br><span class="line">deb https://mirrors.ustc.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse</span><br><span class="line">deb https://mirrors.ustc.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse</span><br><span class="line">deb https://mirrors.ustc.edu.cn/ubuntu/ bionic-security main restricted universe multiverse</span><br><span class="line">deb https://mirrors.ustc.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse</span><br><span class="line"> </span><br><span class="line">#163源</span><br><span class="line">deb http://mirrors.163.com/ubuntu/ bionic main restricted universe multiverse</span><br><span class="line">deb http://mirrors.163.com/ubuntu/ bionic-security main restricted universe multiverse</span><br><span class="line">deb http://mirrors.163.com/ubuntu/ bionic-updates main restricted universe multiverse</span><br><span class="line">deb http://mirrors.163.com/ubuntu/ bionic-proposed main restricted universe multiverse</span><br><span class="line">deb http://mirrors.163.com/ubuntu/ bionic-backports main restricted universe multiverse</span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
 ]]></content>
       <categories>
-        <category>ubuntuOS</category>
+        <category>OS</category>
       </categories>
       <tags>
         <tag>ubuntu source.list</tag>

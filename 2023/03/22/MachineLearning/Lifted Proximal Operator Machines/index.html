@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"github.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="前言title: Lifted Proximal Operator Machines 论文百度云链接: https:&#x2F;&#x2F;pan.baidu.com&#x2F;s&#x2F;1J2hdhLMp_xW6QcmWRi1-zA提取码: ersk  提升近端算子机，将非凸问题进行凸化的利器，已用于分析DNN的网络和训练策略等~">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lifted Proximal Operator Machines">
+<meta property="og:url" content="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/03/22/MachineLearning/Lifted%20Proximal%20Operator%20Machines/index.html">
+<meta property="og:site_name" content="橦言无忌">
+<meta property="og:description" content="前言title: Lifted Proximal Operator Machines 论文百度云链接: https:&#x2F;&#x2F;pan.baidu.com&#x2F;s&#x2F;1J2hdhLMp_xW6QcmWRi1-zA提取码: ersk  提升近端算子机，将非凸问题进行凸化的利器，已用于分析DNN的网络和训练策略等~">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-03-22T07:23:14.000Z">
+<meta property="article:modified_time" content="2023-11-16T08:06:43.566Z">
+<meta property="article:author" content="xinwen">
+<meta property="article:tag" content="LPOM">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/03/22/MachineLearning/Lifted%20Proximal%20Operator%20Machines/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Lifted Proximal Operator Machines | 橦言无忌</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">橦言无忌</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一个不想改变世界的程序媛</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">90</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">9</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">104</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/sophia-hxw" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/03/22/MachineLearning/Lifted%20Proximal%20Operator%20Machines/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/me.jpg">
+      <meta itemprop="name" content="xinwen">
+      <meta itemprop="description" content="想到哪儿记到哪儿的技术博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="橦言无忌">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Lifted Proximal Operator Machines
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-03-22 15:23:14" itemprop="dateCreated datePublished" datetime="2023-03-22T15:23:14+08:00">2023-03-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-11-16 16:06:43" itemprop="dateModified" datetime="2023-11-16T16:06:43+08:00">2023-11-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MachineLearning/" itemprop="url" rel="index"><span itemprop="name">MachineLearning</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/03/22/MachineLearning/Lifted%20Proximal%20Operator%20Machines/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/03/22/MachineLearning/Lifted%20Proximal%20Operator%20Machines/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>16k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>15 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>title: Lifted Proximal Operator Machines</p>
+<p>论文百度云链接: <a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1J2hdhLMp_xW6QcmWRi1-zA">https://pan.baidu.com/s/1J2hdhLMp_xW6QcmWRi1-zA</a><br>提取码: ersk </p>
+<p><strong>提升近端算子机，将非凸问题进行凸化的利器，已用于分析DNN的网络和训练策略等~</strong><br><span id="more"></span></p>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>我们提出了一种用于训练前馈神经网络的新优化方法，通过将激活函数重写为等效的近端算子，然后将近端算子以正则项添加到目标函数来近似前馈神经网络，因此称本文提出的方法为提升近端算子机（LPOM）。 </p>
+<p>LPOM 在所有权重或者激活层中都是块多凸的，这允许我们使用块坐标下降并行更新逐层权重和激活。最值得注意的是，我们只使用激活函数本身，而不是它的导数，从而避免基于梯度方法中的梯度消失或爆炸问题。所以我们的方法适用于各种非递减 Lipschitz 连续激活函数，而且可以是饱和的和不可微的。 LPOM 不比逐层激活需要更多的辅助变量，因此与 SGD方法使用的内存量大致相同。我们也证明了逐层更新权重和激活的收敛性，数据集 MNIST 和 CIFAR-10 上的实验证明了 LPOM 的优势。</p>
+<h1 id="一，介绍"><a href="#一，介绍" class="headerlink" title="一，介绍"></a>一，介绍</h1><p>前馈深度神经网络 (DNN) 是完全级联的连接层，没有反馈连接。在最近年，随着硬件和数据集规模的进步，前馈 DNN 已成为许多任务的标准，例如图像识别, 语音识别，自然语言理解，并作为Go游戏学习系统的块。</p>
+<p>几十年来，训练 DNN 是通过优化一个高度非凸且嵌套的网络权重函数来完成的。训练 DNN 的主要方法是随机梯度下降(SGD)，其有效性由DNN 在各种领域的实际应用中已经得到证明。最近，SGD 的许多变体已被提出，它使用自适应学习率和动量项，例如，Nesterov momentum，AdaGrad，RMSProp 和 Adam。 SGD 及其变体使用少量训练样本来估计全局梯度，使得每次迭代计算复杂度小。此外，估计的梯度是有噪声的，有助于鞍点逃逸。然而，他们也有一些缺点。一个主要问题是梯度消失或爆炸问题，即很多层的梯度指数级的减少或增加。这会导致缓慢或不稳定的收敛，尤其是在非常深的网络中更甚。这个缺陷可以通过使用非饱和激活函数来消除，例如整流线性单元 (ReLU) ，以及网络结构的修改，例如 ResNet。但是，根本问题依然存在。此外，他们无法直接处理不可微的激活函数（例如，二值化神经网络） 并且不允许跨层的并行权重更新。有关更多SGD限制的讨论请参考taylor2016training。</p>
+<p>SGD 的缺点激发了对训练 DNN 的替代方法研究。最近在训练一个前馈神经网络被表述为带约束的优化问题，其中网络激活作为辅助变量引入，网络配置由分层约束保证。它打破了嵌套函数之间的依赖关系，转变为等式约束，因此可使用许多标准优化方法。许多工作研究了这种方法，不同之处在于如何处理等式约束。carreira2014distributed 将等式约束近似为二次正则项，交替优化网络权重和激活。zeng2018global 提出每层多一个辅助变量块，也通过二次正则项近似等式约束。受乘法器交替方向法启发(ADMM)，taylor2016training等使用了增广拉格朗日方法获得等式约束的精确增强。然而，这两种方法涉及拉格朗日乘数和非线性约束，因此对内存的要求更高，更难优化。ReLU 激活函数等同于一个简单的带约束的凸优化问题，受这一事实的启发，zhang2017convergent 放宽了非线性约束作为正则项，对网络架构和 ReLU 激活函数进行编码。因此，非线性约束不复存在。然而，他们的方法仅限于 ReLU 函数，不适用于其他激活函数。沿着这个思路，askari2018lifted 考虑了更多复杂的凸优化问题并讨论了几种非递减激活函数。然而，他们的方法对权重和激活的更新仍然限于 ReLU 函数。所以他们的方法不能胜过 SGD，只能服务于为 SGD 生成良好的初始化。其实我们已经发现了他们的公式不正确（参见“LPOM 的优势”小节）。</p>
+<p>本文做出了以下贡献：</p>
+<ul>
+<li>我们提出了一种新的公式来训练前馈 DNN，我们称之为提升近端算子机 (LPOM)。 LPOM 是块多凸的，即当剩余的权重和激活是固定时，权重和激活的问题是凸的。相比之下，几乎现有所有的 DNN 训练方法都没有这样的性质。这大大方便了DNN的训练。</li>
+<li>相应地，我们应用块坐标下降 (BCD) 来求解 LPOM，其中逐层权重和激活可以并行更新。最值得注意的是，逐层权重或激活的更新仅利用激活函数本身，而不是其导数，从而避免了基于梯度的训练方法中的梯度消失或爆炸问题。此外，LPOM 不需要比逐层激活更多的辅助变量，因此其内存成本接近 SGD。我们进一步证明更新逐层权重或激活的迭代是收敛的。</li>
+<li>由于只有激活函数本身参与计算，LPOM 能够处理一般的非递减 Lipschitz 连续激活函数，可以是饱和的（例如 sigmoid 和 tanh）和不可微的（例如 ReLU 和 leaky ReLU）。因此 LPOM 成功地克服了使用大多数现有激活函数时的计算困难。</li>
+</ul>
+<p>我们在全连接的 DNN 上实施 LPOM 并在基准数据集MNIST 和 CIFAR-10 中对其进行测试，并获得了满意的结果。在卷积神经网络 (CNN)中，因为我们还没有重新制定池化和跳跃连接，将 LPOM 在 CNN 上的实施留作未来的工作。请注意，现有基于非梯度的方法也首先关注全连接的 DNN。</p>
+<h1 id="二，相关工作"><a href="#二，相关工作" class="headerlink" title="二，相关工作"></a>二，相关工作</h1><p>在标准的前馈神经网络中，执行分类任务时训练 $n$ 层神经网络的优化问题可以写做：</p>
+<script type="math/tex; mode=display">
+\min_{W^i}\ell(\phi(W^{n-1}\phi(\cdots \phi(W^2\phi(W^1X^1)))),L) 
+\tag{1}\label{eq1}</script><p>其中 $X^1 \in \mathbb{R}^{n_1\times m}$ 是批训练样本，$L \in \mathbb{R}^{c\times m}$ 表示对应标签，$n_1$ 是训练样本的维度，$m$ 是批量大小，$c$ 是类的数量，$\{W^i\}_{i=1}^{n-1}$ 是要学习的权重，为简单起见，省略了偏差，$\phi(\cdot)$ 是逐元素激活函数（例如，sigmoid、tanh 和 ReLU)，而 ${\ell}(\cdot,\cdot)$ 是损失函数（例如，最小二乘误差或交叉熵误差）。这里的神经网络被定义为嵌套函数，其中第一层神经网络的函数是$\phi(W^1X^1)$，第 $i$ 层($i=2,\cdots,n$) 函数的形式为 $\phi(W^iX)$，并且 $X$ 是第 $(i-1)$ 层函数的输出。优化 \eqref{eq1} 的常用方法是 SGD，即计算梯度，而网络的所有权重更新使用反向传播，具体通过梯度下降来更新权重。</p>
+<p>通过引入逐层激活作为辅助变量块，神经网络的训练可以等价地公式化为等式约束优化问题:</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+  &\min_{\{W^i \},\{X^i\} }\ell(X^n,L)\\
+  &s.t. X^i=\phi(W^{i-1}X^{i-1}),i=2,3\cdots n
+\end{align*}
+\tag{2}\label{eq2}</script><p>其中 $X^i$ 是第 $i$ 层的激活，其他层符号与 \eqref{eq1} 中的相同。</p>
+<p>问题 \eqref{eq2} 中的约束确保辅助变量 $\{X^i\}_{i=2}^{n}$ 完全匹配网络。 与问题\eqref{eq1}相比，问题\eqref{eq2}是有限制的。 但由于目标函数没有嵌套，因此更简单，这样的等价表达可能会带来更灵活的优化方法。 注意当使用 SGD 解决问题\eqref{eq1}时，它<br>实际上也是隐含地对问题\eqref{eq2}求解，但需要记录激活 $\{X^i\}_{i=2}^{n}$ 以便计算梯度。</p>
+<p>受二次正则方法的启发，carreira2014distributed 提出了辅助坐标（MAC）的方法来求解问题\eqref{eq2}。 MAC使用<br>二次正则项近似等式约束，并试图求解以下问题：</p>
+<script type="math/tex; mode=display">
+\min_{\{W^i\},\{X^i\}}\ell(X^n,L)+\frac{\mu}{2}\sum\limits^n_{i=2}\|X^i-\phi(W^{i-1}X^{i-1})\|^2_F \tag{3}</script><p>其中 $\mu&gt;0$ 是控制约束权重的常数，$|\cdot|_F$ 是 Frobenius 范数。zeng2018global 用新的辅助变量解耦了 \eqref{eq2} 中的非线性激活函数：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+  &\min_{\{W^i \},\{X^i\},\{U^i\}}\ell(X^n,L)\\
+  &s.t. U^i=W^{i-1}X^{i-1},X^i=\phi(U^i),i=2,3\cdots n
+\end{align*}
+\tag{4}\label{eq4}</script><p>这称为 3-splitting 公式。相应地，问题\eqref{eq2} 是 2-splitting 公式。 对问题\eqref{eq4}同样适用 MAC 方法，而不是直接求解，可得出他们优化了下面的问题：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+  &\min_{\{W^i\},\{X^i\},\{U^i\}}\ell(X^n,L)\\
+  &+\frac{\mu}{2}\sum\limits^n_{i=2}(\|U^i-W^{i-1}X^{i-1}\|^2_F+\|X^i-\phi(U^i)\|^2_F)
+\end{align*}
+\tag{5}</script><p>他们采用 BCD 方法来解决上述问题。</p>
+<p>taylor2016training 也考虑求解问题\eqref{eq4}。 受 ADMM启发，他们在输出层添加了拉格朗日乘子以实现对输出层的等式约束，产生下列问题：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+  &\min_{\{W^i\},\{X^i\},\{U^i\},M}\ell(U^n,L)+\frac{\beta}{2}\|U^n-W^{n-1}X^{n-1}+M\|^2_F\\
+  &+\sum\limits^{n-1}_{i=2}\frac{\mu_i}{2}(\|U^i-W^{i-1}X^{i-1}\|^2_F+\|X^i-\phi(U^i)\|^2_F)
+\end{align*}
+\tag{6}\label{eq6}</script><p>其中 $M$ 是拉格朗日乘子，$\beta&gt;0$ 和 $\mu_i&gt;0$是常数。 注意输出层上没有激活函数。 所以 \eqref{eq6} 是自适应启发式的 ADMM 算法。 zhang2016efficient 采用了类似的技术，但使用了不同的变量拆分方案：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+  &\min_{\{W^i\},\{X^i\},\{U^i\}}\ell(X^n,L) \\
+  &s.t. U^{i-1}=X^{i-1},X^i=\phi(W^{i-1}U^{i-1}),i=2,3\cdots n
+\end{align*}
+\tag{7}\label{eq7}</script><p>尽管有非线性等式约束，但 ADMM 并不旨在处理该类问题，他们为\eqref{eq7}中的每个约束添加了一个拉格朗日乘数。然后增强的拉格朗日问题如下所示：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+  &\min_{\{W^i\},\{X^i\},\{U^i\},\{A^i\},\{B^i\}}\ell(X^n,L)\\
+  &+\frac{\mu}{2}\sum\limits^n_{i=2}(\|U^{i-1}-X^{i-1}+A^{i-1}\|^2_F\\
+  &+\|X^i-\phi(W^{i-1}U^{i-1})+B^{i-1}\|^2_F)
+\end{align*}
+\tag{8}</script><p>其中 $A^i$ 和 $B^i$ 是拉格朗日乘子。</p>
+<p>与原始应用正则方法和 ADMM 不同，zhang2017convergent 将 ReLU 激活函数解释为一个简单的平滑凸优化问题。即，问题\eqref{eq2} 中的等式约束使用 ReLU 激活函数可以改写为凸优化问题：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+  X^i&=\phi(W^{i-1}X^{i-1})\\
+  &=max(W^{i-1}X^{i-1},\textbf{0})\\
+  &=\mathop{argmin}_{U^i\geq 0}\|U^i-W^{i-1}X^{i-1}\|^2_F
+\end{align*}
+\tag{9}</script><p>其中 $\textbf{0}$ 是具有适当大小的零矩阵。基于这个观察，他们用以下方式近似激活函数为 ReLU 的问题：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+  &\min_{\{W^i\},\{X^i\}}\ell(X^n,L)+\sum\limits^n_{i=2}\frac{\mu_i}{2}\|X^i-W^{i-1}X^{i-1}\|^2_F\\
+  &s.t.X^i\geq \textbf{0},i=2,3\cdots n
+\end{align*}
+\tag{10}\label{eq10}</script><p>其中正则项对网络结构和激活函数都进行了编码。与基于 MAC 和 ADMM 的方法不同，它确实不包括非线性激活。 此外，\eqref{eq10}的主要优势是该问题是块多凸的，即， 每个变量块变化时其余的块是固定的。 他们提出了一种新的 BCD 方法来求解这个问题，而且经验性的证明了在Caffe框架下基于 SGD 方法ADMM方法的优先级。askari2018lifted 等继承了同样的想法，通过引入更复杂的凸最小化问题，他们可以处理更一般的激活函数，例如 sigmoid、leaky ReLU 和正弦函数等。</p>
+<h1 id="三，提升近端算子"><a href="#三，提升近端算子" class="headerlink" title="三，提升近端算子"></a>三，提升近端算子</h1><p>在本节中，我们描述了 LPOM 的基本思想及其相对于现有 DNN 训练方法的优势。跟 zhang2017convergent 和 askari2018lifted 一样，LPOM 首先将\eqref{eq2} 中的激活函数表示为凸最小化问题。 但是，我们希望这种表示不应仅限于特定激活函数，而且我们希望\eqref{eq2}中的等式约束满足LPOM的KKT条件。</p>
+<h2 id="3-1-用近端算子进行重构"><a href="#3-1-用近端算子进行重构" class="headerlink" title="3.1 用近端算子进行重构"></a>3.1 用近端算子进行重构</h2><p>我们假设激活函数 $\phi$ 是非递减的，那么$\phi^{-1}(x)=\{y|x=\phi(y)\}$是一个凸集，$\phi^{-1}(x)$ 是 $\{y\}$ 单例当且仅当 $\phi$ 在 $\phi(y)$ 处是严格增加的。 我们要构建一个目标函数 $h(x,y)$，由 $y$ 参数化，使得它的最小值正好是 $x=\phi(y)$。 因此，我们可以通过最小化 $h(x,y)$ 替换约束 $x=\phi(y)$ ，可以将约束作为正则添加到DNN损失中。</p>
+<p>优化问题更新变量的基本操作有两种：梯度更新和近端算子。 我们正在构造的优化问题和近端算子如下所示：</p>
+<script type="math/tex; mode=display">
+\textrm{prox}_f(y)=\mathop{argmin}_xf(x)+\frac{1}{2}(x-y)^2 
+\tag{11}\label{eq11}</script><p>我们考虑使用近端算子来构造优化问题。 定义</p>
+<script type="math/tex; mode=display">f(x)=\int^x_0(\phi^{-1}(y)-y)dy</script><p>注意 $f(x)$ 定义明确，即使 $\phi^{-1}(y)$ 对于某些介于 0 和 $x$ 之间的 $y$ 来说不是唯一的。 无论如何，$\phi^{-1}$、$f$ 和 $g$（稍后定义）不会显式用于我们的计算。 很容易证明问题\eqref{eq11}的优化条件是 $0\in (\phi^{-1}(x)-x) + (x-y)$。 所以\eqref{eq11} 的解正好是 $x=\phi(y)$。</p>
+<p>请注意 $f(x)$ 是单位变量函数。 对于矩阵 $X=(X_{kl})$，我们定义$f(X)=(f(X_{kl}))$。 然后<br>以下最小化问题的优化性条件：</p>
+<script type="math/tex; mode=display">
+\mathop{argmin}_{X^i}\mathbf{1}^\top f(X^i)\mathbf{1}+\frac{1}{2}\|X^i-W^{i-1}X^{i-1}\|^2_F \tag{12}\label{eq12}</script><p>其中 $\mathbf{1}$ 是全为1的列向量，是</p>
+<script type="math/tex; mode=display">
+\mathbf{0}\in\phi^{-1}(X^i)-W^{i-1}X^{i-1} \tag{13}</script><p>其中 $\phi^{-1}(X^i)$ 也是按元素定义的。 所以<br>\eqref{eq12} 的优化解是</p>
+<script type="math/tex; mode=display">X^i=\phi(W^{i-1}X^{i-1}) \tag{14}\label{eq14}</script><p>这正是问题\eqref{eq2} 中的约束。 所以我们自然地将问题\eqref{eq2} 近似为：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+  &\min_{\{W^i\},\{X^i\}}\ell(X^n,L)\\
+  &+\sum\limits^n_{i=2}\mu_i\bigg (\mathbf{1}^\top  f(X^i)\mathbf{1}+\frac{1}{2}\|X^i-W^{i-1}X^{i-1}\|^2_F \bigg)
+\end{align*}
+\tag{15}</script><p>然而，$\{X^i\}_{i=2}^{n-1}$ 的优化条件是：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+  \mathbf{0}\in &\mu_i(\phi^{-1}(X^i)-W^{i-1}X^{i-1})\\
+  &+\mu_{i+1}(W^i)^\top (W^iX^i-X^{i+1}),i=2\cdots, n-1
+\end{align*}
+\tag{16}\label{eq16}</script><p>我们可以清楚地看到问题\eqref{eq2}的等式约束\eqref{eq14}不满足以上条件。</p>
+<p>为了使等式约束 \eqref{eq14}满足逼近问题的最优性条件，我们需要将 \eqref{eq16} 修改为</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+  \mathbf{0}\in &\mu_i(\phi^{-1}(X^i)-W^{i-1}X^{i-1})\\
+  &+\mu_{i+1}(W^i)^\top (\phi(W^iX^i)-X^{i+1}),i=2\cdots, n-1
+\end{align*}
+\tag{17}\label{eq17}</script><p>这对应于以下问题：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+  &\min_{\{W^i\},\{X^i\}}\ell(X^n,L)+\sum\limits^n_{i=2}\mu_i\bigg (\mathbf{1}^\top f(X^i)\mathbf{1}\\
+  &+\mathbf{1}^\top g(W^{i-1}X^{i-1})\mathbf{1} +\frac{1}{2}\|X^i-W^{i-1}X^{i-1}\|^2_F \bigg)
+\end{align*}
+\tag{18}\label{eq18}</script><p>其中</p>
+<script type="math/tex; mode=display">\int^x_0(\phi(y)-y)dy</script><p>$g(X)$ 是在矩阵 $X$ 逐元素定义的， $f(x)$ 和 $g(x)$的一些有代表性的激活函数显示在表1。 \eqref{eq18} 是我们提出的 LPOM ，其中强调下 $g$ 的引入非常重要且不明显。</p>
+<h2 id="3-2-LPOM优势"><a href="#3-2-LPOM优势" class="headerlink" title="3.2 LPOM优势"></a>3.2 LPOM优势</h2><p>将 \eqref{eq18} 中 LPOM 的目标函数表示为 $F(W,X)$。 那么我们有下面的定理：</p>
+<p><strong>定理1</strong><br>假设 $\ell(X^n, L)$ 在 $X^n$ 中是凸的并且 $\phi$ 是<br>非递减的。 那么 $F(W,X)$ 是块多凸，也就是，如果所有其他变量块都是固定的，每个 $X^i$ 和 $W^i$ 都是凸的。</p>
+<p><strong>证明：</strong><br>$F(W,X)$ 可以简化为</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+  &F(W,X)=\ell(X^n,L)+\sum\limits^n_{i=2}\mu_i\bigg (\mathbf{1}^\top \tilde{f}(X^i)\mathbf{1}\\
+  &+\mathbf{1}^\top \tilde{g}(W^{i-1}X^{i-1})\mathbf{1} +\langle X^i,W^{i-1}X^{i-1}\rangle \bigg)
+\end{align*}
+\tag{19}</script><p>其中 $\tilde{f}(x)=\int_0^x \phi^{-1}(y) dy$ 和 $\tilde{g}(x)=\int_0^x \phi(y) dy$。 因为 $\phi$ 和 $\phi^{-1}$ 是非递减的，所以 $\tilde{f}(x)$ 和 $\tilde{g}(x)$ 是凸的。 很容易验证 $\mathbf{1}^\top\tilde{g}(W^{i-1}!X^{i-1})\mathbf{1}$ 当 $W^{i-1}$ 固定时在 $X^{i-1}$ 中是凸的，当 $X^{i-1}$ 固定时在 $W^{i-1}$ 中是凸的。$F(W,X)$ 中的剩余项 $\langle X^{i},W^{i-1}X^{i-1}\rangle$ 当其他两个块固定时，在一个块中是线性的。证明完成。</p>
+<p>由于子问题的凸性，定理1允许使用高效的 BCD 算法求解 LPOM，并保证可以得到更新 $X^i$ 和 $W^i$ 的最佳解决方案。 相反，正则项方法和基于 ADMM 的方法中的子问题都是非凸的。</p>
+<p>与基于 ADMM 的方法相比，LPOM 除了 $\{X^i\}_{i=2}^{n}$ 不需要拉格朗日乘子和更多的辅助变量。 此外，我们还设计了精致的算法，这样求解 LPOM 也无需额外的变量。 所以 LPOM 的变量数比基于 ADMM 的方法少，因此大大节省了内存。实际上，它的内存成本接近于 SGD。</p>
+<p>与正则项方法相比，LPOM 的优化条件更简单。 例如，LPOM 中的 $\{X^i\}_{i=2}^{n-1}$ 和 $\{W^i\}_{i=1}^{n-1}$ 优化条件是 \eqref{eq17} 和</p>
+<script type="math/tex; mode=display">
+(\phi(W^iX^i)-X^{i+1})(X^i)^\top\!=0,\; i=1,2\cdots n-1 
+\tag{20}</script><p>而那些用于 MAC 的优化条件是</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+  &(X^i-\phi(W^{i-1}X^{i-1}))\\
+  &+(W^i)^\top[(\phi(W^iX^i)-X^{i+1})\circ\phi^{'}(W^iX^i)]=\mathbf{0}\\
+  &i=2,\cdots n-1
+\end{align*}
+\tag{21}</script><p>和</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+  [(\phi(W^iX^i)-X^{i+1})\circ\phi^{'}(W^iX^i)](X^i)^\top=\mathbf{0},i=1,\cdots n-1
+\end{align*}
+\tag{22}</script><p>其中 $\circ$ 表示逐元素乘法。 我们可以看到 MAC 的优化条件有额外的 $\phi’(W^iX^i)$，这是非线性的。zeng2018global 的优化条件可以在补充材料中找到，他们也还有一个额外的 $\phi’(U^i)$。 这可能意味着 MAC 和 zeng2018global 的解集更复杂，更大。 所以LPOM  可能更容易找到良好解决方案。</p>
+<p>与凸优化重构方法相比，LPOM 可处理更一般的激活函数。 注意 zhang2017convergent 只考虑了 ReLU。 虽然 askari2018lifted 声称他们的公式可以处理一般的激活函数，其求解方法还是仅限于 ReLU。 此外 askari2018lifted 关于$\{X^i\}_{i=2}^{n-1}$ 和 $\{W^i\}_{i=1}^{n-1}$的优化条件推导是有误的，也就是：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\mathrm{0}\in&\mu_i(\phi^{-1}(X^i)-W^{i-1}X^{i-1})-\mu_{i+1}(W^i)^\top X^{i+1}\\
+&i=2,\dots n-1
+\end{align*}</script><p>相应地，$X^{i+1}(X^i)^\top=\mathbf{0},\,i=1,\cdots,n-1,$，很明显，等式约束\eqref{eq14} 不满足以上条件。 此外，不知何故 askari2018lifted 不管激活函数是什么，都添加了额外的约束 $X^i\geq \mathbf{0}$，所以他们的重构不能很好地近似原始 DNN \eqref{eq2}，这可能解释为什么 askari2018lifted 得不到好的结果。实际上，它们只能为 SGD 提供良好的初始化。</p>
+<p>与基于梯度的方法（例如 SGD）相比，LPOM 可以使用任何非递减 Lipschitz 连续激活而没有数值求解，包括饱和（例如，sigmoid 和 tanh）和不可微分的（例如，ReLU 和 leaky ReLU），并且可以逐层并行更新权重和激活。 相反，基于梯度的方法只能使用有限的激活函数，例如 ReLU， leaky ReLU 和 softplus，以避免梯度消失或爆炸问题，并且在计算时无法并行化梯度和激活。</p>
+<h1 id="四，求解LPOM"><a href="#四，求解LPOM" class="headerlink" title="四，求解LPOM"></a>四，求解LPOM</h1><p>多亏了块多凸性性质(定理1)，LPOM可以用BCD求解。 即，我们通过固定所有其他变量块来更新 $X^i$ 或 $W^i$。可以使用小批量训练数据来进行优化问题的求解，解决 LPOM 的整个算法总结在算法1，下面我们给出更多的细节。</p>
+<h2 id="4-1-更新-X-i-n-i-2"><a href="#4-1-更新-X-i-n-i-2" class="headerlink" title="4.1 更新$\{X^i\}^n_{i=2}$"></a>4.1 更新$\{X^i\}^n_{i=2}$</h2><p>我们先介绍串行更新的方法 $\{X^i\}_{i=2}^n$，将 $\{X^i\}_{i=2}^{n}$ 从 $i=2$ 接连不断地更新到 $n$，就像 DNN 的前馈过程一样。 当 $i=2,\cdots,n-1$ 时，在 $\{W^i\}_{i=1}^{n-1}$ 和 $\{X^j\}_{j=2,j\neq i}^n$ 固定时，问题 \eqref{eq18}可以化为：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+  &\min_{X^i}\mu_i\bigg(\mathbf{1}^\top f(X^i)\mathbf{1}+\frac{1}{2}\|X^i-W^{i-1}X^{i-1}\|^2_F \bigg)\\
+  &+\mu_{i+1}\bigg(\mathbf{1}^\top g(W^iX^i)\mathbf{1}+\frac{1}{2}\|X^{i+1}-W^iX^i\|^2_F \bigg)
+\end{align*}
+\tag{23}</script><p>优化条件是：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+  &\mathbf{0}\in \mu_i(\phi^{-1}(X^i)-W^{i-1}X^{i-1})\\
+  &+\mu_{i+1}((W^i)^\top(\phi(W^iX^i)-X^{i+1}))
+\end{align*}
+\tag{24}</script><p>所以用下面迭代方法更新 $X^i$ 直到收敛：</p>
+<script type="math/tex; mode=display">
+X^{i,t+1}=\phi\bigg(W^{i-1}X^{i-1}-\frac{\mu_{i=1}}{\mu_i}(W^i)^\top(\phi(W^iX^{i,t})-X^{i+1}) \bigg) 
+\tag{25}</script><p>其中上标 $t$ 为迭代次序。 收敛分析如下：</p>
+<p><strong>定理2</strong><br>假设 $|\phi’(x)|\leq\gamma$，如果 $\rho&lt;1$，则迭代是收敛的并且收敛速率是线性的，其中</p>
+<script type="math/tex; mode=display">\rho=\frac{\mu_{i+1}}{\mu_i}\gamma^2\sqrt{\|
+ |(W^i)^\top||W^i| \|_1\| |(W^i)^\top| |W^i|\|_\infty}</script><p>证明可以在补充材料中找到。 在上面式子中，$|A|$ 是一个矩阵，其元素是 $A$ 的绝对值，$|\cdot|_1$ 和 $|\cdot|_{\infty}$ 分别是矩阵 1-范数（largest absolute column sum）和矩阵 $\infty$-范数（largest absolute row sum）。</p>
+<p>当考虑 $X^n$ 时，问题\eqref{eq18} 简化为</p>
+<script type="math/tex; mode=display">
+\min_{X^n}\ell(X^n,L)+\mu_n\bigg(\mathbf{1}^\top f(X^i)\mathbf{1}+\frac{1}{2}\|X^n-W^{n-1}X^{n-1}\|^2_F \bigg) 
+\tag{26}</script><p>优化条件是：</p>
+<script type="math/tex; mode=display">
+\mathbf{0}\in\frac{\partial\ell(X^n,L)}{\partial X^n}+\mu_n(\phi^{-1}(X^n)-W^{n-1}X^{n-1}) 
+\tag{27}</script><p>所以用下面迭代来更新 $X^n$ 直到收敛</p>
+<script type="math/tex; mode=display">
+X^{n,t+1}=\phi\bigg(W^{n-1}X^{n-1}-\frac{1}{\mu_n}\frac{\partial\ell(X^{n,t},L)}{\partial X^n} \bigg) 
+\tag{28}</script><p>收敛分析如下所示：</p>
+<p><strong>定理3</strong><br>假设 $|\phi’(x)|\leq\gamma$ 和 $\bigg|\big(\frac{\partial^2\ell(X,L)}{\partial X_{kl}\partial X_{pq}}\big)\bigg|_1\leq\eta$。如果 $\tau &lt; 1$，则迭代收敛，收敛率为线性，其中 $\tau=\frac{\gamma\eta}{\mu_n}$。</p>
+<p>证明也可以在补充材料中找到。 如果 ${\ell}(X^n,L)$ 是最小二乘误差，即 ${\ell}(X^n,L)=\frac{1}{2}|X^n-L|_F^2$，然后 $\bigg|\bigg|\big(\frac{\partial^2\ell(X,L)}{\partial X_{kl}\partial X_{pq}}\big)\bigg|\bigg|_1 = 1 $。 所以我们得到 $\mu_n&gt;\gamma$。</p>
+<p>上面的串行更新程序可以很容易地更改为并行更新：每个 $X^i$ 都使用最新的其他 $X^j, j\neq i$ 的信息来更新。</p>
+<h2 id="4-2-更新-W-i-n-1-i-1"><a href="#4-2-更新-W-i-n-1-i-1" class="headerlink" title="4.2 更新$\{W^i\}^{n-1}_{i=1}$"></a>4.2 更新$\{W^i\}^{n-1}_{i=1}$</h2><p>$\{W^i\}_{i=1}^{n-1}$ 可以完全并行更新，当 $\{X^i\}_{i=2}^{n}$ 是固定的，问题 \eqref{eq18}化为：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+  \min_{W^i}\mathbf{1}^\top g(W^iX^i)\mathbf{1}+\frac{1}{2}\|W^iX^i-X^{i+1}\|^2_F\\
+  i=1\cdots n-1 
+\end{align*}
+\tag{29}\label{eq29}</script><p>上述问题可以并行求解。 \eqref{eq29} 可以写做：</p>
+<script type="math/tex; mode=display">
+\min_{W^i}\mathbf{1}^\top\tilde{g}(W^iX^i)\mathbf{1}-\langle X^{i+1},W^iX^i \rangle\tag{30}
+\label{eq30}</script><p>其中，如前所述 $\tilde{g}(x)=\int_0^x \phi(y)dy$。假设 $\phi(x)$ 是 $\beta$-Lipschitz 连续的，这对于几乎所有使用的激活函数都是成立的。 然后 $\tilde{g}(x)$ 是 $\beta$-平滑的：</p>
+<script type="math/tex; mode=display">|\tilde{g}^{'}(x)-\tilde{g}^{'}(y)|=|\phi(x)-\phi(y)|\leq\beta|x-y| \tag{31}</script><p>问题 \eqref{eq30} 可以通过APG的局部线性化 $\hat{g}(W)=\tilde{g}(WX)$ 求解。 然而，$\hat{g}(W)$ 梯度的Lipschitz 常数，即 $\beta|X|_2^2$，可能非常大，因此收敛可能很慢。 下面我们提出一个 APG 的改进版本，专为解决问题\eqref{eq30} 而设计的高效算法。</p>
+<p>考虑以下问题：</p>
+<script type="math/tex; mode=display">
+\min_xF(x)\equiv\varphi(Ax)+h(x) 
+\tag{32}\label{eq32}</script><p>其中 $\varphi(y)$ 和 $h(x)$ 都是凸的。 而且，$\varphi(y)$ 是 $L_\varphi$-平滑的：$|\nabla\varphi(x)-\nabla \varphi(y)| \leq L_\varphi|x-y|,\forall x,y.$ 我们假设下面的问题：</p>
+<script type="math/tex; mode=display">
+x_{k+1}=\mathop{argmin}_x\langle\nabla\varphi(Ay_k),A(x-y_k) \rangle +\frac{L_\varphi}{2}\|A(x-y_k)\|^2+h(x)
+\tag{33}\label{eq33}</script><p>对任何给定的 $y_k$ 很容易求解，我们提出用算法2求解 \eqref{eq32}，那么我们有下面的定理：</p>
+<p><strong>定理4</strong><br>如果我们使用算法2来求解问题\eqref{eq32}，则收敛速度至少为 $O(k^{-2})$：</p>
+<script type="math/tex; mode=display">
+F(x_k)\!-\!F(x^*)\!+\!\frac{L_\varphi}{2}\|z_k\|^2\!\leq\!\frac{4}{k^2}\!\left(\!F(x_1)\!-\!F(x^*)\!+\!\frac{L_\varphi}{2}\|z_1\|^2\!\right)</script><p>其中，<br>$z_k=A[\theta_{k-1}x_{k-1}-x_k+(1-\theta_{k-1})x^<em>]$，且 $x^</em>$ 是问题\eqref{eq32}的任意优化解。</p>
+<p>证明也可以在补充材料中找到。</p>
+<p>通过用问题\eqref{eq30}实例化问题\eqref{eq32}，子问题\eqref{eq33} 变为：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+  W^{i,t+1}&=\mathop{argmin}_W\langle\phi(Y^{i,t}X^i),(W-Y^{i,t})X^i\rangle\\
+  &+\frac{\beta}{2}\|(W-Y^{i,t})X^i||^2_F-\langle X^{i+1}-WX^i\rangle
+\end{align*}
+\tag{34}</script><p>这是一个最小二乘问题，解是：</p>
+<script type="math/tex; mode=display">
+W^{i,t+1}=Y^{i,t}-\frac{1}{\beta}(\phi(Y^{i,t}X^i)-X^{i+1})(X^i)^{+} 
+\tag{35}</script><p>其中 $(X^i)^{+}$ 是 $X^i$ 的伪逆，$Y^{i,t}$ 是算法2中的 $y_k$。</p>
+<p>如果 $\phi(x)$ 严格递增且递增率 $\frac{\phi(y)-\phi(x)}{y-x}\, (y\neq x)$ 的下界为 $\alpha&gt;0$，那么 $\tilde{g}(x)$ 是强凸的，并且收敛是线性的，这里我们省略详情。</p>
+<h1 id="五，实验"><a href="#五，实验" class="headerlink" title="五，实验"></a>五，实验</h1><p>在本节中，我们通过与 SGD 和两种基于非梯度的方法askari2018lifted 及 taylor2016training 进行比较来评估 LPOM。 其他基于非梯度的方法不为分类任务训练完全连接的前馈神经网络（例如，使用跳跃连​​接，训练自动编码器，以及学习哈希等)，所以我们不能将它们包括在内进行比较。为简单起见，我们使用最小二乘损失函数和 ReLU 激活函数（使用 ReLU 的另一个原因是它可以产生更高的精度，尽管 LPOM 可以没有数值困难的用其他激活函数参与计算）除非另有说明。与 askari2018lifted 不同，我们不对权重 $\{W^i\}_{i=1}^{n-1}$ 使用任何正则化。我们对 LPOM 和 SGD 使用相同的输入和随机运行初始化。我们用 LPOM 的 MATLAB 实现而不优化代码，使用基于 Caffe 的 SGD 求解器。对于 Caffe 求解器，我们修改demo代码，仔细调参实现最好的精度。对于 askari2018lifted 和 taylor2016training，我们引用他们的论文的结果。</p>
+<h2 id="5-1-与SGD比较"><a href="#5-1-与SGD比较" class="headerlink" title="5.1 与SGD比较"></a>5.1 与SGD比较</h2><p>我们对两个数据集进行实验，即 MNIST 和 CIFAR-10。对于 MNIST 数据集，我们使用 $28\times28=784$ 个原始像素作为输入，它包括 60,000 张训练图像和 10,000 张测试图像，不使用预处理或数据增强。LPOM和SGD，在每个epoch中都用所有训练样本运行一次。性能取决于网络结构的选择。与 zeng2018global 一样，我们实现了一个784-2048-2048-2048-10 前馈神经网络。对于 LPOM，我们只需在 \eqref{eq18} 中设置 $\mu_i=20$。我们在 LPOM 和 SGD 上都运行 100 个周期的 ，固定批量大小为 100。训练和测试精度如图1(a) 和 (b)，可以看到两种方法的训练精度都约等于 $100\%$。然而，LPOM 的测试准确性略优于 SGD（$98.2\%$ vs. $98.0\%$）。</p>
+<p>对于 CIFAR-10 数据集，在 zeng2018global 中我们实现 3072-4000-1000-4000-10 前馈神经网络。我们通过分别减去训练数据集中红色、绿色和蓝色通道的均值来标准化彩色图像，不使用预处理或数据扩充。对于 LPOM，我们设置 \eqref{eq18} 中的 $\mu_i=100$。在 LPOM 和 SGD 上运行 100 个 epochs，批量大小为 100。训练和测试准确度如图1 (c) 和 (d) 所示，可以看到SGD和LPOM的训练精度是约等于 $100\%$。但是，LPOM 的测试精度优于SGD（$52.5\%$ 对 $47.5\%$）。</p>
+<h2 id="5-2-与其他非梯度方法比较"><a href="#5-2-与其他非梯度方法比较" class="headerlink" title="5.2 与其他非梯度方法比较"></a>5.2 与其他非梯度方法比较</h2><p>我们用 MNIST 数据集上相同结构的网络与 askari2018lifted 中的结果进行比较。在实际计算中askari2018lifted 只用了 ReLU 激活函数，与 askari2018lifted 一样，我们在 LPOM 上运行 17 个 epochs，固定批量大小为 100，设置 $\mu_i=20$。使用 60,000 张训练图像和 10,000 张测试图像，不要使用预处理或数据增强。这两种方法的测试精度示于表2，可以看到带 ReLU 的 LPOM 表现很大差距的优于askari2018lifted 的方法，这符合我们在“LPOM 的优点”小节的描述。</p>
+<p>按照 taylor2016training 中数据集和网络架构的设置，我们在 SVHN 数据集上测试 LPOM，设置 $\mu_i=20$。 SGD、taylor2016training 和 LPOM 的测试精度如表3所示。可以看到 LPOM 优于 SGD 和 taylor2016training。<br>如 taylor2016training 中所述，他们基于 ADMM 的方法和 SGD 的测试精度分别约为 $96.5\%$ 和 $95.0\%$。然而，LPOM 可以在相同的设置下达到 $98.3\%$ 的测试精度。<br>这进一步验证了LPOM的优势。</p>
+<h1 id="六，总结"><a href="#六，总结" class="headerlink" title="六，总结"></a>六，总结</h1><p>在这项工作中，我们提出了 LPOM 来训练全连接前馈神经网络，使用近端运算符 LPOM 将神经网络转化为一个新的分块多凸模型，转换适用于一般非递减 Lipschitz 连续激活函数。我们自然地提出了块坐标下降算法，保障每个子问题收敛的情况下求解。 LPOM 可以并行解决，相比分层激活，无需更多辅助变量。 实验结果表明 LPOM 在完全连接的神经网络比 SGD，askari2018lifted 和 taylor2016training 效果更好。未来的工作包括将 LPOM 扩展到训练卷积和递归神经网络并应用 LPOM 到网络压缩。</p>
+<h1 id="重要文献"><a href="#重要文献" class="headerlink" title="重要文献"></a>重要文献</h1><p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1805.01532">Lifted neural networks</a><br><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1512.03385">Deep residual learning for image recognition</a></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>xinwen
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/03/22/MachineLearning/Lifted%20Proximal%20Operator%20Machines/" title="Lifted Proximal Operator Machines">https://github.com/sophia-hxw/sophia-hxw.github.io/2023/03/22/MachineLearning/Lifted Proximal Operator Machines/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/LPOM/" rel="tag"><i class="fa fa-tag"></i> LPOM</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/03/22/Transformer/Convexifying%20Transformers/" rel="prev" title="Convexifying Transformers">
+      <i class="fa fa-chevron-left"></i> Convexifying Transformers
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/03/22/Transformer/Transformer%20and%20Infinite-Dimensional%20Non-Mercer%20Binary%20Kernel%20Machines/" rel="next" title="Transformer are Deep Infinite-Dimensional Non-Mercer Binary Kernel Machines">
+      Transformer are Deep Infinite-Dimensional Non-Mercer Binary Kernel Machines <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%EF%BC%8C%E4%BB%8B%E7%BB%8D"><span class="nav-text">一，介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%EF%BC%8C%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C"><span class="nav-text">二，相关工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%EF%BC%8C%E6%8F%90%E5%8D%87%E8%BF%91%E7%AB%AF%E7%AE%97%E5%AD%90"><span class="nav-text">三，提升近端算子</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-%E7%94%A8%E8%BF%91%E7%AB%AF%E7%AE%97%E5%AD%90%E8%BF%9B%E8%A1%8C%E9%87%8D%E6%9E%84"><span class="nav-text">3.1 用近端算子进行重构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-LPOM%E4%BC%98%E5%8A%BF"><span class="nav-text">3.2 LPOM优势</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%EF%BC%8C%E6%B1%82%E8%A7%A3LPOM"><span class="nav-text">四，求解LPOM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-%E6%9B%B4%E6%96%B0-X-i-n-i-2"><span class="nav-text">4.1 更新$\{X^i\}^n_{i&#x3D;2}$</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-%E6%9B%B4%E6%96%B0-W-i-n-1-i-1"><span class="nav-text">4.2 更新$\{W^i\}^{n-1}_{i&#x3D;1}$</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94%EF%BC%8C%E5%AE%9E%E9%AA%8C"><span class="nav-text">五，实验</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-%E4%B8%8ESGD%E6%AF%94%E8%BE%83"><span class="nav-text">5.1 与SGD比较</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-%E4%B8%8E%E5%85%B6%E4%BB%96%E9%9D%9E%E6%A2%AF%E5%BA%A6%E6%96%B9%E6%B3%95%E6%AF%94%E8%BE%83"><span class="nav-text">5.2 与其他非梯度方法比较</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AD%EF%BC%8C%E6%80%BB%E7%BB%93"><span class="nav-text">六，总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%87%8D%E8%A6%81%E6%96%87%E7%8C%AE"><span class="nav-text">重要文献</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="xinwen"
+      src="/images/me.jpg">
+  <p class="site-author-name" itemprop="name">xinwen</p>
+  <div class="site-description" itemprop="description">想到哪儿记到哪儿的技术博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">104</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">90</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/sophia-hxw" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;sophia-hxw"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/sophia_xw" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;sophia_xw" rel="noopener" target="_blank"><i class="crosshairs fa-fw"></i>CSDN</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xinwen618@gmail.com" title="E-Mail → mailto:xinwen618@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2022 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xinwen</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">433k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">6:33</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+// 代码折叠
+<script src="/js/code-unfold.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'QS91rh0eXkhXnjzhcdHGIRzJ-gzGzoHsz',
+      appKey     : 'DD7UTgTkdGwFia0JrJRcs7fs',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
