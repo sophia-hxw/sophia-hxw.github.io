@@ -21,18 +21,21 @@
     var CONFIG = {"hostname":"github.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="前言本文思想 [paper link][code]">
+  <meta name="description" content="前言本文思想  Natural language supervision Creating a sufficiently large Dataset Selecting an efficient pre-training method Choosing and scaling a method  papercode clip">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Learning Transferable Visual Models From Natural Language Supervision">
 <meta property="og:url" content="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/11/16/Multimodal/Learning%20Transferable%20Visual%20Models%20From%20Natural%20Language%20Supervision/index.html">
 <meta property="og:site_name" content="橦言无忌">
-<meta property="og:description" content="前言本文思想 [paper link][code]">
+<meta property="og:description" content="前言本文思想  Natural language supervision Creating a sufficiently large Dataset Selecting an efficient pre-training method Choosing and scaling a method  papercode clip">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/11/16/Multimodal/Learning%20Transferable%20Visual%20Models%20From%20Natural%20Language%20Supervision/clip_structure.png">
+<meta property="og:image" content="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/11/16/Multimodal/Learning%20Transferable%20Visual%20Models%20From%20Natural%20Language%20Supervision/clip_choose%20a%20method.png">
 <meta property="article:published_time" content="2023-11-15T16:27:14.000Z">
-<meta property="article:modified_time" content="2023-11-16T07:34:09.691Z">
+<meta property="article:modified_time" content="2023-11-17T04:55:48.699Z">
 <meta property="article:author" content="xinwen">
 <meta property="article:tag" content="clip">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/11/16/Multimodal/Learning%20Transferable%20Visual%20Models%20From%20Natural%20Language%20Supervision/clip_structure.png">
 
 <link rel="canonical" href="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/11/16/Multimodal/Learning%20Transferable%20Visual%20Models%20From%20Natural%20Language%20Supervision/">
 
@@ -142,7 +145,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">104</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">105</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -222,10 +225,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2023-11-16 00:27:14 / 修改时间：15:34:09" itemprop="dateCreated datePublished" datetime="2023-11-16T00:27:14+08:00">2023-11-16</time>
+              <time title="创建时间：2023-11-16 00:27:14" itemprop="dateCreated datePublished" datetime="2023-11-16T00:27:14+08:00">2023-11-16</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-11-17 12:55:48" itemprop="dateModified" datetime="2023-11-17T12:55:48+08:00">2023-11-17</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -256,14 +265,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>652</span>
+              <span>3.1k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -276,9 +285,44 @@
 
       
         <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><strong>本文思想</strong></p>
-<p>[paper link]<br>[code]</p>
-<hr>
-<span id="more"></span>
+<ul>
+<li>Natural language supervision</li>
+<li>Creating a sufficiently large Dataset</li>
+<li>Selecting an efficient pre-training method</li>
+<li>Choosing and scaling a method</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2103.00020">paper</a><br><a href="https://github.com/OpenAI/CLIP">code</a></p>
+<p><strong>clip</strong><br><span id="more"></span></p>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>最先进的计算机视觉系统经过训练可以预测一组固定的预定对象类别，这种受限的监督形式限制了它们的通用性和可用性，因为需要额外的标记数据来指定任何其他视觉概念，而直接从原始文本中学习图像是一种很有前途的替代方案，它利用了更广泛的监督来源。 </p>
+<p>我们证明，预测哪个标题与哪个图像对应的简单预训练任务是一种有效且可扩展的方法，可以在从互联网收集的 4 亿（图像、文本）对的数据集上从头开始学习 SOTA 图像表示。 预训练后，使用自然语言来引用学习的视觉概念（或描述新的视觉概念），从而实现模型零样本传输到下游任务。 我们通过对 30 多个不同的现有计算机视觉数据集进行基准测试来研究这种方法的性能，涵盖 OCR、视频中的动作识别、地理定位和许多类型的细粒度对象分类等任务。 </p>
+<p>该模型可以轻松地迁移到大多数任务，并且通常可以与完全监督的基线竞争，而无需任何数据集特定的训练。 例如，我们在 ImageNet 零样本上匹配原始 ResNet-50 的准确性，而无需使用其所训练的 128 万个训练样本中的任何一个。</p>
+<h1 id="一，简介及本文工作灵感"><a href="#一，简介及本文工作灵感" class="headerlink" title="一，简介及本文工作灵感"></a>一，简介及本文工作灵感</h1><p>①NLP近年来飞速发展。从网络上爬下一些文本形成数据集，一些NLP模型可以直接在这个数据集上预训练，再到其他数据集做任务时，这个模型可以不使用这个数据集的任何数据（zero-shot）进行参数微调而直接做任务。zero-shot transfer就是零样本迁移到下游任务的意思。GPT-3是更通用化的 NLP 模型，也是openAI的作品。<br>②计算机视觉，在ImageNet等人工标记的数据集上预训练模型仍然是标准的做法。<br>③Visual N-Grams促成CLIP的诞生的最重要的论文。<br>【Visual N-Grams：用自然语言监督信号来让促成一些现存的CV分类数据集(包含ImageNet数据集)实现zero-shot transfer。】</p>
+<h1 id="二，方法"><a href="#二，方法" class="headerlink" title="二，方法"></a>二，方法</h1><ul>
+<li>自然语言监督<br>①这不是一个新想法，然而用来描述这个领域工作的术语是多样的，并且动机是多样的。有很多人都引入了从有图像配对的文本中学习视觉表示的方法，但它们将其方法分别描述为无监督、自监督、弱监督和有监督。<br>②与大多数无监督或自监督的学习方法相比，从自然语言中学习也有一个重要的优势，因为它不仅“只是”学习一种表示，而且还将该表示与语言联系起来，从而实现灵活的zero-shot transfer。</li>
+<li><p>创建一个足够大的数据集<br>作者用4亿对来自网络的图文数据集，将文本作为图像标签，进行训练。这个数据集称为WebImageText（WIT）</p>
+</li>
+<li><p>选择一种有效的预训练方法<br>这是一个简单的有监督的contrastive任务。它将图片分类任务转换为图文匹配任务。CLIP的模型是比较简单的，它的贡献点在于采用了海量图文对数据和超大batch size进行预训练，并不在于其模型结构。计算模态之间的cosine similarity，让 $N$ 个匹配的图文对相似度最大，$N^2-N$ 不匹配的图文对相似度最小对角线上都是配对的正样本对，而矩阵的其他元素，则是由同个batch内的图片和不配对的文本（相反亦然）组成的负样本。这种策略可以形成 $N^2-N$ 个负样本。CLIP的模型结构和正负样本组成策略并不复杂，也即是从batch内部去构成负样本。</p>
+</li>
+</ul>
+<p><img src="clip_structure.png" alt="clip_structure"></p>
+<p>作者不使用表示空间和对比embedding空间之间的非线性投影，因为作者没有注意到这两个版本之间的训练效率的差异，并推测非线性投影只有在自监督表示学习方法中才可能与当前图像的细节共同适应。</p>
+<ul>
+<li>选择和缩放模型<br><img src="clip_choose a method.png" alt="method"></li>
+</ul>
+<p>the antialiased rect-2 blur pooling的示意图在左下角。第一步为max pooling，这一步操作能够保留平移不变性，第二步为降采样subsampling，这一步操作会破坏平移不变性，然后在两者中间插入一个低通滤波器（二维图像就是卷积运算），这是为了尽最大努力保留平移不变性。</p>
+<p><strong>Image Encoder:</strong> 使用一个简单的baseline来平均分配额外的算力，以增加模型的宽度、深度和分辨率。</p>
+<p><strong>Text Encoder:</strong> 只缩放模型的宽度，使其与计算出的ResNet宽度的增加成正比，而不缩放深度，因为作者发现CLIP的性能对文本编码器的容量不那么敏感。</p>
+<h1 id="三，迁移到零样本任务"><a href="#三，迁移到零样本任务" class="headerlink" title="三，迁移到零样本任务"></a>三，迁移到零样本任务</h1><ul>
+<li>输入：一张图片 + 所有类别转换的文本（100个类别就是100个文本描述）。</li>
+<li>计算图像的特征嵌入和由它们各自的编码器对可能的文本集的特征嵌入。</li>
+<li>计算这些嵌入的cosine similarity，用温度参数τ进行缩放，并通过softmax归一化为概率分布。</li>
+</ul>
+<p><strong>注意:</strong> 该预测层是一个多项式logistic回归分类器，具有L2归一化输入、L2归一化权值、no bias和temperature scaling。</p>
+<h2 id="对比visual-N-gram的初始化"><a href="#对比visual-N-gram的初始化" class="headerlink" title="对比visual N-gram的初始化"></a>对比visual N-gram的初始化</h2><p>visual N-GRAMS受n-gram模型的启发，n-gram模型中每一个字节片段称为gram，对所有gram的出现频次进行统计，进行过滤，形成关键gram列表，也就成了文本的向量特征空间。</p>
+<p>该模型基于这样一种假设：第N个词的出现只与前面N-1个词相关，而与其它任何词都不相关，整句的概率就是各个词出现概率的乘积。这些概率可以通过直接从语料中统计N个词同时出现的次数得到。</p>
+<p>visual N-GRAMS使用差分版本的Jelinek-Mercer平滑来最大化给定图像的所有文本n-gram的概率。</p>
+<p>visual N-GRAMS为了进行zero-shot传输，他们首先将每个数据集的类名的文本转换为其n-gram表示，然后根据他们的模型计算其概率，预测得分最高的概率。</p>
+<p>从结果可以看出，CLIP在aYahoo、ImageNet、SUN这三个数据集上表现比visual N-GRAMS好得多。</p>
 <h1 id="未来工作"><a href="#未来工作" class="headerlink" title="未来工作"></a>未来工作</h1><p>本文是初步分析，旨在说明通用计算机视觉模型带来的一些挑战，并了解其偏差和影响。</p>
 <p>我们希望这项工作能够激发未来对此类模型的能力、缺点和偏差的表征的研究，并且我们很高兴与研究界就这些问题进行合作。</p>
 <p>我们相信，社区探索是向前迈出的一大步，以进一步表征 CLIP 等模型的功能，并且最重要的是，确定它们具有良好性能的应用领域以及它们可能会降低性能的领域。 这一表征过程可以帮助研究人员提高模型在以下方面的使用可能性：</p>
@@ -387,7 +431,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%AA%E6%9D%A5%E5%B7%A5%E4%BD%9C"><span class="nav-text">未来工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%EF%BC%8C%E7%AE%80%E4%BB%8B%E5%8F%8A%E6%9C%AC%E6%96%87%E5%B7%A5%E4%BD%9C%E7%81%B5%E6%84%9F"><span class="nav-text">一，简介及本文工作灵感</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%EF%BC%8C%E6%96%B9%E6%B3%95"><span class="nav-text">二，方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%EF%BC%8C%E8%BF%81%E7%A7%BB%E5%88%B0%E9%9B%B6%E6%A0%B7%E6%9C%AC%E4%BB%BB%E5%8A%A1"><span class="nav-text">三，迁移到零样本任务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E6%AF%94visual-N-gram%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-text">对比visual N-gram的初始化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%AA%E6%9D%A5%E5%B7%A5%E4%BD%9C"><span class="nav-text">未来工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -403,7 +447,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">104</span>
+          <span class="site-state-item-count">105</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -471,13 +515,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">433k</span>
+    <span title="站点总字数">436k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:33</span>
+    <span title="站点阅读时长">6:36</span>
 </div>
 
         
