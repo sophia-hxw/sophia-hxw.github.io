@@ -1,6 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Accelerating Generative AI with PyTorch II-GPT, Fast</title>
+    <url>/2023/12/06/Engineering/Accelerating%20Generative%20AI%20with%20PyTorch%20II/</url>
+    <content><![CDATA[<h1 id="一，前言"><a href="#一，前言" class="headerlink" title="一，前言"></a>一，前言</h1><p>pytorch原生库加速文本生成模型～</p>
+<p>特征：</p>
+<ul>
+<li>低延迟</li>
+<li>小于1000行代码</li>
+<li>仅依赖pytorch的原生库</li>
+<li>int8/int4量化</li>
+<li>Speculative decoding（推测性解码？）</li>
+<li>张量并行</li>
+<li>支持Nvidia和AMD的GPU显卡</li>
+</ul>
+<p><strong>pytorch团队出品，仅依赖pure pytorch</strong><br><span id="more"></span></p>
+<h1 id="二，问题来源"><a href="#二，问题来源" class="headerlink" title="二，问题来源"></a>二，问题来源</h1><p>系列制作的第二篇，第一篇是<strong>Segment Anything over 8x</strong>，本篇则是针对文本生成模型。</p>
+<p>LLM模型发展很快，功能强大，但不是那么易用，比如需要转化为特定格式或者特殊的依赖项等。可否在原生pytorch上来优化？或者尝试找找优化后的极限性能？</p>
+<p>在 <a href="https://www.youtube.com/watch?v=IWpM_9AsC-U">Pytorch Developer Conference</a>上指出，在不损失精度的情况下，可以用原生的 pytorch 从头写LLM模型而获得近10x的效率。可优化的点包含：</p>
+<ul>
+<li><a href="https://pytorch.org/tutorials/intermediate/torch_compile_tutorial.html">Torch.compile</a>-&gt;Pytorch的模型编译</li>
+<li><a href="https://github.com/pytorch-labs/ao/tree/main#torchao">GPU量化</a>-&gt;精度降低，int8/int4</li>
+<li><a href="https://github.com/pytorch-labs/gpt-fast/blob/main/generate.py#L76">Speculative decoding</a>-&gt;小的”draft”预测输出，大模型验证</li>
+<li><a href="https://github.com/pytorch-labs/gpt-fast/blob/main/tp.py">张量并行</a>-&gt;多设备加速</li>
+</ul>
+<p><strong>注意【对比参照数据】：</strong>下面所以对比的起点都是(25.5 TOK/S)</p>
+<p>测试Llma-7B模型，可以看到的问题是：<strong>CPU overhead bound</strong>，CPU的开销限制问题，也就是CPU 无法足够快地告诉 GPU 做什么，以便充分利用 GPU。能做些什么来解决或者缓解这个问题？ 第一，我们可以用 C++ 重写实现，甚至可能完全避开框架并编写原始 CUDA，或者可以一次向 GPU 发送更多工作。</p>
+<p>通过一次发送大量工作，可以让 GPU 保持忙碌！ 尽管在训练过程中，可能只是通过增加批量大小来完成，但在推理过程中如何做到这一点？</p>
+<h1 id="优化点1-通过torch-compile和KV静态缓存降低CPU开销-107-0-TOK-S"><a href="#优化点1-通过torch-compile和KV静态缓存降低CPU开销-107-0-TOK-S" class="headerlink" title="优化点1-通过torch.compile和KV静态缓存降低CPU开销(107.0 TOK/S)"></a>优化点1-通过torch.compile和KV静态缓存降低CPU开销(107.0 TOK/S)</h1><p>结论：性能提升超过四倍</p>
+<p><a href="https://github.com/pytorch-labs/gpt-fast/blob/main/generate.py#L296">how to apply?</a></p>
+<h2 id="kv-cache"><a href="#kv-cache" class="headerlink" title="kv-cache"></a>kv-cache</h2><p>kv-cache 是一种推理时的时间优化策略，可缓存为先前 token 计算的激活。 然而，当我们生成更多令牌时，kv-cache 的“逻辑长度”就会增长，这是有问题的。首先，每次缓存增长时重新分配（或复制）kv-cache 的成本非常高。 其次，这种动态使得减少开销变得更加困难，因为不再能够利用 cudagraphs 等方法。</p>
+<p>所以给出了 <a href="https://github.com/pytorch-labs/gpt-fast/blob/0afae1ace441ce4c5d02ef11a72da28cf7ca4795/generate.py#L154">“static kv-cach”</a>方案，直接静态分配 kv-cache 的最大大小，然后屏蔽计算注意力时未使用的值。</p>
+<h2 id="prefill-phase"><a href="#prefill-phase" class="headerlink" title="prefill phase"></a>prefill phase</h2><p>Transformer 文本生成可被视为一个两阶段过程：1. 处理整个提示的预填充；2. 自回归生成每个标记的解码。一旦 kv-cache 静态化，解码就可以完全静态化，但由于prompt长度可变，预填充阶段仍然需要更多的动态性。 因此，我们实际上需要使用单独的编译策略来编译这两个阶段。</p>
+<h2 id="why-work"><a href="#why-work" class="headerlink" title="why work?"></a>why work?</h2><ul>
+<li><p>第一个因素是减少开销。<br>  Torch.compile 能够通过各种优化来减少开销，最有效的优化之一称为 <a href="https://pytorch.org/blog/accelerating-pytorch-with-cuda-graphs/">CUDAGraphs</a>。 对用户而言，配置“reduce-overhead”就可以自动应用此功能，无须额外的工作和代码编写。</p>
+</li>
+<li><p>第二个因素是 torch.compile 能生成更快的内核。<br>  在上面的解码 benchmark 中，torch.compile 实际上从头开始生成每个内核，包括矩阵乘法和注意力，而且，这些内核比内置的替代方案（CuBLAS 和 FlashAttention2）更快！</p>
+</li>
+</ul>
+<blockquote>
+<p>矩阵乘法有: torch.mul(a, b)点乘；torch.mm(a, b)二维的矩阵乘法，超出二维会报错；和torch.matmul(a, b)是高维矩阵乘法。</p>
+</blockquote>
+<h1 id="优化点2-通过-INT8-权重量化缓解内存带宽瓶颈-157-4-TOK-S"><a href="#优化点2-通过-INT8-权重量化缓解内存带宽瓶颈-157-4-TOK-S" class="headerlink" title="优化点2-通过 INT8 权重量化缓解内存带宽瓶颈(157.4 TOK/S)"></a>优化点2-通过 INT8 权重量化缓解内存带宽瓶颈(157.4 TOK/S)</h1><p>是否可以更快？可以对比下理论峰值，在这个例子中，瓶颈在于将权重从 GPU 全局内存加载到寄存器的成本。 换句话说，每次前向传递都要求我们“接触”GPU 上的每个参数。 那么，理论上我们能够以多快的速度“触及”模型中的每个参数？引入模型带宽利用率参数（MBU），公式如下：</p>
+<script type="math/tex; mode=display">model\ bandwidth\ utilization=\frac{\{params\}\cdot\{bytes\ per\ param\}\cdot\{tokes\ per\ second\}}{memory\ bandwidth}</script><p>eg:<br>我们有一个 7B（Llama-7b） 参数模型，每个参数都存储在 fp16 中（每个参数 2 个字节），我们实现了 107 个令牌/秒，Nvidia A100-80GB 理论内存带宽为 2 TB/s。</p>
+<script type="math/tex; mode=display">MBU=\frac{7B\cdot 2\cdot 107}{2\ Terabytes}=\frac{7*10^9\cdot 2\cdot107}{2*10^{12}}\approx 72\%</script><blockquote>
+<p>FP32,4 bytes; FP16, 3 bytes; int8, 1 bytes; int4, 0.5bytes.</p>
+</blockquote>
+<p>即使只是复制内存也很难突破 85%，而本文模型达到了72%，意味着我们非常接近理论极限，并且我们显然在从内存加载权重方面遇到了瓶颈。 如果不从问题源头出发，最多可能只能再争取 10% 的性能。再次回过头来看公式，此时还能优化的就是<strong>bytes per param</strong>，即参数的内存占用，由此引出int8量化。</p>
+<p><strong>注意</strong> 仅量化权重，计算本身仍然在 fp16 中完成，使得这种形式的量化易于应用，并且精度几乎没有降低。而且，int8需要与torch.compile融合使用，否则性能可能比fp16（无论是否带torch.compile）的还要低/</p>
+<p>结论2：约有50%的性能提升。</p>
+<p><a href="https://github.com/pytorch-labs/gpt-fast/blob/main/quantize.py#L314">github code</a></p>
+<h1 id="优化点3-用推测解码来重构问题"><a href="#优化点3-用推测解码来重构问题" class="headerlink" title="优化点3-用推测解码来重构问题"></a>优化点3-用推测解码来重构问题</h1><p>量化之后，下一个问题就凸显出来了，为了生成100个token，需要load模型权重100次。有可以优化的方法吗？乍看貌似没有，因为在自回归生成任务中有严格的序列依赖性，但是本文仍然提出了推测解码来解决该问题？</p>
+<p>在 Transformer 模型的推理中，Verity 将由更大的模型发挥作用，我们希望其输出满足我们的任务，称为 Verifier 模型。 同样，Drake 将由一个较小的模型（称为 Draft 模型）来扮演，该模型能够比大模型更快地生成文本。 因此，我们将使用 Draft 模型生成 8 个令牌，然后使用 Verifier 模型并行处理所有 8 个令牌，并丢弃不匹配的令牌。</p>
+<p>如上所述，推测解码的一个关键特性是它不会改变输出的质量。 只要使用 Draft 模型生成令牌 + Verifier 模型验证令牌所需的时间少于生成这些令牌所需的时间即可。</p>
+<p><a href="https://github.com/pytorch-labs/gpt-fast/blob/main/generate.py#L76">github code</a></p>
+<p>尽管推测性解码保证我们在数学上与常规生成相比具有相同的结果，但它在运行时的性能会根据待生成的文本以及 Draft 和 Verifier 模型的对齐程度而变化。 例如，当运行 CodeLlama-34B + CodeLlama-7B 时，我们能够在生成代码时获得 2 倍的 $tokes/s$ 提升。 另一方面，当使用 Llama-7B + TinyLlama-1B 时，我们只能获得大约 1.3 倍的 $tokes/s$ 提升。</p>
+<h2 id="在AMD显卡上的实现"><a href="#在AMD显卡上的实现" class="headerlink" title="在AMD显卡上的实现"></a>在AMD显卡上的实现</h2><p>如上所述，解码中的每个内核都是由 torch.compile 从头开始生成的，并转换为 OpenAI Triton。 由于 AMD 有 torch.compile 后端（还有 Triton 后端），我们可以简单地完成上述所有优化。在 AMD GPU 上，通过 int8 量化，我们能够使用 MI250x 的 1 个 GCD（即二分之一）实现 102.5 token/s！</p>
+<h1 id="优化点4-通过-INT4-量化和-GPTQ-202-1-TOK-S-进一步减小权重的大小-202-1-TOK-S"><a href="#优化点4-通过-INT4-量化和-GPTQ-202-1-TOK-S-进一步减小权重的大小-202-1-TOK-S" class="headerlink" title="优化点4-通过 INT4 量化和 GPTQ (202.1 TOK/S) 进一步减小权重的大小(202.1 TOK/S)"></a>优化点4-通过 INT4 量化和 GPTQ (202.1 TOK/S) 进一步减小权重的大小(202.1 TOK/S)</h1><h2 id="怎么减小int4量化带来的精度损失？"><a href="#怎么减小int4量化带来的精度损失？" class="headerlink" title="怎么减小int4量化带来的精度损失？"></a>怎么减小int4量化带来的精度损失？</h2><ul>
+<li>第一个是拥有更细粒度的缩放因子。 考虑缩放因子的一种方法是，当我们有量化张量表示时，它处于浮点张量（每个值都有缩放因子）和整数张量（没有值有缩放因子）之间的滑动比例。 例如，对于 int8 量化，我们每行都有一个缩放因子。 然而，如果我们想要更高的精度，我们可以将其更改为“每 32 个元素一个缩放因子”。 我们选择组大小为 32 来最小化准确性下降，这也是社区中的常见选择。</li>
+<li>另一种是使用比简单地对权重进行舍入更先进的量化策略。 例如，GPTQ 等方法利用示例数据来更准确地校准权重。 在本例中，我们基于 PyTorch 最近发布的 torch.export 在存储库中构建了 GPTQ 实现的原型。此外，我们需要将 int4 反量化与矩阵向量乘法融合的内核。 在这种情况下，torch.compile 不幸地无法从头开始生成这些内核，因此我们在 PyTorch 中利用一些手写的 CUDA 内核。</li>
+</ul>
+<p>此外，我们需要内核来将 int4 反量化与矩阵向量乘法融合。 在这种情况下，torch.compile 却无法从头开始生成这些内核，因此我们在 PyTorch 中需要手写一些 CUDA 内核。这些技术需要一些额外的工作，但将它们组合在一起会产生更好的性能！</p>
+<h1 id="优化点5-将所有内容组合在一起（244-7-TOK-S）"><a href="#优化点5-将所有内容组合在一起（244-7-TOK-S）" class="headerlink" title="优化点5-将所有内容组合在一起（244.7 TOK/S）"></a>优化点5-将所有内容组合在一起（244.7 TOK/S）</h1><p>单GPU-&gt;多GPU，是增大了MBU公式的分母，即内存带宽。</p>
+<p>选择哪种并行策略呢？请注意，为了减少一个 sample 的延迟，能够同时在更多设备上利用内存带宽，这需要将一个令牌的处理拆分到多个设备上。 换句话说，我们需要使用张量并行性。</p>
+<p>幸运的是，PyTorch 还提供了与 torch.compile 组合的张量并行的低级工具，也还在开发用于表达张量并行性的更高级别的 API！</p>
+<p><a href="https://github.com/pytorch-labs/gpt-fast/blob/main/tp.py">code</a></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>简单性：忽略量化，model.py（244 LOC）+generate.py（371 LOC）+tp.py（151 LOC）得出766 LOC，实现快速推理+推测解码+张量并行。</p>
+<p>性能：通过 Llama-7B，我们能够使用编译 + int4 Quant + 推测解码来达到 241 tok/s。 借助 llama-70B，我们还能够引入张量并行性以达到 80 tok/s。 这些都接近或超过 SOTA 性能数据！</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="https://mp.weixin.qq.com/s/nqLe8ufr95J_p2g_Jb1zPg">wechat article</a><br><a href="https://pytorch.org/blog/accelerating-generative-ai-2/">pytorch blog</a></p>
+]]></content>
+      <categories>
+        <category>Engineering</category>
+      </categories>
+      <tags>
+        <tag>gpt-fast</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2023/12/06/Engineering/Accelerating%20Generative%20AI%20with%20PyTorch/</url>
+    <content><![CDATA[<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&amp;mid=2650897947&amp;idx=3&amp;sn=27da2fd05194f27bc8033c616174ece4&amp;chksm=84e4ba65b393337371a846afe432131299e488e364664d1ba13b53a2b8c464036d65946a91f6&amp;scene=21#wechat_redirect">wechat article</a><br><a href="https://pytorch.org/blog/accelerating-generative-ai/">official blog</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2023/12/06/Engineering/speedup-kv-cache/</url>
+    <content><![CDATA[<p><a href="https://www.dipkumar.dev/becoming-the-unbeatable/posts/gpt-kvcache/">link</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2023/11/24/Multimodal/VLMo:%20Unified%20Vision-Language%20Pre-Training%20with%20Mixture-of-Modality-Experts/</url>
+    <content><![CDATA[<p><a href="https://arxiv.org/abs/2111.02358">paper</a></p>
+]]></content>
+  </entry>
+  <entry>
     <title>Align before Fuse-Vision and Language Representation Learning with Momentum Distillation</title>
     <url>/2023/11/22/Multimodal/Align%20before%20Fuse:%20Vision%20and%20Language%20Representation%20Learning%20with%20Momentum%20Distillation/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><strong>本文思想</strong></p>
@@ -45,11 +139,12 @@
 <li>training / validation scripts</li>
 </ul>
 <p>旨在将各种 SOTA 模型整合在一起，并具有复现 ImageNet 训练结果的能力。</p>
-<p><a href="https://github.com/huggingface/pytorch-image-models">github link</a></p>
+<p><a href="https://github.com/huggingface/pytorch-image-models">github link</a><br><a href="https://huggingface.co/models">hugging face models</a></p>
 <p><strong>作者：Ross Wightman，来自加拿大温哥华。首先致敬大佬！</strong><br><span id="more"></span></p>
 <h1 id="一，简介"><a href="#一，简介" class="headerlink" title="一，简介"></a>一，简介</h1><p>timm 库实现了最新的几乎所有的具有影响力的视觉模型，它不仅提供了模型的权重，还提供了一个很棒的分布式训练和评估的代码框架，方便后人开发。更难能可贵的是它还在不断地更新迭代新的训练方法，新的视觉模型和优化代码。</p>
 <p>但是毫无疑问，训练、测试和维护这些代码库和模型权重需要大量的 GPU (或 TPU) 资源和大量的电力/冷却费用。Ross Wightman 也确实需要额外的资源来提供和训练更多具有更好技术的模型，所以作者打了广告邀请各界人士赞助 </p>
-<h1 id="二，使用教程"><a href="#二，使用教程" class="headerlink" title="二，使用教程"></a>二，使用教程</h1><h2 id="2-1-环境"><a href="#2-1-环境" class="headerlink" title="2.1 环境"></a>2.1 环境</h2>]]></content>
+<h1 id="二，使用教程"><a href="#二，使用教程" class="headerlink" title="二，使用教程"></a>二，使用教程</h1><h2 id="2-1-环境"><a href="#2-1-环境" class="headerlink" title="2.1 环境"></a>2.1 环境</h2><p><a href="https://hub.docker.com/r/pytorch/pytorch/tags">pytorch docker</a></p>
+]]></content>
       <categories>
         <category>Engineering</category>
       </categories>
@@ -1173,21 +1268,6 @@ m^\ast = \mathop{argmin}
       </tags>
   </entry>
   <entry>
-    <title>A Survey of Transformers</title>
-    <url>/2023/06/28/Transformer/A%20Survey%20of%20Transformers/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Transformer模型的发展综述～</p>
-<p>论文百度云链接: <a href="https://pan.baidu.com/s/1fwGSq4SysfLSOzSPKRQzjg">https://pan.baidu.com/s/1fwGSq4SysfLSOzSPKRQzjg</a><br>提取码: r2ii<br>—来自百度网盘超级会员v6的分享</p>
-<p><strong>继续加油读文章</strong><br><span id="more"></span></p>
-<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>Transformers 在自然语言处理、计算机视觉、音频处理等许多人工智能领域取得了巨大的成功。 因此，自然会引起学术界和工业界研究人员的极大兴趣。 到目前为止，已经提出了各种各样的 Transformer 变体（又名 X-formers），但是，仍然缺乏对这些 Transformer 变体的系统和全面的文献综述。 在本次调查中，我们对各种 X-formers 进行了全面审查。 我们首先简要介绍 vanilla Transformer，然后提出一个新的 X-formers 分类法。 接下来，我们从架构修改、预训练、应用三个角度介绍各种X-former。 最后，我们概述了未来研究的一些潜在方向。</p>
-<h1 id=""><a href="#" class="headerlink" title=" "></a> </h1>]]></content>
-      <categories>
-        <category>Transformer</category>
-      </categories>
-      <tags>
-        <tag>transformer</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>A Survey on Vision Transformer</title>
     <url>/2023/06/28/Transformer/A%20Survey%20on%20Vision%20Transformer/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>title: A Survey on Vision Transformer</p>
@@ -1330,6 +1410,21 @@ where head_i=\mathrm{Attention}(\mathbf Q_i,\mathbf K_i,\mathbf V_i)
 <p>出现了各种类型的神经网络，例如 CNN、RNN 和 Transformer。在CV领域，CNNs曾经是主流选择，但是现在Transformer开始流行了。 CNN 可以捕获归纳偏差，例如翻译等方差和局部性，而 ViT 使用大规模训练来超越归纳偏差。根据目前可用的证据，CNN 在小型数据集上表现良好，而 Transformer 在大型数据集上表现更好。未来的问题是使用 CNN 还是 Transformer。</p>
 <p>通过使用大型数据集进行训练，Transformer 可以在 NLP 和 CV 基准测试上实现最先进的性能，神经网络可能需要大数据而不是归纳偏差。最后，我们留给大家一个问题：Transformer 是否可以通过非常简单的计算范式（例如，仅使用全连接层）和海量数据训练来获得令人满意的结果？</p>
 ]]></content>
+      <categories>
+        <category>Transformer</category>
+      </categories>
+      <tags>
+        <tag>transformer</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>A Survey of Transformers</title>
+    <url>/2023/06/28/Transformer/A%20Survey%20of%20Transformers/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Transformer模型的发展综述～</p>
+<p>论文百度云链接: <a href="https://pan.baidu.com/s/1fwGSq4SysfLSOzSPKRQzjg">https://pan.baidu.com/s/1fwGSq4SysfLSOzSPKRQzjg</a><br>提取码: r2ii<br>—来自百度网盘超级会员v6的分享</p>
+<p><strong>继续加油读文章</strong><br><span id="more"></span></p>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>Transformers 在自然语言处理、计算机视觉、音频处理等许多人工智能领域取得了巨大的成功。 因此，自然会引起学术界和工业界研究人员的极大兴趣。 到目前为止，已经提出了各种各样的 Transformer 变体（又名 X-formers），但是，仍然缺乏对这些 Transformer 变体的系统和全面的文献综述。 在本次调查中，我们对各种 X-formers 进行了全面审查。 我们首先简要介绍 vanilla Transformer，然后提出一个新的 X-formers 分类法。 接下来，我们从架构修改、预训练、应用三个角度介绍各种X-former。 最后，我们概述了未来研究的一些潜在方向。</p>
+<h1 id=""><a href="#" class="headerlink" title=" "></a> </h1>]]></content>
       <categories>
         <category>Transformer</category>
       </categories>
@@ -2136,6 +2231,21 @@ k-\tau^i_j(k)\leq \Delta,\; k=0,1...
 <td>$\equiv$</td>
 <td><code>$\equiv$</code></td>
 </tr>
+<tr>
+<td>点乘</td>
+<td>$\cdot$</td>
+<td><code>$\cdot$</code></td>
+</tr>
+<tr>
+<td>乘法</td>
+<td>$\times$</td>
+<td><code>$\times$</code></td>
+</tr>
+<tr>
+<td>卷积</td>
+<td>$\otimes$</td>
+<td><code>$\otimes$</code></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -2363,8 +2473,8 @@ a_{i,j} = \frac{1}{2-y_i^\top y_j}(\sum^n_{k=1}\frac{1}{2-y_i^\top y_k})^{-1}
         <category>Transformer</category>
       </categories>
       <tags>
-        <tag>math</tag>
         <tag>transformer</tag>
+        <tag>math</tag>
       </tags>
   </entry>
   <entry>
@@ -2401,8 +2511,8 @@ a_{i,j} = \frac{1}{2-y_i^\top y_j}(\sum^n_{k=1}\frac{1}{2-y_i^\top y_k})^{-1}
         <category>Transformer</category>
       </categories>
       <tags>
-        <tag>math</tag>
         <tag>transformer</tag>
+        <tag>math</tag>
       </tags>
   </entry>
   <entry>
@@ -5738,6 +5848,42 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </tags>
   </entry>
   <entry>
+    <title>边缘提取方法</title>
+    <url>/2022/05/19/Engineering/edge-extract/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Chen Mingming老师组的三个边缘提取的模型，还有部分数据集，效果不错~</p>
+<p><strong>用边缘特征做过一些图像应用哦</strong><br><span id="more"></span></p>
+<h2 id="1，边缘提取hed"><a href="#1，边缘提取hed" class="headerlink" title="1，边缘提取hed"></a>1，边缘提取hed</h2><p><a href="https://github.com/s9xie/hed">github link</a></p>
+<ul>
+<li>作者<br>南开大学程明明</li>
+<li>对应文章   <ul>
+<li>author = {“Xie, Saining and Tu, Zhuowen”},</li>
+<li>Title = {Holistically-Nested Edge Detection},</li>
+<li>Booktitle = “Proceedings of IEEE International Conference on Computer Vision”,</li>
+<li>Year = {2015},</li>
+</ul>
+</li>
+<li>结果<br>BSDS benchmark数据集：<br>ODS=.790 and OIS=.808<br>BSD500 数据集：<br>ODS F-score of .790<br>NYU Depth 数据集：<br>ODS F-score of .746<br>速度： (0.4s per image)</li>
+</ul>
+<h2 id="2，边缘提取rcf"><a href="#2，边缘提取rcf" class="headerlink" title="2，边缘提取rcf"></a>2，边缘提取rcf</h2><p><a href="https://github.com/meteorshowers/RCF-pytorch">pytorch版本：github</a><br><a href="https://github.com/yun-liu/rcf">caffe版本：github</a></p>
+<ul>
+<li>作者<br>南开大学程明明</li>
+<li>文章<br>title={Richer Convolutional Features for Edge Detection},<br>author={Liu, Yun and Cheng, Ming-Ming and Hu, Xiaowei and Bian, Jia-Wang and Zhang, Le and Bai, Xiang and Tang, Jinhui},<br>journal={IEEE Transactions on Pattern Analysis and Machine Intelligence},<br>year={2019}</li>
+<li>特性<br>Using VGG16 network；<br>BSDS500 benchmark 数据集：<br>ODS F-measure of 0.811， speed (8 FPS)<br>fast version of RCF 快速版本：<br>ODS F-measure of 0.806 with 30 FPS</li>
+</ul>
+<h2 id="3，边缘提取dfi"><a href="#3，边缘提取dfi" class="headerlink" title="3，边缘提取dfi"></a>3，边缘提取dfi</h2><p><a href="https://github.com/backseason/DFI">github link</a></p>
+<ul>
+<li>作者<br>南开大学程明明</li>
+<li>文章<br>title={Dynamic Feature Integration for Simultaneous Detection of Salient Object, Edge and Skeleton},<br>author={Jiang-Jiang Liu and Qibin Hou and Ming-Ming Cheng},<br>journal={IEEE Transactions on Image Processing},<br>year={2020}</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Engineering</category>
+      </categories>
+      <tags>
+        <tag>edge extract</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>hi3559a开发记录</title>
     <url>/2022/05/19/Engineering/hi3559a-coding/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>hisi视觉模型开发，主要是检测任务，三个类别，本文包含项目开发的基本流程，包括模型训练，模型转化以及hisi官方提供的关于yolov3的源码及其调用分析。</p>
@@ -5793,42 +5939,6 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </categories>
       <tags>
         <tag>hi3559a cv model</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>边缘提取方法</title>
-    <url>/2022/05/19/Engineering/edge-extract/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Chen Mingming老师组的三个边缘提取的模型，还有部分数据集，效果不错~</p>
-<p><strong>用边缘特征做过一些图像应用哦</strong><br><span id="more"></span></p>
-<h2 id="1，边缘提取hed"><a href="#1，边缘提取hed" class="headerlink" title="1，边缘提取hed"></a>1，边缘提取hed</h2><p><a href="https://github.com/s9xie/hed">github link</a></p>
-<ul>
-<li>作者<br>南开大学程明明</li>
-<li>对应文章   <ul>
-<li>author = {“Xie, Saining and Tu, Zhuowen”},</li>
-<li>Title = {Holistically-Nested Edge Detection},</li>
-<li>Booktitle = “Proceedings of IEEE International Conference on Computer Vision”,</li>
-<li>Year = {2015},</li>
-</ul>
-</li>
-<li>结果<br>BSDS benchmark数据集：<br>ODS=.790 and OIS=.808<br>BSD500 数据集：<br>ODS F-score of .790<br>NYU Depth 数据集：<br>ODS F-score of .746<br>速度： (0.4s per image)</li>
-</ul>
-<h2 id="2，边缘提取rcf"><a href="#2，边缘提取rcf" class="headerlink" title="2，边缘提取rcf"></a>2，边缘提取rcf</h2><p><a href="https://github.com/meteorshowers/RCF-pytorch">pytorch版本：github</a><br><a href="https://github.com/yun-liu/rcf">caffe版本：github</a></p>
-<ul>
-<li>作者<br>南开大学程明明</li>
-<li>文章<br>title={Richer Convolutional Features for Edge Detection},<br>author={Liu, Yun and Cheng, Ming-Ming and Hu, Xiaowei and Bian, Jia-Wang and Zhang, Le and Bai, Xiang and Tang, Jinhui},<br>journal={IEEE Transactions on Pattern Analysis and Machine Intelligence},<br>year={2019}</li>
-<li>特性<br>Using VGG16 network；<br>BSDS500 benchmark 数据集：<br>ODS F-measure of 0.811， speed (8 FPS)<br>fast version of RCF 快速版本：<br>ODS F-measure of 0.806 with 30 FPS</li>
-</ul>
-<h2 id="3，边缘提取dfi"><a href="#3，边缘提取dfi" class="headerlink" title="3，边缘提取dfi"></a>3，边缘提取dfi</h2><p><a href="https://github.com/backseason/DFI">github link</a></p>
-<ul>
-<li>作者<br>南开大学程明明</li>
-<li>文章<br>title={Dynamic Feature Integration for Simultaneous Detection of Salient Object, Edge and Skeleton},<br>author={Jiang-Jiang Liu and Qibin Hou and Ming-Ming Cheng},<br>journal={IEEE Transactions on Image Processing},<br>year={2020}</li>
-</ul>
-]]></content>
-      <categories>
-        <category>Engineering</category>
-      </categories>
-      <tags>
-        <tag>edge extract</tag>
       </tags>
   </entry>
   <entry>
@@ -6155,23 +6265,6 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </tags>
   </entry>
   <entry>
-    <title>rpn的原理和作用</title>
-    <url>/2022/05/16/Detection/principle-and-effects-of-rpn/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>rpn原理和作用</p>
-<span id="more"></span>
-<h2 id="1，作用"><a href="#1，作用" class="headerlink" title="1，作用"></a>1，作用</h2><p>RPN专门用来提取候选框，一方面RPN耗时少，另一方面RPN可以很容易结合到Fast RCNN中，成为一个整体。</p>
-<h2 id="2，实现细节"><a href="#2，实现细节" class="headerlink" title="2，实现细节"></a>2，实现细节</h2><p>一个特征图（Faster RCNN的公共Feature Map）经过sliding window处理，得到256维特征，对每个特征向量做两次全连接操作，一个得到2个分数，一个得到4个坐标{然后通过两次全连接得到结果2k个分数和4k个坐标[k指的是由锚点产生的K个框(K anchor boxes)]}</p>
-<h2 id="3，anchor-box是怎么选取的？"><a href="#3，anchor-box是怎么选取的？" class="headerlink" title="3，anchor box是怎么选取的？"></a>3，anchor box是怎么选取的？</h2><p>滑窗的中心在原像素空间的映射点称为anchor，以此anchor为中心，生成k(paper中default k=9, 3 scales and 3 aspect ratios/不同尺寸和不同长宽比)个proposals。三个面积尺寸$(128^{2}，256^{2}，512^{2})$，然后在每个面积尺寸下，取三种不同的长宽比例（1:1,1:2,2:1）</p>
-<h2 id="4，为什么提出anchor-box？"><a href="#4，为什么提出anchor-box？" class="headerlink" title="4，为什么提出anchor box？"></a>4，为什么提出anchor box？</h2><p>主要有两个原因：一个窗口只能检测一个目标、无法解决多尺度问题。<br>目前anchor box尺寸的选择主要有三种方式：人为经验选取、k-means聚类、作为超参数进行学习<br>为什么使用不同尺寸和不同长宽比？ 为了得到更大的交并比(IOU)。</p>
-]]></content>
-      <categories>
-        <category>Detection</category>
-      </categories>
-      <tags>
-        <tag>rpn</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>roi align</title>
     <url>/2022/05/16/Detection/roi-align/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>roi align产生的背景，原理和应用场景</p>
@@ -6220,6 +6313,23 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </categories>
       <tags>
         <tag>roi pooling</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>rpn的原理和作用</title>
+    <url>/2022/05/16/Detection/principle-and-effects-of-rpn/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>rpn原理和作用</p>
+<span id="more"></span>
+<h2 id="1，作用"><a href="#1，作用" class="headerlink" title="1，作用"></a>1，作用</h2><p>RPN专门用来提取候选框，一方面RPN耗时少，另一方面RPN可以很容易结合到Fast RCNN中，成为一个整体。</p>
+<h2 id="2，实现细节"><a href="#2，实现细节" class="headerlink" title="2，实现细节"></a>2，实现细节</h2><p>一个特征图（Faster RCNN的公共Feature Map）经过sliding window处理，得到256维特征，对每个特征向量做两次全连接操作，一个得到2个分数，一个得到4个坐标{然后通过两次全连接得到结果2k个分数和4k个坐标[k指的是由锚点产生的K个框(K anchor boxes)]}</p>
+<h2 id="3，anchor-box是怎么选取的？"><a href="#3，anchor-box是怎么选取的？" class="headerlink" title="3，anchor box是怎么选取的？"></a>3，anchor box是怎么选取的？</h2><p>滑窗的中心在原像素空间的映射点称为anchor，以此anchor为中心，生成k(paper中default k=9, 3 scales and 3 aspect ratios/不同尺寸和不同长宽比)个proposals。三个面积尺寸$(128^{2}，256^{2}，512^{2})$，然后在每个面积尺寸下，取三种不同的长宽比例（1:1,1:2,2:1）</p>
+<h2 id="4，为什么提出anchor-box？"><a href="#4，为什么提出anchor-box？" class="headerlink" title="4，为什么提出anchor box？"></a>4，为什么提出anchor box？</h2><p>主要有两个原因：一个窗口只能检测一个目标、无法解决多尺度问题。<br>目前anchor box尺寸的选择主要有三种方式：人为经验选取、k-means聚类、作为超参数进行学习<br>为什么使用不同尺寸和不同长宽比？ 为了得到更大的交并比(IOU)。</p>
+]]></content>
+      <categories>
+        <category>Detection</category>
+      </categories>
+      <tags>
+        <tag>rpn</tag>
       </tags>
   </entry>
   <entry>
