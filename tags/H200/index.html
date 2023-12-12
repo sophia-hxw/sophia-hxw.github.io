@@ -21,24 +21,18 @@
     var CONFIG = {"hostname":"github.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="一，前言Nvidia的A100和H100对比～ H100的显存带宽更小，为啥更受欢迎？">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Nvidia A100 and H100 GPUs">
-<meta property="og:url" content="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/12/12/Engineering/A100%20and%20H100/index.html">
+  <meta name="description" content="想到哪儿记到哪儿的技术博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="橦言无忌">
+<meta property="og:url" content="https://github.com/sophia-hxw/sophia-hxw.github.io/tags/H200/index.html">
 <meta property="og:site_name" content="橦言无忌">
-<meta property="og:description" content="一，前言Nvidia的A100和H100对比～ H100的显存带宽更小，为啥更受欢迎？">
+<meta property="og:description" content="想到哪儿记到哪儿的技术博客">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/12/12/Engineering/A100%20and%20H100/speed.png">
-<meta property="og:image" content="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/12/12/Engineering/A100%20and%20H100/big_speedup.png">
-<meta property="article:published_time" content="2023-12-12T03:25:42.000Z">
-<meta property="article:modified_time" content="2023-12-12T03:47:03.775Z">
 <meta property="article:author" content="xinwen">
-<meta property="article:tag" content="H100">
-<meta property="article:tag" content="A100">
+<meta property="article:tag" content="cv算法 记录技术路 随手写心情 橦大爷">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/12/12/Engineering/A100%20and%20H100/speed.png">
 
-<link rel="canonical" href="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/12/12/Engineering/A100%20and%20H100/">
+<link rel="canonical" href="https://github.com/sophia-hxw/sophia-hxw.github.io/tags/H200/">
 
 
 <script id="page-configurations">
@@ -46,12 +40,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : true,
+    isPost : false,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>Nvidia A100 and H100 GPUs | 橦言无忌</title>
+  <title>标签: H200 | 橦言无忌</title>
   
 
 
@@ -136,7 +130,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">98</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">99</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -196,152 +190,57 @@
         <div class="content-wrap">
           
 
-          <div class="content post posts-expand">
+          <div class="content tag">
             
 
-    
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/12/12/Engineering/A100%20and%20H100/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/me.jpg">
-      <meta itemprop="name" content="xinwen">
-      <meta itemprop="description" content="想到哪儿记到哪儿的技术博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="橦言无忌">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          Nvidia A100 and H100 GPUs
-        </h1>
-
-        <div class="post-meta">
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2023-12-12 11:25:42 / 修改时间：11:47:03" itemprop="dateCreated datePublished" datetime="2023-12-12T11:25:42+08:00">2023-12-12</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Engineering/" itemprop="url" rel="index"><span itemprop="name">Engineering</span></a>
-                </span>
-            </span>
-
-          
   
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2023/12/12/Engineering/A100%20and%20H100/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/12/12/Engineering/A100%20and%20H100/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>316</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
+  <div class="post-block">
+    <div class="posts-collapse">
+      <div class="collection-title">
+        <h2 class="collection-header">H200
+          <small>标签</small>
+        </h2>
+      </div>
 
       
-        <h1 id="一，前言"><a href="#一，前言" class="headerlink" title="一，前言"></a>一，前言</h1><p>Nvidia的A100和H100对比～</p>
-<p><strong>H100的显存带宽更小，为啥更受欢迎？</strong><br><span id="more"></span></p>
-<h1 id="H100为什么成首选？"><a href="#H100为什么成首选？" class="headerlink" title="H100为什么成首选？"></a>H100为什么成首选？</h1><p>H100比A100更受欢迎，成为首选，部分原因是缓存延迟更低和FP8计算。</p>
-<p>因为它的效率高达3倍，但成本只有（1.5-2倍）。考虑到整体系统成本，H100的性能要高得多。</p>
-<p>从技术细节来说，比起A100，H100在16位推理速度大约快3.5倍，16位训练速度大约快2.3倍。</p>
-<p>A100和H100的速度对比：<br><img src="speed.png" alt="a100 and h100 speed"></p>
-<p>大规模加速中的A100和H100对比：<br><img src="big_speedup.png" alt="big speedup"></p>
-<p>大多数公司购买H100，并将其用于训练和推理，而A100主要用于推理。</p>
-<p>但是，由于成本、容量、使用新硬件和设置新硬件的风险，以及现有的软件已经针对A100进行了优化，有些公司会犹豫是否要切换。</p>
-
+    <div class="collection-year">
+      <span class="collection-header">2023</span>
     </div>
 
-    
-    
-    
-        
+  <article itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
 
-<div>
-<ul class="post-copyright">
-  <li class="post-copyright-author">
-    <strong>本文作者： </strong>xinwen
-  </li>
-  <li class="post-copyright-link">
-    <strong>本文链接：</strong>
-    <a href="https://github.com/sophia-hxw/sophia-hxw.github.io/2023/12/12/Engineering/A100%20and%20H100/" title="Nvidia A100 and H100 GPUs">https://github.com/sophia-hxw/sophia-hxw.github.io/2023/12/12/Engineering/A100 and H100/</a>
-  </li>
-  <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
-  </li>
-</ul>
-</div>
+      <div class="post-meta">
+        <time itemprop="dateCreated"
+              datetime="2023-12-12T11:25:42+08:00"
+              content="2023-12-12">
+          12-12
+        </time>
+      </div>
 
+      <div class="post-title">
+          <a class="post-title-link" href="/2023/12/12/Engineering/A100-H100-H200/" itemprop="url">
+            <span itemprop="name">Nvidia A100, H100 and H200 GPUs</span>
+          </a>
+      </div>
 
-      <footer class="post-footer">
-          
-          <div class="post-tags">
-              <a href="/tags/H100/" rel="tag"><i class="fa fa-tag"></i> H100</a>
-              <a href="/tags/A100/" rel="tag"><i class="fa fa-tag"></i> A100</a>
-          </div>
-
-        
-
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2023/12/11/Engineering/model%20selection%20and%20deployment/" rel="prev" title="model selection and deployment">
-      <i class="fa fa-chevron-left"></i> model selection and deployment
-    </a></div>
-      <div class="post-nav-item"></div>
-    </div>
-      </footer>
-    
+    </header>
   </article>
+
+    </div>
+  </div>
   
   
+  
+
   
 
 
 
           </div>
           
-    <div class="comments" id="valine-comments"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -388,7 +287,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%EF%BC%8C%E5%89%8D%E8%A8%80"><span class="nav-text">一，前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#H100%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%90%E9%A6%96%E9%80%89%EF%BC%9F"><span class="nav-text">H100为什么成首选？</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -417,7 +315,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">98</span>
+        <span class="site-state-item-count">99</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -478,7 +376,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:45</span>
+    <span title="站点阅读时长">6:46</span>
 </div>
 
         
