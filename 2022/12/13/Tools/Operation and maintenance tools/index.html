@@ -30,8 +30,11 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://github.com/sophia-hxw/sophia-hxw.github.io/2022/12/13/Tools/Operation%20and%20maintenance%20tools/Cacti.png">
 <meta property="og:image" content="https://github.com/sophia-hxw/sophia-hxw.github.io/2022/12/13/Tools/Operation%20and%20maintenance%20tools/!Nagios.png">
+<meta property="og:image" content="https://github.com/sophia-hxw/sophia-hxw.github.io/2022/12/13/Tools/Operation%20and%20maintenance%20tools/Zabbix.png">
+<meta property="og:image" content="https://github.com/sophia-hxw/sophia-hxw.github.io/2022/12/13/Tools/Operation%20and%20maintenance%20tools/Prometheus.png">
+<meta property="og:image" content="https://github.com/sophia-hxw/sophia-hxw.github.io/2022/12/13/Tools/Operation%20and%20maintenance%20tools/Grafana.png">
 <meta property="article:published_time" content="2022-12-13T11:40:12.000Z">
-<meta property="article:modified_time" content="2023-12-13T11:50:48.631Z">
+<meta property="article:modified_time" content="2023-12-13T13:18:39.782Z">
 <meta property="article:author" content="xinwen">
 <meta property="article:tag" content="operation">
 <meta name="twitter:card" content="summary">
@@ -233,7 +236,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-12-13 19:50:48" itemprop="dateModified" datetime="2023-12-13T19:50:48+08:00">2023-12-13</time>
+                <time title="修改时间：2023-12-13 21:18:39" itemprop="dateModified" datetime="2023-12-13T21:18:39+08:00">2023-12-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -265,14 +268,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>705</span>
+              <span>2.2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -309,6 +312,35 @@
 <p>Nagios 是一个企业级的监控系统，可监控服务的运行状态和网络信息等，并能监视所指定的本地或远程主机参数以及服务，同时提供异常告警通知功能等。</p>
 <p>Nagios 可运行在 Linux 和 UNIX 平台上，同时提供一个可选的基于浏览器的Web 界面，以方便系统管理人员查看网络状态、各种系统问题，以及日志等。Nagios 的功能侧重于监控服务的可用性，能及时根据触发条件告警。</p>
 <p>目前，Nagios 也占领了一定的市场份额，不过从观察来看，Nagios 并没有与时俱进，已经不能满足于多变的监控需求，架构的扩展性和使用的便捷性有待增强，其高级功能集成在商业版 Nagios XI 中。</p>
+<h1 id="Zabbix"><a href="#Zabbix" class="headerlink" title="Zabbix"></a>Zabbix</h1><p><a target="_blank" rel="noopener" href="https://www.zabbix.com/">official link</a></p>
+<p>界面<br><img src="Zabbix.png" alt="Zabbix"></p>
+<p>Zabbix 是一个分布式监控系统，支持多种采集方式和采集客户端，有专用的 Agent（代理），也可以支持 SNMP、IPMI、JMX、Telnet、SSH 等多种协议，它将采集到的数据存放到数据库，然后对其进行分析整理，达到条件触发告警。</p>
+<p>Zabbix 拥有良好的扩展性，同时它的功能十分丰富，可以监控CPU负荷、内存使用、磁盘使用、网络状况、端口监视、日志监视等。</p>
+<p>但是因为消耗资源较多的缘故，如果监控的主机非常多时，可能会出现监控超时、告警超时等现象。</p>
+<h1 id="Prometheus"><a href="#Prometheus" class="headerlink" title="Prometheus"></a>Prometheus</h1><p><a target="_blank" rel="noopener" href="https://prometheus.io/">official link</a></p>
+<p>界面<br><img src="Prometheus.png" alt="Promitheus"></p>
+<p>Prometheus 作为一个数据监控解决方案，它由一个大型社区支持，有来自700多家公司的6300个贡献者，13500个代码提交和7200个拉取请求。</p>
+<p>Prometheus具有以下特性：</p>
+<ul>
+<li>多维的数据模型（基于时间序列的Key、Value键值对）</li>
+<li>灵活的查询和聚合语言PromQL</li>
+<li>提供本地存储和分布式存储</li>
+<li>通过基于HTTP的Pull模型采集时间序列数据</li>
+<li>可利用Pushgateway（Prometheus的可选中间件）实现Push模式</li>
+<li>可通过动态服务发现或静态配置发现目标机器</li>
+</ul>
+<h1 id="Grafana"><a href="#Grafana" class="headerlink" title="Grafana"></a>Grafana</h1><p><a target="_blank" rel="noopener" href="https://grafana.com/">official link</a></p>
+<p>界面：<br><img src="Grafana.png" alt="Grafana"></p>
+<p>Grafana 是一款采用 go 语言编写的开源应用，主要用于大规模指标数据的可视化展现。</p>
+<p>Grafana支持许多不同的数据源。每个数据源都有一个特定的查询编辑器,该编辑器定制的特性和功能是公开的特定数据来源。官方支持以下数据源:Graphite，Elasticsearch，InfluxDB，Prometheus，Cloudwatch，MySQL 和 OpenTSDB 等。</p>
+<p>每个数据源的查询语言和能力都是不同的。你可以把来自多个数据源的数据组合到一个仪表板，但每一个面板被绑定到一个特定的数据源,它就属于一个特定的组织。</p>
+<p>每个监控工具的优势和能力都是不同的。你可以根据实际应用需求，选择适合的监控工具。</p>
+<h1 id="Nightingale"><a href="#Nightingale" class="headerlink" title="Nightingale"></a>Nightingale</h1><p><a target="_blank" rel="noopener" href="https://playnightingale.com/">official link</a></p>
+<p>夜莺监控（ Nightingale ）是一款国产、开源云原生监控分析系统，采用 All-In-One 的设计，集数据采集、可视化、监控告警、数据分析于一体。于2020年3月20日，在 github 上发布 v1 版本，从 v5 版本开始与 Prometheus、VictoriaMetrics、Grafana、Telegraf、Datadog 等生态紧密协同集成，提供开箱即用的企业级监控分析和告警能力，已有众多企业选择将 Prometheus + AlertManager + Grafana 的组合方案升级为使用夜莺监控。</p>
+<p>夜莺监控，由滴滴开发和开源，并于 2022年5月11日，捐赠予中国计算机学会开源发展委员会（CCF ODC），为 CCF ODC 成立后接受捐赠的第一个开源项目。夜莺监控的核心开发团队，也是Open-Falcon项目原核心研发人员。</p>
+<h1 id="Open-Falcon"><a href="#Open-Falcon" class="headerlink" title="Open-Falcon"></a>Open-Falcon</h1><p><a target="_blank" rel="noopener" href="http://open-falcon.org/">official link</a></p>
+<p>Open-Falcon是一款开源的、可扩展的企业级监控解决方案，由小米运维团队发起和维护，曾在小米内部广泛应用，现覆盖小米、美团、快网、滴滴等300多家企业，已经成为国内最流行的监控系统之一。</p>
+<p>据了解，Open-Falcon 已经在github上取得了3000+star，数百次fork，数百个pull-request，社区用户超过6000+，超过300家公司都在不同程度使用 Open-Falcon，并且分布在海内外不同地区，如中国大陆、新加坡等。</p>
 <h1 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h1><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/FC1D8Z9BApVGmggaxQEWFA">five monitoring tools</a></p>
 
     </div>
@@ -412,7 +444,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Cacti"><span class="nav-text">Cacti</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Nagios"><span class="nav-text">Nagios</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-text">reference</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Cacti"><span class="nav-text">Cacti</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Nagios"><span class="nav-text">Nagios</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Zabbix"><span class="nav-text">Zabbix</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Prometheus"><span class="nav-text">Prometheus</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Grafana"><span class="nav-text">Grafana</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Nightingale"><span class="nav-text">Nightingale</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Open-Falcon"><span class="nav-text">Open-Falcon</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-text">reference</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -496,13 +528,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">448k</span>
+    <span title="站点总字数">449k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:47</span>
+    <span title="站点阅读时长">6:48</span>
 </div>
 
         
