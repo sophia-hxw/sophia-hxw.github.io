@@ -23,16 +23,19 @@
 
   <meta name="description" content="前言流量监控  MRTG Cacti SmokePing Graphite  性能告警  Nagios Zabbix Zenoss Core Ganglia OpenTSDB运维工具篇">
 <meta property="og:type" content="article">
-<meta property="og:title" content="阅读清单来了，上半部分">
+<meta property="og:title" content="Operation and maintenance tools">
 <meta property="og:url" content="https://github.com/sophia-hxw/sophia-hxw.github.io/2022/12/13/Tools/Operation%20and%20maintenance%20tools/index.html">
 <meta property="og:site_name" content="橦言无忌">
 <meta property="og:description" content="前言流量监控  MRTG Cacti SmokePing Graphite  性能告警  Nagios Zabbix Zenoss Core Ganglia OpenTSDB运维工具篇">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/sophia-hxw/sophia-hxw.github.io/2022/12/13/Tools/Operation%20and%20maintenance%20tools/Cacti.png">
+<meta property="og:image" content="https://github.com/sophia-hxw/sophia-hxw.github.io/2022/12/13/Tools/Operation%20and%20maintenance%20tools/!Nagios.png">
 <meta property="article:published_time" content="2022-12-13T11:40:12.000Z">
-<meta property="article:modified_time" content="2023-12-13T11:40:28.447Z">
+<meta property="article:modified_time" content="2023-12-13T11:50:48.631Z">
 <meta property="article:author" content="xinwen">
 <meta property="article:tag" content="operation">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/sophia-hxw/sophia-hxw.github.io/2022/12/13/Tools/Operation%20and%20maintenance%20tools/Cacti.png">
 
 <link rel="canonical" href="https://github.com/sophia-hxw/sophia-hxw.github.io/2022/12/13/Tools/Operation%20and%20maintenance%20tools/">
 
@@ -47,7 +50,7 @@
   };
 </script>
 
-  <title>阅读清单来了，上半部分 | 橦言无忌</title>
+  <title>Operation and maintenance tools | 橦言无忌</title>
   
 
 
@@ -212,7 +215,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          阅读清单来了，上半部分
+          Operation and maintenance tools
         </h1>
 
         <div class="post-meta">
@@ -230,7 +233,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-12-13 19:40:28" itemprop="dateModified" datetime="2023-12-13T19:40:28+08:00">2023-12-13</time>
+                <time title="修改时间：2023-12-13 19:50:48" itemprop="dateModified" datetime="2023-12-13T19:50:48+08:00">2023-12-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -262,7 +265,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>114</span>
+              <span>705</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -297,7 +300,16 @@
 <li>OpenTSDB<br><strong>运维工具篇</strong><span id="more"></span>
 </li>
 </ul>
-<h1 id="Cacti"><a href="#Cacti" class="headerlink" title="Cacti"></a>Cacti</h1><h1 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h1><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/FC1D8Z9BApVGmggaxQEWFA">five monitoring tools</a></p>
+<h1 id="Cacti"><a href="#Cacti" class="headerlink" title="Cacti"></a>Cacti</h1><p><a target="_blank" rel="noopener" href="https://www.cacti.net/">official link</a><br><a href="https://github.com/cacti/">github</a><br>一套基于 PHP、MySQL、SNMP 和 RRDtool开发的网络流量监测图形分析工具。</p>
+<p>界面<br><img src="Cacti.png" alt="cacti"></p>
+<p>它通过 snmpget 来获取数据，使用 RRDtool 绘图，但使用者无须了解 RRDtool 复杂的参数。它提供了非常强大的数据和用户管理功能，可以指定每一个用户能查看树状结构、主机设备以及任何一张图，还可以与 LDAP 结合进行用户认证，同时也能自定义模板，在历史数据的展示监控方面，其功能相当不错。</p>
+<p>Cacti 通过添加模板，使不同设备的监控添加具有可复用性，并且具备可自定义绘图的功能，具有强大的运算能力（数据的叠加功能）。</p>
+<h1 id="Nagios"><a href="#Nagios" class="headerlink" title="Nagios"></a>Nagios</h1><p><a target="_blank" rel="noopener" href="https://www.nagios.org/">official link</a></p>
+<p>界面<br><img src="!Nagios.png" alt="Nagios"></p>
+<p>Nagios 是一个企业级的监控系统，可监控服务的运行状态和网络信息等，并能监视所指定的本地或远程主机参数以及服务，同时提供异常告警通知功能等。</p>
+<p>Nagios 可运行在 Linux 和 UNIX 平台上，同时提供一个可选的基于浏览器的Web 界面，以方便系统管理人员查看网络状态、各种系统问题，以及日志等。Nagios 的功能侧重于监控服务的可用性，能及时根据触发条件告警。</p>
+<p>目前，Nagios 也占领了一定的市场份额，不过从观察来看，Nagios 并没有与时俱进，已经不能满足于多变的监控需求，架构的扩展性和使用的便捷性有待增强，其高级功能集成在商业版 Nagios XI 中。</p>
+<h1 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h1><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/FC1D8Z9BApVGmggaxQEWFA">five monitoring tools</a></p>
 
     </div>
 
@@ -313,7 +325,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://github.com/sophia-hxw/sophia-hxw.github.io/2022/12/13/Tools/Operation%20and%20maintenance%20tools/" title="阅读清单来了，上半部分">https://github.com/sophia-hxw/sophia-hxw.github.io/2022/12/13/Tools/Operation and maintenance tools/</a>
+    <a href="https://github.com/sophia-hxw/sophia-hxw.github.io/2022/12/13/Tools/Operation%20and%20maintenance%20tools/" title="Operation and maintenance tools">https://github.com/sophia-hxw/sophia-hxw.github.io/2022/12/13/Tools/Operation and maintenance tools/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -400,7 +412,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Cacti"><span class="nav-text">Cacti</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-text">reference</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Cacti"><span class="nav-text">Cacti</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Nagios"><span class="nav-text">Nagios</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-text">reference</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -484,13 +496,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">447k</span>
+    <span title="站点总字数">448k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:46</span>
+    <span title="站点阅读时长">6:47</span>
 </div>
 
         
