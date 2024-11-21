@@ -222,7 +222,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2024-11-21 08:52:13 / 修改时间：09:18:17" itemprop="dateCreated datePublished" datetime="2024-11-21T08:52:13+08:00">2024-11-21</time>
+              <time title="创建时间：2024-11-21 08:52:13 / 修改时间：09:22:59" itemprop="dateCreated datePublished" datetime="2024-11-21T08:52:13+08:00">2024-11-21</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -254,7 +254,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>367</span>
+              <span>351</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -273,12 +273,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>主要是面向AVQA(audio visual question and answer)和AVC(audio visual caption)问题，方法自然是MLLMs(multimodal large language models)，文章的出发点则是先有方法推理结果的二义性，无法描述音视频中的特定事件。</p>
+          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>主要是面向AVQA(audio visual question and answer)和AVC(audio visual caption)问题，方法自然是MLLMs(multimodal large language models)，文章的出发点则是现有方法推理结果的二义性以及无法描述音视频中的特定事件。</p>
 <p>本文方法：</p>
 <ul>
-<li>1，设计了一个clue收集策略，用推理时的问题在音视频场景中的clue来丰富LLM模型可以接受到的信息；</li>
-<li>2，模型在混合多模态数据集上训练，可直接用于类似场景，本团队也整理了AVinstruct多模态数据集；</li>
-<li>3，提出了AI辅助下的二义性DPO(direct preference optimization)算法，是消除二义性的模型重训练策略。</li>
+<li>1，设计了一个clue收集策略，用待推理问题在音视频中的clue来丰富LLM模型接受到的信息；</li>
+<li>2，模型直接在混合多模态数据集上训练，本团队也整理了AVinstruct多模态数据集；</li>
+<li>3，提出AI辅助的二义性DPO(direct preference optimization)算法，是消除二义性的重训练策略。</li>
 </ul>
 <p><strong>Cat: 音视频理解多模态模型框架</strong><br>
           <!--noindex-->

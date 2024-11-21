@@ -3,12 +3,12 @@
   <entry>
     <title>CAT-Enhancing Multimodal Large Language Model to Answer Questions in Dynamic Audio-Visual Scenarios</title>
     <url>/2024/11/21/UNDO/CAT-Enhancing%20Multimodal%20Large%20Language%20Model%20to%20Answer%20Questions%20in%20Dynamic%20Audio-Visual%20Scenarios/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>主要是面向AVQA(audio visual question and answer)和AVC(audio visual caption)问题，方法自然是MLLMs(multimodal large language models)，文章的出发点则是先有方法推理结果的二义性，无法描述音视频中的特定事件。</p>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>主要是面向AVQA(audio visual question and answer)和AVC(audio visual caption)问题，方法自然是MLLMs(multimodal large language models)，文章的出发点则是现有方法推理结果的二义性以及无法描述音视频中的特定事件。</p>
 <p>本文方法：</p>
 <ul>
-<li>1，设计了一个clue收集策略，用推理时的问题在音视频场景中的clue来丰富LLM模型可以接受到的信息；</li>
-<li>2，模型在混合多模态数据集上训练，可直接用于类似场景，本团队也整理了AVinstruct多模态数据集；</li>
-<li>3，提出了AI辅助下的二义性DPO(direct preference optimization)算法，是消除二义性的模型重训练策略。</li>
+<li>1，设计了一个clue收集策略，用待推理问题在音视频中的clue来丰富LLM模型接受到的信息；</li>
+<li>2，模型直接在混合多模态数据集上训练，本团队也整理了AVinstruct多模态数据集；</li>
+<li>3，提出AI辅助的二义性DPO(direct preference optimization)算法，是消除二义性的重训练策略。</li>
 </ul>
 <p><strong>Cat: 音视频理解多模态模型框架</strong><br><span id="more"></span></p>
 <h1 id="动机和主要贡献"><a href="#动机和主要贡献" class="headerlink" title="动机和主要贡献"></a>动机和主要贡献</h1><h1 id="本文主要方法"><a href="#本文主要方法" class="headerlink" title="本文主要方法"></a>本文主要方法</h1><h1 id="横向对比"><a href="#横向对比" class="headerlink" title="横向对比"></a>横向对比</h1><h1 id="其他信息"><a href="#其他信息" class="headerlink" title="其他信息"></a>其他信息</h1>]]></content>
