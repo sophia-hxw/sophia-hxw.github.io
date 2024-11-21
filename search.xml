@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>CAT-Enhancing Multimodal Large Language Model to Answer Questions in Dynamic Audio-Visual Scenarios</title>
+    <url>/2024/11/21/UNDO/CAT-Enhancing%20Multimodal%20Large%20Language%20Model%20to%20Answer%20Questions%20in%20Dynamic%20Audio-Visual%20Scenarios/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>主要是面向AVQA(audio visual question and answer)和AVC(audio visual caption)问题，方法自然是MLLMs(multimodal large language models)，文章的出发点则是先有方法推理结果的二义性，无法描述音视频中的特定事件。</p>
+<p>本文方法：</p>
+<ul>
+<li>1，设计了一个clue收集策略，用推理时的问题在音视频场景中的clue来丰富LLM模型可以接受到的信息；</li>
+<li>2，模型在混合多模态数据集上训练，可直接用于类似场景，本团队也整理了AVinstruct多模态数据集；</li>
+<li>3，提出了AI辅助下的二义性DPO(direct preference optimization)算法，是消除二义性的模型重训练策略。</li>
+</ul>
+<p><strong>Cat: 音视频理解多模态模型框架</strong><br><span id="more"></span></p>
+<h1 id="动机和主要贡献"><a href="#动机和主要贡献" class="headerlink" title="动机和主要贡献"></a>动机和主要贡献</h1><h1 id="本文主要方法"><a href="#本文主要方法" class="headerlink" title="本文主要方法"></a>本文主要方法</h1><h1 id="横向对比"><a href="#横向对比" class="headerlink" title="横向对比"></a>横向对比</h1><h1 id="其他信息"><a href="#其他信息" class="headerlink" title="其他信息"></a>其他信息</h1>]]></content>
+      <categories>
+        <category>UNDO</category>
+      </categories>
+      <tags>
+        <tag>cat</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>VLMo-Unified Vision-Language Pre-Training with Mixture-of-Modality-Experts</title>
     <url>/2024/11/20/Multimodal/VLMo:%20Unified%20Vision-Language%20Pre-Training%20with%20Mixture-of-Modality-Experts/</url>
     <content><![CDATA[<p><a href="https://arxiv.org/abs/2111.02358">paper</a></p>
@@ -2888,8 +2907,8 @@ a_{i,j} = \frac{1}{2-y_i^\top y_j}(\sum^n_{k=1}\frac{1}{2-y_i^\top y_k})^{-1}
         <category>Transformer</category>
       </categories>
       <tags>
-        <tag>transformer</tag>
         <tag>math</tag>
+        <tag>transformer</tag>
       </tags>
   </entry>
   <entry>
@@ -2926,8 +2945,8 @@ a_{i,j} = \frac{1}{2-y_i^\top y_j}(\sum^n_{k=1}\frac{1}{2-y_i^\top y_k})^{-1}
         <category>Transformer</category>
       </categories>
       <tags>
-        <tag>transformer</tag>
         <tag>math</tag>
+        <tag>transformer</tag>
       </tags>
   </entry>
   <entry>
@@ -6763,6 +6782,28 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </tags>
   </entry>
   <entry>
+    <title>roi align</title>
+    <url>/2022/05/16/ComputerVision/roi-align/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>roi align产生的背景，原理和应用场景</p>
+<p><strong>主要对比roi pooling</strong><br><span id="more"></span></p>
+<h2 id="1，背景"><a href="#1，背景" class="headerlink" title="1，背景"></a>1，背景</h2><p>在mask rcnn中提出，是为了解决roi pooling的两次量化带来的位置精度损失问题。</p>
+<h2 id="2，思路"><a href="#2，思路" class="headerlink" title="2，思路"></a>2，思路</h2><p>取消量化操作，使用双线性内插的方法获得坐标为浮点数的像素点上的图像数值,从而将整个特征聚集过程转化为一个连续的操作。值得注意的是，在具体的算法操作上，ROI Align并不是简单地补充出候选区域边界上的坐标点，然后将这些坐标点进行池化，而是重新设计了一套比较优雅的流程，大致算法流程为：</p>
+<ul>
+<li>遍历每一个候选区域，保持浮点数边界不做量化。</li>
+<li>将候选区域分割成k x k个单元，每个单元的边界也不做量化。</li>
+<li>在每个单元中计算固定四个坐标位置，用双线性内插的方法计算出这四个位置的值，然后进行最大池化操作。</li>
+</ul>
+<h2 id="3，区别"><a href="#3，区别" class="headerlink" title="3，区别"></a>3，区别</h2><p>ROI Align舍去了近似像素取整数的量化方法，改用双线性插值的方法确定特征图坐标对应于原图中的像素位置.ROI Align很好地解决了ROI Pooling操作中两次量化造成的区域不匹配(mis-alignment)的问题。</p>
+<h2 id="4，应用场景"><a href="#4，应用场景" class="headerlink" title="4，应用场景"></a>4，应用场景</h2><p>对于检测图片中大目标物体时，两种方案的差别不大，而如果是图片中有较多小目标物体需要检测，则优先选择RoiAlign，更精准些。</p>
+]]></content>
+      <categories>
+        <category>ComputerVision</category>
+      </categories>
+      <tags>
+        <tag>roi align</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>roi pooling</title>
     <url>/2022/05/16/ComputerVision/roi-pooling/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>roi pooling的基本原理和应用</p>
@@ -6789,28 +6830,6 @@ lrate=d^{-0.5}_{model}\cdot \min(step\_num^{-0.5},step\_num\cdot warmup\_steps^{
       </categories>
       <tags>
         <tag>roi pooling</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>roi align</title>
-    <url>/2022/05/16/ComputerVision/roi-align/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>roi align产生的背景，原理和应用场景</p>
-<p><strong>主要对比roi pooling</strong><br><span id="more"></span></p>
-<h2 id="1，背景"><a href="#1，背景" class="headerlink" title="1，背景"></a>1，背景</h2><p>在mask rcnn中提出，是为了解决roi pooling的两次量化带来的位置精度损失问题。</p>
-<h2 id="2，思路"><a href="#2，思路" class="headerlink" title="2，思路"></a>2，思路</h2><p>取消量化操作，使用双线性内插的方法获得坐标为浮点数的像素点上的图像数值,从而将整个特征聚集过程转化为一个连续的操作。值得注意的是，在具体的算法操作上，ROI Align并不是简单地补充出候选区域边界上的坐标点，然后将这些坐标点进行池化，而是重新设计了一套比较优雅的流程，大致算法流程为：</p>
-<ul>
-<li>遍历每一个候选区域，保持浮点数边界不做量化。</li>
-<li>将候选区域分割成k x k个单元，每个单元的边界也不做量化。</li>
-<li>在每个单元中计算固定四个坐标位置，用双线性内插的方法计算出这四个位置的值，然后进行最大池化操作。</li>
-</ul>
-<h2 id="3，区别"><a href="#3，区别" class="headerlink" title="3，区别"></a>3，区别</h2><p>ROI Align舍去了近似像素取整数的量化方法，改用双线性插值的方法确定特征图坐标对应于原图中的像素位置.ROI Align很好地解决了ROI Pooling操作中两次量化造成的区域不匹配(mis-alignment)的问题。</p>
-<h2 id="4，应用场景"><a href="#4，应用场景" class="headerlink" title="4，应用场景"></a>4，应用场景</h2><p>对于检测图片中大目标物体时，两种方案的差别不大，而如果是图片中有较多小目标物体需要检测，则优先选择RoiAlign，更精准些。</p>
-]]></content>
-      <categories>
-        <category>ComputerVision</category>
-      </categories>
-      <tags>
-        <tag>roi align</tag>
       </tags>
   </entry>
   <entry>
