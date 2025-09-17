@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"github.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="前言Hydra 是一个非常强大且易用的工具，适合用于复杂配置的管理场景。它的模块化、动态覆盖和实验记录功能尤其适合机器学习和深度学习项目。 Hydra，配置管理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hydra in Python">
+<meta property="og:url" content="https://github.com/sophia-hxw/sophia-hxw.github.io/2024/12/10/UNDO/hydra%20in%20python/index.html">
+<meta property="og:site_name" content="橦言无忌">
+<meta property="og:description" content="前言Hydra 是一个非常强大且易用的工具，适合用于复杂配置的管理场景。它的模块化、动态覆盖和实验记录功能尤其适合机器学习和深度学习项目。 Hydra，配置管理">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-12-10T01:02:14.000Z">
+<meta property="article:modified_time" content="2024-12-10T01:06:01.474Z">
+<meta property="article:author" content="xinwen">
+<meta property="article:tag" content="Hydra">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://github.com/sophia-hxw/sophia-hxw.github.io/2024/12/10/UNDO/hydra%20in%20python/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Hydra in Python | 橦言无忌</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">橦言无忌</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一个不想改变世界的程序媛</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">116</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">9</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">133</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/sophia-hxw" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://github.com/sophia-hxw/sophia-hxw.github.io/2024/12/10/UNDO/hydra%20in%20python/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/me.jpg">
+      <meta itemprop="name" content="xinwen">
+      <meta itemprop="description" content="想到哪儿记到哪儿的技术博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="橦言无忌">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Hydra in Python
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-12-10 09:02:14 / 修改时间：09:06:01" itemprop="dateCreated datePublished" datetime="2024-12-10T09:02:14+08:00">2024-12-10</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/UNDO/" itemprop="url" rel="index"><span itemprop="name">UNDO</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2024/12/10/UNDO/hydra%20in%20python/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/12/10/UNDO/hydra%20in%20python/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Hydra 是一个非常强大且易用的工具，适合用于复杂配置的管理场景。它的模块化、动态覆盖和实验记录功能尤其适合机器学习和深度学习项目。</p>
+<p><strong>Hydra，配置管理</strong><br><span id="more"></span></p>
+<h1 id="一，什么是-Hydra？"><a href="#一，什么是-Hydra？" class="headerlink" title="一，什么是 Hydra？"></a>一，什么是 Hydra？</h1><p>Hydra 是一个强大的配置管理框架，主要用于 Python 项目。它允许开发者以模块化的方式管理配置，同时支持多层次的配置继承、覆盖、动态命令行参数修改等功能，适用于机器学习、深度学习等需要大量配置管理的场景。</p>
+<h1 id="二，Hydra-的核心特性"><a href="#二，Hydra-的核心特性" class="headerlink" title="二，Hydra 的核心特性"></a>二，Hydra 的核心特性</h1><pre><code>1.    配置模块化：通过分离配置文件实现灵活的配置管理。
+2.    配置继承：支持继承基础配置并在此基础上进行修改。
+3.    动态配置覆盖：可以在运行时通过命令行覆盖默认配置。
+4.    实验管理：内置实验记录功能，自动保存每次运行的配置和结果。
+5.    支持 YAML 配置格式：更人性化和易读。
+</code></pre><h1 id="三，安装"><a href="#三，安装" class="headerlink" title="三，安装"></a>三，安装</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install hydra-core</span><br></pre></td></tr></table></figure>
+<h1 id="四，常用功能示例"><a href="#四，常用功能示例" class="headerlink" title="四，常用功能示例"></a>四，常用功能示例</h1><h2 id="1-基本用法"><a href="#1-基本用法" class="headerlink" title="1,基本用法"></a>1,基本用法</h2><p>配置文件：config.yaml<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">database:</span><br><span class="line">  driver: mysql</span><br><span class="line">  host: localhost</span><br><span class="line">  port: 3306</span><br><span class="line">  username: root</span><br><span class="line">  password: root</span><br></pre></td></tr></table></figure></p>
+<p>主程序：app.py<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">import hydra</span><br><span class="line">from omegaconf import DictConfig</span><br><span class="line"></span><br><span class="line">@hydra.main(config_path=&quot;.&quot;, config_name=&quot;config&quot;)</span><br><span class="line">def main(cfg: DictConfig):</span><br><span class="line">    print(f&quot;Database driver: &#123;cfg.database.driver&#125;&quot;)</span><br><span class="line">    print(f&quot;Host: &#123;cfg.database.host&#125;&quot;)</span><br><span class="line">    print(f&quot;Port: &#123;cfg.database.port&#125;&quot;)</span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure></p>
+<p>运行：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python app.py</span><br></pre></td></tr></table></figure></p>
+<p>输出：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Database driver: mysql</span><br><span class="line">Host: localhost</span><br><span class="line">Port: 3306</span><br></pre></td></tr></table></figure></p>
+<h2 id="2-动态覆盖配置"><a href="#2-动态覆盖配置" class="headerlink" title="2,动态覆盖配置"></a>2,动态覆盖配置</h2><p>通过命令行修改默认配置：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python app.py database.driver=postgresql database.port=5432</span><br></pre></td></tr></table></figure></p>
+<p>输出：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Database driver: postgresql</span><br><span class="line">Host: localhost</span><br><span class="line">Port: 5432</span><br></pre></td></tr></table></figure></p>
+<h2 id="3-配置继承"><a href="#3-配置继承" class="headerlink" title="3,配置继承"></a>3,配置继承</h2><p>Hydra 支持通过多个 YAML 文件实现配置继承。</p>
+<p>基础配置：config.yaml<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">defaults:</span><br><span class="line">  - db: mysql</span><br><span class="line"></span><br><span class="line">database:</span><br><span class="line">  timeout: 30</span><br></pre></td></tr></table></figure></p>
+<p>子配置：db/mysql.yaml<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">driver: mysql</span><br><span class="line">host: localhost</span><br><span class="line">port: 3306</span><br></pre></td></tr></table></figure></p>
+<p>子配置：db/postgresql.yaml<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">driver: postgresql</span><br><span class="line">host: localhost</span><br><span class="line">port: 5432</span><br></pre></td></tr></table></figure></p>
+<p>主程序：app.py<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import hydra</span><br><span class="line">from omegaconf import DictConfig</span><br><span class="line"></span><br><span class="line">@hydra.main(config_path=&quot;.&quot;, config_name=&quot;config&quot;)</span><br><span class="line">def main(cfg: DictConfig):</span><br><span class="line">    print(cfg.database)</span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure></p>
+<p>运行：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python app.py</span><br></pre></td></tr></table></figure></p>
+<p>输出：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#x27;driver&#x27;: &#x27;mysql&#x27;, &#x27;host&#x27;: &#x27;localhost&#x27;, &#x27;port&#x27;: 3306, &#x27;timeout&#x27;: 30&#125;</span><br></pre></td></tr></table></figure></p>
+<p>运行时覆盖默认配置：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python app.py db=postgresql</span><br></pre></td></tr></table></figure></p>
+<p>输出：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#x27;driver&#x27;: &#x27;postgresql&#x27;, &#x27;host&#x27;: &#x27;localhost&#x27;, &#x27;port&#x27;: 5432, &#x27;timeout&#x27;: 30&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="4-多任务配置"><a href="#4-多任务配置" class="headerlink" title="4,多任务配置"></a>4,多任务配置</h2><p>Hydra 支持为不同任务配置不同的参数。</p>
+<p>配置文件：config.yaml<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">defaults:</span><br><span class="line">  - task: classification</span><br><span class="line"></span><br><span class="line">task:</span><br><span class="line">  classification:</span><br><span class="line">    model: resnet50</span><br><span class="line">    dataset: cifar10</span><br><span class="line">  regression:</span><br><span class="line">    model: linear</span><br><span class="line">    dataset: boston</span><br></pre></td></tr></table></figure></p>
+<p>主程序：app.py<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import hydra</span><br><span class="line">from omegaconf import DictConfig</span><br><span class="line"></span><br><span class="line">@hydra.main(config_path=&quot;.&quot;, config_name=&quot;config&quot;)</span><br><span class="line">def main(cfg: DictConfig):</span><br><span class="line">    print(f&quot;Task: &#123;cfg.task.model&#125;&quot;)</span><br><span class="line">    print(f&quot;Dataset: &#123;cfg.task.dataset&#125;&quot;)</span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure></p>
+<p>运行不同任务：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python app.py task=classification</span><br><span class="line">python app.py task=regression</span><br></pre></td></tr></table></figure></p>
+<h2 id="5-实验管理与工作目录"><a href="#5-实验管理与工作目录" class="headerlink" title="5,实验管理与工作目录"></a>5,实验管理与工作目录</h2><p>Hydra 默认会为每次运行创建一个独立的工作目录并保存配置和输出。<br>主程序：app.py<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import hydra</span><br><span class="line">from omegaconf import DictConfig</span><br><span class="line">import os</span><br><span class="line"></span><br><span class="line">@hydra.main(config_path=&quot;.&quot;, config_name=&quot;config&quot;)</span><br><span class="line">def main(cfg: DictConfig):</span><br><span class="line">    print(f&quot;Working directory: &#123;os.getcwd()&#125;&quot;)</span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure></p>
+<p>运行：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python app.py</span><br></pre></td></tr></table></figure></p>
+<p>默认输出：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Working directory: /path/to/outputs/2024-12-06/11-42-33</span><br></pre></td></tr></table></figure></p>
+<h1 id="五，多个配置文件夹举例"><a href="#五，多个配置文件夹举例" class="headerlink" title="五，多个配置文件夹举例"></a>五，多个配置文件夹举例</h1><p>在 Python 中使用 Hydra 时，可以处理多个配置文件夹，通过将它们组织到不同的目录中并设置 config_path 和 defaults 来指定配置来源。</p>
+<h2 id="文件目录"><a href="#文件目录" class="headerlink" title="文件目录"></a>文件目录</h2><p>假设我们有以下目录结构：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">my_app/</span><br><span class="line">├── conf/</span><br><span class="line">│   ├── db/</span><br><span class="line">│   │   ├── mysql.yaml</span><br><span class="line">│   │   ├── postgresql.yaml</span><br><span class="line">│   ├── task/</span><br><span class="line">│   │   ├── classification.yaml</span><br><span class="line">│   │   ├── regression.yaml</span><br><span class="line">│   ├── config.yaml</span><br><span class="line">├── app.py</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>db 文件夹：包含数据库相关的配置。</li>
+<li>task 文件夹：包含任务相关的配置。</li>
+<li>config.yaml：主配置文件，用于整合子配置。</li>
+<li>app.py：主程序文件。</li>
+</ul>
+<h2 id="配置文件内容"><a href="#配置文件内容" class="headerlink" title="配置文件内容"></a>配置文件内容</h2><h3 id="1-主配置文件：conf-config-yaml"><a href="#1-主配置文件：conf-config-yaml" class="headerlink" title="1,主配置文件：conf/config.yaml"></a>1,主配置文件：conf/config.yaml</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">defaults:</span><br><span class="line">  - db: mysql         # 默认使用 mysql 数据库配置</span><br><span class="line">  - task: classification # 默认使用 classification 任务配置</span><br><span class="line"></span><br><span class="line">global:</span><br><span class="line">  debug: true</span><br></pre></td></tr></table></figure>
+<h3 id="2-数据库配置文件：conf-db-mysql-yaml"><a href="#2-数据库配置文件：conf-db-mysql-yaml" class="headerlink" title="2,数据库配置文件：conf/db/mysql.yaml"></a>2,数据库配置文件：conf/db/mysql.yaml</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">driver: mysql</span><br><span class="line">host: localhost</span><br><span class="line">port: 3306</span><br><span class="line">username: root</span><br><span class="line">password: password</span><br></pre></td></tr></table></figure>
+<h3 id="3-数据库配置文件：conf-db-postgresql-yaml"><a href="#3-数据库配置文件：conf-db-postgresql-yaml" class="headerlink" title="3,数据库配置文件：conf/db/postgresql.yaml"></a>3,数据库配置文件：conf/db/postgresql.yaml</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">driver: postgresql</span><br><span class="line">host: localhost</span><br><span class="line">port: 5432</span><br><span class="line">username: postgres</span><br><span class="line">password: password</span><br></pre></td></tr></table></figure>
+<h3 id="4-任务配置文件：conf-task-classification-yaml"><a href="#4-任务配置文件：conf-task-classification-yaml" class="headerlink" title="4,任务配置文件：conf/task/classification.yaml"></a>4,任务配置文件：conf/task/classification.yaml</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">model: resnet50</span><br><span class="line">dataset: cifar10</span><br><span class="line">epochs: 50</span><br></pre></td></tr></table></figure>
+<h3 id="5-任务配置文件：conf-task-regression-yaml"><a href="#5-任务配置文件：conf-task-regression-yaml" class="headerlink" title="5,任务配置文件：conf/task/regression.yaml"></a>5,任务配置文件：conf/task/regression.yaml</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">model: linear</span><br><span class="line">dataset: boston</span><br><span class="line">epochs: 100</span><br></pre></td></tr></table></figure>
+<h3 id="主程序文件：app-py"><a href="#主程序文件：app-py" class="headerlink" title="主程序文件：app.py"></a>主程序文件：app.py</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import hydra</span><br><span class="line">from omegaconf import DictConfig, OmegaConf</span><br><span class="line"></span><br><span class="line">@hydra.main(config_path=&quot;conf&quot;, config_name=&quot;config&quot;)</span><br><span class="line">def main(cfg: DictConfig):</span><br><span class="line">    print(&quot;Configuration:&quot;)</span><br><span class="line">    print(OmegaConf.to_yaml(cfg))</span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<h2 id="运行和结果"><a href="#运行和结果" class="headerlink" title="运行和结果"></a>运行和结果</h2><h3 id="直接运行"><a href="#直接运行" class="headerlink" title="直接运行"></a>直接运行</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python app.py</span><br></pre></td></tr></table></figure>
+<p>输出：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">db:</span><br><span class="line">  driver: mysql</span><br><span class="line">  host: localhost</span><br><span class="line">  port: 3306</span><br><span class="line">  username: root</span><br><span class="line">  password: password</span><br><span class="line">task:</span><br><span class="line">  model: resnet50</span><br><span class="line">  dataset: cifar10</span><br><span class="line">  epochs: 50</span><br><span class="line">global:</span><br><span class="line">  debug: true</span><br></pre></td></tr></table></figure></p>
+<h3 id="覆盖数据库配置"><a href="#覆盖数据库配置" class="headerlink" title="覆盖数据库配置"></a>覆盖数据库配置</h3><p>指定 PostgreSQL 数据库<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python app.py db=postgresql</span><br></pre></td></tr></table></figure></p>
+<p>输出：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">db:</span><br><span class="line">  driver: postgresql</span><br><span class="line">  host: localhost</span><br><span class="line">  port: 5432</span><br><span class="line">  username: postgres</span><br><span class="line">  password: password</span><br><span class="line">task:</span><br><span class="line">  model: resnet50</span><br><span class="line">  dataset: cifar10</span><br><span class="line">  epochs: 50</span><br><span class="line">global:</span><br><span class="line">  debug: true</span><br></pre></td></tr></table></figure></p>
+<h3 id="覆盖任务配置"><a href="#覆盖任务配置" class="headerlink" title="覆盖任务配置"></a>覆盖任务配置</h3><p>指定回归任务：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python app.py task=regression</span><br></pre></td></tr></table></figure></p>
+<p>输出<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">db:</span><br><span class="line">  driver: mysql</span><br><span class="line">  host: localhost</span><br><span class="line">  port: 3306</span><br><span class="line">  username: root</span><br><span class="line">  password: password</span><br><span class="line">task:</span><br><span class="line">  model: linear</span><br><span class="line">  dataset: boston</span><br><span class="line">  epochs: 100</span><br><span class="line">global:</span><br><span class="line">  debug: true</span><br></pre></td></tr></table></figure></p>
+<p>动态覆盖多个参数<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python app.py db=postgresql task=regression global.debug=false</span><br></pre></td></tr></table></figure><br>输出：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">db:</span><br><span class="line">  driver: postgresql</span><br><span class="line">  host: localhost</span><br><span class="line">  port: 5432</span><br><span class="line">  username: postgres</span><br><span class="line">  password: password</span><br><span class="line">task:</span><br><span class="line">  model: linear</span><br><span class="line">  dataset: boston</span><br><span class="line">  epochs: 100</span><br><span class="line">global:</span><br><span class="line">  debug: false</span><br></pre></td></tr></table></figure></p>
+<h2 id="配置多个文件夹的关键点"><a href="#配置多个文件夹的关键点" class="headerlink" title="配置多个文件夹的关键点"></a>配置多个文件夹的关键点</h2><pre><code>1.    文件夹结构清晰：
+•    根据功能将配置文件组织到不同的子文件夹（例如 db 和 task）。
+2.    defaults 声明：
+•    在主配置文件中通过 defaults 指定默认使用的子配置文件。
+3.    动态覆盖：
+•    使用 命令行参数 实现动态覆盖，方便切换配置。
+4.    扩展配置路径（高级）：
+</code></pre><p>如果需要加载多个根路径的配置，可以通过环境变量或者 hydra.searchpath 添加多个路径。例如：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@hydra.main(config_path=None, config_name=&quot;config&quot;)</span><br><span class="line">def main(cfg: DictConfig):</span><br><span class="line">    hydra.core.global_hydra.GlobalHydra.instance().clear()</span><br><span class="line">    hydra.initialize(config_path=&quot;conf&quot;)</span><br><span class="line">    cfg = hydra.compose(config_name=&quot;config&quot;, overrides=[&quot;+hydra.searchpath=[/custom/path]&quot;])</span><br><span class="line">    print(OmegaConf.to_yaml(cfg))</span><br></pre></td></tr></table></figure></p>
+<p>这种方式可以在运行时动态扩展配置源路径，非常适合复杂场景。</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>xinwen
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://github.com/sophia-hxw/sophia-hxw.github.io/2024/12/10/UNDO/hydra%20in%20python/" title="Hydra in Python">https://github.com/sophia-hxw/sophia-hxw.github.io/2024/12/10/UNDO/hydra in python/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Hydra/" rel="tag"><i class="fa fa-tag"></i> Hydra</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/12/09/UNDO/rootutils/" rel="prev" title="rootutils in Python">
+      <i class="fa fa-chevron-left"></i> rootutils in Python
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/12/11/UNDO/Spectral%20Bias%20in%20Neural%20Networks/" rel="next" title="Spectral Bias in Neural Networks">
+      Spectral Bias in Neural Networks <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%EF%BC%8C%E4%BB%80%E4%B9%88%E6%98%AF-Hydra%EF%BC%9F"><span class="nav-text">一，什么是 Hydra？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%EF%BC%8CHydra-%E7%9A%84%E6%A0%B8%E5%BF%83%E7%89%B9%E6%80%A7"><span class="nav-text">二，Hydra 的核心特性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%EF%BC%8C%E5%AE%89%E8%A3%85"><span class="nav-text">三，安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%EF%BC%8C%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD%E7%A4%BA%E4%BE%8B"><span class="nav-text">四，常用功能示例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95"><span class="nav-text">1,基本用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%8A%A8%E6%80%81%E8%A6%86%E7%9B%96%E9%85%8D%E7%BD%AE"><span class="nav-text">2,动态覆盖配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E9%85%8D%E7%BD%AE%E7%BB%A7%E6%89%BF"><span class="nav-text">3,配置继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%A4%9A%E4%BB%BB%E5%8A%A1%E9%85%8D%E7%BD%AE"><span class="nav-text">4,多任务配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E5%AE%9E%E9%AA%8C%E7%AE%A1%E7%90%86%E4%B8%8E%E5%B7%A5%E4%BD%9C%E7%9B%AE%E5%BD%95"><span class="nav-text">5,实验管理与工作目录</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94%EF%BC%8C%E5%A4%9A%E4%B8%AA%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%BE%E4%BE%8B"><span class="nav-text">五，多个配置文件夹举例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95"><span class="nav-text">文件目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9"><span class="nav-text">配置文件内容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%B8%BB%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%EF%BC%9Aconf-config-yaml"><span class="nav-text">1,主配置文件：conf&#x2F;config.yaml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%95%B0%E6%8D%AE%E5%BA%93%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%EF%BC%9Aconf-db-mysql-yaml"><span class="nav-text">2,数据库配置文件：conf&#x2F;db&#x2F;mysql.yaml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%95%B0%E6%8D%AE%E5%BA%93%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%EF%BC%9Aconf-db-postgresql-yaml"><span class="nav-text">3,数据库配置文件：conf&#x2F;db&#x2F;postgresql.yaml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E4%BB%BB%E5%8A%A1%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%EF%BC%9Aconf-task-classification-yaml"><span class="nav-text">4,任务配置文件：conf&#x2F;task&#x2F;classification.yaml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E4%BB%BB%E5%8A%A1%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%EF%BC%9Aconf-task-regression-yaml"><span class="nav-text">5,任务配置文件：conf&#x2F;task&#x2F;regression.yaml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E7%A8%8B%E5%BA%8F%E6%96%87%E4%BB%B6%EF%BC%9Aapp-py"><span class="nav-text">主程序文件：app.py</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E5%92%8C%E7%BB%93%E6%9E%9C"><span class="nav-text">运行和结果</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E8%BF%90%E8%A1%8C"><span class="nav-text">直接运行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A6%86%E7%9B%96%E6%95%B0%E6%8D%AE%E5%BA%93%E9%85%8D%E7%BD%AE"><span class="nav-text">覆盖数据库配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A6%86%E7%9B%96%E4%BB%BB%E5%8A%A1%E9%85%8D%E7%BD%AE"><span class="nav-text">覆盖任务配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%A4%9A%E4%B8%AA%E6%96%87%E4%BB%B6%E5%A4%B9%E7%9A%84%E5%85%B3%E9%94%AE%E7%82%B9"><span class="nav-text">配置多个文件夹的关键点</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="xinwen"
+      src="/images/me.jpg">
+  <p class="site-author-name" itemprop="name">xinwen</p>
+  <div class="site-description" itemprop="description">想到哪儿记到哪儿的技术博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">133</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">116</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/sophia-hxw" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;sophia-hxw"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/sophia_xw" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;sophia_xw" rel="noopener" target="_blank"><i class="crosshairs fa-fw"></i>CSDN</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xinwen618@gmail.com" title="E-Mail → mailto:xinwen618@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2022 – 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xinwen</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">471k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">7:09</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+// 代码折叠
+<script src="/js/code-unfold.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'QS91rh0eXkhXnjzhcdHGIRzJ-gzGzoHsz',
+      appKey     : 'DD7UTgTkdGwFia0JrJRcs7fs',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

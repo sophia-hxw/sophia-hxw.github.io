@@ -29,7 +29,7 @@
 <meta property="og:description" content="一，前言主要是面向AVQA(audio visual question and answer)和AVC(audio visual caption)问题，方法自然是MLLMs(multimodal large language models)，文章的出发点则是现有方法推理结果的二义性以及无法描述音视频中的特定事件。 本文方法：  1，设计了一个clue收集策略，用待推理问题在音视频中的clue来丰富">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-11-21T00:52:13.000Z">
-<meta property="article:modified_time" content="2024-11-22T13:13:58.284Z">
+<meta property="article:modified_time" content="2024-11-24T11:46:04.416Z">
 <meta property="article:author" content="xinwen">
 <meta property="article:tag" content="cat">
 <meta name="twitter:card" content="summary">
@@ -132,7 +132,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">109</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">116</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -142,7 +142,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">126</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">133</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -230,7 +230,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-11-22 21:13:58" itemprop="dateModified" datetime="2024-11-22T21:13:58+08:00">2024-11-22</time>
+                <time title="修改时间：2024-11-24 19:46:04" itemprop="dateModified" datetime="2024-11-24T19:46:04+08:00">2024-11-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -262,14 +262,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.5k</span>
+              <span>2.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -305,13 +305,35 @@
 <li>AI辅助下针对二义性的DPO策略，应用到MLLMs来克服带二义性描述特定音视频对象的问题。</li>
 <li>在多个多模态数据集上评价CAT，实验证明了CAT的先进性，在基于视频的文本生成任务和zero-shot VQA任务上达到sota。</li>
 </ul>
-<h1 id="三，本文主要方法"><a href="#三，本文主要方法" class="headerlink" title="三，本文主要方法"></a>三，本文主要方法</h1><h2 id="3-1-三个分支"><a href="#3-1-三个分支" class="headerlink" title="3.1 三个分支"></a>3.1 三个分支</h2><p>两个编码器：使用预训练的音频-&gt;文本和视频-&gt;文本的ImageBind模型</p>
+<h1 id="三，本文主要方法"><a href="#三，本文主要方法" class="headerlink" title="三，本文主要方法"></a>三，本文主要方法</h1><h2 id="3-1-三个分支"><a href="#3-1-三个分支" class="headerlink" title="3.1 三个分支"></a>3.1 三个分支</h2><p><strong>两个编码器：使用预训练的音频-&gt;文本和视频-&gt;文本的ImageBind模型</strong>   </p>
 <script type="math/tex; mode=display">h_v=ImageBind(\mathbf{V})\quad h_a=ImageBind(\mathbf{A}</script><ul>
 <li>视频用帧的维度在时间上进行压缩以降低计算开销</li>
 <li>这两个编码器之后都用两个线性映射层(projector)链接到LLM</li>
 </ul>
-<p>关键提示聚合器</p>
-<h2 id="3-2-多模态训练"><a href="#3-2-多模态训练" class="headerlink" title="3.2 多模态训练"></a>3.2 多模态训练</h2><h2 id="3-3-AI辅助关联二义性的ADPO"><a href="#3-3-AI辅助关联二义性的ADPO" class="headerlink" title="3.3 AI辅助关联二义性的ADPO"></a>3.3 AI辅助关联二义性的ADPO</h2><h1 id="横向对比"><a href="#横向对比" class="headerlink" title="横向对比"></a>横向对比</h1><h1 id="其他信息"><a href="#其他信息" class="headerlink" title="其他信息"></a>其他信息</h1>
+<p><strong>关键提示聚合器</strong><br>最简单就是用一个线性层来包含完整的视觉和音频信息，优势就是不用精简时空信息，但是这样也让LLM无法集中到特定内容，也不能稳定的描述视频。</p>
+<p>本文构建了一个提示聚合器(clue aggregator)来挖掘问题相关的多模态信息。用包含多个不同transformer模块的感受器来提取足够的音视频详情，这个感受器包含自注意力、交叉注意力和FFN模块。</p>
+<script type="math/tex; mode=display">\mathcal{B}_1(h_t;\mathbf{X}) = \mathbf{XA}(h_t,FFN(SA(\mathbf{X})))</script><p>其中，$\mathbf{X}$是音频或者视频特征，$h_t$ 是文本特征，$\mathbf{XA}$ 是交叉注意力，$SA$ 是自注意力，音频和视频的编码器模型共享参数。</p>
+<p><strong>问题感受也相关的提示聚合器</strong><br>视频编码器参数是冻结的，从视频中是以间隔帧的方式采样，三分钟的视频大概采样400～500帧，在问题相关的提示生成时，直接拓展多帧结果。</p>
+<p>将问题的文本特征，音频-文本提示，视频-文本提示同时输入到Q-Former模型训练，之后通过projector映射到LLM。</p>
+<h2 id="3-2-多模态训练"><a href="#3-2-多模态训练" class="headerlink" title="3.2 多模态训练"></a>3.2 多模态训练</h2><p><strong>第一阶段 音频和视频projector的特征对齐</strong>   </p>
+<ul>
+<li>video-text Webvid 2.5M数据集训练视频projector，此时音频projector冻结</li>
+<li>audio-text WavCap 数据集训练音频projector，此时视频projector冻结</li>
+</ul>
+<p>以上训练时，LLM模型，音频和视频的编码器模型也都是冻结的。</p>
+<p><strong>第二阶段 音视频联合指令微调</strong><br>动态音视频数据对训练CAT来应用到AVQA任务，此类数据被收集在AVinstruct中。</p>
+<ul>
+<li>带音频的视频数据来源：从YouTube和VGGSound中大量收集；</li>
+<li>QA数据来源：在闭合AVQA训练数据集(music scene 和real-world scene)中选择；</li>
+<li>不同的子标题生成器(BLIP2和Whisper)用于生成视频描述；</li>
+<li>用GPT概括人工书写的例子来概括为问题引导下的音视频描述；</li>
+</ul>
+<p>第一阶段训练结束后，冻结音视频编码器和projector的参数，仅仅微调聚合器和关联的LoRA的参数，训练数据是100k视频指令和AVStruct数据集。预定义的prompt的结构是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">USER:&lt;system&gt;&lt;Q&gt;&lt;/Q&gt;&lt;video&gt;&lt;audio&gt;&lt;clues&gt; Assistant: </span><br></pre></td></tr></table></figure>
+<h2 id="3-3-AI辅助关联二义性的ADPO"><a href="#3-3-AI辅助关联二义性的ADPO" class="headerlink" title="3.3 AI辅助关联二义性的ADPO"></a>3.3 AI辅助关联二义性的ADPO</h2><p>首先，用多样化的 prompts 让 MLLMs 生成简单的描述，但是这样的方法是非持续学习方式的，在多样化的动态音视频场景中难以得到准确的反馈，尤其在描述音视频中的特定对象时容易产生二义性。ADPO 就是用于让 MLLMs 复习并重学习其错误或者不当输出，分两步可达到这个目标。</p>
+<p><strong>收集二义性实例并改写</strong><br>训练集 $\mathbf{D}_{train}$ 和 Cat 的输出 $\mathbf{D}_{des}$，用 GPT 和详细指令模板来检查 $\mathbf{D}_{des}$ 中每个输出的二义性，二义性就是检查 Cat 输出和原 label 之间的区别，差异较大定义为负向反馈。然后，用 GPT 来纠正这个负向反馈，原则就是生成的正向反馈详细、清晰的描述了视觉对象或者声音而没有重要信息的遗漏。</p>
+<p><strong>支持CAT关注正向反馈</strong></p>
+<h1 id="四，横向对比"><a href="#四，横向对比" class="headerlink" title="四，横向对比"></a>四，横向对比</h1><h1 id="五，其他信息"><a href="#五，其他信息" class="headerlink" title="五，其他信息"></a>五，其他信息</h1>
     </div>
 
     
@@ -350,7 +372,10 @@
     <a href="/2024/11/20/Multimodal/VLMo:%20Unified%20Vision-Language%20Pre-Training%20with%20Mixture-of-Modality-Experts/" rel="prev" title="VLMo-Unified Vision-Language Pre-Training with Mixture-of-Modality-Experts">
       <i class="fa fa-chevron-left"></i> VLMo-Unified Vision-Language Pre-Training with Mixture-of-Modality-Experts
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2024/12/06/UNDO/lightning%20in%20python/" rel="next" title="lightning in Python">
+      lightning in Python <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -410,7 +435,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%EF%BC%8C%E5%89%8D%E8%A8%80"><span class="nav-text">一，前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%EF%BC%8C%E5%8A%A8%E6%9C%BA%E5%92%8C%E4%B8%BB%E8%A6%81%E8%B4%A1%E7%8C%AE"><span class="nav-text">二，动机和主要贡献</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E6%9C%AC%E6%96%87%E5%8A%A8%E6%9C%BA"><span class="nav-text">2.1 本文动机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E6%9C%AC%E6%96%87%E6%96%B9%E6%B3%95"><span class="nav-text">2.2 本文方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-%E6%9C%AC%E6%96%87%E8%B4%A1%E7%8C%AE"><span class="nav-text">2.3 本文贡献</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%EF%BC%8C%E6%9C%AC%E6%96%87%E4%B8%BB%E8%A6%81%E6%96%B9%E6%B3%95"><span class="nav-text">三，本文主要方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-%E4%B8%89%E4%B8%AA%E5%88%86%E6%94%AF"><span class="nav-text">3.1 三个分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-%E5%A4%9A%E6%A8%A1%E6%80%81%E8%AE%AD%E7%BB%83"><span class="nav-text">3.2 多模态训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-AI%E8%BE%85%E5%8A%A9%E5%85%B3%E8%81%94%E4%BA%8C%E4%B9%89%E6%80%A7%E7%9A%84ADPO"><span class="nav-text">3.3 AI辅助关联二义性的ADPO</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A8%AA%E5%90%91%E5%AF%B9%E6%AF%94"><span class="nav-text">横向对比</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E4%BF%A1%E6%81%AF"><span class="nav-text">其他信息</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%EF%BC%8C%E5%89%8D%E8%A8%80"><span class="nav-text">一，前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%EF%BC%8C%E5%8A%A8%E6%9C%BA%E5%92%8C%E4%B8%BB%E8%A6%81%E8%B4%A1%E7%8C%AE"><span class="nav-text">二，动机和主要贡献</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E6%9C%AC%E6%96%87%E5%8A%A8%E6%9C%BA"><span class="nav-text">2.1 本文动机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E6%9C%AC%E6%96%87%E6%96%B9%E6%B3%95"><span class="nav-text">2.2 本文方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-%E6%9C%AC%E6%96%87%E8%B4%A1%E7%8C%AE"><span class="nav-text">2.3 本文贡献</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%EF%BC%8C%E6%9C%AC%E6%96%87%E4%B8%BB%E8%A6%81%E6%96%B9%E6%B3%95"><span class="nav-text">三，本文主要方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-%E4%B8%89%E4%B8%AA%E5%88%86%E6%94%AF"><span class="nav-text">3.1 三个分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-%E5%A4%9A%E6%A8%A1%E6%80%81%E8%AE%AD%E7%BB%83"><span class="nav-text">3.2 多模态训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-AI%E8%BE%85%E5%8A%A9%E5%85%B3%E8%81%94%E4%BA%8C%E4%B9%89%E6%80%A7%E7%9A%84ADPO"><span class="nav-text">3.3 AI辅助关联二义性的ADPO</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%EF%BC%8C%E6%A8%AA%E5%90%91%E5%AF%B9%E6%AF%94"><span class="nav-text">四，横向对比</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94%EF%BC%8C%E5%85%B6%E4%BB%96%E4%BF%A1%E6%81%AF"><span class="nav-text">五，其他信息</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -426,7 +451,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-count">133</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -439,7 +464,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-count">116</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -484,7 +509,7 @@
 <div class="copyright">
   
   &copy; 2022 – 
-  <span itemprop="copyrightYear">2024</span>
+  <span itemprop="copyrightYear">2025</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -494,13 +519,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">450k</span>
+    <span title="站点总字数">471k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:49</span>
+    <span title="站点阅读时长">7:09</span>
 </div>
 
         
